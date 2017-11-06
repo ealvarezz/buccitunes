@@ -2,13 +2,15 @@ package com.buccitunes.dao;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.repository.CrudRepository;
 
 import com.buccitunes.model.User;
 
-public interface UserRepository extends CrudRepository<User, String>{
+@Transactional
+public interface UserRepository extends BaseUserRepository<User>, CrudRepository<User, String>{
 
-	public List<User> findByName(String name);
 	
 	
 	
