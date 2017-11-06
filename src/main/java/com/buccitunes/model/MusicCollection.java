@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.format.annotation.DateTimeFormat;
 
 public class MusicCollection {
+	
 	private int id;
 	private String title;
 	private List<Song> songs;
@@ -15,6 +16,8 @@ public class MusicCollection {
 	private String artworkPath;
 	private StatCache stats;
 	private List<User> followers;
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -57,11 +60,9 @@ public class MusicCollection {
 	public void setFollowers(List<User> followers) {
 		this.followers = followers;
 	}
-	
 	public void addSong(Song song) {
 		
 	}
-	
 	public void removeSong(Song song) {
 		
 	}

@@ -40,11 +40,9 @@ public class Playlist extends MusicCollection {
 	public void setInvitedViewers(List<User> invitedViewers) {
 		this.invitedViewers = invitedViewers;
 	}
-	
 	public void canEdit(User user) {
 		
 	}
-	
 	public void canView(User user) {
 		
 	}

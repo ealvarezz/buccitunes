@@ -15,6 +15,7 @@ public class Album extends MusicCollection {
 	private Date releaseDate;
 	private String label;
 	private List<Genre> genres;
+	
 	public Artist getPrimaryArtist() {
 		return primaryArtist;
 	}

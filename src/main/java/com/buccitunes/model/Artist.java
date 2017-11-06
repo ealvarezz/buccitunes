@@ -15,6 +15,7 @@ public class Artist {
 	String biography;
 	
 	
+	
 	public int getId() {
 		return id;
 	}

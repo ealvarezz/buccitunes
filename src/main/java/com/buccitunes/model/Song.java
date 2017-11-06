@@ -2,23 +2,37 @@ package com.buccitunes.model;
 
 import java.io.File;
 import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+
 import com.buccitunes.constants.*;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
-
+@Entity(name="SONG")
 public class Song {
+	
+	@Id
 	private int id;
 	private String name;
 	private int duration;
 	private int rating;
 	private Artist artist ;
+	@JsonIgnore
 	private List<Artist>features;
-	private File audio;
 	private MimeType mimeType;
 	private boolean isExplicit;
 	private List<Genre> genres;
 	private String picturePath;
+	private String audioPath;
 	private StatCache stats;
 	
+	public String getAudioPath() {
+		return audioPath;
+	}
+	public void setAudioPath(String audioPath) {
+		this.audioPath = audioPath;
+	}
 	public int getId() {
 		return id;
 	}
@@ -55,11 +69,8 @@ public class Song {
 	public void setFeatures(List<Artist> features) {
 		this.features = features;
 	}
-	public File getAudio() {
-		return audio;
-	}
-	public void setAudio(File audio) {
-		this.audio = audio;
+	public File getAudioAsFile() {
+		return new File("");
 	}
 	public MimeType getMimeType() {
 		return mimeType;
