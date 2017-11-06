@@ -1,5 +1,7 @@
 package com.buccitunes.model;
 
+import java.util.List;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -10,9 +12,16 @@ public class Artist {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	int id;
-	String name;
-	String biography;
+	private int id;
+	private String name;
+	private String biography;
+	private List<Album> albums;
+	private List<User> followers;
+	private List<Song> features;
+	private List<Concert> upcomingConcerts;
+	private Album featuredAlbum;
+	private List<Song> recentlyPlayed;
+	private StatCache stats;
 	
 	
 	
