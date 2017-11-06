@@ -15,6 +15,7 @@ public class Album extends MusicCollection {
 	private Date releaseDate;
 	private String label;
 	private List<Genre> genres;
+	private boolean isPublic;
 	
 	public Artist getPrimaryArtist() {
 		return primaryArtist;
@@ -46,6 +47,10 @@ public class Album extends MusicCollection {
 	public void setGenres(List<Genre> genres) {
 		this.genres = genres;
 	}
-	
-	
+	public boolean isPublic() {
+		return isPublic;
+	}
+	public void setPublic(boolean isPublic) {
+		this.isPublic = isPublic;
+	}
 }
