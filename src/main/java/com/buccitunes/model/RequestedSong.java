@@ -2,27 +2,61 @@ package com.buccitunes.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity(name="RequestedSong")
 public class RequestedSong {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
 	private String name;
 	
 	private int duration;
 	
-	private Artist artist;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
+	private Artist owner;
 	
-	private List<Artist> features;
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "Featured_Artist_Requested",
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+	private List<Artist> featuredArtists;
 	
 	private String audioPath;
 	
+	@ManyToOne
+    @JoinColumn(name = "mime_id", insertable = false, updatable = false)
 	private MimeType mimeType;
 	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "Genre_Requested_Song",
+		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
 	
 	private String picturePath;
 	
 	private String comments;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
 	private ArtistUser requester;
 
 	public String getName() {
@@ -42,19 +76,19 @@ public class RequestedSong {
 	}
 
 	public Artist getArtist() {
-		return artist;
+		return owner;
 	}
 
 	public void setArtist(Artist artist) {
-		this.artist = artist;
+		this.owner = artist;
 	}
 
 	public List<Artist> getFeatures() {
-		return features;
+		return featuredArtists;
 	}
 
 	public void setFeatures(List<Artist> features) {
-		this.features = features;
+		this.featuredArtists = features;
 	}
 
 	public String getAudioPath() {

@@ -116,6 +116,4 @@ public class Song {
 	public void setPicturePath(String picturePath) {
 		this.picturePath = picturePath;
 	}
-
-	
 }
