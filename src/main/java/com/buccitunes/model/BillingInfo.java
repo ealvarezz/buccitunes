@@ -2,8 +2,6 @@ package com.buccitunes.model;
 
 import org.springframework.beans.factory.annotation.Value;
 
-import com.buccitunes.constants.CreditCompany;
-
 public class BillingInfo {
 	private String cardHolderName;
 	private String creditCardNo;

@@ -5,8 +5,6 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.buccitunes.constants.Genre;
-
 public class Album extends MusicCollection {
 	private Artist primaryArtist;
 	private List<Artist> featuredArtists;
