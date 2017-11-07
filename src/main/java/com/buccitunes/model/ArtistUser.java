@@ -2,7 +2,7 @@ package com.buccitunes.model;
 
 import java.util.*;
 
-public class ArtistUser {
+public class ArtistUser extends User {
 	private Artist artist;
 
 	public Artist getArtist() {
