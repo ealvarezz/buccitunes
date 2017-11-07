@@ -10,7 +10,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
 @Entity(name="ArtistUser")
-@DiscriminatorValue("ArtistUser")
 public class ArtistUser extends User {
 	
 	
