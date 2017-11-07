@@ -119,6 +119,7 @@ public class Song {
 	public void setPicturePath(String picturePath) {
 		this.picturePath = picturePath;
 	}
+
 	public StatCache getStats() {
 		return stats;
 	}
@@ -126,5 +127,5 @@ public class Song {
 		this.stats = stats;
 	}
 	
-	
+
 }
