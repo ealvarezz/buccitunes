@@ -2,6 +2,7 @@ package com.buccitunes.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -37,7 +39,12 @@ public class User {
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "following")
 	private List<User> followers;
 	
-	//private List<Playlist> followingPlaylists;
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "user_following_playlist",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
+		inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
+	private List<Playlist> followingPlaylists;
 	
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -67,8 +74,16 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id"))
 	private List<MusicCollection> recentlyPlayed;
 	
+	@JsonIgnore
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
+	private List<Playlist> playlists;
 	
-	//private List<Playlist> playlists;
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "user_collaborating_playlist",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
+		inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
+	private List<Playlist> collaboratingPlaylitst;
 	
 	
 	public String getEmail() {
@@ -119,12 +134,12 @@ public class User {
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
 	}
-	/*public List<Playlist> getFollowingPlaylists() {
+	public List<Playlist> getFollowingPlaylists() {
 		return followingPlaylists;
 	}
 	public void setFollowingPlaylists(List<Playlist> followingPlaylists) {
 		this.followingPlaylists = followingPlaylists;
-	}*/
+	}
 	public List<Artist> getFollowingArtists() {
 		return followingArtists;
 	}
@@ -150,12 +165,18 @@ public class User {
 		this.recentlyPlayed = recentlyPlayed;
 	}
 	
-	/*public List<Playlist> getPlaylists() {
+	public List<Playlist> getPlaylists() {
 		return playlists;
 	}
 	public void setPlaylists(List<Playlist> playlists) {
 		this.playlists = playlists;
-	}*/
+	}
+	public List<Playlist> getCollaboratingPlaylitst() {
+		return collaboratingPlaylitst;
+	}
+	public void setCollaboratingPlaylitst(List<Playlist> collaboratingPlaylitst) {
+		this.collaboratingPlaylitst = collaboratingPlaylitst;
+	}
 	
 	
 }
