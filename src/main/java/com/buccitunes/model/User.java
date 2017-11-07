@@ -33,7 +33,6 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "followed_id", referencedColumnName = "email"))
 	private List<User> following;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "following")
 	private List<User> followers;
 	

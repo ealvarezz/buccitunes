@@ -3,8 +3,11 @@ package com.buccitunes.model;
 import java.io.File;
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
 
 import com.buccitunes.constants.*;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -17,9 +20,13 @@ public class Song {
 	private String name;
 	private int duration;
 	private int rating;
-	private Artist artist ;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id")
+	private Artist owner ;
+	
 	@JsonIgnore
-	private List<Artist>features;
+	private List<Artist>featuredArtists;
 	private MimeType mimeType;
 	private boolean isExplicit;
 	private List<Genre> genres;
@@ -57,17 +64,17 @@ public class Song {
 	public void setRating(int rating) {
 		this.rating = rating;
 	}
-	public Artist getArtist() {
-		return artist;
+	public List<Artist> getFeaturedArtists() {
+		return featuredArtists;
 	}
-	public void setArtist(Artist artist) {
-		this.artist = artist;
+	public Artist getOwner() {
+		return owner;
 	}
-	public List<Artist> getFeatures() {
-		return features;
+	public void setOwner(Artist owner) {
+		this.owner = owner;
 	}
-	public void setFeatures(List<Artist> features) {
-		this.features = features;
+	public void setFeaturedArtists(List<Artist> featuredArtists) {
+		this.featuredArtists = featuredArtists;
 	}
 	public File getAudioAsFile() {
 		return new File("");
