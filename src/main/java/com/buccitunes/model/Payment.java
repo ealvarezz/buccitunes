@@ -2,9 +2,23 @@ package com.buccitunes.model;
 
 import java.util.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+@Entity(name="Payment")
 public class Payment {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	
 	private boolean isPaid;
 	
 	private boolean isPending;
@@ -16,7 +30,9 @@ public class Payment {
 	
 	private double balanceRemaining;
 	
-	private User PremiumUser;
+	@ManyToOne(fetch=FetchType.LAZY)
+	@JoinColumn(name="premiumUser")
+	private PremiumUser premiumUser;
 
 	public boolean isPaid() {
 		return isPaid;
@@ -59,10 +75,10 @@ public class Payment {
 	}
 
 	public User getPremiumUser() {
-		return PremiumUser;
+		return premiumUser;
 	}
 
 	public void setPremiumUser(User premiumUser) {
-		PremiumUser = premiumUser;
+		premiumUser = premiumUser;
 	}
 }

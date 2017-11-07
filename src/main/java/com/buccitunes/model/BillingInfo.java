@@ -1,16 +1,36 @@
 package com.buccitunes.model;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 import org.springframework.beans.factory.annotation.Value;
 
+@Entity(name="BillingInfo")
 public class BillingInfo {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	
 	private String cardHolderName;
+	
 	private String creditCardNo;
+	
 	private String cvv;
+	
 	private String billingAddress;
+	
+	@ManyToOne
+    @JoinColumn(name = "credit_company_id", insertable = false, updatable = false)
 	private CreditCompany creditCardCompany;
 	
 	//@Value(true)
 	private boolean active;
+	
 	public String getCardHolderName() {
 		return cardHolderName;
 	}
