@@ -5,8 +5,11 @@ import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.buccitunes.constants.*;
@@ -26,9 +29,16 @@ public class Song {
 	private Artist owner ;
 	
 	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "featured",
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<Artist>featuredArtists;
+	
 	private MimeType mimeType;
 	private boolean isExplicit;
+	
+	
 	private List<Genre> genres;
 	private String picturePath;
 	private String audioPath;
