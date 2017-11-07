@@ -37,7 +37,9 @@ public class Artist {
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists")
 	private List<Song> features;
 	
-	//private List<Concert> upcomingConcerts;
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists")
+	private List<Concert> upcomingConcerts;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "featured_album_id", insertable = false, updatable = false)
@@ -75,12 +77,12 @@ public class Artist {
 	public void setFeatures(List<Song> features) {
 		this.features = features;
 	}
-	/*public List<Concert> getUpcomingConcerts() {
+	public List<Concert> getUpcomingConcerts() {
 		return upcomingConcerts;
 	}
 	public void setUpcomingConcerts(List<Concert> upcomingConcerts) {
 		this.upcomingConcerts = upcomingConcerts;
-	}*/
+	}
 	public Album getFeaturedAlbum() {
 		return featuredAlbum;
 	}

@@ -3,16 +3,42 @@ package com.buccitunes.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity(name="CONCERT")
 public class Concert {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String name;
+	
+	@ManyToOne
+    @JoinColumn(name = "location_id", insertable = false, updatable = false)
 	private Location location;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date releaseDate;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "Artists_Concerts",
+		joinColumns = @JoinColumn(name = "concert_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Artist> featuredArtists;
+	
 	private double price;
 	private String purchaseLink;
 	
@@ -20,8 +46,6 @@ public class Concert {
 	public Concert(RequestedConcert requested) {
 		
 	}
-	
-	
 	public int getId() {
 		return id;
 	}

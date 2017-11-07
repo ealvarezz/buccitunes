@@ -38,8 +38,8 @@ public class RequestedConcert {
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Artists_Concerts_Requested",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "requested_concert_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Artist> featuredArtists;
 	
 	private double price;
