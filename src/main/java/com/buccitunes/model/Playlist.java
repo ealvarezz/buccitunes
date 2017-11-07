@@ -8,7 +8,7 @@ public class Playlist extends MusicCollection {
 	private User owner;
 	private List<User> collaboratives;
 	private List<User> invitedViewers;
-	
+	private List<User> followers;
 	
 	public boolean isCollaborative() {
 		return isCollaborative;
@@ -45,6 +45,12 @@ public class Playlist extends MusicCollection {
 	}
 	public void canView(User user) {
 		
+	}
+	public List<User> getFollowers() {
+		return followers;
+	}
+	public void setFollowers(List<User> followers) {
+		this.followers = followers;
 	}
 	
 }

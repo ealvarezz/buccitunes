@@ -33,8 +33,43 @@ public class User {
 		inverseJoinColumns = @JoinColumn(name = "followed_id", referencedColumnName = "email"))
 	private List<User> following;
 	
+	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "following")
 	private List<User> followers;
+	
+	//private List<Playlist> followingPlaylists;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "user_following_artist",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
+	private List<Artist> followingArtists;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "user_saved_song",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
+	private List<Song> savedSongs;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "user_saved_album",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
+		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"))
+	private List<Album> savedAlbums;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "user_recently_played_music_collection",
+		joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
+		inverseJoinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id"))
+	private List<MusicCollection> recentlyPlayed;
+	
+	
+	//private List<Playlist> playlists;
+	
 	
 	public String getEmail() {
 		return email;
@@ -84,5 +119,43 @@ public class User {
 	public void setProfilePicture(String profilePicture) {
 		this.profilePicture = profilePicture;
 	}
+	/*public List<Playlist> getFollowingPlaylists() {
+		return followingPlaylists;
+	}
+	public void setFollowingPlaylists(List<Playlist> followingPlaylists) {
+		this.followingPlaylists = followingPlaylists;
+	}*/
+	public List<Artist> getFollowingArtists() {
+		return followingArtists;
+	}
+	public void setFollowingArtists(List<Artist> followingArtists) {
+		this.followingArtists = followingArtists;
+	}
+	public List<Song> getSavedSongs() {
+		return savedSongs;
+	}
+	public void setSavedSongs(List<Song> savedSongs) {
+		this.savedSongs = savedSongs;
+	}
+	public List<Album> getSavedAlbums() {
+		return savedAlbums;
+	}
+	public void setSavedAlbums(List<Album> savedAlbums) {
+		this.savedAlbums = savedAlbums;
+	}
+	public List<MusicCollection> getRecentlyPlayed() {
+		return recentlyPlayed;
+	}
+	public void setRecentlyPlayed(List<MusicCollection> recentlyPlayed) {
+		this.recentlyPlayed = recentlyPlayed;
+	}
+	
+	/*public List<Playlist> getPlaylists() {
+		return playlists;
+	}
+	public void setPlaylists(List<Playlist> playlists) {
+		this.playlists = playlists;
+	}*/
+	
 	
 }

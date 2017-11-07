@@ -28,7 +28,7 @@ public class Song {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id", insertable = false, updatable = false)
-	private Artist owner ;
+	private Artist owner;
 	
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -51,7 +51,10 @@ public class Song {
 	private List<Genre> genres;
 	private String picturePath;
 	private String audioPath;
-	//private StatCache stats;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stats_id", insertable = false, updatable = false)
+	private StatCache stats;
 	
 	public String getAudioPath() {
 		return audioPath;
@@ -116,6 +119,12 @@ public class Song {
 	public void setPicturePath(String picturePath) {
 		this.picturePath = picturePath;
 	}
-
+	public StatCache getStats() {
+		return stats;
+	}
+	public void setStats(StatCache stats) {
+		this.stats = stats;
+	}
+	
 	
 }

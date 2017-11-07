@@ -3,19 +3,47 @@ package com.buccitunes.model;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity(name="MUSIC_COLLECTION")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class MusicCollection {
 	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String title;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "music_collection_song",
+		joinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date dateCreated;
 	private String artworkPath;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stats_id", insertable = false, updatable = false)
 	private StatCache stats;
-	private List<User> followers;
+	
 	
 	
 	public int getId() {
@@ -53,12 +81,6 @@ public class MusicCollection {
 	}
 	public void setStats(StatCache stats) {
 		this.stats = stats;
-	}
-	public List<User> getFollowers() {
-		return followers;
-	}
-	public void setFollowers(List<User> followers) {
-		this.followers = followers;
 	}
 	public void addSong(Song song) {
 		
