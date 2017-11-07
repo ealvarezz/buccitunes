@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -27,8 +28,8 @@ public class RequestedConcert {
 	
 	private String name;
 	
-	/*@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "location_id", insertable = false, updatable = false)*/
+	@ManyToOne
+    @JoinColumn(name = "location_id", insertable = false, updatable = false)
 	private Location location;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
