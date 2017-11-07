@@ -6,10 +6,13 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -17,42 +20,44 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Song {
 	
 	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	private String name;
 	private int duration;
 	private int rating;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id")
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
 	private Artist owner ;
 	
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "featured",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Artist>featuredArtists;
 	
+	@ManyToOne
+    @JoinColumn(name = "mime_id", insertable = false, updatable = false)
 	private MimeType mimeType;
+	
 	private boolean isExplicit;
 	
-	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "genre_song",
+		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
 	private String picturePath;
 	private String audioPath;
-	private StatCache stats;
+	//private StatCache stats;
 	
 	public String getAudioPath() {
 		return audioPath;
 	}
 	public void setAudioPath(String audioPath) {
 		this.audioPath = audioPath;
-	}
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
 	}
 	public String getName() {
 		return name;
@@ -111,12 +116,6 @@ public class Song {
 	public void setPicturePath(String picturePath) {
 		this.picturePath = picturePath;
 	}
-	public StatCache getStats() {
-		return stats;
-	}
-	public void setStats(StatCache stats) {
-		this.stats = stats;
-	}
-	
+
 	
 }

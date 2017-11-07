@@ -15,22 +15,17 @@ public class Artist {
 	private int id;
 	private String name;
 	private String biography;
-	private List<Album> albums;
+	/*private List<Album> albums;
 	private List<User> followers;
 	private List<Song> features;
 	private List<Concert> upcomingConcerts;
 	private Album featuredAlbum;
 	private List<Song> recentlyPlayed;
 	private StatCache stats;
+	*/
 	
 	
-	
-	public int getId() {
-		return id;
-	}
-	public void setId(int id) {
-		this.id = id;
-	}
+
 	public String getName() {
 		return name;
 	}
