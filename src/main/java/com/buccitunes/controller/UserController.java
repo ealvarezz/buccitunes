@@ -82,6 +82,8 @@ public class UserController {
 	public @ResponseBody BucciResponse<SignupFormInfo> updateUserName(@RequestBody SignupFormInfo signupInfo) {
 		
 		BucciResponse<SignupFormInfo> r = BucciResponseBuilder.successfulResponseMessage("My message returned", signupInfo);
+		String theEmail = (String) r.getResponse().userInfo.getEmail() ;
+		System.out.println("WE GOT EMAIL: \n=========================\n" +theEmail);
 		
 		return r;
 	}
