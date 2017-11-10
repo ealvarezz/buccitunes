@@ -1,6 +1,12 @@
 package com.buccitunes.model;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+
+@Entity(name="AdminUser")
 public class AdminUser extends User {
+	
+	@Column(unique=true)
 	private int employeeId;
 
 	public int getEmployeeId() {
