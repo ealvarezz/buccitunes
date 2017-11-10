@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.buccitunes.miscellaneous.*;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
 
@@ -75,5 +76,13 @@ public class UserController {
 		
 		userService.updateName(email, name);
 		
+	}
+	
+	@RequestMapping(value="signup", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<SignupFormInfo> updateUserName(@RequestBody SignupFormInfo signupInfo) {
+		
+		BucciResponse<SignupFormInfo> r = BucciResponseBuilder.successfulResponseMessage("My message returned", signupInfo);
+		
+		return r;
 	}
 }
