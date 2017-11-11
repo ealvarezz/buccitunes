@@ -1,0 +1,111 @@
+
+<div class="main signupScreen">
+<div class="signupContainer">
+
+<md-card class="signupCard">
+  <md-card-title> <div class = "title"> <h3> Sign Up</h3></div>
+  </md-card-title>
+<md-horizontal-stepper [linear]="isLinear">
+  <md-step [stepControl]="firstFormGroup">
+    <form [formGroup]="firstFormGroup">
+      <ng-template mdStepLabel>Account Type</ng-template>
+      <md-radio-group>
+          <div>
+            <md-radio-button value = "Artist">
+              Artist
+            </md-radio-button>
+          </div>
+          <div>
+            <md-radio-button value = "Premium User">
+              Premium User
+            </md-radio-button>
+          </div>
+        </md-radio-group>
+      <div>
+        <button md-button mdStepperNext>Next</button>
+      </div>
+    </form>
+  </md-step>
+  <md-step [stepControl]="secondFormGroup">
+    <form [formGroup]="secondFormGroup">
+      <ng-template mdStepLabel>User Information</ng-template>
+        <div>
+          <md-form-field> 
+            <input mdInput placeholder="Email" formControlName="secondCtrl" required>
+          </md-form-field> 
+        </div>
+        <div>
+          <md-form-field> 
+            <input mdInput placeholder="Confirm Email" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
+        <div>
+          <md-form-field> 
+            <input mdInput  type="password" placeholder="Password" formControlName="secondCtrl" required>
+          </md-form-field> 
+        </div>
+        <div>
+          <md-form-field> 
+            <input mdInput placeholder="Username" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
+        <div>
+          <md-select placeholder="Month" name="month">
+              <md-option *ngFor="let month of months" [value]="month">
+              {{month}}
+              </md-option>
+          </md-select>
+          <md-form-field> 
+            <input mdInput type="number" placeholder="Day" formControlName="secondCtrl" required>
+          </md-form-field>
+          <md-form-field> 
+            <input mdInput type="number" placeholder="Year" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
+      <div>
+        <!-- <button md-button mdStepperPrevious>Back</button> -->
+        <button md-button mdStepperNext>Next</button>
+      </div>
+    </form>
+  </md-step>
+  <md-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template mdStepLabel>Payment Information</ng-template>
+        <div>
+          <md-form-field> 
+            <input mdInput placeholder="Name (As it appears on the card)" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
+        <div> 
+          <md-form-field> 
+            <input mdInput placeholder="Card Number" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
+        <div>
+          <md-select placeholder="Month" name="month">
+              <md-option *ngFor="let month of months" [value]="month">
+              {{month}}
+              </md-option>
+          </md-select>
+        <md-form-field> 
+          <input mdInput type="number" placeholder="Year" formControlName="secondCtrl" required>
+        </md-form-field>
+        </div>
+      <div>
+        <!-- <button md-button mdStepperPrevious>Back</button> -->
+        <button md-button mdStepperNext>Next</button>
+      </div>
+    </form>
+  </md-step>
+  <md-step>
+    <ng-template mdStepLabel>Done</ng-template>
+    <h2>Registration Complete</h2>
+    <h4> A verification email has been sent. If you do not receive it within 5 minutes, please do nothing. </h4>
+    <p>Click <a routerLink="/login"><u>here</u></a> to login</p>
+  </md-step>
+</md-horizontal-stepper>
+
+</md-card>
+
+</div>
+</div>
