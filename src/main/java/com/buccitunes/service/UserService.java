@@ -55,6 +55,12 @@ public class UserService  {
 		
 	}
 	
+	public User findOne(String email){
+		
+		return userRepository.findOne(email);
+	}
+	
+	
 	public List<User> getFollowing(String email){
 		
 		User user = userRepository.findOne(email);

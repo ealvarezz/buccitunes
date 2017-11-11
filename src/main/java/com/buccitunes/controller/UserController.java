@@ -87,4 +87,26 @@ public class UserController {
 		
 		return r;
 	}
+	
+	@RequestMapping(value="login", method = RequestMethod.POST)
+	public @ResponseBody void login(@RequestBody LoginInfo loginInfo) {
+		//TODO set session
+		
+		User account = userService.findOne(loginInfo.email);
+		
+		if(BucciPassword.checkPassword(loginInfo.password, account.getPassword())){
+			
+		}else{
+			
+		}
+		
+		
+		
+		
+		
+		
+		
+		return ;
+	}
+	
 }
