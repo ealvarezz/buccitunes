@@ -7,10 +7,12 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.SignupFormInfo;
+import com.buccitunes.model.CreditCompany;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.User;
 
@@ -20,11 +22,13 @@ public class UserService  {
 	
 	private final UserRepository userRepository;
 	private final PremiumUserRepository premiumUserRepository;
+	private final CreditCompanyRepository creditCompanyRepository;
 	
-	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository) {
+	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, CreditCompanyRepository creditCompanyRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
+		this.creditCompanyRepository = creditCompanyRepository;
 	}
 	
 	public List<User> findAll(){
@@ -110,16 +114,30 @@ public class UserService  {
 			if(!invalidBillingInfo.equals("")) {
 				throw new BucciException("Invalid Billing Infomation");
 			}
+			
+			CreditCompany creditCompany = creditCompanyRepository.findByName(signupInfo.billingInfo.getCreditCardCompany().getName());
+			
+			if(creditCompany != null) {
+				signupInfo.billingInfo.setCreditCardCompany(creditCompany);
+			}
+			else {
+				throw new BucciException("Invalid Credit Card Company");
+			}
+			
 		}
 		
-		User newUser = userRepository.save(user);
+		
 		
 		if(signedForPremium) {
-			PremiumUser pUser = new PremiumUser(newUser,signupInfo.billingInfo);
-			
-			newUser = premiumUserRepository.save(pUser);
+			PremiumUser pUser = new PremiumUser(user,signupInfo.billingInfo);
+			PremiumUser newUser = premiumUserRepository.save(pUser);
+			return newUser;
+		}
+		else {
+			User newUser = userRepository.save(user);
+			return newUser;
 		}
 		
-		return newUser;
+		
 	}
 }
