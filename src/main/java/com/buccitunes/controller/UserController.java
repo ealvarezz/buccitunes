@@ -79,12 +79,21 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="signup", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<SignupFormInfo> updateUserName(@RequestBody SignupFormInfo signupInfo) {
+	public @ResponseBody BucciResponse<User> updateUserName(@RequestBody SignupFormInfo signupInfo) {
+		
 		
 		BucciResponse<SignupFormInfo> r = BucciResponseBuilder.successfulResponseMessage("My message returned", signupInfo);
 		String theEmail = (String) r.getResponse().userInfo.getEmail() ;
 		System.out.println("WE GOT EMAIL: \n=========================\n" +theEmail);
 		
-		return r;
+		try{
+			User newUser = userService.signup(signupInfo);
+			BucciResponse<User> success = BucciResponseBuilder.successfulResponseMessage("Successful Signup", newUser);
+			return success;
+		}
+		catch(BucciException e) {
+			BucciResponse<User> failed = BucciResponseBuilder.failedResponse(e.getErrMessage());
+			return failed;
+		}	
 	}
 }

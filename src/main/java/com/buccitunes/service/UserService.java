@@ -7,9 +7,11 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.SignupFormInfo;
+import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.User;
 
 @Service
@@ -17,10 +19,12 @@ import com.buccitunes.model.User;
 public class UserService  {
 	
 	private final UserRepository userRepository;
+	private final PremiumUserRepository premiumUserRepository;
 	
-	public UserService(UserRepository userRepository) {
+	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository) {
 		
 		this.userRepository = userRepository;
+		this.premiumUserRepository = premiumUserRepository;
 	}
 	
 	public List<User> findAll(){
@@ -82,18 +86,40 @@ public class UserService  {
 		//userRepository.save(user);
 	}
 	
-	public User signUp(SignupFormInfo signupInfo) throws BucciException {
+	public User signup(SignupFormInfo signupInfo) throws BucciException {
 		
+		boolean signedForPremium = false;
+		if(signupInfo.billingInfo != null) {
+			signedForPremium = true;
+		}
 		
 		User user = userRepository.findOne(signupInfo.userInfo.getEmail());
 		
-		if(user == null) {
+		if(user != null) {
 			throw new BucciException("User Name Already Exists");
 		}
 		
-		user.encryptAndSetPassword(signupInfo.password);
+		user = signupInfo.userInfo;
 		
+		user.encryptAndSetPassword(signupInfo.userInfo.getPassword());
 		
-		return user;
+		if(signedForPremium) {
+			String invalidBillingInfo = signupInfo.billingInfo.checkInvalidInfo(); 
+			
+			//If the billingInfo entered is invalid
+			if(!invalidBillingInfo.equals("")) {
+				throw new BucciException("Invalid Billing Infomation");
+			}
+		}
+		
+		User newUser = userRepository.save(user);
+		
+		if(signedForPremium) {
+			PremiumUser pUser = new PremiumUser(newUser,signupInfo.billingInfo);
+			
+			newUser = premiumUserRepository.save(pUser);
+		}
+		
+		return newUser;
 	}
 }

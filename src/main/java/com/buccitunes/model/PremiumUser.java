@@ -24,6 +24,11 @@ public class PremiumUser extends User {
 	@OneToMany(mappedBy="premiumUser")
 	private List<Payment> paymentHistory;
 	
+	public PremiumUser(User user, BillingInfo billingInfo) {
+		super(user.email, user.name, user.password, user.username);
+		this.billingInfo = billingInfo;
+	}
+	
 	public BillingInfo getBillingInfo() {
 		return billingInfo;
 	}

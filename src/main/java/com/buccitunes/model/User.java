@@ -92,6 +92,14 @@ public class User {
 	private List<Playlist> collaboratingPlaylitst;
 
 
+	public User(){}
+	
+	public User(String email, String name, String password, String username) {
+		this.email = email;
+		this.name = name;
+		this.password = password;
+		this.username = username;
+	}
 	public String getEmail() {
 		return email;
 	}

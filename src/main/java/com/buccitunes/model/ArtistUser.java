@@ -14,6 +14,11 @@ public class ArtistUser extends User {
 	
 	
 	
+	public ArtistUser(String email, String name, String password, String username) {
+		super(email, name, password, username);
+		// TODO Auto-generated constructor stub
+	}
+
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "artist_id", insertable = false, updatable = false)
 	private Artist artist;

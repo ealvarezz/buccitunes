@@ -67,4 +67,8 @@ public class BillingInfo {
 	public void setActive(boolean active) {
 		this.active = active;
 	}
+	
+	public String checkInvalidInfo() {
+		return "";
+	}
 }
