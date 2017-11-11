@@ -106,7 +106,7 @@ public class UserService  {
 		User user = userRepository.findOne(signupInfo.userInfo.getEmail());
 		
 		if(user != null) {
-			throw new BucciException("User Name Already Exists");
+			throw new BucciException("Email already being used");
 		}
 		
 		user = signupInfo.userInfo;
@@ -132,8 +132,6 @@ public class UserService  {
 			
 		}
 		
-		
-		
 		if(signedForPremium) {
 			PremiumUser pUser = new PremiumUser(user,signupInfo.billingInfo);
 			PremiumUser newUser = premiumUserRepository.save(pUser);
@@ -143,7 +141,5 @@ public class UserService  {
 			User newUser = userRepository.save(user);
 			return newUser;
 		}
-		
-		
 	}
 }

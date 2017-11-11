@@ -2,6 +2,8 @@ package com.buccitunes.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -92,30 +94,45 @@ public class UserController {
 			return success;
 		}
 		catch(BucciException e) {
-			BucciResponse<User> failed = BucciResponseBuilder.failedResponse(e.getErrMessage());
+			BucciResponse<User> failed = BucciResponseBuilder.failedMessage(e.getErrMessage());
 			return failed;
 		}	
 	}
 	
 	@RequestMapping(value="login", method = RequestMethod.POST)
-	public @ResponseBody void login(@RequestBody LoginInfo loginInfo) {
-		//TODO set session
+	public @ResponseBody BucciResponse<User> login(@RequestBody LoginInfo loginInfo, HttpSession session) {
 		
 		User account = userService.findOne(loginInfo.email);
 		
-		if(BucciPassword.checkPassword(loginInfo.password, account.getPassword())){
-			
+		if(account != null && BucciPassword.checkPassword(loginInfo.password, account.getPassword())){
+			session.setAttribute("user", account);
+			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
 		}else{
-			
+			return BucciResponseBuilder.failedMessage("Invalid Login Information");
 		}
-		
-		
-		
-		
-		
-		
-		
-		return ;
 	}
 	
+	@RequestMapping(value="logout", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> logout(@RequestBody User user, HttpSession session) {
+		
+		User sessionUser = (User) session.getAttribute("user");
+		
+		if(sessionUser != null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(!sessionUser.getEmail().equals(user.getEmail())) {
+			return BucciResponseBuilder.failedMessage("Invalid Email");
+		}
+			
+		session.removeAttribute("user");
+		return BucciResponseBuilder.successMessage("LoggedOut");
+	}
+	
+	@RequestMapping(value="sessionInfo", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<User> sessionTest(HttpSession session) {
+			
+		User sessionUser = (User) session.getAttribute("user");
+		return BucciResponseBuilder.successfulResponse(sessionUser);
+	}
 }
