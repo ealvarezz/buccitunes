@@ -1,0 +1,67 @@
+<md-card style="margin-bottom:10%">
+    <md-card-header>
+        <div style="margin-bottom: 1%">
+            <div >
+                <div><h3>Artist<i class="material-icons" style="color:#3f51b5;">verified_user</i></h3></div>
+                <div><h1>Yung Gravy</h1></div>
+                <button md-raised-button class="rounded-button">Play</button>
+                <button md-raised-button class="rounded-button">Follow</button>
+                <button md-mini-fab  style="color: white; background-color:#3f51b5; top:5px;"><i class="material-icons " style="font-size:24px; ">more_horiz</i></button>
+            </div>
+        </div>
+    </md-card-header>
+    <md-tab-group>
+        <md-tab label="OVERVIEW">
+            <div style="width:70%">
+                <div class="sub-header"><h4>Latest Release</h4></div>
+                <div class="hoverable-div">
+                    <div style="width: 20%; float:left" >
+                         <img src="../assets/yung_gravy.png">   
+                    </div> 
+                    <div style="width:80%;float:left;">    
+                        <h4>Ran It Up Again</h4>
+                        <p>OCT 28, 2017</p> 
+                    </div>
+                </div>
+                <div class="sub-header"><h4>Popular</h4></div>
+                <div>
+                    <music-table [data]="viewSongs" [isAlbum] = "true"></music-table>
+                </div>
+                <div style="margin-top:2%">
+                    <button *ngIf = "showAllSongs == false" style="width:20%" md-raised-button class="rounded-button" (click)="toggleShow(true)">SHOW 5 MORE</button>
+                    <button *ngIf = "showAllSongs == true" style="width:25%" md-raised-button class="rounded-button" (click)="toggleShow(false)">SHOW ONLY 5 SONGS</button>
+                </div>
+                </div>
+            <div>
+                <md-list>
+                    <h3 >Albums</h3>
+                    <md-divider></md-divider>
+                    <mini-album [songs]="songs" ></mini-album>
+                </md-list>
+            </div>
+            
+        </md-tab>
+        <md-tab label="ABOUT">
+            <h2>Bio</h2>
+            <img src="../assets/ugly_god.png">
+            <p>Lyrically crude and rhythmically sluggish, Ugly God is a rapper and producer who broke out during the latter half of the 2010s. Born in Indiana, he has lived in other areas of the Midwest, as well as the South, including Texas, Mississippi, and Louisiana. He attended the University of Southern Mississippi and dropped out, subsequently forming the Little Dick Clique and releasing material -- such as "Booty from a Distance" and "I Beat My Meat" -- through a SoundCloud page. In 2016, one of the more successful tracks, "Water," was picked up for release by major-label Asylum. By the end of the year, the single made Billboard's Spotify Velocity and Spotify Viral 50 charts. Ugly God issued his full-length Asylum debut, The Booty Tape, in 2017. The mixtape climbed into the Top 30 of the Billboard 200. ~ Andy Kellman, Rovi</p>
+            <div>
+                <h2 style="margin-bottom:1px;">2,542,347</h2>
+                <p style="margin-top:0px;">Monthly Listeners</p>
+            </div>
+            <div>
+                <h2 style="margin-bottom:1px;">445,020</h2>
+                <p style="margin-top:0px;">Followers</p>
+            </div>
+        </md-tab>
+        <md-tab label="CONCERTS">
+            <md-list>
+                <h3 >Upcoming Concerts</h3>
+                <md-divider></md-divider>
+            </md-list>
+        </md-tab>
+        <md-tab label="RELATED ARTISTS">
+        </md-tab>
+    </md-tab-group>
+
+</md-card>

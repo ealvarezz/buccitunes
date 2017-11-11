@@ -1,0 +1,48 @@
+<md-card class = "featured-album-card mat-elevation-z22">
+    <md-card-header>
+            <md-card-title><h2>Featured Album</h2></md-card-title>
+    </md-card-header>
+        <md-card-content style= "height:200px;">
+                <div class = "img-container">
+                        <image src="../assets/erotica.jpg"></image>
+                </div>
+                <div class = "featured-info">
+                    <h4>Album</h4>
+                    <h1><u>An Erotic Album</u></h1>
+                    <h3> By <u>Dennis Reynolds</u></h3>
+                    <button class="rounded-button" md-raised-button>Play</button>
+                    <button class="rounded-button" md-raised-button>Save</button>
+                    <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+                </div>
+        </md-card-content>
+</md-card>
+
+<md-card class = "browse-card mat-elevation-z22">
+    <!-- <md-card-header>
+        
+    </md-card-header> -->
+        <md-card-content style= "margin-bottom:100px">
+                <md-tab-group class ="browse-tabs">
+                 <md-tab label="OVERVIEW">
+                         <homepage-template [data]="overView"></homepage-template>
+                 </md-tab>
+                 <md-tab label="FOR YOU">
+                         <homepage-template [data]="recommended"></homepage-template>
+                 </md-tab>
+                 <md-tab label="CHARTS">
+                         <homepage-template [data]="overView"></homepage-template>
+                 </md-tab>
+                 <md-tab label="GENRE & MOODS">
+                         <homepage-template [data]="genres" rowHeight = "250"></homepage-template>
+                 </md-tab>
+                 <md-tab label="NEW RELEASES">
+                         <homepage-template [data]="overView"></homepage-template>
+                 </md-tab>
+                 <md-tab label="CONCERTS">
+                         <homepage-template [data]="overView"></homepage-template>
+                 </md-tab>
+        </md-tab-group>
+                
+
+        </md-card-content>
+</md-card>

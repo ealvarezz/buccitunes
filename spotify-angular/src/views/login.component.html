@@ -1,0 +1,35 @@
+<div class="main loginScreen">
+  <div class="loginContainer">
+
+  <md-card id="loginCard">
+    <h1 class="logo-text">🅱️ ucci Tunes</h1>
+    <form class="login-form">
+      <md-form-field class="login-full-width">
+        <input type="email" mdInput placeholder="Username">
+      </md-form-field>
+
+      <md-form-field class="login-full-width">
+        <input type="password" mdInput placeholder="Password">
+      </md-form-field>
+
+      <div>
+        <button md-raised-button (click)="loginUser()" id="loginBtn">LOGIN</button>
+      </div>
+    </form>
+
+    <div class="extraBtnsContainer">
+      <div class="extraLoginBtn">
+        <button md-button (click)="goSignUp()">SIGN UP</button>
+      </div>
+
+      <div class="extraLoginBtn">
+        <button md-button>FORGOT USERNAME OR PASSWORD?</button>
+      </div>
+    </div>
+
+
+  </md-card>
+
+  </div>
+
+</div>

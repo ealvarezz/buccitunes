@@ -1,0 +1,21 @@
+<md-list>
+
+  <div *ngFor ="let section of data">
+    <h4>  {{section.header}}  </h4>
+    <md-grid-list cols="4" [rowHeight]="rowHeight">
+        <md-grid-tile *ngFor = "let item of section.items" colspan= "1" rowpan = "1" >
+            <div>
+                <div><image [src]="item.image"></image></div>
+                <div *ngIf ="item.name" class ="browse-item-template"><h4><b><a routerLink="/playlist">{{item.name}}</a></b></h4></div>
+                <div *ngIf ="item.shortDescription" class ="browse-item-template"><h4>{{item.shortDescription}}</h4></div>
+            </div>
+        </md-grid-tile>
+    </md-grid-list>
+
+
+  <md-divider></md-divider>
+  </div>
+  
+
+
+</md-list>

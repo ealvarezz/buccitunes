@@ -6,6 +6,11 @@ import javax.persistence.Entity;
 @Entity(name="AdminUser")
 public class AdminUser extends User {
 	
+	public AdminUser(String email, String name, String password, String username) {
+		super(email, name, password, username);
+		// TODO Auto-generated constructor stub
+	}
+
 	@Column(unique=true)
 	private int employeeId;
 

@@ -22,4 +22,13 @@ public class BucciResponseBuilder {
 			
 			return bucci;
 	}
+	
+	public static <T> BucciResponse<T> failedResponse(String message) {
+			boolean successful = false;
+			String status = "400 Bad Request";
+			
+			BucciResponse<T> bucci = new BucciResponse<T>(message, successful, null, status);
+			
+			return bucci;
+	}
 }

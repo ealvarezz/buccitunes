@@ -17,12 +17,21 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class PremiumUser extends User {
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "billing_id", insertable = false, updatable = false)
+    @JoinColumn(name = "billing_id")
 	private BillingInfo billingInfo;
 	
 	@JsonIgnore
 	@OneToMany(mappedBy="premiumUser")
 	private List<Payment> paymentHistory;
+	
+	public PremiumUser(){};
+	
+	public PremiumUser(BillingInfo billingInfo){};
+	
+	public PremiumUser(User user, BillingInfo billingInfo) {
+		super(user.email, user.name, user.password, user.username);
+		this.billingInfo = billingInfo;
+	}
 	
 	public BillingInfo getBillingInfo() {
 		return billingInfo;
