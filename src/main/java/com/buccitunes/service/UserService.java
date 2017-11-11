@@ -8,11 +8,13 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.UserRepository;
+import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.SignupFormInfo;
 import com.buccitunes.model.User;
 
 @Service
 @Transactional
-public class UserService {
+public class UserService  {
 	
 	private final UserRepository userRepository;
 	
@@ -79,5 +81,19 @@ public class UserService {
 		user.setName(name);
 		//userRepository.save(user);
 	}
-
+	
+	public User signUp(SignupFormInfo signupInfo) throws BucciException {
+		
+		
+		User user = userRepository.findOne(signupInfo.userInfo.getEmail());
+		
+		if(user == null) {
+			throw new BucciException("User Name Already Exists");
+		}
+		
+		user.encryptAndSetPassword(signupInfo.password);
+		
+		
+		return user;
+	}
 }

@@ -4,6 +4,7 @@ import org.springframework.security.crypto.bcrypt.BCrypt;
 
 
 public class Password {
+	
 	private String password;
 	
 	

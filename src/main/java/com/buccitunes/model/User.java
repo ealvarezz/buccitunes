@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
+import com.buccitunes.miscellaneous.BucciPassword;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.JoinColumn;
@@ -181,6 +182,10 @@ public class User {
 	}
 	public void setCollaboratingPlaylitst(List<Playlist> collaboratingPlaylitst) {
 		this.collaboratingPlaylitst = collaboratingPlaylitst;
+	}
+	
+	public void encryptAndSetPassword(String password) {
+		this.password = BucciPassword.encryptPassword(password);
 	}
 
 

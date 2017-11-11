@@ -8,7 +8,5 @@ public class SignupFormInfo {
 	
 	public String password;
 	
-	public BillingInfo billinginfo;
-		
-	
+	public BillingInfo billingInfo;	
 }
