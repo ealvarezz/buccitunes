@@ -1,0 +1,131 @@
+package com.buccitunes.model;
+
+import java.io.File;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity(name="SONG")
+public class Song {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	private String name;
+	private int duration;
+	private int rating;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
+	private Artist owner;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "featured",
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+	private List<Artist>featuredArtists;
+	
+	@ManyToOne
+    @JoinColumn(name = "mime_id", insertable = false, updatable = false)
+	private MimeType mimeType;
+	
+	private boolean isExplicit;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "genre_song",
+		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+	private List<Genre> genres;
+	private String picturePath;
+	private String audioPath;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stats_id", insertable = false, updatable = false)
+	private StatCache stats;
+	
+	public String getAudioPath() {
+		return audioPath;
+	}
+	public void setAudioPath(String audioPath) {
+		this.audioPath = audioPath;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public int getDuration() {
+		return duration;
+	}
+	public void setDuration(int duration) {
+		this.duration = duration;
+	}
+	public int getRating() {
+		return rating;
+	}
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+	public List<Artist> getFeaturedArtists() {
+		return featuredArtists;
+	}
+	public Artist getOwner() {
+		return owner;
+	}
+	public void setOwner(Artist owner) {
+		this.owner = owner;
+	}
+	public void setFeaturedArtists(List<Artist> featuredArtists) {
+		this.featuredArtists = featuredArtists;
+	}
+	public File getAudioAsFile() {
+		return new File("");
+	}
+	public MimeType getMimeType() {
+		return mimeType;
+	}
+	public void setMimeType(MimeType mimeType) {
+		this.mimeType = mimeType;
+	}
+	public boolean isExplicit() {
+		return isExplicit;
+	}
+	public void setExplicit(boolean isExplicit) {
+		this.isExplicit = isExplicit;
+	}
+	public List<Genre> getGenres() {
+		return genres;
+	}
+	public void setGenres(List<Genre> genres) {
+		this.genres = genres;
+	}
+	public String getPicturePath() {
+		return picturePath;
+	}
+	public void setPicturePath(String picturePath) {
+		this.picturePath = picturePath;
+	}
+
+	public StatCache getStats() {
+		return stats;
+	}
+	public void setStats(StatCache stats) {
+		this.stats = stats;
+	}
+	
+
+}

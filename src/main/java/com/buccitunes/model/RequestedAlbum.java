@@ -1,0 +1,148 @@
+package com.buccitunes.model;
+
+import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
+
+import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+@Entity(name="RequestedAlbum")
+public class RequestedAlbum {
+	
+	@Id
+	@GeneratedValue(strategy=GenerationType.AUTO)
+	private int id;
+	
+	private String biography;
+	
+	private String coverArtPath;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "Featured_Album_Artist_Requested",
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
+	private List<Artist> featuredArtists;
+	
+	private boolean isASingle;
+	
+	@DateTimeFormat(pattern="MM/dd/yyyy")
+	private Date releaseDate;
+	
+	private String label;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "Genre_Requested_Album",
+		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
+	private List<Genre> genres;
+	
+	@JsonIgnore
+	@ManyToMany(fetch=FetchType.LAZY)
+	@JoinTable(name = "Requested_Songs_For_Album",
+		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false),
+		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
+	private List<RequestedSong> songs;
+	
+	private String comments;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
+	private ArtistUser user;
+
+	public String getBiography() {
+		return biography;
+	}
+
+	public void setBiography(String biography) {
+		this.biography = biography;
+	}
+
+	public String getCoverArtPath() {
+		return coverArtPath;
+	}
+
+	public void setCoverArtPath(String coverArtPath) {
+		this.coverArtPath = coverArtPath;
+	}
+
+	public List<Artist> getFeaturedArtists() {
+		return featuredArtists;
+	}
+
+	public void setFeaturedArtists(List<Artist> featuredArtists) {
+		this.featuredArtists = featuredArtists;
+	}
+
+	public boolean isASingle() {
+		return isASingle;
+	}
+
+	public void setASingle(boolean isASingle) {
+		this.isASingle = isASingle;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+	public String getLabel() {
+		return label;
+	}
+
+	public void setLabel(String label) {
+		this.label = label;
+	}
+
+	public List<Genre> getGenres() {
+		return genres;
+	}
+
+	public void setGenres(List<Genre> genres) {
+		this.genres = genres;
+	}
+
+	public List<RequestedSong> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<RequestedSong> songs) {
+		this.songs = songs;
+	}
+
+	public String getComments() {
+		return comments;
+	}
+
+	public void setComments(String comments) {
+		this.comments = comments;
+	}
+
+	public ArtistUser getUser() {
+		return user;
+	}
+
+	public void setUser(ArtistUser user) {
+		this.user = user;
+	}
+	
+	
+	
+}
