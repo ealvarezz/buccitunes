@@ -1,0 +1,30 @@
+.signupScreen{
+    background-color: #3f51b5;
+    
+    /* Animation for the background color*/
+    animation-name: colorChange;
+    animation-duration: 10s;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes colorChange {
+  from {
+    background-color: #3f51b5;
+  }
+  to {
+    background-color: #6B3DB0;
+  }
+}
+
+.signupContainer {
+    width: 75%;
+    height: 60%;
+    margin:0 auto;
+    padding-top:5%;
+}
+
+.title{
+    margin:0 auto;
+    width:20%;
+}

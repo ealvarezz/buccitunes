@@ -1,0 +1,24 @@
+
+
+<md-card class="bg-card">
+    <md-card-header>
+        <div class="albumPic">
+            <img src="../assets/coloring_book.png">
+        </div>
+        <div class="albumInfo">
+            <div><h4>Album</h4></div>
+            <div><h1>Coloring Book</h1></div>
+            <div><h4>By Chance The Rapper</h4></div>
+            <div><h4>May 27, 2016 14 Songs, 57 min</h4></div>
+            <button md-raised-button  class="rounded-button">Play</button>
+            <button md-raised-button  class="rounded-button">Save</button>
+            <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+        </div>
+    </md-card-header>
+    <md-card-content>
+        <div class="table">
+            <music-table [data] = "songs" [isAlbum]="true"> </music-table>
+        </div>
+    </md-card-content>
+</md-card>
+  

@@ -1,0 +1,45 @@
+<div class = "music-player-class">
+<md-toolbar color="primary" class="music-bar">
+
+    <img class="album_img" [src] ="song.album_image">
+    <div class="row" style="padding-left:10px;">
+        <div >
+            <a class="song_name">{{song.song_name}}</a>
+        </div>
+        <div style="line-height:0px;">
+            <a class="artist_name">{{song.artist_name}}</a>
+        </div>
+    </div>
+
+
+
+    <div class="middle-controls row"> 
+        <div class = "controls" >
+            <button md-icon-button><i class="material-icons">shuffle</i></button>
+            <button md-icon-button><i class="material-icons">skip_previous</i></button>
+            <button md-icon-button *ngIf ="!isPlaying" (click)="play()"><i class="material-icons md-48">play_circle_outline</i></button>
+            <button md-icon-button *ngIf ="isPlaying" (click)="pause()"><i class="material-icons md-48">pause_circle_outline</i></button>
+            <button md-icon-button><i class="material-icons">skip_next</i></button>
+            <button md-icon-button><i class="material-icons">loop</i></button>
+        </div>
+        <div class="song_progress">
+            <md-progress-bar
+                color="warn"
+                mode="determinate"
+                [value]="time">
+            </md-progress-bar>
+        </div>
+    </div>
+
+    <div class="right-controls"> 
+
+        <button md-icon-button ><i class="material-icons">queue_music</i></button>
+
+        <!-- volume control section -->
+        <button (click)="mute()" *ngIf ="volume >= 50" md-icon-button ><i class="material-icons">volume_up</i></button>
+        <button (click)="mute()" *ngIf ="volume < 50 && volume > 0" md-icon-button><i class="material-icons">volume_down</i></button>
+        <button (click)="mute()" *ngIf ="volume == 0" md-icon-button><i class="material-icons">volume_off</i></button>
+        <md-slider  [min]="minVolume" [max]="maxVolume" [step]="volIncrement" [value]="volume" [(ngModel)]="volume" (change)= "changeVolume()"></md-slider>
+    </div>
+</md-toolbar>
+</div>

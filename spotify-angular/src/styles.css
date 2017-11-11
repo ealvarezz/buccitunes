@@ -1,0 +1,166 @@
+/* You can add global styles to this file, and also import other style files */
+@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';
+@import url('https://fonts.googleapis.com/css?family=Noto+Sans');
+
+h1, h2, h3, h4, p{
+    font-family: 'Noto Sans', sans-serif;
+}
+
+a {
+  color: inherit;
+  text-decoration: none; /* no underline */
+}
+
+.logo-text {
+    font-family: 'Impact', sans-serif;
+}
+
+/* For the profile picture that will link to many things including maybe settings or logging out*/
+.profile-pic-btn {
+    
+    text-align: center
+}
+.profile-pic-btn button{
+  margin: 0;
+}
+.profile-pic-btn p {
+  margin-top: 0;
+  font-size: 12px;
+}
+
+
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
+html, body, .full {
+  height: 100%;
+}
+
+.main{
+    height:100%;
+    width:100%;
+}
+body { margin:0; } /* Remove body margins */
+.middle-controls{
+    width: 15%;
+    margin: 0 auto;
+}
+
+.inner-side{
+    overflow-y:auto;
+    margin-bottom:100px;
+}
+
+.side-bar{
+    width: 200px;
+    height:100%;
+    background-color:#3f51b5;
+    overflow-y:auto;
+    
+}
+.side-list{
+    width:50%;
+    color:white;
+    margin-top: 0px;
+    margin-bottom:15px;
+}
+.img-container {
+    width: 200px;
+    height: 120px;
+}
+
+.featured-album-card{
+    width:93%;
+    margin:0 auto;
+    
+}
+
+.browse-card{
+    width:93%;
+    margin:0 auto;
+    margin-top:0px;
+    overflow-y:auto;
+}
+
+.img-container img{
+     width: 100%;
+    height: auto;
+}
+.featured-info{
+    margin-left:250px;
+    margin-top : -120px;
+}
+
+.featured-info h4{
+    margin-bottom: 5px;
+    margin-top: 0px;
+    color: #3f51b5;
+}
+
+.featured-info h1{
+    margin-bottom: 5px;
+    margin-top: 0px;
+    color: #3f51b5;
+}
+
+.featured-info h3{
+    color: #3f51b5;
+}
+
+.playlist-icons{
+    color:white;
+    float:right;
+    padding:0 !important;
+}
+
+.sidenav-container{
+    height:100%;
+}
+
+ .music-bar{
+    width:100%;
+    height:100px;
+    position:absolute;
+    bottom:0;
+} 
+.browse-tabs{
+    width:87%;
+    margin:0 auto;
+}
+
+mat-toolbar-row{
+    height:100px;
+    min-height: 100px;
+}
+
+ .controls{
+     margin-bottom:20px;
+ }
+.song_progress{
+    width: 500px;
+    margin-left:-140px;
+}
+ .song-controls{
+    height:100%;
+    position:relative;
+} 
+.song_name{
+    font-size: 16px;
+    margin-bottom:0px;
+}
+.artist_name{
+    font-size:12px;
+}
+.browse-item-template h4 {
+   margin-top:0px;
+   margin-bottom: 5px;
+}
+
+ .rounded-button{
+    border-radius: 25px !important;
+    color: white !important;
+    background-color:#3f51b5;
+} 

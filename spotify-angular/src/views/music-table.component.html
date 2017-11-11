@@ -1,0 +1,68 @@
+<div class="example-container">
+
+  <md-table #table [dataSource]="dataSource">
+
+    <!-- ID Column -->
+    <ng-container mdColumnDef="num">
+      <md-header-cell *mdHeaderCellDef> # </md-header-cell>
+      <md-cell *mdCellDef="let row; let i=index"> 
+        <div *ngIf ="hoveredRow != i">{{i+1}}</div>
+        <div *ngIf ="hoveredRow == i"><button md-icon-button style="width:24px; float:left;"> <i class="material-icons" >play_circle_outline</i> </button></div>
+      </md-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container mdColumnDef="songName">
+      <md-header-cell *mdHeaderCellDef> Title </md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.song_name}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="add">
+      <md-header-cell *mdHeaderCellDef>  </md-header-cell>
+      <md-cell *mdCellDef="let row"> <button md-icon-button> <i class="material-icons" >add</i> </button>  </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="artist">
+      <md-header-cell *mdHeaderCellDef> <div *ngIf="isAlbum == false" >Artist</div> </md-header-cell>
+      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false" >{{row.artist_name}}</div> </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="album">
+      <md-header-cell *mdHeaderCellDef> <div *ngIf="isAlbum == false" >Album</div> </md-header-cell>
+      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false">{{row.album}}</div> </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="more">
+      <md-header-cell *mdHeaderCellDef>  </md-header-cell>
+      <md-cell *mdCellDef="let row"> 
+        <button md-icon-button [mdMenuTriggerFor]="menu"> <i class="material-icons" >more_horiz</i> </button> 
+        <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
+          <button md-menu-item>
+            <span>Add to Queue</span>
+          </button>
+          <button md-menu-item>
+            <span>Go to Artist</span>
+          </button>
+          <button md-menu-item>
+            <span>Save to Your Library</span>
+          </button>
+          <button md-menu-item>
+            <span>Add to Playlist</span>
+          </button>
+        </md-menu>
+      </md-cell>
+    </ng-container>
+    
+    <ng-container mdColumnDef="duration">
+      <md-header-cell *mdHeaderCellDef> <i class="material-icons" >access_time</i> </md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.duration}} </md-cell>
+    </ng-container>
+
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; let i=index; columns: displayedColumns;" 
+    (mouseenter)="hover(i)" (mouseleave)="unHover()"></md-row>
+  </md-table>
+</div>
+
+
