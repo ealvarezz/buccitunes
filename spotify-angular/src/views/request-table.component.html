@@ -1,0 +1,51 @@
+<div class="example-container">
+    
+  <md-table #table [dataSource]="dataSource">
+
+    <!-- ID Column -->
+    <ng-container mdColumnDef="checkBox">
+      <md-header-cell *mdHeaderCellDef></md-header-cell>
+      <md-cell *mdCellDef="let row; "> 
+        <div><md-checkbox></md-checkbox></div>
+      </md-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container mdColumnDef="requested_content">
+      <md-header-cell *mdHeaderCellDef> Requested Content </md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.data.name}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="artist">
+      <md-header-cell *mdHeaderCellDef>Artist</md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.data.artist_name}}  </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="created_by">
+      <md-header-cell *mdHeaderCellDef>Created By</md-header-cell>
+      <md-cell *mdCellDef="let row"> <div>{{row.created_by}}</div> </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="requested_date">
+      <md-header-cell *mdHeaderCellDef> Requested Date</md-header-cell>
+      <md-cell *mdCellDef="let row"> <div>{{row.requested_date | date:'medium'}}</div> </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="details">
+      <md-header-cell *mdHeaderCellDef></md-header-cell>
+      <md-cell *mdCellDef="let row"> <button md-icon-button mdTooltip="View Request Details" (click)="dialog(row)"><i class="material-icons" >launch</i> </button></md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="decline">
+      <md-header-cell *mdHeaderCellDef></md-header-cell>
+      <md-cell *mdCellDef="let row"> <button md-icon-button><i class="material-icons" >remove_circle</i> </button></md-cell>
+    </ng-container>
+
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; let i=index; columns: displayedColumns;" 
+    (mouseenter)="hover(i)" (mouseleave)="unHover()"></md-row>
+  </md-table>
+</div>
+
+

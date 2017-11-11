@@ -1,0 +1,57 @@
+<md-card>
+    <md-card-header><h1>Admin Utilities</h1></md-card-header>
+<md-tab-group>
+    <md-tab label="ARTIST REQUESTS">
+        <md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Artist Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-table [requests] = "requests" (openDialog)="openDialog($event)"></request-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button color="primary">Accept Selected</button>
+                    <button md-raised-button color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>
+    </md-tab>
+    <md-tab label="ALBUM REQUESTS">
+        <md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Album Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-table [requests] = "requests" (openDialog)="openDialog($event)"></request-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button color="primary">Accept Selected</button>
+                    <button md-raised-button color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>
+    </md-tab>
+    <md-tab label="SONG REQUESTS">
+        <md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Song Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-table [requests] = "requests" (openDialog)="openDialog($event)"></request-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button color="primary">Accept Selected</button>
+                    <button md-raised-button color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>
+    </md-tab>
+    <md-tab label="SYSTEM SETTINGS">
+    </md-tab>
+    <md-tab label="STATISTICS">
+    </md-tab>
+</md-tab-group>
+</md-card>

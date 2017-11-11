@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdToolbarModule, MdButtonModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule} from '@angular/material';
+import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule} from '@angular/material';
 import {PlayerComponent} from './player.component'
 import {HomePageTabTemplate} from './homepage-tab.component'
 import { AppComponent } from './app.component';
@@ -21,6 +21,11 @@ import {PlaylistComponent} from './playlist.component';
 import {MusicService} from './services/player.service';
 import {ArtistComponent} from './artist.component';
 import {MiniAlbumComponent} from './mini-album.component';
+import {AdminComponent} from './admin.component';
+import {RequestTableComponent} from './request-table.component';
+import {DetailDialog} from './admin.component';
+	import { DatePipe } from '@angular/common';
+
 
 
 const appRoutes: Routes = [
@@ -29,7 +34,8 @@ const appRoutes: Routes = [
           { path: '', component: HomePageComponent },
           {path: 'album', component: AlbumComponent},
           {path: 'playlist', component: PlaylistComponent},
-          {path: 'artist', component: ArtistComponent}
+          {path: 'artist', component: ArtistComponent},
+          {path: 'admin',component:AdminComponent}
         ] 
   },
   {path: 'login', component: LoginComponent},
@@ -52,7 +58,10 @@ const appRoutes: Routes = [
     AlbumComponent,
     PlaylistComponent,
     ArtistComponent,
-    MiniAlbumComponent
+    MiniAlbumComponent,
+    AdminComponent,
+    RequestTableComponent,
+    DetailDialog
   ],
   imports: [
     RouterModule.forRoot(
@@ -75,12 +84,22 @@ const appRoutes: Routes = [
     MdStepperModule,
     MdRadioModule,
     MdSelectModule,
+    MdDialogModule,
     MdTabsModule,
     MdTableModule,
     CdkTableModule,
-    MdMenuModule
+    MdMenuModule,
+    MdTooltipModule,
+    MdSlideToggleModule,
+    MdCheckboxModule
   ],
-  providers: [MusicService],
+  providers: [MusicService,
+    { provide: MD_DIALOG_DATA, useValue: {} },
+    { provide: MdDialogRef, useValue: {} }
+  ],
+  entryComponents: [
+    DetailDialog
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

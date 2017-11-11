@@ -1,0 +1,33 @@
+<h1 md-dialog-title>Pending Song</h1>
+ <md-list>
+    <h3 md-subheader>Song Name</h3>
+    <md-list-item>
+        <h3 >{{data.data.name}}</h3>
+    </md-list-item>
+    <h3 md-subheader>Artist</h3>
+    <md-list-item>
+        <h3 >{{data.data.artist_name}}</h3>
+    </md-list-item>
+    <h3 md-subheader>Album</h3>
+    <md-list-item>
+        <h3 >{{data.data.album}}</h3>
+    </md-list-item>
+    <h3 md-subheader>Flag as explicit</h3>
+    <md-list-item>
+        <md-slide-toggle color="warn"></md-slide-toggle>
+    </md-list-item>
+</md-list> 
+
+
+<div class="song-file">
+    <i class="material-icons" style="float:left; font-size:36px;">attachment</i>
+    <p>{{data.data.name}}.mp3</p>
+    <p> File Size</p>
+    <p> Song Duration </p>
+
+</div>
+
+<button md-raised-button color="primary">Accept Request</button>
+<button md-raised-button color="primary">Decline Request</button>
+<button md-raised-button color="primary" (click)="onNoClick()">Cancel</button>
+
