@@ -1,5 +1,6 @@
 package com.buccitunes.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -17,7 +18,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-@Entity(name="ALBUM")
+@Entity(name="Album")
 public class Album extends MusicCollection {
 	
 	@Id
@@ -25,7 +26,7 @@ public class Album extends MusicCollection {
 	private int id;
 	
 	@ManyToOne
-    @JoinColumn(name = "primary_artist_id", insertable = false, updatable = false)
+    @JoinColumn(name = "primary_artist_id")
 	private Artist primaryArtist;
 	
 	@JsonIgnore
@@ -47,6 +48,29 @@ public class Album extends MusicCollection {
 		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
 	private boolean isPublic;
+	
+	
+	public Album(){};
+	
+	public Album(RequestedAlbum requested) {
+		
+		super(requested.getTitle());
+		this.primaryArtist = requested.getPrimaryArtist();
+		this.featuredArtists = requested.getFeaturedArtists();
+		this.releaseDate = requested.getReleaseDate();
+		this.label = requested.getLabel();
+		this.genres = requested.getGenres();
+		
+		
+		List<Song> newSongs = new ArrayList<Song>();
+		List<RequestedSong> requestedSongs = requested.getSongs();
+		
+		for(RequestedSong requestedSong : requestedSongs) {
+			newSongs.add(new Song(requestedSong));
+		}
+		
+		super.setSongs(newSongs);
+	}
 	
 	public Artist getPrimaryArtist() {
 		return primaryArtist;

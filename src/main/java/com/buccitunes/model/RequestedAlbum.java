@@ -12,6 +12,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -25,9 +26,13 @@ public class RequestedAlbum {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	private String biography;
+	private String title;
 	
 	private String coverArtPath;
+	
+	@ManyToOne
+    @JoinColumn(name = "primary_artist_id")
+	private Artist primaryArtist;
 	
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -62,13 +67,22 @@ public class RequestedAlbum {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
 	private ArtistUser user;
-
-	public String getBiography() {
-		return biography;
+	
+	
+	public int getId() {
+		return id;
 	}
 
-	public void setBiography(String biography) {
-		this.biography = biography;
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
 	public String getCoverArtPath() {
@@ -142,6 +156,15 @@ public class RequestedAlbum {
 	public void setUser(ArtistUser user) {
 		this.user = user;
 	}
+
+	public Artist getPrimaryArtist() {
+		return primaryArtist;
+	}
+
+	public void setPrimaryArtist(Artist primaryArtist) {
+		this.primaryArtist = primaryArtist;
+	}
+	
 	
 	
 	

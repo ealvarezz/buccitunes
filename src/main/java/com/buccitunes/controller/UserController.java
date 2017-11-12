@@ -2,6 +2,8 @@ package com.buccitunes.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.buccitunes.miscellaneous.*;
+import com.buccitunes.model.BillingInfo;
+import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
 
@@ -92,8 +96,64 @@ public class UserController {
 			return success;
 		}
 		catch(BucciException e) {
-			BucciResponse<User> failed = BucciResponseBuilder.failedResponse(e.getErrMessage());
-			return failed;
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}	
+	}
+	
+	@RequestMapping(value="login", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<User> login(@RequestBody LoginInfo loginInfo, HttpSession session) {
+		
+		User account = userService.findOne(loginInfo.email);
+		
+		if(account != null && BucciPassword.checkPassword(loginInfo.password, account.getPassword())){
+			session.setAttribute("user", account);
+			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
+		}else{
+			return BucciResponseBuilder.failedMessage("Invalid Login Information");
+		}
+	}
+	
+	@RequestMapping(value="logout", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> logout(@RequestBody User user, HttpSession session) {
+		
+		User sessionUser = (User) session.getAttribute("user");
+		
+		if(sessionUser != null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(!sessionUser.getEmail().equals(user.getEmail())) {
+			return BucciResponseBuilder.failedMessage("Invalid Email");
+		}
+			
+		session.removeAttribute("user");
+		return BucciResponseBuilder.successMessage("LoggedOut");
+	}
+	
+	@RequestMapping(value="sessionInfo", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<User> sessionTest(HttpSession session) {
+			
+		User sessionUser = (User) session.getAttribute("user");
+		return BucciResponseBuilder.successfulResponse(sessionUser);
+	}
+	
+	@RequestMapping(value="premiumUpgrade", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<PremiumUser> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
+		
+		User sessionUser = (User) session.getAttribute("user");
+		
+		if(sessionUser == null) {
+			BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		try {
+			PremiumUser user = userService.upgradeToPremium(sessionUser, billingInfo);
+			session.setAttribute("user", user);
+			sessionUser = user;
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
+		return BucciResponseBuilder.successfulResponseMessage("Congratulations, you have upgraded to premium", (PremiumUser)sessionUser);
 	}
 }

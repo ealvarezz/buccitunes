@@ -8,6 +8,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.ArtistRepository;
+import com.buccitunes.dao.RequestedAlbumRepository;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.User;
 
@@ -16,10 +17,12 @@ import com.buccitunes.model.User;
 public class ArtistService {
 	
 private final ArtistRepository artistRepository;
+private final RequestedAlbumRepository requestedAlbumRepository;
 	
-	public ArtistService(ArtistRepository artistRepository) {
+	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository) {
 		
 		this.artistRepository = artistRepository;
+		this.requestedAlbumRepository = requestedAlbumRepository;
 	}
 	
 	public List<Artist> findAll(){

@@ -16,6 +16,8 @@ public class RequestedArtist {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	private String name;
+	
 	private String biography;
 	
 	private String comments;
@@ -24,26 +26,44 @@ public class RequestedArtist {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User requester;
 
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getBiography() {
 		return biography;
 	}
+	
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
+	
 	public String getComments() {
 		return comments;
 	}
+	
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+	
 	public User getRequester() {
 		return requester;
 	}
+	
 	public void setRequester(User requester) {
 		this.requester = requester;
 	}
-	
-	
-	
 	
 }

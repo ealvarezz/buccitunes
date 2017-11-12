@@ -1,5 +1,6 @@
 package com.buccitunes.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,6 +8,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.beans.factory.annotation.Value;
 
 @Entity(name="BillingInfo")
@@ -25,12 +27,18 @@ public class BillingInfo {
 	private String billingAddress;
 	
 	@ManyToOne
-    @JoinColumn(name = "credit_company_id", insertable = false, updatable = false)
+    @JoinColumn(name = "credit_company_id")
 	private CreditCompany creditCardCompany;
 	
-	//@Value(true)
-	private boolean active;
+	private boolean active = true;
 	
+	
+	public int getId() {
+		return id;
+	}
+	public void setId(int id) {
+		this.id = id;
+	}
 	public String getCardHolderName() {
 		return cardHolderName;
 	}

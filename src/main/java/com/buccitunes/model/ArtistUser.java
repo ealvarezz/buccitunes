@@ -19,8 +19,12 @@ public class ArtistUser extends User {
 		// TODO Auto-generated constructor stub
 	}
 
+	public ArtistUser(RequestedArtist requestedArtist) {
+		//Artist artist = 
+	}
+
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "artist_id", insertable = false, updatable = false)
+    @JoinColumn(name = "artist_id")
 	private Artist artist;
 
 	public Artist getArtist() {

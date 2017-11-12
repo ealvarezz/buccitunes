@@ -7,10 +7,14 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.dao.BillingInfoRepository;
+import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.SignupFormInfo;
+import com.buccitunes.model.BillingInfo;
+import com.buccitunes.model.CreditCompany;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.User;
 
@@ -20,11 +24,16 @@ public class UserService  {
 	
 	private final UserRepository userRepository;
 	private final PremiumUserRepository premiumUserRepository;
+	private final CreditCompanyRepository creditCompanyRepository;
+	private final BillingInfoRepository billingInfoRepository;
 	
-	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository) {
+	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
+			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
+		this.creditCompanyRepository = creditCompanyRepository;
+		this.billingInfoRepository = billingInfoRepository;
 	}
 	
 	public List<User> findAll(){
@@ -58,6 +67,12 @@ public class UserService  {
 		
 		
 	}
+	
+	public User findOne(String email){
+		
+		return userRepository.findOne(email);
+	}
+	
 	
 	public List<User> getFollowing(String email){
 		
@@ -96,7 +111,7 @@ public class UserService  {
 		User user = userRepository.findOne(signupInfo.userInfo.getEmail());
 		
 		if(user != null) {
-			throw new BucciException("User Name Already Exists");
+			throw new BucciException("Email already being used");
 		}
 		
 		user = signupInfo.userInfo;
@@ -112,14 +127,38 @@ public class UserService  {
 			}
 		}
 		
-		User newUser = userRepository.save(user);
-		
 		if(signedForPremium) {
-			PremiumUser pUser = new PremiumUser(newUser,signupInfo.billingInfo);
-			
-			newUser = premiumUserRepository.save(pUser);
+			PremiumUser pUser = new PremiumUser(user,signupInfo.billingInfo);
+			PremiumUser newUser = premiumUserRepository.save(pUser);
+			return newUser;
+		}
+		else {
+			User newUser = userRepository.save(user);
+			return newUser;
+		}
+	}
+	
+	public PremiumUser upgradeToPremium(User user, BillingInfo billingInfo) throws BucciException {
+		PremiumUser existingPremium = premiumUserRepository.findOne(user.getEmail());
+		
+		if(existingPremium != null) {
+			throw new BucciException("You are already a premium user");
 		}
 		
-		return newUser;
+		user = userRepository.findOne(user.getEmail());
+		if(user == null) {
+			throw new BucciException("Original user not found");
+		}
+		
+		String invalidBillingInfo = billingInfo.checkInvalidInfo(); 
+		if(!invalidBillingInfo.equals("")) {
+			throw new BucciException("Invalid Billing Infomation");
+		}
+		
+		billingInfo = billingInfoRepository.save(billingInfo);
+		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
+		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
+
+		return pUser;
 	}
 }

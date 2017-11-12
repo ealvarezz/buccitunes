@@ -17,7 +17,7 @@ import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="RequestedSong")
-public class RequestedSong {
+public class RequestedSong{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
@@ -53,11 +53,17 @@ public class RequestedSong {
 	
 	private String picturePath;
 	
+	private boolean isExplicit;	
+
 	private String comments;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
 	private ArtistUser requester;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "lyric_id")
+	private Lyrics lyrics;
 
 	public String getName() {
 		return name;
@@ -139,6 +145,27 @@ public class RequestedSong {
 		this.requester = requester;
 	}
 	
-	//private RequestedAlbum albumRequestedOn;
- 
+	public boolean isExplicit() {
+		return isExplicit;
+	}
+
+	public void setExplicit(boolean isExplicit) {
+		this.isExplicit = isExplicit;
+	}
+
+	public List<Artist> getFeaturedArtists() {
+		return featuredArtists;
+	}
+
+	public void setFeaturedArtists(List<Artist> featuredArtists) {
+		this.featuredArtists = featuredArtists;
+	}
+
+	public Lyrics getLyrics() {
+		return lyrics;
+	}
+
+	public void setLyrics(Lyrics lyrics) {
+		this.lyrics = lyrics;
+	}
 }
