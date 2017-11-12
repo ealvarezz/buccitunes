@@ -143,7 +143,7 @@ public class UserController {
 		User sessionUser = (User) session.getAttribute("user");
 		
 		if(sessionUser == null) {
-			BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
 		try {
