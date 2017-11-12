@@ -13,6 +13,8 @@ public class Lyrics {
 	
 	private String lyric;
 
+	public Lyrics() {}
+	
 	public Lyrics(String lyric) {
 		this.lyric = lyric;
 	}

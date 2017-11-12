@@ -123,7 +123,7 @@ public class UserService  {
 			
 			//If the billingInfo entered is invalid
 			if(!invalidBillingInfo.equals("")) {
-				throw new BucciException("Invalid Billing Infomation");
+				throw new BucciException(invalidBillingInfo);
 			}
 		}
 		
@@ -151,10 +151,12 @@ public class UserService  {
 		}
 		
 		String invalidBillingInfo = billingInfo.checkInvalidInfo();
-		CreditCompany cardCompany = creditCompanyRepository.findOne(billingInfo.getCreditCardCompany().getId()); 
+		if(!invalidBillingInfo.equals("") ) {
+			throw new BucciException(invalidBillingInfo);
+		}
 		
-		
-		if(!invalidBillingInfo.equals("") || cardCompany == null) {
+		CreditCompany cardCompany = creditCompanyRepository.findOne(billingInfo.getCreditCardCompany().getId());
+		if(cardCompany == null) {
 			throw new BucciException("Invalid Billing Infomation");
 		}
 		

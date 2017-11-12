@@ -120,7 +120,7 @@ public class UserController {
 		
 		if(sessionUser != null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
-		}
+		} 
 		
 		if(!sessionUser.getEmail().equals(user.getEmail())) {
 			return BucciResponseBuilder.failedMessage("Invalid Email");

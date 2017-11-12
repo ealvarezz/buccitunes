@@ -26,7 +26,7 @@ public class Album extends MusicCollection {
 	private int id;
 	
 	@ManyToOne
-    @JoinColumn(name = "primary_artist_id")
+    @JoinColumn(name = "primary_artist_id",  insertable = false, updatable = false)
 	private Artist primaryArtist;
 	
 	@JsonIgnore
@@ -66,7 +66,13 @@ public class Album extends MusicCollection {
 		List<RequestedSong> requestedSongs = requested.getSongs();
 		
 		for(RequestedSong requestedSong : requestedSongs) {
-			newSongs.add(new Song(requestedSong));
+			Song newSong = new Song(requestedSong);
+			
+			if(newSong.getOwner() == null) {
+				newSong.setOwner(this.primaryArtist);
+			}
+			
+			newSongs.add(newSong);
 		}
 		
 		super.setSongs(newSongs);

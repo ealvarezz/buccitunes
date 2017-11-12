@@ -44,11 +44,11 @@ public class RequestedSong{
     @JoinColumn(name = "mime_id", insertable = false, updatable = false)
 	private MimeType mimeType;
 	
-	@JsonIgnore
+	//@JsonIgnore Causing issue with saving into song
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Song",
-		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<Genre> genres;
 	
 	private String picturePath;
@@ -65,6 +65,8 @@ public class RequestedSong{
     @JoinColumn(name = "lyric_id")
 	private Lyrics lyrics;
 
+	public RequestedSong() {}
+	
 	public String getName() {
 		return name;
 	}

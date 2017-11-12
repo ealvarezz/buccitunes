@@ -27,18 +27,18 @@ public class Song {
 	private int rating;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id")
 	private Artist owner;
 	
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "featured",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<Artist>featuredArtists;
 	
 	@ManyToOne
-    @JoinColumn(name = "mime_id", insertable = false, updatable = false)
+    @JoinColumn(name = "mime_id")
 	private MimeType mimeType;
 	
 	private boolean isExplicit;
@@ -73,7 +73,7 @@ public class Song {
 		this.picturePath = song.getPicturePath();
 		this.audioPath = song.getAudioPath();
 		this.lyrics = song.getLyrics();
-		//this.stats = new StatCache();
+		this.stats = new StatCache();
 	}
 	
 	public String getAudioPath() {

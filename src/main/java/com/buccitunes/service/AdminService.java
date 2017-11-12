@@ -82,8 +82,8 @@ public class AdminService {
 		
 		//Used to make sure the requestedAlbum information is up to date
 		//requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
-		
-		
+		Artist artist = artistRepository.findOne(requestedAlbum.getPrimaryArtist().getId());
+		requestedAlbum.setPrimaryArtist(artist);
 		
 		Album album = new Album(requestedAlbum);
 		

@@ -55,7 +55,7 @@ public class RequestedAlbum {
 		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
 	
-	@JsonIgnore
+	//@JsonIgnore Caused a problem with saving songs to album
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Requested_Songs_For_Album",
 		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false),

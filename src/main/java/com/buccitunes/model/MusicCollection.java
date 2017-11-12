@@ -29,8 +29,8 @@ public class MusicCollection {
 	private int id;
 	private String title;
 	
-	@JsonIgnore
-	@ManyToMany(fetch=FetchType.LAZY)
+	@JsonIgnore 
+	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "music_collection_song",
 		joinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id", insertable = false, updatable = false),
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
@@ -38,6 +38,7 @@ public class MusicCollection {
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date dateCreated;
+	
 	private String artworkPath;
 	
 	@OneToOne(cascade = CascadeType.ALL)
