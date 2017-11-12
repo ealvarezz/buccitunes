@@ -14,5 +14,5 @@ public interface ArtistUserRepository extends BaseUserRepository<ArtistUser>, Cr
 	
 	@Modifying
 	@Query(value="INSERT INTO buccidb2.artist_user(email,artist_id) VALUES (:newEmail, :newArtist)", nativeQuery = true)
-	public void upgradeToArtist(@Param("newEmail") String newEmail, @Param("newBilling")int newArtist);
+	public void upgradeToArtist(@Param("newEmail") String newEmail, @Param("newArtist")int newArtist);
 }

@@ -95,14 +95,4 @@ public class AdminService {
 		return album;
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

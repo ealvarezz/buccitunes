@@ -41,14 +41,17 @@ public class MusicCollection {
 	private String artworkPath;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stats_id", insertable = false, updatable = false)
+    @JoinColumn(name = "stats_id")
 	private StatCache stats;
 	
-	public MusicCollection(){};
+	public MusicCollection(){
+		this.stats = new StatCache();
+	};
 	
 	public MusicCollection(String title) {
 		this.title = title;
 		this.dateCreated = new Date();
+		this.stats = new StatCache();
 	}
 	
 	public int getId() {

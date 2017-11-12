@@ -13,7 +13,6 @@ public class Genre {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Id
 	private String name;
 	
 	public int getId() {

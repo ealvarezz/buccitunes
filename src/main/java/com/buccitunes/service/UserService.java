@@ -125,16 +125,6 @@ public class UserService  {
 			if(!invalidBillingInfo.equals("")) {
 				throw new BucciException("Invalid Billing Infomation");
 			}
-			
-			CreditCompany creditCompany = creditCompanyRepository.findByName(signupInfo.billingInfo.getCreditCardCompany().getName());
-			
-			if(creditCompany != null) {
-				signupInfo.billingInfo.setCreditCardCompany(creditCompany);
-			}
-			else {
-				throw new BucciException("Invalid Credit Card Company");
-			}
-			
 		}
 		
 		if(signedForPremium) {
@@ -164,12 +154,6 @@ public class UserService  {
 		if(!invalidBillingInfo.equals("")) {
 			throw new BucciException("Invalid Billing Infomation");
 		}
-		
-		CreditCompany creditCompany = creditCompanyRepository.findByName(billingInfo.getCreditCardCompany().getName());
-		if(creditCompany != null) {
-			billingInfo.setCreditCardCompany(creditCompany);
-		}
-		billingInfo.setCreditCardCompany(creditCompany);
 		
 		billingInfo = billingInfoRepository.save(billingInfo);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
