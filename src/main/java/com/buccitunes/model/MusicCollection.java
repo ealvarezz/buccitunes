@@ -44,7 +44,12 @@ public class MusicCollection {
     @JoinColumn(name = "stats_id", insertable = false, updatable = false)
 	private StatCache stats;
 	
+	public MusicCollection(){};
 	
+	public MusicCollection(String title) {
+		this.title = title;
+		this.dateCreated = new Date();
+	}
 	
 	public int getId() {
 		return id;
@@ -83,10 +88,10 @@ public class MusicCollection {
 		this.stats = stats;
 	}
 	public void addSong(Song song) {
-		
+		this.songs.remove(song);
 	}
 	public void removeSong(Song song) {
-		
+		this.songs.add(song);
 	}
 	
 }

@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.buccitunes.miscellaneous.*;
+import com.buccitunes.model.BillingInfo;
+import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
 
@@ -94,8 +96,8 @@ public class UserController {
 			return success;
 		}
 		catch(BucciException e) {
-			BucciResponse<User> failed = BucciResponseBuilder.failedMessage(e.getErrMessage());
-			return failed;
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+			
 		}	
 	}
 	
@@ -134,5 +136,25 @@ public class UserController {
 			
 		User sessionUser = (User) session.getAttribute("user");
 		return BucciResponseBuilder.successfulResponse(sessionUser);
+	}
+	
+	@RequestMapping(value="premiumUpgrade", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<PremiumUser> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
+		
+		User sessionUser = (User) session.getAttribute("user");
+		
+		if(sessionUser == null) {
+			BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		try {
+			PremiumUser user = userService.upgradeToPremium(sessionUser, billingInfo);
+			session.setAttribute("user", user);
+			sessionUser = user;
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
+		return BucciResponseBuilder.successfulResponseMessage("Congratulations, you have upgraded to premium", (PremiumUser)sessionUser);
 	}
 }

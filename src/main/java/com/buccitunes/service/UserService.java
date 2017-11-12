@@ -7,11 +7,13 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.dao.BillingInfoRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.SignupFormInfo;
+import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.CreditCompany;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.User;
@@ -23,12 +25,15 @@ public class UserService  {
 	private final UserRepository userRepository;
 	private final PremiumUserRepository premiumUserRepository;
 	private final CreditCompanyRepository creditCompanyRepository;
+	private final BillingInfoRepository billingInfoRepository;
 	
-	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, CreditCompanyRepository creditCompanyRepository) {
+	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
+			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
 		this.creditCompanyRepository = creditCompanyRepository;
+		this.billingInfoRepository = billingInfoRepository;
 	}
 	
 	public List<User> findAll(){
@@ -141,5 +146,35 @@ public class UserService  {
 			User newUser = userRepository.save(user);
 			return newUser;
 		}
+	}
+	
+	public PremiumUser upgradeToPremium(User user, BillingInfo billingInfo) throws BucciException {
+		PremiumUser existingPremium = premiumUserRepository.findOne(user.getEmail());
+		
+		if(existingPremium != null) {
+			throw new BucciException("You are already a premium user");
+		}
+		
+		user = userRepository.findOne(user.getEmail());
+		if(user == null) {
+			throw new BucciException("Original user not found");
+		}
+		
+		String invalidBillingInfo = billingInfo.checkInvalidInfo(); 
+		if(!invalidBillingInfo.equals("")) {
+			throw new BucciException("Invalid Billing Infomation");
+		}
+		
+		CreditCompany creditCompany = creditCompanyRepository.findByName(billingInfo.getCreditCardCompany().getName());
+		if(creditCompany != null) {
+			billingInfo.setCreditCardCompany(creditCompany);
+		}
+		billingInfo.setCreditCardCompany(creditCompany);
+		
+		billingInfo = billingInfoRepository.save(billingInfo);
+		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
+		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
+
+		return pUser;
 	}
 }

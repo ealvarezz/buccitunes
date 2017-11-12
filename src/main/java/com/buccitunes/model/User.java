@@ -30,7 +30,7 @@ public class User {
 	String password;
 	String username;
 	boolean verified;
-	String profilePicture;
+	String profilePicturePath;
 
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -142,11 +142,11 @@ public class User {
 	public void setVerified(boolean verified) {
 		this.verified = verified;
 	}
-	public String getProfilePicture() {
-		return profilePicture;
+	public String getProfilePicturePath() {
+		return profilePicturePath;
 	}
-	public void setProfilePicture(String profilePicture) {
-		this.profilePicture = profilePicture;
+	public void setProfilePicturePath(String profilePicture) {
+		this.profilePicturePath = profilePicture;
 	}
 	public List<Playlist> getFollowingPlaylists() {
 		return followingPlaylists;
@@ -196,5 +196,12 @@ public class User {
 		this.password = BucciPassword.encryptPassword(password);
 	}
 
-
+	/*
+	public String getProfilePicture() {
+		return profilePicture;
+	}
+	public void setProfilePicture(String profilePicture) {
+		this.profilePicture = profilePicture;
+	}
+	*/
 }

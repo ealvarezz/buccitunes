@@ -24,21 +24,34 @@ public class RequestedArtist {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User requester;
 
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+	
 	public String getBiography() {
 		return biography;
 	}
+	
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
+	
 	public String getComments() {
 		return comments;
 	}
+	
 	public void setComments(String comments) {
 		this.comments = comments;
 	}
+	
 	public User getRequester() {
 		return requester;
 	}
+	
 	public void setRequester(User requester) {
 		this.requester = requester;
 	}
