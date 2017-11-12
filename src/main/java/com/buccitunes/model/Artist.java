@@ -22,7 +22,9 @@ public class Artist {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
 	private String name;
+	
 	private String biography;
 	
 	@JsonIgnore
@@ -56,61 +58,93 @@ public class Artist {
     @JoinColumn(name = "stats_id", insertable = false, updatable = false)
 	private StatCache stats;
 	
+	public Artist(String name, String biography) {
+		this.name = name;
+		this.biography = biography;
+	}
 	
+	public Artist(RequestedArtist requested) {
+		this.name = requested.getName();
+		this.biography = requested.getBiography();
+	}
 	
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public List<Album> getAlbums() {
 		return albums;
 	}
+	
 	public void setAlbums(List<Album> albums) {
 		this.albums = albums;
 	}
+	
 	public List<User> getFollowers() {
 		return followers;
 	}
+	
 	public void setFollowers(List<User> followers) {
 		this.followers = followers;
 	}
+	
 	public List<Song> getFeatures() {
 		return features;
 	}
+	
 	public void setFeatures(List<Song> features) {
 		this.features = features;
 	}
+	
 	public List<Concert> getUpcomingConcerts() {
 		return upcomingConcerts;
 	}
+	
 	public void setUpcomingConcerts(List<Concert> upcomingConcerts) {
 		this.upcomingConcerts = upcomingConcerts;
 	}
+	
 	public Album getFeaturedAlbum() {
 		return featuredAlbum;
 	}
+	
 	public void setFeaturedAlbum(Album featuredAlbum) {
 		this.featuredAlbum = featuredAlbum;
 	}
+	
 	public List<Song> getRecentlyPlayed() {
 		return recentlyPlayed;
 	}
 	public void setRecentlyPlayed(List<Song> recentlyPlayed) {
 		this.recentlyPlayed = recentlyPlayed;
 	}
+	
 	public StatCache getStats() {
 		return stats;
 	}
+	
 	public void setStats(StatCache stats) {
 		this.stats = stats;
 	}
+	
 	public String getName() {
 		return name;
 	}
+	
 	public void setName(String name) {
 		this.name = name;
 	}
+	
 	public String getBiography() {
 		return biography;
 	}
+	
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
+	
 }

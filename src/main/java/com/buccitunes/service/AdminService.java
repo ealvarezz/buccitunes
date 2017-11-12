@@ -5,11 +5,14 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.*;
+import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.User;
 
 
 @Service
@@ -25,12 +28,13 @@ public class AdminService {
 	private final RequestedArtistRepository requestedArtistRepository;
 	private final RequestedConcertRepository requestedConcertRepository;
 	private final ArtistUserRepository artistUserRepository;
+	private final UserRepository userRepository;
 	
 	public AdminService(AdminUserRepository adminUserRepository, AlbumRepository albumRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, ConcertRepository concertRepository,
 			RequestedAlbumRepository requestedAlbumRepository, RequestedSongRepository requestedSongRepository,
-			RequestedArtistRepository requestedArtistRepository,
-			RequestedConcertRepository requestedConcertRepository, ArtistUserRepository artistUserRepository) {
+			RequestedArtistRepository requestedArtistRepository, RequestedConcertRepository requestedConcertRepository, 
+			ArtistUserRepository artistUserRepository, UserRepository userRepository) {
 		this.adminUserRepository = adminUserRepository;
 		this.albumRepository = albumRepository;
 		this.songRepository = songRepository;
@@ -41,23 +45,37 @@ public class AdminService {
 		this.requestedArtistRepository = requestedArtistRepository;
 		this.requestedConcertRepository = requestedConcertRepository;
 		this.artistUserRepository = artistUserRepository;
+		this.userRepository = userRepository;
 	}
 	
-	public Artist adminApproveArtist(RequestedArtist requestedArtist) {
+	public Artist addNewArtist(Artist artist) throws BucciException {
+		artist = artistRepository.save(artist);
+		return artist;
+	}
+	
+	public ArtistUser adminApproveArtist(RequestedArtist requestedArtist) throws BucciException {
 		
 		//Used to make sure the requestedAlbum information is up to date
 		requestedArtist = requestedArtistRepository.findOne(requestedArtist.getId());
+		User requestedUser = userRepository.findOne(requestedArtist.getRequester().getEmail());
 		
+		if(requestedUser == null) {
+			throw new BucciException("Invalid User Requested");
+		}
 		
-		ArtistUser artistUser = new ArtistUser(requestedArtist);
-	
+		Artist artist = new Artist(requestedArtist);
 		
 		//The songs may delete itself
 		//requestedArtistRepository.delete(requestedArtist);
 		
-		artistUser = artistUserRepository.save(artistUser);
+		//artistUser = artistUserRepository.save(artistUser);
 		
-		return artistUser.getArtist();
+		
+		artist = artistRepository.save(artist);
+		artistUserRepository.upgradeToArtist(requestedUser.getEmail(), artist.getId());		
+		ArtistUser artUser = artistUserRepository.findOne(requestedUser.getEmail());
+		
+		return artUser;
 	}
 	
 	public Album adminApproveAlbum(RequestedAlbum requestedAlbum) {

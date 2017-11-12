@@ -26,7 +26,7 @@ public class Album extends MusicCollection {
 	private int id;
 	
 	@ManyToOne
-    @JoinColumn(name = "primary_artist_id", insertable = false, updatable = false)
+    @JoinColumn(name = "primary_artist_id")
 	private Artist primaryArtist;
 	
 	@JsonIgnore

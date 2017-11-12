@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.service.AdminService;
@@ -25,9 +27,20 @@ public class AdminController {
 	@Autowired
 	private AdminService adminService;
 	
+	@RequestMapping(value="addArtist", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Artist> addArtist(@RequestBody Artist artist, HttpSession session) throws BucciException {
+		artist = adminService.addNewArtist(artist);
+		return BucciResponseBuilder.successfulResponseMessage("New Artist Added", artist);
+	}
+	
 	@RequestMapping(value="approveArtist", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<Artist> approveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
-		Artist artist = adminService.adminApproveArtist(requested);		
+	public @ResponseBody BucciResponse<ArtistUser> approveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
+		ArtistUser artist;
+		try {
+			artist = adminService.adminApproveArtist(requested);
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}		
 		return BucciResponseBuilder.successfulResponseMessage("New Artist Added", artist);
 	}
 	

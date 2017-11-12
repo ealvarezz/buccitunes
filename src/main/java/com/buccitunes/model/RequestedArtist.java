@@ -16,6 +16,8 @@ public class RequestedArtist {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	private String name;
+	
 	private String biography;
 	
 	private String comments;
@@ -32,6 +34,14 @@ public class RequestedArtist {
 		this.id = id;
 	}
 	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 	public String getBiography() {
 		return biography;
 	}
@@ -55,8 +65,5 @@ public class RequestedArtist {
 	public void setRequester(User requester) {
 		this.requester = requester;
 	}
-	
-	
-	
 	
 }

@@ -6,11 +6,13 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buccitunes.miscellaneous.BucciResponse;
+import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.*;
 import com.buccitunes.service.MusicCollectionService;
 import com.buccitunes.service.UserService;
@@ -26,6 +28,13 @@ public class MusicCollectionController {
 	public @ResponseBody BucciResponse<List<Album>> newReleasedAlbums() {
 		
 		return null;
-		
+	}
+	
+	
+	//For testing purposes
+	@RequestMapping(value="checkDate", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Album> check(@RequestBody Album album) {
+		System.out.println(album.getReleaseDate());
+		return BucciResponseBuilder.successfulResponse(album);
 	}
 }
