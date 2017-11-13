@@ -1,11 +1,14 @@
 package com.buccitunes.service;
 
+import java.io.IOException;
+
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.*;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
@@ -78,15 +81,24 @@ public class AdminService {
 		return artUser;
 	}
 	
-	public Album adminApproveAlbum(RequestedAlbum requestedAlbum) {
+	public Album adminApproveAlbum(RequestedAlbum requestedAlbum) throws BucciException {
 		
 		//Used to make sure the requestedAlbum information is up to date
 		//requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
-		
-		
+		Artist artist = artistRepository.findOne(requestedAlbum.getPrimaryArtist().getId());
+		requestedAlbum.setPrimaryArtist(artist);
 		
 		Album album = new Album(requestedAlbum);
 		
+		if(requestedAlbum.getArtwork() != null) {
+			try {
+				String artworkPath = FileManager.saveArtwork(requestedAlbum.getArtwork(), artist);
+				album.setArtworkPath(artworkPath);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				throw new BucciException("UNABLE TO SAVE ARTWORK");
+			}
+		}
 		//The songs may delete itself
 		//requestedAlbumRepository.delete(requestedAlbum);
 		

@@ -46,7 +46,11 @@ public class AdminController {
 	
 	@RequestMapping(value="approveAlbum", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> approveAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
-		Album album = adminService.adminApproveAlbum(requested);		
-		return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
+		try {
+			Album album = adminService.adminApproveAlbum(requested);
+			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}		
 	}
 }

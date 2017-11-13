@@ -1,15 +1,11 @@
 package com.buccitunes.model;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-
-import org.hibernate.annotations.ColumnDefault;
-import org.springframework.beans.factory.annotation.Value;
 
 @Entity(name="BillingInfo")
 public class BillingInfo {
@@ -77,6 +73,36 @@ public class BillingInfo {
 	}
 	
 	public String checkInvalidInfo() {
+		if(!validCreditCardNumber()){
+			return "Invalid credit card number";
+		}
+		
 		return "";
 	}
+	
+	/**
+	 * Checks if the credit card is valid using The Luhn Algorithm
+	 * @return if the credit card is valid or not
+	 */
+	private boolean validCreditCardNumber()
+	{
+	   
+	   int sum = 0;
+	   /*boolean alternate = false;
+	   for (int i = creditCardNo.length() - 1; i >= 0; i--)
+	   {
+	       int n = Integer.parseInt(creditCardNo.substring(i, i + 1));
+	       if (alternate)
+	       {
+	           n *= 2;
+	           if (n > 9)
+	           {
+	                n = (n % 10) + 1;
+	            }
+	        }
+	        sum += n;
+	        alternate = !alternate;
+	    }*/
+	    return (sum % 10 == 0);
+	 }
 }

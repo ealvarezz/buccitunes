@@ -123,7 +123,7 @@ public class UserService  {
 			
 			//If the billingInfo entered is invalid
 			if(!invalidBillingInfo.equals("")) {
-				throw new BucciException("Invalid Billing Infomation");
+				throw new BucciException(invalidBillingInfo);
 			}
 		}
 		
@@ -150,11 +150,17 @@ public class UserService  {
 			throw new BucciException("Original user not found");
 		}
 		
-		String invalidBillingInfo = billingInfo.checkInvalidInfo(); 
-		if(!invalidBillingInfo.equals("")) {
+		String invalidBillingInfo = billingInfo.checkInvalidInfo();
+		if(!invalidBillingInfo.equals("") ) {
+			throw new BucciException(invalidBillingInfo);
+		}
+		
+		CreditCompany cardCompany = creditCompanyRepository.findOne(billingInfo.getCreditCardCompany().getId());
+		if(cardCompany == null) {
 			throw new BucciException("Invalid Billing Infomation");
 		}
 		
+		billingInfo.setCreditCardCompany(cardCompany);
 		billingInfo = billingInfoRepository.save(billingInfo);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());

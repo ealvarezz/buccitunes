@@ -21,10 +21,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity(name="Album")
 public class Album extends MusicCollection {
 	
-	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
-	private int id;
-	
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
 	private Artist primaryArtist;
@@ -50,7 +46,9 @@ public class Album extends MusicCollection {
 	private boolean isPublic;
 	
 	
-	public Album(){};
+	public Album(){
+		super();
+	};
 	
 	public Album(RequestedAlbum requested) {
 		
@@ -66,7 +64,13 @@ public class Album extends MusicCollection {
 		List<RequestedSong> requestedSongs = requested.getSongs();
 		
 		for(RequestedSong requestedSong : requestedSongs) {
-			newSongs.add(new Song(requestedSong));
+			Song newSong = new Song(requestedSong);
+			
+			if(newSong.getOwner() == null) {
+				newSong.setOwner(requested.getPrimaryArtist());
+			}
+			
+			newSongs.add(newSong);
 		}
 		
 		super.setSongs(newSongs);
