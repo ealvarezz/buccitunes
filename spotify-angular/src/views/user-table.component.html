@@ -1,0 +1,42 @@
+<div class="example-container">
+  <div class="example-header">
+    <md-form-field floatPlaceholder="never">
+      <input mdInput #filter placeholder="Filter users">
+    </md-form-field>
+  </div>
+  <md-table #table [dataSource]="dataSource">
+
+    <!-- ID Column -->
+    <ng-container mdColumnDef="username">
+      <md-header-cell *mdHeaderCellDef>Username</md-header-cell>
+      <md-cell *mdCellDef="let row; "> 
+        {{row.username}}
+      </md-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container mdColumnDef="email">
+      <md-header-cell *mdHeaderCellDef> Email </md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.email}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="type">
+      <md-header-cell *mdHeaderCellDef>User Type</md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.type}}  </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="status">
+      <md-header-cell *mdHeaderCellDef>Status</md-header-cell>
+      <md-cell *mdCellDef="let row"> <div>{{row.status}}</div> </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="join_date">
+      <md-header-cell *mdHeaderCellDef>Join Date</md-header-cell>
+      <md-cell *mdCellDef="let row"> <div>{{row.join_date | date}}</div> </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; let i=index; columns: displayedColumns;" 
+    (mouseenter)="hover(i)" (mouseleave)="unHover()" (click)="selectRow(row)"></md-row>
+  </md-table>
+</div>

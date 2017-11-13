@@ -1,0 +1,50 @@
+ <h1 md-dialog-title>Pending Song</h1>
+ 
+<md-grid-list cols="3" rowHeight="30px">
+    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Song Name</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.data.name}}</span></md-grid-tile>
+    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Artist</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.data.artist_name}}</span></md-grid-tile>
+    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Album</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.data.album}}</span></md-grid-tile>
+    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>File Size</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">4.5 MB</span></md-grid-tile>
+    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Song Duration</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">3:30</span></md-grid-tile>
+    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Flag As Explicit</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"><md-slide-toggle color="warn"></md-slide-toggle></span></md-grid-tile>
+</md-grid-list>
+
+
+
+
+<!-- <h1 md-dialog-title>Pending Song</h1>
+ <md-list>
+    <h3 md-subheader>Song Name</h3>
+    <md-list-item>
+        <h3 >{{data.data.name}}</h3>
+    </md-list-item>
+    <h3 md-subheader>Artist</h3>
+    <md-list-item>
+        <h3 >{{data.data.artist_name}}</h3>
+    </md-list-item>
+    <h3 md-subheader>Album</h3>
+    <md-list-item>
+        <h3 >{{data.data.album}}</h3>
+    </md-list-item>
+    <h3 md-subheader>Flag as explicit</h3>
+    <md-list-item>
+        <md-slide-toggle color="warn"></md-slide-toggle>
+    </md-list-item>
+</md-list>  -->
+
+
+<div class="song-file">
+    <i class="material-icons" style="float:left; font-size:36px;">attachment</i>
+    <p><a routerLink="/">{{data.data.name}}.mp3</a></p>
+</div>
+
+<button md-raised-button color="primary">Accept Request</button>
+<button md-raised-button color="primary">Decline Request</button>
+<button md-raised-button color="primary" (click)="onNoClick()">Cancel</button>
+

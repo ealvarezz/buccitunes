@@ -1,0 +1,90 @@
+<md-card>
+    <md-card-header><h1>Admin Utilities</h1></md-card-header>
+<md-tab-group>
+    <md-tab label="ARTIST REQUESTS">
+        <md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Artist Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-table [requests] = "requests" (openDialog)="openDialog($event)"></request-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button color="primary">Accept Selected</button>
+                    <button md-raised-button color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>
+    </md-tab>
+    <md-tab label="ALBUM REQUESTS">
+        <md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Album Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-table [requests] = "requests" (openDialog)="openDialog($event)"></request-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button color="primary">Accept Selected</button>
+                    <button md-raised-button color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>
+    </md-tab>
+    <md-tab label="SONG REQUESTS">
+        <md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Song Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-table [requests] = "requests" (openDialog)="openDialog($event)"></request-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button color="primary">Accept Selected</button>
+                    <button md-raised-button color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>
+    </md-tab>
+    <md-tab label="SYSTEM SETTINGS">
+    </md-tab>
+    <md-tab label="USERS">
+
+        <div>
+             <div class="user_info">
+                <md-card style="min-height:500px;"> 
+                    <md-grid-list cols="3" rowHeight="30px">
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Username</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.username}}</span></md-grid-tile>
+                          <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Email</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.email}}</span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Account Type</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.type}}</span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Account Status</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.status}}</span></md-grid-tile>
+                          <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Join Date</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.join_date | date }}</span></md-grid-tile>
+                          <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.last_name}}, {{selectedUser.first_name}}</span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Billing Info</b></span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;">..............</span></md-grid-tile>
+                    </md-grid-list>
+
+                    <button md-raised-button color="warn" class="rounded-button">Disable Account</button>
+
+
+                </md-card>
+            </div>
+            <div class="user_table">
+                <user-table (selectedRow)= "chooseSelectedUser($event)" [users]="users"></user-table>
+            </div>
+        </div>
+ 
+    </md-tab>
+    <md-tab label="STATISTICS">
+    </md-tab>
+</md-tab-group>
+</md-card>
