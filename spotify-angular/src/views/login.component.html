@@ -5,11 +5,13 @@
     <h1 class="logo-text">🅱️ ucci Tunes</h1>
     <form class="login-form">
       <md-form-field class="login-full-width">
-        <input type="email" mdInput placeholder="Username">
+        <input type="email" name="email" [(ngModel)]= "userName" mdInput placeholder="Email" [formControl]="emailFormControl" required>
+        <md-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</md-error>
       </md-form-field>
 
       <md-form-field class="login-full-width">
-        <input type="password" mdInput placeholder="Password">
+        <input type="password" name="pw" mdInput [(ngModel)]= "password" [formControl]="passwordFormControl" placeholder="Password" required>
+        <md-error *ngIf="passwordFormControl.invalid">{{getPasswordMessage()}}</md-error>
       </md-form-field>
 
       <div>

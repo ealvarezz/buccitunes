@@ -9,20 +9,14 @@
   <md-step [stepControl]="firstFormGroup">
     <form [formGroup]="firstFormGroup">
       <ng-template mdStepLabel>Account Type</ng-template>
-      <md-radio-group>
-          <div>
-            <md-radio-button value = "Artist">
-              Artist
-            </md-radio-button>
-          </div>
-          <div>
-            <md-radio-button value = "Premium User">
-              Premium User
-            </md-radio-button>
-          </div>
-        </md-radio-group>
+        <div>
+        <button md-raised-button (click)="setUserType('artist')"   mdStepperNext style="background-color:#3f51b5; color:white; margin-bottom:1%">Sign Up As Artist<i class="material-icons">arrow_forward</i></button>
+      </div>
       <div>
-        <button md-button mdStepperNext>Next</button>
+        <button md-raised-button (click)="setUserType('premium')" mdStepperNext style="background-color:#3f51b5; color:white; margin-bottom:1%">Sign Up As Premium User<i class="material-icons">arrow_forward</i> </button>
+      </div>
+      <div>
+        <button md-raised-button (click)="setUserType('basic')"  mdStepperNext style="background-color:#3f51b5; color:white; margin-bottom:1%">Sign Up As Basic User<i class="material-icons">arrow_forward</i> </button>
       </div>
     </form>
   </md-step>

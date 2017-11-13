@@ -1,0 +1,106 @@
+<md-card style="overflow-y: scroll; max-height:500px;">
+    <md-horizontal-stepper [linear]="true">
+  <md-step [stepControl]="infoFormGroup">
+    <form [formGroup]="infoFormGroup">
+      <ng-template mdStepLabel>Album Information</ng-template>
+      <md-form-field>
+        <input mdInput placeholder="Album Name" formControlName="title"  name="title" [(ngModel)]= "currentAlbum.label" required>
+      </md-form-field>
+      <div>
+          <h4>Release Date</h4>
+          <md-select placeholder="Month" name="month" [(value)]="releaseMonth">
+              <md-option *ngFor="let month of months" [value]="month">
+              {{month}}
+              </md-option>
+          </md-select>
+          <md-form-field> 
+            <input mdInput type="number" placeholder="Day" formControlName="dayCtrl" name="day" [(ngModel)]= "releaseDay" required>
+          </md-form-field>
+          <md-form-field> 
+            <input mdInput type="number" placeholder="Year" formControlName="yearCtrl" name="year" [(ngModel)]= "releaseYear" required>
+          </md-form-field>
+        </div>
+      <div>
+        <button md-button mdStepperNext (click)="setDate()">Next</button>
+      </div>
+    </form>
+  </md-step>
+  <md-step [stepControl]="artworkFormGroup">
+    <form [formGroup]="artworkFormGroup">
+      <ng-template mdStepLabel>Upload Album Artwork</ng-template>
+        
+      <div *ngIf="currentAlbum.artwork">
+          <img [src]="currentAlbum.artwork">
+      </div>
+
+        <button type="button" style="background-color:#3f51b5; color:white; margin-bottom:1%" md-raised-button (click)="imgFileInput.click()"><i class="material-icons">file_upload</i>Upload Image</button>
+        <input [disabled] = "true" placeholder="Upload Image...." mdInput [value]="albumArtworkPath" required>
+        <input hidden type="file" #imgFileInput (change)="previewImage($event)"/>
+
+      <div>
+        <button md-button mdStepperPrevious>Back</button>
+        <button md-button mdStepperNext>Next</button>
+      </div>
+    </form>
+  </md-step>
+<md-step [stepControl]="songsFormGroup">
+    <form [formGroup]="songsFormGroup">
+      <ng-template mdStepLabel>Upload Songs</ng-template>
+      <div *ngFor="let song of currentAlbum.songs;">
+        <div>
+            <md-form-field>
+                <input mdInput placeholder="Song Title" name="song_title" [(ngModel)]= "song.song_name" formControlName="song_title" required>
+            </md-form-field>
+            <button md-icon-button style="float:right"><i class="material-icons">close</i></button>
+        </div>
+        <div>
+            <md-slide-toggle>Mark As Explicit</md-slide-toggle>
+        </div>
+        <div>
+        <md-form-field class="demo-chip-list">
+            <md-chip-list mdPrefix #chipList>
+                <md-chip *ngFor="let artists of featuredArtists" [selectable]="true"
+                        [removable]="true" (remove)="remove(artists)">
+                {{artists}}
+                <md-icon mdChipRemove *ngIf="removable">cancel</md-icon>
+                </md-chip>
+            </md-chip-list>
+            <input mdInput placeholder="Featured Artists"
+                    [mdChipInputFor]="chipList"
+                    [mdChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                    [mdChipInputAddOnBlur]="addOnBlur"
+                    (mdChipInputTokenEnd)="add($event)" />
+        </md-form-field>
+        </div>
+        <button md-raised-button style="background-color:#3f51b5; color:white; margin-bottom:1%"><i class="material-icons">file_upload</i>Upload Song File</button>
+        <md-form-field>
+            <input [disabled] = "true" placeholder="Upload Song...." mdInput required>
+        </md-form-field>
+         <md-divider></md-divider>
+      </div>
+        <button md-raised-button color="primary" style="color:white; " (click)="addNewSong()">Add New Song</button>
+      <div>
+        <button md-button mdStepperPrevious>Back</button>
+        <button md-button mdStepperNext>Next</button>
+      </div>
+    </form>
+  </md-step>
+  <md-step>
+    <ng-template mdStepLabel>Confirm</ng-template>
+    <div style="height:100%">
+    <md-grid-list cols="3" rowHeight="30px">
+        <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Album Name</b></span></md-grid-tile>
+        <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{currentAlbum.label}}</span></md-grid-tile>
+        <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Release Date</b></span></md-grid-tile>
+        <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{currentAlbum.releaseDate | date}}</span></md-grid-tile>
+        <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Album Art</b></span></md-grid-tile>
+    </md-grid-list>
+    <span style="position:absolute; left:0px;"><img [src]="currentAlbum.artwork"></span>
+    <div>
+      <button md-button mdStepperPrevious>Back</button>
+    </div>
+    </div>
+  </md-step>
+</md-horizontal-stepper>
+
+</md-card>

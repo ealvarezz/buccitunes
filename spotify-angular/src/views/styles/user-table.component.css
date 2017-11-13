@@ -1,0 +1,42 @@
+.mat-column-username {
+  flex: 0 0 20%;
+}
+
+.mat-column-email {
+  flex: 0 0 40%;
+}
+.mat-column-type {
+  flex: 0 0 15%;
+}
+.mat-column-status{
+ flex: 0 0 10%;
+}
+.mat-column-join_date{
+flex: 0 0 15%;
+}
+
+
+
+.example-container{
+  width:100%;
+  height:100%;
+}
+
+md-row:hover{
+  background-color: #F5F5F5;
+  cursor: pointer;
+}
+.example-header {
+  min-height: 64px;
+  display: flex;
+  align-items: baseline;
+  padding: 8px 24px 0;
+  font-size: 20px;
+  justify-content: space-between;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  flex-grow: 1;
+  margin-left: 32px;
+}

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule} from '@angular/material';
+import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule} from '@angular/material';
 import {PlayerComponent} from './player.component'
 import {HomePageTabTemplate} from './homepage-tab.component'
 import { AppComponent } from './app.component';
@@ -24,18 +24,23 @@ import {MiniAlbumComponent} from './mini-album.component';
 import {AdminComponent} from './admin.component';
 import {RequestTableComponent} from './request-table.component';
 import {DetailDialog} from './admin.component';
-	import { DatePipe } from '@angular/common';
+import {AddAlbumDialog} from './artist.component'
+import {AuthenticationService} from './services/authentication.service'
+  import { DatePipe } from '@angular/common';
+  import {UserTableComponent} from './user-table.component';
+import { HttpModule } from '@angular/http';
 
+import { AuthGuard } from './services/AuthGuard';
 
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, 
         children:[
-          { path: '', component: HomePageComponent },
-          {path: 'album', component: AlbumComponent},
-          {path: 'playlist', component: PlaylistComponent},
-          {path: 'artist', component: ArtistComponent},
-          {path: 'admin',component:AdminComponent}
+          { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
+          {path: 'album', component: AlbumComponent, canActivate: [AuthGuard]},
+          {path: 'playlist', component: PlaylistComponent, canActivate: [AuthGuard]},
+          {path: 'artist', component: ArtistComponent, canActivate: [AuthGuard]},
+          {path: 'admin',component:AdminComponent, canActivate: [AuthGuard]}
         ] 
   },
   {path: 'login', component: LoginComponent},
@@ -61,12 +66,15 @@ const appRoutes: Routes = [
     MiniAlbumComponent,
     AdminComponent,
     RequestTableComponent,
-    DetailDialog
+    DetailDialog,
+    AddAlbumDialog,
+    UserTableComponent
   ],
   imports: [
     RouterModule.forRoot(
       appRoutes
     ),
+    HttpModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
@@ -91,14 +99,19 @@ const appRoutes: Routes = [
     MdMenuModule,
     MdTooltipModule,
     MdSlideToggleModule,
-    MdCheckboxModule
+    MdCheckboxModule,
+    MdChipsModule
   ],
-  providers: [MusicService,
+  providers: [
+    MusicService,
+    AuthenticationService,
+    AuthGuard,
     { provide: MD_DIALOG_DATA, useValue: {} },
     { provide: MdDialogRef, useValue: {} }
   ],
   entryComponents: [
-    DetailDialog
+    DetailDialog,
+    AddAlbumDialog
   ],
   bootstrap: [AppComponent]
 })

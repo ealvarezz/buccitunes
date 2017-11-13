@@ -8,11 +8,18 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 })
 export class SignUpComponent implements OnInit {
   isLinear = false;
-
+  type : string;
   firstFormGroup: FormGroup;
   secondFormGroup: FormGroup;
   thirdFormGroup: FormGroup;
   selectedMonth : string;
+
+  visible: boolean = true;
+  selectable: boolean = true;
+  removable: boolean = true;
+  addOnBlur: boolean = true;
+
+
   months : string[] = ['January','Feburary','March','April','May','June','July','August','September','October','November','Decemeber']
 
   constructor(private _formBuilder: FormBuilder) { }
@@ -28,6 +35,11 @@ export class SignUpComponent implements OnInit {
       secondCtrl: ['', Validators.required]
     });
   }
+
+  setUserType(type){
+    this.type = type;
+  }
+
 
 
 }

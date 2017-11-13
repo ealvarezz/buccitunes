@@ -6,7 +6,12 @@
                 <div><h1>Yung Gravy</h1></div>
                 <button md-raised-button class="rounded-button">Play</button>
                 <button md-raised-button class="rounded-button">Follow</button>
-                <button md-mini-fab  style="color: white; background-color:#3f51b5; top:5px;"><i class="material-icons " style="font-size:24px; ">more_horiz</i></button>
+                <button md-mini-fab  style="color: white; background-color:#3f51b5; top:5px;" [mdMenuTriggerFor]="artistMenu"><i class="material-icons " style="font-size:24px; ">more_horiz</i></button>
+
+                <md-menu #artistMenu="matMenu">
+                    <button mat-menu-item (click)="addAlbum()"> Add Album </button>
+                    <button mat-menu-item> Add Song </button>
+                </md-menu>
             </div>
         </div>
     </md-card-header>

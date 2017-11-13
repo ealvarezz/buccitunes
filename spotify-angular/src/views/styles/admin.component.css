@@ -11,3 +11,16 @@
     width:40%;
     margin: 0 auto;
 }
+.user_info{
+    float:left;
+    max-width:45%;
+    min-width:45%;
+    min-height:1000px;
+}
+.user_table{
+   max-width: 55%;
+   margin-left:45%;
+   height:100%;
+}
+
+
