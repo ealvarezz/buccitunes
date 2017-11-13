@@ -86,7 +86,14 @@ public class AdminService {
 		//Used to make sure the requestedAlbum information is up to date
 		//requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
 		Artist artist = artistRepository.findOne(requestedAlbum.getPrimaryArtist().getId());
+		if(artist == null) {
+			artist = artistRepository.findByName(requestedAlbum.getPrimaryArtist().getName());
+			if(artist == null) {
+				throw new BucciException("Artist not enter");
+			}
+		}
 		requestedAlbum.setPrimaryArtist(artist);
+		
 		
 		Album album = new Album(requestedAlbum);
 		

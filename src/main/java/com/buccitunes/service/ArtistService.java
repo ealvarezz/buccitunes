@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
+import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.User;
 
@@ -32,6 +33,16 @@ private final RequestedAlbumRepository requestedAlbumRepository;
 			
 
 		return result;
+	}
+	
+	public Artist getArtistByName(String name) throws BucciException {
+		Artist artist = artistRepository.findByName(name);
+		
+		if(artist != null) {
+			return artist;
+		} else {
+			throw new BucciException("Artist not found");
+		}
 	}
 	
 	public void save(Artist artist) {
