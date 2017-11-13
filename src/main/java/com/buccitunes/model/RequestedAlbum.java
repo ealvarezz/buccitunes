@@ -14,10 +14,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="RequestedAlbum")
 public class RequestedAlbum {
@@ -27,8 +29,6 @@ public class RequestedAlbum {
 	private int id;
 	
 	private String title;
-	
-	private String coverArtPath;
 	
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
@@ -47,6 +47,12 @@ public class RequestedAlbum {
 	private Date releaseDate;
 	
 	private String label;
+	
+	private String artworkPath;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Transient
+	private String artwork;
 	
 	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -83,14 +89,6 @@ public class RequestedAlbum {
 
 	public void setTitle(String title) {
 		this.title = title;
-	}
-
-	public String getCoverArtPath() {
-		return coverArtPath;
-	}
-
-	public void setCoverArtPath(String coverArtPath) {
-		this.coverArtPath = coverArtPath;
 	}
 
 	public List<Artist> getFeaturedArtists() {
@@ -163,6 +161,22 @@ public class RequestedAlbum {
 
 	public void setPrimaryArtist(Artist primaryArtist) {
 		this.primaryArtist = primaryArtist;
+	}
+
+	public String getArtworkPath() {
+		return artworkPath;
+	}
+
+	public void setArtworkPath(String artworkPath) {
+		this.artworkPath = artworkPath;
+	}
+
+	public String getArtwork() {
+		return artwork;
+	}
+
+	public void setArtwork(String artwork) {
+		this.artwork = artwork;
 	}
 	
 	

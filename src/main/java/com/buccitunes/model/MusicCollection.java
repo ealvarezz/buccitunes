@@ -15,10 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="MUSIC_COLLECTION")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -27,6 +29,7 @@ public class MusicCollection {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
 	private String title;
 	
 	@JsonIgnore 
@@ -40,6 +43,10 @@ public class MusicCollection {
 	private Date dateCreated;
 	
 	private String artworkPath;
+	
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	@Transient
+	private String artwork;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "stats_id")
@@ -97,5 +104,15 @@ public class MusicCollection {
 	public void removeSong(Song song) {
 		this.songs.add(song);
 	}
+
+	public String getArtwork() {
+		return artwork;
+	}
+
+	public void setArtwork(String artwork) {
+		this.artwork = artwork;
+	}
+	
+	
 	
 }
