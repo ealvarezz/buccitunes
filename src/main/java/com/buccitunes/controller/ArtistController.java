@@ -37,4 +37,15 @@ public class ArtistController {
 		}
 	}
 	
+	@RequestMapping(value="addartist", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<ArtistUser> addArtistUser(@RequestBody ArtistUser artistUser) {
+		try {
+			
+			artistService.saveArtistUser(artistUser);
+			return BucciResponseBuilder.successfulResponse(artistUser);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+	}
+	
 }

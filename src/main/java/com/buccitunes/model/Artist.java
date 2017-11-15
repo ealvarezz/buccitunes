@@ -13,6 +13,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -26,6 +27,10 @@ public class Artist {
 	private String name;
 	
 	private String biography;
+	
+	// This won't be stored into database we will just read it from requests and store it into file system
+	private String avatar;
+	
 	
 	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "primaryArtist", cascade = CascadeType.ALL)
@@ -58,6 +63,16 @@ public class Artist {
     @JoinColumn(name = "stats_id")
 	private StatCache stats;
 	
+	
+	
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
 	public Artist() {
 		this.stats = new StatCache();
 	}

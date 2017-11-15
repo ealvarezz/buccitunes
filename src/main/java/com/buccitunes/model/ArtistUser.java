@@ -27,6 +27,8 @@ public class ArtistUser extends User {
     @JoinColumn(name = "artist_id")
 	private Artist artist;
 
+	public ArtistUser(){}
+	
 	public Artist getArtist() {
 		return artist;
 	}

@@ -99,7 +99,7 @@ public class AdminService {
 		
 		if(requestedAlbum.getArtwork() != null) {
 			try {
-				String artworkPath = FileManager.saveArtwork(requestedAlbum.getArtwork(), artist);
+				String artworkPath = FileManager.saveArtwork(requestedAlbum.getArtwork(), requestedAlbum.getId());
 				album.setArtworkPath(artworkPath);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
