@@ -1,6 +1,10 @@
 package com.buccitunes.service;
 
+
 import java.io.IOException;
+
+import java.util.Calendar;
+
 import java.util.Date;
 import java.util.List;
 
@@ -38,12 +42,23 @@ public class MusicCollectionService {
 		this.artistRepository = artistRepository;
 	}
 	
-	/*
-	public List<Album> getNewReleases() {
-		albumRepository.
+	public List<Album> getNewReleasesByCurrentMonth() {
+		
+		Date d = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        int month = cal.get(Calendar.MONTH) + 1;
+        
+		List<Album> albums = albumRepository.getByReleasesMonth(month);
+				
+		return albums;
 	}
-	*/
 	
+	
+	public List<Album> getTopAlbumsByWeek() {
+		return null;
+	}
+
 	public void saveAlbum(Album album) throws BucciException{
 		
 			
@@ -76,4 +91,5 @@ public class MusicCollectionService {
 			
 		
 	}
+
 }
