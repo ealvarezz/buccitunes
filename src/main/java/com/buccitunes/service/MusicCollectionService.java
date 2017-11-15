@@ -24,6 +24,7 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.Song;
 
 @Service
 @Transactional
@@ -63,8 +64,9 @@ public class MusicCollectionService {
 		
 			
 			String artworkString = album.getArtwork();
-			Artist albumOwner = artistRepository.findByName(album.getArtist());
+			Artist albumOwner = artistRepository.findByName(album.getPrimaryArtist().getName());
 			album.setPrimaryArtist(albumOwner);
+			for(Song song: album.getSongs()) song.setOwner(albumOwner);
 			Album returnedAlbum = albumRepository.save(album);
 			
 			albumOwner.getAlbums().add(album); // suppose to add album by adding to artist's album list

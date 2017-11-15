@@ -31,7 +31,6 @@ public class RequestedSong{
     @JoinColumn(name = "owner_id", insertable = false, updatable = false)
 	private Artist owner;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Featured_Artist_Requested",
 		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),

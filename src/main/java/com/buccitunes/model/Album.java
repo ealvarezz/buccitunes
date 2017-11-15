@@ -20,14 +20,13 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 @Entity(name="Album")
 public class Album extends MusicCollection {
 	
-	@Transient
-	String artist;
+	
 	
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
 	private Artist primaryArtist;
 	
-	@JsonIgnore
+
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "artist_feature_album",
 		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false),
@@ -40,7 +39,7 @@ public class Album extends MusicCollection {
 	private Date releaseDate;
 	private String label;
 	
-	@JsonIgnore
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "genre_album",
 		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false),
@@ -77,14 +76,6 @@ public class Album extends MusicCollection {
 		}
 		
 		super.setSongs(newSongs);
-	}
-	
-	public String getArtist() {
-		return artist;
-	}
-
-	public void setArtist(String artist) {
-		this.artist = artist;
 	}
 
 	public Artist getPrimaryArtist() {

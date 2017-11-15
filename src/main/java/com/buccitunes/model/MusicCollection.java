@@ -32,7 +32,6 @@ public class MusicCollection {
 	
 	private String title;
 	
-	@JsonIgnore 
 	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "music_collection_song",
 		joinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id", insertable = false, updatable = false),

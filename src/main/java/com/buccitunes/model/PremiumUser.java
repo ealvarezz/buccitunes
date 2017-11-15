@@ -20,7 +20,6 @@ public class PremiumUser extends User {
     @JoinColumn(name = "billing_id")
 	private BillingInfo billingInfo;
 	
-	@JsonIgnore
 	@OneToMany(mappedBy="premiumUser")
 	private List<Payment> paymentHistory;
 	

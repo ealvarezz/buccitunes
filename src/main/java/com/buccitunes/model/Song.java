@@ -25,12 +25,12 @@ public class Song {
 	private String name;
 	private int duration;
 	private int rating;
+	private boolean isExplicit; // change to explicit, rob kelly doesn't like verbs in variables
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
 	private Artist owner;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "featured",
 		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
@@ -41,9 +41,8 @@ public class Song {
     @JoinColumn(name = "mime_id")
 	private MimeType mimeType;
 	
-	private boolean isExplicit;
 	
-	@JsonIgnore
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "genre_song",
 		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false),
@@ -136,14 +135,14 @@ public class Song {
 		this.mimeType = mimeType;
 	}
 	
-	public boolean isExplicit() {
+	public boolean getIsExplicit() {
 		return isExplicit;
 	}
 	
-	public void setExplicit(boolean isExplicit) {
+	public void setIsExplicit(boolean isExplicit) {
 		this.isExplicit = isExplicit;
 	}
-	
+
 	public List<Genre> getGenres() {
 		return genres;
 	}
