@@ -21,14 +21,24 @@ import com.buccitunes.service.UserService;
 public class MusicCollectionController {
 	
 	@Autowired
-	private MusicCollectionService musicService;
+	private MusicCollectionService musicCollectionService;
 	
 	
 	@RequestMapping(value="getNewReleases", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> newReleasedAlbums() {
 		
+		List<Album> newAlbums = musicCollectionService.getNewReleasesByCurrentMonth();
+		return BucciResponseBuilder.successfulResponse(newAlbums);
+	}
+	
+	
+	@RequestMapping(value="topAlbumsOfweek", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Album>> topAlbumsByWeek() {
 		return null;
 	}
+	
+	
+	
 	
 	
 	//For testing purposes

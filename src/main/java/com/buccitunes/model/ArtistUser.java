@@ -9,10 +9,19 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity(name="ArtistUser")
 public class ArtistUser extends User {
 	
+	@DateTimeFormat(pattern="MM/dd/yyyy")
+	private Date createDate;
 	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "artist_id")
+	private Artist artist;
+
+	public ArtistUser(){}
 	
 	public ArtistUser(String email, String name, String password, String username) {
 		super(email, name, password, username);
@@ -23,11 +32,6 @@ public class ArtistUser extends User {
 		//Artist artist = 
 	}
 
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "artist_id")
-	private Artist artist;
-
-	public ArtistUser(){}
 	
 	public Artist getArtist() {
 		return artist;

@@ -1,5 +1,7 @@
 package com.buccitunes.service;
 
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -29,9 +31,20 @@ public class MusicCollectionService {
 		this.songRepository = songRepository;
 	}
 	
-	/*
-	public List<Album> getNewReleases() {
-		albumRepository.
+	public List<Album> getNewReleasesByCurrentMonth() {
+		
+		Date d = new Date();
+        Calendar cal = Calendar.getInstance();
+        cal.setTime(d);
+        int month = cal.get(Calendar.MONTH) + 1;
+        
+		List<Album> albums = albumRepository.getByReleasesMonth(month);
+				
+		return albums;
 	}
-	*/
+	
+	
+	public List<Album> getTopAlbumsByWeek() {
+		return null;
+	}
 }
