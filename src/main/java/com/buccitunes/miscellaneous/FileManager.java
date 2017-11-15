@@ -17,12 +17,12 @@ import com.buccitunes.model.Artist;
 
 public class FileManager {
 	private final static String FILESDIR = "/BucciTunesFiles";
-	private final static Path FILESPATH = Paths.get(System.getProperty("user.home") + FILESDIR + "/");
-	private final static Path USERPATH = Paths.get(FILESPATH + "USERS/");
-	private final static Path ARTISTPATH = Paths.get(FILESPATH + "ARTISTS/");
-	private final static Path ALBUMPATH = Paths.get(FILESPATH + "ALBUMS/");
-	private final static Path PLAYLISTPATH = Paths.get(FILESPATH + "PLAYLISTS/");
-	private final static Path SONGPATH = Paths.get(FILESPATH + "SONGS/");
+	private final static Path FILESPATH = Paths.get(System.getProperty("user.home").toString() + FILESDIR + "/");
+	private final static Path USERPATH = Paths.get(FILESPATH.toString() + "/USERS/");
+	private final static Path ARTISTPATH = Paths.get(FILESPATH.toString() + "/ARTISTS/");
+	private final static Path ALBUMPATH = Paths.get(FILESPATH.toString() + "/ALBUMS/");
+	private final static Path PLAYLISTPATH = Paths.get(FILESPATH.toString() + "/PLAYLISTS/");
+	private final static Path SONGPATH = Paths.get(FILESPATH.toString() + "/SONGS/");
 	private final static String ARTWORKIMAGE = "artwork.png";
 
 	
@@ -44,15 +44,12 @@ public class FileManager {
 			setUpFileDirectory();
 		}
 		
-		Path artistDir = Paths.get(ARTISTPATH + "/" + artistId + "/");
+		Path artistDir = Paths.get(ARTISTPATH.toString() + "/" + artistId + "/");
 		if(Files.notExists(artistDir)) {
 			Files.createDirectory(artistDir);
 		}
 		
-		Path artworkImage = Paths.get(artistDir + ARTWORKIMAGE);
-		if(Files.notExists(artworkImage)) {
-			Files.createDirectory(artworkImage);
-		}
+		
 		
 		
 	}
@@ -63,30 +60,27 @@ public static void setAlbumDirectory(int artistId) throws IOException {
 			setUpFileDirectory();
 		}
 		
-		Path albumDir = Paths.get(ALBUMPATH + "/" + artistId + "/");
+		Path albumDir = Paths.get(ALBUMPATH.toString() + "/" + artistId + "/");
 		if(Files.notExists(albumDir)) {
 			Files.createDirectory(albumDir);
 		}
 		
-		Path artworkImage = Paths.get(albumDir + ARTWORKIMAGE);
-		if(Files.notExists(artworkImage)) {
-			Files.createDirectory(artworkImage);
-		}
+		
 		
 		
 	}
 	
-	public static String saveArtwork(String encodedStr, int artistId) throws IOException {
+	public static String saveArtwork(String encodedStr, int albumId) throws IOException {
 		
 		 byte[] decodedBytes = Base64.getMimeDecoder().decode(encodedStr);
 		 
 		 System.out.println("I  MADE IT HERE!!!!!!!!!!!!!!!!!!!!!!!!\n\n\n\n\n");
-         Path path = Paths.get(ALBUMPATH + "/" + artistId +  "/" + ARTWORKIMAGE);
+         Path path = Paths.get(ALBUMPATH + "/" + albumId +  "/" + ARTWORKIMAGE);
          
          System.out.println(path);
          
          if(Files.notExists(path)) {
-        	 	setAlbumDirectory(artistId);
+        	 	setAlbumDirectory(albumId);
          }
 
          try{
@@ -97,7 +91,7 @@ public static void setAlbumDirectory(int artistId) throws IOException {
 				
 			BufferedImage bImageFromConvert = ImageIO.read(in);
 					
-			ImageIO.write(bImageFromConvert, "png", new File(ALBUMPATH + "/" + artistId +  "/" + ARTWORKIMAGE)); // File might be null
+			ImageIO.write(bImageFromConvert, "png", path.toFile()); // File might be null
 				
             System.out.println("Success");
          }
@@ -121,7 +115,13 @@ public static void setAlbumDirectory(int artistId) throws IOException {
         }
 
         try{
-            Files.write(path,decodedBytes);
+        		
+        		InputStream in = new ByteArrayInputStream(decodedBytes);
+			
+			BufferedImage bImageFromConvert = ImageIO.read(in);
+					
+			ImageIO.write(bImageFromConvert, "png", path.toFile()); // File might be null
+            
             System.out.println("Success");
         }
         catch (Exception ex) {

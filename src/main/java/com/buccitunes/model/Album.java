@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -20,6 +21,9 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="Album")
 public class Album extends MusicCollection {
+	
+	@Transient
+	String artist;
 	
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
@@ -76,6 +80,14 @@ public class Album extends MusicCollection {
 		super.setSongs(newSongs);
 	}
 	
+	public String getArtist() {
+		return artist;
+	}
+
+	public void setArtist(String artist) {
+		this.artist = artist;
+	}
+
 	public Artist getPrimaryArtist() {
 		return primaryArtist;
 	}

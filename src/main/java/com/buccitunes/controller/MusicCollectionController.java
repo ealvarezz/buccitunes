@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.*;
@@ -35,6 +36,21 @@ public class MusicCollectionController {
 	@RequestMapping(value="checkDate", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> check(@RequestBody Album album) {
 		System.out.println(album.getReleaseDate());
+		return BucciResponseBuilder.successfulResponse(album);
+	}
+	
+	//For testing purposes
+	@RequestMapping(value="addalbum", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Album album) {
+		
+		try {
+			musicService.saveAlbum(album);
+			
+		} catch (BucciException e) {
+			
+			return BucciResponseBuilder.failedMessage(e.getMessage()); 
+		}
+		
 		return BucciResponseBuilder.successfulResponse(album);
 	}
 }

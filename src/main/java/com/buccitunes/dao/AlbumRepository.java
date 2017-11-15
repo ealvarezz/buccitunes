@@ -9,4 +9,5 @@ import com.buccitunes.model.Album;
 @Transactional
 public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, CrudRepository<Album, Integer> {
 
+	public Album findByPrimaryArtist_Name(String name);
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.data.repository.CrudRepository;
 
+import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.User;
 

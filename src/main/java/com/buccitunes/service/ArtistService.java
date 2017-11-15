@@ -70,18 +70,18 @@ private final ArtistUserRepository artistUserRepository;
 		
 		try{
 			
-			if(artistUser.getArtist().getAvatar() != null)  {
+			String avatar = artistUser.getArtist().getAvatar();
+			artistUser.getArtist().setAvatar("");
+			artistUserRepository.save(artistUser);
+			ArtistUser savedArtist = artistUserRepository.findOne(artistUser.getEmail());
+			
+			if(avatar != null)  {
 				
-				String avatarPath = FileManager.saveArtwork(artistUser.getArtist().getAvatar(), artistUser.getArtist().getId());
-				
-				artistUser.getArtist().setAvatar(avatarPath);
+				String avatarPath = FileManager.saveArtistAlias(avatar, savedArtist.getArtist().getId());
+				savedArtist.getArtist().setAvatar(avatarPath);
 			}
 				
-			artistUserRepository.save(artistUser);
-			
-				
-				
-			
+	
 		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
