@@ -67,6 +67,7 @@ public class MusicCollectionService {
 			Artist albumOwner = artistRepository.findByName(album.getPrimaryArtist().getName());
 			album.setPrimaryArtist(albumOwner);
 			for(Song song: album.getSongs()) song.setOwner(albumOwner);
+			album.setArtwork("");
 			Album returnedAlbum = albumRepository.save(album);
 			
 			albumOwner.getAlbums().add(album); // suppose to add album by adding to artist's album list
