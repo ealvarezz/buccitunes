@@ -34,7 +34,6 @@ public class RequestedAlbum {
     @JoinColumn(name = "primary_artist_id")
 	private Artist primaryArtist;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Featured_Album_Artist_Requested",
 		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
@@ -54,7 +53,6 @@ public class RequestedAlbum {
 	@Transient
 	private String artwork;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Album",
 		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false),

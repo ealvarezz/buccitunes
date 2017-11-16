@@ -22,12 +22,10 @@ public class Playlist extends MusicCollection {
 	@ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User owner;
-	
-	@JsonIgnore
+
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "collaboratingPlaylitst")
 	private List<User> collaboratives;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "followingPlaylists")
 	private List<User> followers;
 	

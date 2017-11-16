@@ -35,7 +35,6 @@ public class RequestedConcert {
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date releaseDate;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Artists_Concerts_Requested",
 		joinColumns = @JoinColumn(name = "requested_concert_id", referencedColumnName = "id", insertable = false, updatable = false),

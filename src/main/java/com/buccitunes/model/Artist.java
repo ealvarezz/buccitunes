@@ -33,19 +33,15 @@ public class Artist {
 	private String avatar;
 	
 	
-	@JsonIgnore
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "primaryArtist", cascade = CascadeType.ALL)
 	private List<Album> albums;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "followingArtists")
 	private List<User> followers;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists")
 	private List<Song> features;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists")
 	private List<Concert> upcomingConcerts;
 	
@@ -53,7 +49,6 @@ public class Artist {
     @JoinColumn(name = "featured_album_id", insertable = false, updatable = false)
 	private Album featuredAlbum;
 	
-	@JsonIgnore
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "recently_played_song_artist",
 		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
