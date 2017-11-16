@@ -50,7 +50,6 @@ public class MusicCollectionService {
         int month = cal.get(Calendar.MONTH) + 1;
         
 		List<Album> albums = albumRepository.getByReleasesMonth(month);
-				
 		return albums;
 	}
 	

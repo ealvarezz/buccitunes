@@ -29,6 +29,7 @@ public class Artist {
 	private String biography;
 	
 	// This won't be stored into database we will just read it from requests and store it into file system
+	
 	private String avatar;
 	
 	

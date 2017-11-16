@@ -36,7 +36,7 @@ public class Album extends MusicCollection {
 	
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
-	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") comment this out just incase script doesn't work
 	private Date releaseDate;
 	private String label;
 	
@@ -51,6 +51,10 @@ public class Album extends MusicCollection {
 	
 	public Album(){
 		super();
+	};
+	
+	public Album(List<Song> newSongs){
+		super(newSongs);
 	};
 	
 	public Album(RequestedAlbum requested) {

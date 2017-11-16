@@ -1,5 +1,6 @@
 package com.buccitunes.model;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -11,6 +12,7 @@ public class Lyrics {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
+	//@Column(columnDefinition = "VARCHAR(5000)")
 	private String lyric;
 
 	public Lyrics() {}

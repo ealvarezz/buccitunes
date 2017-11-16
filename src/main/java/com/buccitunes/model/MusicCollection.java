@@ -19,6 +19,7 @@ import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -32,7 +33,7 @@ public class MusicCollection {
 	
 	private String title;
 	
-	@JsonIgnore 
+	
 	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "music_collection_song",
 		joinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id", insertable = false, updatable = false),
@@ -40,6 +41,7 @@ public class MusicCollection {
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") comment this out just incase script doesn't work
 	private Date dateCreated;
 	
 	private String artworkPath;
@@ -53,6 +55,11 @@ public class MusicCollection {
 	private StatCache stats;
 	
 	public MusicCollection(){
+		this.stats = new StatCache();
+	};
+	
+	public MusicCollection(List<Song> songs){
+		this.songs = songs;
 		this.stats = new StatCache();
 	};
 	
