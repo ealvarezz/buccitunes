@@ -3,6 +3,7 @@ package com.buccitunes.model;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,6 +27,7 @@ public class Artist {
 	
 	private String name;
 	
+	@Column(columnDefinition = "VARCHAR(5000)")
 	private String biography;
 	
 	// This won't be stored into database we will just read it from requests and store it into file system

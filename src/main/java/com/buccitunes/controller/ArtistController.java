@@ -37,7 +37,7 @@ public class ArtistController {
 		}
 	}
 	
-	@RequestMapping(value="addartist", method = RequestMethod.POST)
+	@RequestMapping(value="addArtistUser", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<ArtistUser> addArtistUser(@RequestBody ArtistUser artistUser) {
 		try {
 			
