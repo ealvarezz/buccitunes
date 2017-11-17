@@ -63,12 +63,16 @@ public class MusicCollectionService {
 	
 	public Album getAlbum(int albumId) {
 		
-	       return albumRepository.findOne(albumId);
+	       Album album = albumRepository.findOne(albumId);
+	       album.getSongs().size();
+	       return album;
 	}
 	
 	public Playlist getPlaylist(int playlistId) {
 		
-	       return playlistRepository.findOne(playlistId);
+	       Playlist playlist = playlistRepository.findOne(playlistId);
+	       playlist.getSongs().size();
+	       return playlist;
 	}
 
 	public void saveAlbum(Album album) throws BucciException{
