@@ -27,6 +27,7 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.Playlist;
 import com.buccitunes.model.Song;
 
 @Service
@@ -54,6 +55,20 @@ public class MusicCollectionService {
 	
 	public List<Album> getTopAlbumsByWeek() {
        return null;
+	}
+	
+	public Album getAlbum(int albumId) {
+		
+	       Album album = albumRepository.findOne(albumId);
+	       album.getSongs().size();
+	       return album;
+	}
+	
+	public Playlist getPlaylist(int playlistId) {
+		
+	       Playlist playlist = playlistRepository.findOne(playlistId);
+	       playlist.getSongs().size();
+	       return playlist;
 	}
 
 	public void saveAlbum(Album album) throws BucciException{
