@@ -22,6 +22,7 @@ import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
@@ -37,10 +38,6 @@ public class MusicCollectionService {
 	private final SongRepository songRepository;
 	private final ArtistRepository artistRepository;
 	
-	private final int STARTINGPAGELIMIT = 0;
-	private final int NEWRELEASESTART = 7;
-	private final int LIMITNEWRELASES = 2;
-	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
 			SongRepository songRepository, ArtistRepository artistRepository) {
 		this.albumRepository = albumRepository;
@@ -50,8 +47,7 @@ public class MusicCollectionService {
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
-		
-		PageRequest pageRequest = new PageRequest(STARTINGPAGELIMIT, LIMITNEWRELASES);
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES);
 		return albumRepository.getByReleasesMonth(pageRequest);
 	}
 	

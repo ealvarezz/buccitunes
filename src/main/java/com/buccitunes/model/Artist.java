@@ -17,6 +17,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name="ARTIST")
 public class Artist {
@@ -36,6 +37,7 @@ public class Artist {
 	
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "primaryArtist", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties(value = "primaryArtist")
 	private List<Album> albums;
 	
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "followingArtists")
