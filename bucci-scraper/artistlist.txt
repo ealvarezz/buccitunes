@@ -1,0 +1,54 @@
+Michael Jackson,POP
+DMX,HIPHOP
+Lupe Fiasco,HIPHOP
+Outkast,HIPHOP
+Death Grips,HIPHOP
+Carlos Santana,LATIN
+Jimi Hendrix,ROCK
+Butthole Surfers,PUNK
+Fatal Bazooka,HIPHOP
+21 Savage,HIPHOP
+Dave Matthews Band,ROCK
+Taylor Swift,POP
+5 Seconds Of Summer,POP
+Jonas Brothers,POP
+Demi Lovato,POP
+R. Kelly,RNB
+Migos,HIPHOP
+One Direction,POP
+Dead Or Alive,POP
+Rick James,RNB
+Yung Lean,HIPHOP
+Eminem,HIPHOP
+Wale,HIPHOP
+Lil Pump,HIPHOP
+Green Day,ROCK
+Post Malone,HIPHOP
+Dead Kennedys,PUNK
+Three 6 Mafia,HIPHOP
+Owl City,POP
+Gang Starr,HIPHOP
+Nickelback,POP
+Justin Timberlake,FUNK
+Cee Lo Green,RNB
+T-Pain,HIPHOP
+Britney Spears,POP
+Kanye West,HIPHOP
+Relient K,ROCK
+Wu-Tang Clan,HIPHOP
+E-40,HIPHOP
+Timbaland,HIPHOP
+Paramore,INDIE
+Adele,POP
+Madonna,POP
+Avril Lavigne,ROCK
+Katy Perry,POP
+Whitney Houston,POP
+Linkin Park,METAL
+Nicki Minaj,POP
+Poppy,POP
+Led Zeppelin,ROCK
+The White Stripes,ROCK
+Radiohead,ROCK
+The Wiggles,POP
+Tears For Fears,POP
