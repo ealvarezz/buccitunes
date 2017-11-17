@@ -66,7 +66,7 @@ public class Song {
 		this.duration = song.getDuration();
 		this.owner = song.getArtist();
 		this.featuredArtists = song.getFeatures();
-		this.isExplicit = song.isExplicit();
+		this.isExplicit = song.getIsExplicit();
 		this.genres = song.getGenres();
 		this.mimeType = song.getMimeType();
 		this.picturePath = song.getPicturePath();

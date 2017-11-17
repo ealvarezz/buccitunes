@@ -10,6 +10,8 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.AlbumRepository;
@@ -35,6 +37,10 @@ public class MusicCollectionService {
 	private final SongRepository songRepository;
 	private final ArtistRepository artistRepository;
 	
+	private final int STARTINGPAGELIMIT = 0;
+	private final int NEWRELEASESTART = 7;
+	private final int LIMITNEWRELASES = 2;
+	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
 			SongRepository songRepository, ArtistRepository artistRepository) {
 		this.albumRepository = albumRepository;
@@ -45,18 +51,13 @@ public class MusicCollectionService {
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
 		
-		Date d = new Date();
-        Calendar cal = Calendar.getInstance();
-        cal.setTime(d);
-        int month = cal.get(Calendar.MONTH) + 1;
-        
-		List<Album> albums = albumRepository.getByReleasesMonth(month);
-		return albums;
+		PageRequest pageRequest = new PageRequest(STARTINGPAGELIMIT, LIMITNEWRELASES);
+		return albumRepository.getByReleasesMonth(pageRequest);
 	}
 	
 	
 	public List<Album> getTopAlbumsByWeek() {
-		return null;
+       return null;
 	}
 
 	public void saveAlbum(Album album) throws BucciException{
@@ -90,8 +91,6 @@ public class MusicCollectionService {
 			}
 			
 			album.setDateCreated(new Date());
-			
-		
 	}
 
 }

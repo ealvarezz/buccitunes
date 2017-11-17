@@ -146,11 +146,11 @@ public class RequestedSong{
 		this.requester = requester;
 	}
 	
-	public boolean isExplicit() {
+	public boolean getIsExplicit() {
 		return isExplicit;
 	}
 
-	public void setExplicit(boolean isExplicit) {
+	public void setIsExplicit(boolean isExplicit) {
 		this.isExplicit = isExplicit;
 	}
 

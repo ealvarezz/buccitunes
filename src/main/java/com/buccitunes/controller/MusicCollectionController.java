@@ -27,7 +27,6 @@ public class MusicCollectionController {
 	
 	@RequestMapping(value="getNewReleases", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> newReleasedAlbums() {
-		
 		List<Album> newAlbums = musicCollectionService.getNewReleasesByCurrentMonth();
 		return BucciResponseBuilder.successfulResponse(newAlbums);
 	}
@@ -35,7 +34,8 @@ public class MusicCollectionController {
 	
 	@RequestMapping(value="topAlbumsOfweek", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> topAlbumsByWeek() {
-		return null;
+		List<Album> newAlbums = musicCollectionService.getTopAlbumsByWeek();
+		return BucciResponseBuilder.successfulResponse(newAlbums);
 	}
 	
 	
