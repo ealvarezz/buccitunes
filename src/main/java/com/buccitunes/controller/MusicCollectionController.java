@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buccitunes.miscellaneous.BucciException;
@@ -39,8 +40,17 @@ public class MusicCollectionController {
 	}
 	
 	
+	@RequestMapping(value="album", method = RequestMethod.GET)
+	public @ResponseBody Album getAlbum(@RequestParam int id) {
+		
+		return musicCollectionService.getAlbum(id);
+	}
 	
-	
+	@RequestMapping(value="playlist", method = RequestMethod.GET)
+	public @ResponseBody Playlist getPlaylist(@RequestParam int id) {
+		
+		return musicCollectionService.getPlaylist(id);
+	}
 	
 	//For testing purposes
 	@RequestMapping(value="checkDate", method = RequestMethod.POST)
