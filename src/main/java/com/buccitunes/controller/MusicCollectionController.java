@@ -8,6 +8,9 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,9 +25,14 @@ import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.*;
 import com.buccitunes.service.MusicCollectionService;
 import com.buccitunes.service.UserService;
+@Configuration
+@PropertySource("classpath:config.properties")
 
 @Controller
 public class MusicCollectionController {
+	
+	@Autowired
+	private Environment env;
 	
 	@Autowired
 	private MusicCollectionService musicCollectionService;
@@ -42,7 +50,7 @@ public class MusicCollectionController {
 		List<Album> newAlbums = musicCollectionService.getTopAlbumsByWeek();
 		return BucciResponseBuilder.successfulResponse(newAlbums);
 	}
-	
+	/*
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="toplaylists", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Playlist>> topPlaylistsOfAllTime() {
@@ -63,7 +71,7 @@ public class MusicCollectionController {
 		List<Album> topAlbums = musicCollectionService.getTopAlbumsByGenre(genreId);
 		return BucciResponseBuilder.successfulResponse(topAlbums);
 	}
-	
+	*/
 	
 	@RequestMapping(value="album", method = RequestMethod.GET)
 	public @ResponseBody Album getAlbum(@RequestParam int id) {
@@ -81,17 +89,18 @@ public class MusicCollectionController {
 	@RequestMapping(value="gettopsongs", method = RequestMethod.GET)
 	public @ResponseBody List<Song> topSongs() {
 		
+		System.out.println(env.getProperty("email"));
 		return musicCollectionService.getTopSongs();
 	}
 	
-	
+	/*
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="gettopsongsbyartist", method = RequestMethod.GET)
 	public @ResponseBody List<Song> topSongsByArtist(@RequestParam int artistId) {
 		
 		return musicCollectionService.getTopSongsByArtist(artistId);
 	}
-	
+	*/
 	//For testing purposes
 	@RequestMapping(value="checkDate", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> check(@RequestBody Album album) {

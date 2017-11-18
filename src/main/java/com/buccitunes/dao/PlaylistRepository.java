@@ -12,9 +12,9 @@ import com.buccitunes.model.Playlist;
 public interface PlaylistRepository extends BaseMusicCollectionRepository<Playlist>, CrudRepository<Playlist, Integer> {
 
 	// TODO make query
-	List<Playlist> getTopPlaylistOfAllTime();
+	//List<Playlist> getTopPlaylistOfAllTime();
 
 	// TODO make query
-	List<Playlist> topPlaylistsByGenre(int genreId);
+	//List<Playlist> topPlaylistsByGenre(int genreId);
 
 }

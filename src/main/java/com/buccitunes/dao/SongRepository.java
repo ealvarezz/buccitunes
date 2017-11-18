@@ -20,6 +20,6 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 	public List<Song> getCurrentTopSongs();
 
 	// TODO make query
-	public List<Song> topSongsByArtist(int artistId);
+	//public List<Song> topSongsByArtist(int artistId);
 	
 }

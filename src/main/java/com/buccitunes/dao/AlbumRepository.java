@@ -26,7 +26,7 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	public List<Album> getByReleasesMonth(Pageable page);
 
 	// TODO make query
-	public List<Album> topAlbumsByGenre(int genreId);
+	//public List<Album> topAlbumsByGenre(int genreId);
 	
 	/*
 	@Query(value=""

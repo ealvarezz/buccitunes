@@ -141,7 +141,7 @@ public class MusicCollectionService {
 		
 		return songRepository.getCurrentTopSongs();
 	}
-
+	/*
 	public List<Playlist> getTopPlaylist() {
 		
 		return playlistRepository.getTopPlaylistOfAllTime();
@@ -162,6 +162,6 @@ public class MusicCollectionService {
 		return songRepository.topSongsByArtist(artistId);
 	}
 
-	
+	*/
 
 }
