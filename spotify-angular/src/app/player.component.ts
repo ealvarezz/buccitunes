@@ -19,6 +19,8 @@ export class PlayerComponent {
     private volume : number
     private time : number
 
+    showBar : boolean = false;
+
     
     constructor(private musicService : MusicService){
     }
@@ -57,6 +59,12 @@ export class PlayerComponent {
         this.musicService.pauseSong();
     }
 
+    hover(){
+        this.showBar = true;
+    }
+    unHover(){
+        this.showBar = false;
+    }
 
     
 

@@ -47,9 +47,29 @@
             
         </md-tab>
         <md-tab label="ABOUT">
+            <button mdTooltip="Edit Bio" style="float:right;" *ngIf="isEditModeBio == false" (click)="toggleEditModeBio()"md-icon-button><i class="material-icons">mode_edit</i></button>
             <h2>Bio</h2>
             <img src="../assets/ugly_god.png">
-            <p>Lyrically crude and rhythmically sluggish, Ugly God is a rapper and producer who broke out during the latter half of the 2010s. Born in Indiana, he has lived in other areas of the Midwest, as well as the South, including Texas, Mississippi, and Louisiana. He attended the University of Southern Mississippi and dropped out, subsequently forming the Little Dick Clique and releasing material -- such as "Booty from a Distance" and "I Beat My Meat" -- through a SoundCloud page. In 2016, one of the more successful tracks, "Water," was picked up for release by major-label Asylum. By the end of the year, the single made Billboard's Spotify Velocity and Spotify Viral 50 charts. Ugly God issued his full-length Asylum debut, The Booty Tape, in 2017. The mixtape climbed into the Top 30 of the Billboard 200. ~ Andy Kellman, Rovi</p>
+            <p *ngIf="isEditModeBio == false">Lyrically crude and rhythmically sluggish, Ugly God is a rapper and producer who broke out during the latter half of the 2010s. Born in Indiana, he has lived in other areas of the Midwest, as well as the South, including Texas, Mississippi, and Louisiana. He attended the University of Southern Mississippi and dropped out, subsequently forming the Little Dick Clique and releasing material -- such as "Booty from a Distance" and "I Beat My Meat" -- through a SoundCloud page. In 2016, one of the more successful tracks, "Water," was picked up for release by major-label Asylum. By the end of the year, the single made Billboard's Spotify Velocity and Spotify Viral 50 charts. Ugly God issued his full-length Asylum debut, The Booty Tape, in 2017. The mixtape climbed into the Top 30 of the Billboard 200. ~ Andy Kellman, Rovi</p>
+            <div *ngIf="isEditModeBio == true">
+                <div>
+                    <input style = "margin-top:1%; margin-bottom:1%;" [disabled] = "true" placeholder="Upload Image...." mdInput value="../assets/ugly_god.png" required>
+                    <button type="button" style="background-color:#3f51b5; color:white; margin-bottom:1%" md-raised-button (click)="imgFileInput.click()"><i class="material-icons">file_upload</i>Update Image</button>
+                    <input hidden type="file" #imgFileInput (change)="previewImage($event)"/>
+                </div>
+            
+                <div class="txtarea">
+                    <md-form-field class="txtarea">
+                        <textarea mdInput placeholder="Artist Bio" mdTextareaAutosize mdAutosizeMinRows="2"
+                                    mdAutosizeMaxRows="10">Lyrically crude and rhythmically sluggish, Ugly God is a rapper and producer who broke out during the latter half of the 2010s. Born in Indiana, he has lived in other areas of the Midwest, as well as the South, including Texas, Mississippi, and Louisiana. He attended the University of Southern Mississippi and dropped out, subsequently forming the Little Dick Clique and releasing material -- such as "Booty from a Distance" and "I Beat My Meat" -- through a SoundCloud page. In 2016, one of the more successful tracks, "Water," was picked up for release by major-label Asylum. By the end of the year, the single made Billboard's Spotify Velocity and Spotify Viral 50 charts. Ugly God issued his full-length Asylum debut, The Booty Tape, in 2017. The mixtape climbed into the Top 30 of the Billboard 200. ~ Andy Kellman, Rovi
+                                </textarea>
+                    </md-form-field>
+                </div>
+                <div>
+                <button class="rounded-button" (click)="toggleEditModeBio()" md-raised-button>Update</button>
+                <button  class="rounded-button" (click)="toggleEditModeBio()" md-raised-button>Cancel</button>
+                </div>
+            </div>
             <div>
                 <h2 style="margin-bottom:1px;">2,542,347</h2>
                 <p style="margin-top:0px;">Monthly Listeners</p>
