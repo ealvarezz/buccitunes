@@ -6,6 +6,9 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -26,15 +29,15 @@ public class MusicCollectionController {
 	@Autowired
 	private MusicCollectionService musicCollectionService;
 	
-	
+	@Cacheable(value="PopularityCache")
 	@RequestMapping(value="getNewReleases", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> newReleasedAlbums() {
 		List<Album> newAlbums = musicCollectionService.getNewReleasesByCurrentMonth();
 		return BucciResponseBuilder.successfulResponse(newAlbums);
 	}
 	
-	
-	@RequestMapping(value="topAlbumsOfweek", method = RequestMethod.GET)
+	@Cacheable(value="PopularityCache")
+	@RequestMapping(value="topAlbumsOfWeek", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> topAlbumsByWeek() {
 		List<Album> newAlbums = musicCollectionService.getTopAlbumsByWeek();
 		return BucciResponseBuilder.successfulResponse(newAlbums);
@@ -74,7 +77,7 @@ public class MusicCollectionController {
 	}
 	
 	//For testing purposes
-	@RequestMapping(value="addalbum", method = RequestMethod.POST)
+	@RequestMapping(value="addAlbum", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Album album) {
 		
 		try {
@@ -88,4 +91,9 @@ public class MusicCollectionController {
 		
 		return BucciResponseBuilder.successfulResponse(album);
 	}
+	
+	@Scheduled(fixedRate=30000)
+	@CacheEvict(allEntries=true, cacheNames={"popularityCache"})
+	public void clearPopularCache(){}
+	
 }
