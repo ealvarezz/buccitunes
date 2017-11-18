@@ -16,14 +16,15 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name="Album")
 public class Album extends MusicCollection {
 	
 	
-	
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
+	@JsonIgnoreProperties(value = "albums")
 	private Artist primaryArtist;
 	
 
@@ -35,7 +36,7 @@ public class Album extends MusicCollection {
 	
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") comment this out just incase script doesn't work
+	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
 	private Date releaseDate;
 	private String label;
 	

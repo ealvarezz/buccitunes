@@ -47,6 +47,17 @@ private final ArtistUserRepository artistUserRepository;
 		return result;
 	}
 	
+	public Artist getArtist(int id) throws BucciException {
+		Artist artist = artistRepository.findOne(id);
+		
+		if(artist != null) {
+			artist.getAlbums().size();
+			return artist;
+		} else {
+			throw new BucciException("Artist not found");
+		}
+	}
+	
 	public Artist getArtistByName(String name) throws BucciException {
 		Artist artist = artistRepository.findByName(name);
 		

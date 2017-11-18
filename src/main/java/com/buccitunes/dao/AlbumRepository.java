@@ -20,10 +20,13 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	
 	@Query(value=""
 			+ "SELECT * FROM music_collection m "
-			+ "Join album a on a.id = m.id"
+			+ "Join album a on a.id = m.id "
 			+ "where Month(a.release_date) = Month(CURDATE()) and YEAR(a.release_date) = YEAR(CURDATE())"
 			+ "\n#pageable\n", nativeQuery = true)
 	public List<Album> getByReleasesMonth(Pageable page);
+
+	// TODO make query
+	//public List<Album> topAlbumsByGenre(int genreId);
 	
 	/*
 	@Query(value=""
