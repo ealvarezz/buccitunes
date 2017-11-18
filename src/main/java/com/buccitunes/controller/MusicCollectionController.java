@@ -29,14 +29,14 @@ public class MusicCollectionController {
 	@Autowired
 	private MusicCollectionService musicCollectionService;
 	
-	@Cacheable(value="PopularityCache")
+	@Cacheable(value="popularityCache")
 	@RequestMapping(value="getNewReleases", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> newReleasedAlbums() {
 		List<Album> newAlbums = musicCollectionService.getNewReleasesByCurrentMonth();
 		return BucciResponseBuilder.successfulResponse(newAlbums);
 	}
 	
-	@Cacheable(value="PopularityCache")
+	@Cacheable(value="popularityCache")
 	@RequestMapping(value="topAlbumsOfWeek", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> topAlbumsByWeek() {
 		List<Album> newAlbums = musicCollectionService.getTopAlbumsByWeek();
@@ -56,9 +56,11 @@ public class MusicCollectionController {
 		return musicCollectionService.getPlaylist(id);
 	}
 	
+	@Cacheable(value="popularityCache")
 	@RequestMapping(value="gettopglobal", method = RequestMethod.GET)
 	public @ResponseBody List<Song> getTopGlobalBillboardSongs() {
 		
+		System.out.println("ASSSSSSSSSS");
 		return musicCollectionService.getGlobal();
 	}
 	
@@ -98,7 +100,7 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse(album);
 	}
 	
-	@Scheduled(fixedRate=30000)
+	@Scheduled(fixedRate=60000)
 	@CacheEvict(allEntries=true, cacheNames={"popularityCache"})
 	public void clearPopularCache(){}
 	

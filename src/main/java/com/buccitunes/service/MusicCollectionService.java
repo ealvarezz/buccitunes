@@ -118,7 +118,7 @@ public class MusicCollectionService {
 		
 		User user = userRepository.findOne(userId);
 		Song song = songRepository.findOne(songId);
-		song.getLyrics();
+		//song.getLyrics().getLyric().length();
 		
 		SongPlays songPlay = new SongPlays(user, song);
 		
