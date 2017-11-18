@@ -17,5 +17,9 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 			"GROUP BY (S.id)) as SS, buccidb2.song SG WHERE SG.id = SS.id\n" + 
 			"ORDER BY(song_count) DESC\n" + 
 			"LIMIT 50", nativeQuery = true)
-	public List<Song> getGlobalTopSongs();
+	public List<Song> getCurrentTopSongs();
+
+	// TODO make query
+	public List<Song> topSongsByArtist(int artistId);
+	
 }

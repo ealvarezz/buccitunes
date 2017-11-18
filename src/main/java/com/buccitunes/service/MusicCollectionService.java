@@ -137,10 +137,31 @@ public class MusicCollectionService {
 		return song;
 	}
 	
-	public List<Song> getGlobal(){
+	public List<Song> getTopSongs(){
 		
-		return songRepository.getGlobalTopSongs();
+		return songRepository.getCurrentTopSongs();
 	}
+
+	public List<Playlist> getTopPlaylist() {
+		
+		return playlistRepository.getTopPlaylistOfAllTime();
+	}
+
+	public List<Playlist> getTopPlaylistByGenre(int genreId) {
+		
+		return playlistRepository.topPlaylistsByGenre(genreId);
+	}
+
+	public List<Album> getTopAlbumsByGenre(int genreId) {
+	
+		return albumRepository.topAlbumsByGenre(genreId);
+	}
+
+	public List<Song> getTopSongsByArtist(int artistId) {
+		
+		return songRepository.topSongsByArtist(artistId);
+	}
+
 	
 
 }
