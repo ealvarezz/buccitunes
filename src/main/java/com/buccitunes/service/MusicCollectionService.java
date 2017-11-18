@@ -2,7 +2,8 @@ package com.buccitunes.service;
 
 
 import java.io.IOException;
-
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import java.util.Date;
@@ -20,6 +21,7 @@ import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
+import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciConstants;
@@ -29,22 +31,30 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SongPlays;
+import com.buccitunes.model.User;
 
 @Service
 @Transactional
 public class MusicCollectionService {
 	
+	boolean alter = true;
 	private final AlbumRepository albumRepository;
 	private final PlaylistRepository playlistRepository;
 	private final SongRepository songRepository;
 	private final ArtistRepository artistRepository;
+	private final SongPlaysRepository songPlaysRepository;
+	private final UserRepository userRepository;
 	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
-			SongRepository songRepository, ArtistRepository artistRepository) {
+			SongRepository songRepository, ArtistRepository artistRepository, SongPlaysRepository songPlaysRepository,
+			UserRepository userRepository) {
 		this.albumRepository = albumRepository;
 		this.playlistRepository = playlistRepository;
 		this.songRepository = songRepository;
 		this.artistRepository = artistRepository;
+		this.songPlaysRepository = songPlaysRepository;
+		this.userRepository = userRepository;
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
@@ -103,5 +113,28 @@ public class MusicCollectionService {
 			
 			album.setDateCreated(new Date());
 	}
+	
+	public Song PlaySong(String userId, int songId) throws ParseException {
+		
+		User user = userRepository.findOne(userId);
+		Song song = songRepository.findOne(songId);
+		
+		SongPlays songPlay = new SongPlays(user, song);
+		
+		if(alter) {
+			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
+			songPlay.setDatePlayed(format.parse("2017-01-13"));
+			alter = !alter;
+		}else {
+			
+			songPlay.setDatePlayed(new Date());
+			alter = !alter;
+		}
+		
+		songPlaysRepository.save(songPlay);
+		
+		return song;
+	}
+	
 
 }

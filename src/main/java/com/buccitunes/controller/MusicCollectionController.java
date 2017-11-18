@@ -1,5 +1,6 @@
 package com.buccitunes.controller;
 
+import java.text.ParseException;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
@@ -57,6 +58,19 @@ public class MusicCollectionController {
 	public @ResponseBody BucciResponse<Album> check(@RequestBody Album album) {
 		System.out.println(album.getReleaseDate());
 		return BucciResponseBuilder.successfulResponse(album);
+	}
+	
+	@RequestMapping(value="playsong", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestParam String userId, int songId) {
+		
+		Song bucciSong;
+		try {
+			bucciSong = musicCollectionService.PlaySong(userId, songId);
+		} catch (ParseException e) {
+			
+			return BucciResponseBuilder.failedMessage(e.getMessage());
+		}
+		return BucciResponseBuilder.successfulResponse(bucciSong);
 	}
 	
 	//For testing purposes
