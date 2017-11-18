@@ -118,6 +118,7 @@ public class MusicCollectionService {
 		
 		User user = userRepository.findOne(userId);
 		Song song = songRepository.findOne(songId);
+		song.getLyrics();
 		
 		SongPlays songPlay = new SongPlays(user, song);
 		
@@ -134,6 +135,11 @@ public class MusicCollectionService {
 		songPlaysRepository.save(songPlay);
 		
 		return song;
+	}
+	
+	public List<Song> getGlobal(){
+		
+		return songRepository.getGlobalTopSongs();
 	}
 	
 

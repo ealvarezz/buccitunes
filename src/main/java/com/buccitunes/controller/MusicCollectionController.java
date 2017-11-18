@@ -53,6 +53,12 @@ public class MusicCollectionController {
 		return musicCollectionService.getPlaylist(id);
 	}
 	
+	@RequestMapping(value="gettopglobal", method = RequestMethod.GET)
+	public @ResponseBody List<Song> getTopGlobalBillboardSongs() {
+		
+		return musicCollectionService.getGlobal();
+	}
+	
 	//For testing purposes
 	@RequestMapping(value="checkDate", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> check(@RequestBody Album album) {

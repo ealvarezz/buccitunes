@@ -55,7 +55,7 @@ public class Song {
     @JoinColumn(name = "stats_id")
 	private StatCache stats;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "lyric_id")
 	private Lyrics lyrics;
 	
