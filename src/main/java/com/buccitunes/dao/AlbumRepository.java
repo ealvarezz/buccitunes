@@ -19,14 +19,24 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	public Album findByPrimaryArtist_Name(String name);
 	
 	@Query(value=""
-			+ "SELECT * FROM music_collection m "
+			+ "select * FROM music_collection m "
 			+ "Join album a on a.id = m.id "
-			+ "where Month(a.release_date) = Month(CURDATE()) and YEAR(a.release_date) = YEAR(CURDATE())"
+			+ "where Month(a.release_date) = Month(CURDATE()) and YEAR(a.release_date) = YEAR(CURDATE()) "
 			+ "\n#pageable\n", nativeQuery = true)
-	public List<Album> getByReleasesMonth(Pageable page);
-
-	// TODO make query
-	//public List<Album> topAlbumsByGenre(int genreId);
+	public List<Album> getNewReleasesOfMonth(Pageable page);
+	
+	
+	@Query(value=""
+			+ "select m.*, a.* "
+			+ "from genre g "
+			+ "join genre_album ga ON ga.genre_id = g.id "
+			+ "join album a ON a.id = ga.album_id "
+			+ "join music_collection m ON m.id = a.id "
+			+ "join stat_cache stats on stats.id = m.stats_id "
+			+ "where g.id = :genreId "
+			+ "\n#pageable\n ", nativeQuery = true)
+	public List<Album> topAlbumsByGenre(@Param("genreId") int genreId, Pageable page);
+	
 	
 	/*
 	@Query(value=""

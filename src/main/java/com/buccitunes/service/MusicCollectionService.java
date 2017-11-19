@@ -13,6 +13,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.AlbumRepository;
@@ -59,7 +60,7 @@ public class MusicCollectionService {
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
 		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES);
-		return albumRepository.getByReleasesMonth(pageRequest);
+		return albumRepository.getNewReleasesOfMonth(pageRequest);
 	}
 	
 	
@@ -141,6 +142,16 @@ public class MusicCollectionService {
 		
 		return songRepository.getCurrentTopSongs();
 	}
+	
+	public List<Album> getTopAlbumsByGenre(int genreId) {
+		
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES,
+				Sort.Direction.DESC, "stats.monthly_plays");
+		return albumRepository.topAlbumsByGenre(genreId,pageRequest);
+	}
+	
+
+	
 	/*
 	public List<Playlist> getTopPlaylist() {
 		
@@ -152,11 +163,7 @@ public class MusicCollectionService {
 		return playlistRepository.topPlaylistsByGenre(genreId);
 	}
 
-	public List<Album> getTopAlbumsByGenre(int genreId) {
 	
-		return albumRepository.topAlbumsByGenre(genreId);
-	}
-
 	public List<Song> getTopSongsByArtist(int artistId) {
 		
 		return songRepository.topSongsByArtist(artistId);
