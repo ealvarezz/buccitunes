@@ -65,7 +65,15 @@ public class MusicCollectionService {
 	
 	
 	public List<Album> getTopAlbumsByWeek() {
-       return null;
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES,
+				Sort.Direction.DESC, "numPlays");
+		return albumRepository.topAlbumsOfTheWeek(pageRequest);
+	}
+	
+	public List<Playlist> getTopPlaylist() {
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES,
+				Sort.Direction.DESC, "stats.total_plays");
+		return playlistRepository.getTopPlaylistOfAllTime();
 	}
 	
 	public Album getAlbum(int albumId) {
@@ -153,10 +161,6 @@ public class MusicCollectionService {
 
 	
 	/*
-	public List<Playlist> getTopPlaylist() {
-		
-		return playlistRepository.getTopPlaylistOfAllTime();
-	}
 
 	public List<Playlist> getTopPlaylistByGenre(int genreId) {
 		

@@ -32,7 +32,7 @@ public class Song {
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "featured",
+	@JoinTable(name = "featured_artists",
 		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<Artist>featuredArtists;

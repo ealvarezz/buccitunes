@@ -156,4 +156,10 @@ public class UserController {
 		
 		return BucciResponseBuilder.successfulResponseMessage("Congratulations, you have upgraded to premium", (PremiumUser)sessionUser);
 	}
+	/*
+	@RequestMapping(value="followingAlbums", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<User> followingAlbums(@RequestBody BillingInfo billingInfo, HttpSession session) {
+		
+	}
+	*/
 }
