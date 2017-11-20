@@ -75,7 +75,6 @@ private final ArtistUserRepository artistUserRepository;
 	public void saveArtistUser(ArtistUser artistUser) throws BucciException {
 		
 		try{
-			
 			String avatar = artistUser.getArtist().getAvatar();
 			artistUser.getArtist().setAvatar("");
 			artistUserRepository.save(artistUser);
@@ -85,9 +84,6 @@ private final ArtistUserRepository artistUserRepository;
 				String avatarPath = FileManager.saveArtistAlias(avatar, savedArtist.getArtist().getId());
 				savedArtist.getArtist().setAvatar(avatarPath);
 			}
-				
-	
-		
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			throw new BucciException("UNABLE TO SAVE ARTWORK");

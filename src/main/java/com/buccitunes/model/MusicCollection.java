@@ -15,8 +15,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -44,9 +44,6 @@ public class MusicCollection {
 	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") comment this out just incase script doesn't work
 	private Date dateCreated;
 	
-	private String artworkPath;
-	
-	//@Transient
 	private String artwork;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -91,12 +88,6 @@ public class MusicCollection {
 	}
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
-	}
-	public String getArtworkPath() {
-		return artworkPath;
-	}
-	public void setArtworkPath(String artworkPath) {
-		this.artworkPath = artworkPath;
 	}
 	public StatCache getStats() {
 		return stats;

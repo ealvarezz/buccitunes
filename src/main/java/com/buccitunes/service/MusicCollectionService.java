@@ -109,8 +109,8 @@ public class MusicCollectionService {
 		
 		if(artwork != null)  {
 			try {
-				String artworkPath = FileManager.savePlaylistAlias(artwork, newPlaylist.getId());
-				newPlaylist.setArtworkPath(artworkPath);
+				artwork = FileManager.savePlaylistAlias(artwork, newPlaylist.getId());
+				newPlaylist.setArtwork(artwork);
 			} catch (IOException e) {
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
 			}
@@ -135,7 +135,7 @@ public class MusicCollectionService {
 				try {
 					
 					String artworkPath = FileManager.saveArtwork(artworkString, returnedAlbum.getId());
-					album.setArtworkPath(artworkPath);
+					album.setArtwork(artworkPath);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block

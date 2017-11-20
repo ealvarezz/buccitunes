@@ -14,8 +14,8 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
-import javax.persistence.Transient;
 
+import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -47,10 +47,6 @@ public class RequestedAlbum {
 	
 	private String label;
 	
-	private String artworkPath;
-	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
-	@Transient
 	private String artwork;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -159,14 +155,6 @@ public class RequestedAlbum {
 
 	public void setPrimaryArtist(Artist primaryArtist) {
 		this.primaryArtist = primaryArtist;
-	}
-
-	public String getArtworkPath() {
-		return artworkPath;
-	}
-
-	public void setArtworkPath(String artworkPath) {
-		this.artworkPath = artworkPath;
 	}
 
 	public String getArtwork() {
