@@ -50,20 +50,21 @@ public class MusicCollectionController {
 		List<Album> newAlbums = musicCollectionService.getTopAlbumsByWeek();
 		return BucciResponseBuilder.successfulResponse(newAlbums);
 	}
-	/*
+	
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="toplaylists", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Playlist>> topPlaylistsOfAllTime() {
 		List<Playlist> topPlaylists = musicCollectionService.getTopPlaylist();
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
 	}
-	
+	/*
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="toplaylistsbygenre", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Playlist>> topPlaylistsByGenre(@RequestParam int genreId) {
 		List<Playlist> topPlaylists = musicCollectionService.getTopPlaylistByGenre(genreId);
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
 	}
+	*/
 	
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="topalbumsbygenre", method = RequestMethod.GET)
@@ -71,7 +72,7 @@ public class MusicCollectionController {
 		List<Album> topAlbums = musicCollectionService.getTopAlbumsByGenre(genreId);
 		return BucciResponseBuilder.successfulResponse(topAlbums);
 	}
-	*/
+	
 	
 	@RequestMapping(value="album", method = RequestMethod.GET)
 	public @ResponseBody Album getAlbum(@RequestParam int id) {

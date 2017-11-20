@@ -19,7 +19,7 @@
 
     <ng-container mdColumnDef="add">
       <md-header-cell *mdHeaderCellDef>  </md-header-cell>
-      <md-cell *mdCellDef="let row"> <button md-icon-button> <i class="material-icons" >add</i> </button>  </md-cell>
+      <md-cell *mdCellDef="let row"> <button mdTooltip="Add to Library"  mdTooltipShowDelay="800" md-icon-button> <i class="material-icons" >add</i> </button>  </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="artist">
@@ -35,7 +35,7 @@
     <ng-container mdColumnDef="more">
       <md-header-cell *mdHeaderCellDef>  </md-header-cell>
       <md-cell *mdCellDef="let row"> 
-        <button md-icon-button [mdMenuTriggerFor]="menu"> <i class="material-icons" >more_horiz</i> </button> 
+        <button md-icon-button [mdMenuTriggerFor]="menu" mdTooltip="More"  mdTooltipShowDelay="800"> <i class="material-icons" >more_horiz</i> </button> 
         <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
           <button md-menu-item>
             <span>Add to Queue</span>

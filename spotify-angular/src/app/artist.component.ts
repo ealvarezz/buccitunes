@@ -16,6 +16,8 @@ export class ArtistComponent {
   viewSongs : Song[] = this.songs.slice(0,5);
   showAllSongs : boolean = false;
 
+  isEditModeBio : boolean = false;
+
   constructor(public dialog: MdDialog){}
 
   addAlbum(){
@@ -32,6 +34,29 @@ export class ArtistComponent {
       this.showAllSongs = false;
     }
   }
+
+  toggleEditModeBio(){
+    this.isEditModeBio = !this.isEditModeBio;
+  }
+
+  previewImage(event){
+    let fileList: FileList = event.target.files;
+    let file = fileList[0].name;
+
+    if(fileList.length > 0) {
+        let file = fileList[0];
+
+        let reader = new FileReader();
+
+        reader.onload = (e: any) => {
+            let file = e.target.result;
+        }
+
+        reader.readAsDataURL(fileList[0]);
+    }
+  }
+
+
 }
 
 @Component({
@@ -64,7 +89,6 @@ export class AddAlbumDialog {
   releaseMonth: string;
   releaseDay: number;
   releaseYear: number;
-
 
   ngOnInit() {
     this.currentAlbum.featuredArtists = ['R Kelly', 'Lil Jon', 'Lil B','Big Shaq'];

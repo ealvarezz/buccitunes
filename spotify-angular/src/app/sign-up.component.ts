@@ -14,11 +14,7 @@ export class SignUpComponent implements OnInit {
   thirdFormGroup: FormGroup;
   selectedMonth : string;
 
-  visible: boolean = true;
-  selectable: boolean = true;
-  removable: boolean = true;
-  addOnBlur: boolean = true;
-
+  
 
   months : string[] = ['January','Feburary','March','April','May','June','July','August','September','October','November','Decemeber']
 

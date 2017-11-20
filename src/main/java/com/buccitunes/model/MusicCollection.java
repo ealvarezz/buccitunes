@@ -36,8 +36,8 @@ public class MusicCollection {
 	
 	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "music_collection_song",
-		joinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")

@@ -7,5 +7,6 @@ export class Album{
     artwork: File;
     songs : Song[] = [];
     featuredArtists : String[] = [];
+    
 
 }

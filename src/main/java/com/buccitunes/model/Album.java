@@ -29,7 +29,7 @@ public class Album extends MusicCollection {
 	
 
 	@ManyToMany(fetch=FetchType.LAZY)
-	@JoinTable(name = "artist_feature_album",
+	@JoinTable(name = "artists_featured_on_album",
 		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false),
 		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Artist> featuredArtists;
