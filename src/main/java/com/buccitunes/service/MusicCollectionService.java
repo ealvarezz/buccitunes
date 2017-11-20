@@ -40,7 +40,7 @@ import com.buccitunes.model.User;
 @Transactional
 public class MusicCollectionService {
 	
-	boolean alter = true;
+	boolean alter = true; // just for testing purposes, must be removed during production
 	private final AlbumRepository albumRepository;
 	private final PlaylistRepository playlistRepository;
 	private final SongRepository songRepository;
@@ -160,6 +160,8 @@ public class MusicCollectionService {
 		SongPlays songPlay = new SongPlays(user, song);
 		
 		if(alter) {
+			// This will be deleted, we should only store new Date() for the current date
+			// this is just for testing
 			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
 			songPlay.setDatePlayed(format.parse("2017-01-13"));
 			alter = !alter;
