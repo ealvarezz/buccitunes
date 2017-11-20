@@ -8,4 +8,5 @@ public class BucciConstants {
 	public static class Album {
 		public static final int LIMITNEWRELASES = 10;
 	}
+	
 }
