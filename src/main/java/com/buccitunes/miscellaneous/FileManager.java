@@ -24,6 +24,7 @@ public class FileManager {
 	private final static Path PLAYLISTPATH = Paths.get(FILESPATH.toString() + "/PLAYLISTS/");
 	private final static Path SONGPATH = Paths.get(FILESPATH.toString() + "/SONGS/");
 	private final static String ARTWORKIMAGE = "artwork.png";
+	//private final static String AVATARIMAGE = "avatar.png";
 
 	
 	public static void setUpFileDirectory() throws IOException {
@@ -47,27 +48,31 @@ public class FileManager {
 		Path artistDir = Paths.get(ARTISTPATH.toString() + "/" + artistId + "/");
 		if(Files.notExists(artistDir)) {
 			Files.createDirectory(artistDir);
-		}
-		
-		
-		
-		
+		}	
 	}
 	
-public static void setAlbumDirectory(int artistId) throws IOException {
+	public static void setAlbumDirectory(int albumId) throws IOException {
 		
 		if(Files.notExists(FILESPATH)) {
 			setUpFileDirectory();
 		}
 		
-		Path albumDir = Paths.get(ALBUMPATH.toString() + "/" + artistId + "/");
+		Path albumDir = Paths.get(ALBUMPATH.toString() + "/" + albumId + "/");
 		if(Files.notExists(albumDir)) {
 			Files.createDirectory(albumDir);
 		}
+	}
+	
+	public static void setPlaylistDirectory(int playlistId) throws IOException {
+			
+		if(Files.notExists(FILESPATH)) {
+			setUpFileDirectory();
+		}
 		
-		
-		
-		
+		Path playlistDir = Paths.get(PLAYLISTPATH.toString() + "/" + playlistId + "/");
+		if(Files.notExists(playlistDir)) {
+			Files.createDirectory(playlistDir);
+		}
 	}
 	
 	public static String saveArtwork(String encodedStr, int albumId) throws IOException {
@@ -80,7 +85,7 @@ public static void setAlbumDirectory(int artistId) throws IOException {
          System.out.println(path);
          
          if(Files.notExists(path)) {
-        	 	setAlbumDirectory(albumId);
+        	 setAlbumDirectory(albumId);
          }
 
          try{
@@ -102,38 +107,58 @@ public static void setAlbumDirectory(int artistId) throws IOException {
          return path.toString();
 	}
 	
-	public static String saveArtistAlias(String encodedStr, int artistId) throws IOException {
-		
-		System.out.println("dick!!!!!!!!!!!!!");
-		byte[] decodedBytes = Base64.getMimeDecoder().decode(encodedStr);
-        Path path = Paths.get(ARTISTPATH + "/" + artistId +  "/" + ARTWORKIMAGE);
+	public static String saveAlbumAlias(String encodedStr, int albumId) throws IOException {
+        Path path = Paths.get(ALBUMPATH + "/" + albumId +  "/" + ARTWORKIMAGE);
+        System.out.println(path);
         
+        if(Files.notExists(path)) {
+        	setAlbumDirectory(albumId);
+        }
+        
+        String strPath = saveImage(encodedStr, path);
+        return strPath; 
+	}
+	
+	public static String saveArtistAlias(String encodedStr, int artistId) throws IOException {
+        Path path = Paths.get(ARTISTPATH + "/" + artistId +  "/" + ARTWORKIMAGE);
         System.out.println(path);
         
         if(Files.notExists(path)) {
        	 	setArtistDirectory(artistId);
         }
-
-        try{
-        		
-        		InputStream in = new ByteArrayInputStream(decodedBytes);
-			
-			BufferedImage bImageFromConvert = ImageIO.read(in);
-					
-			ImageIO.write(bImageFromConvert, "png", path.toFile()); // File might be null
-            
-            System.out.println("Success");
-        }
-        catch (Exception ex) {
-            ex.printStackTrace();
+        
+        String strPath = saveImage(encodedStr, path);
+        return strPath; 
+	}
+	
+	public static String savePlaylistAlias(String encodedStr, int playlistId) throws IOException {
+		Path path = Paths.get(PLAYLISTPATH + "/" + playlistId +  "/" + ARTWORKIMAGE);
+        System.out.println(path);
+        
+        if(Files.notExists(path)) {
+        	setPlaylistDirectory(playlistId);
         }
         
-        return path.toString();
+        String strPath = saveImage(encodedStr, path);
+        return strPath;
+	}
+	
+	private static String saveImage(String encodedStr, Path path) {
+		byte[] decodedBytes = Base64.getMimeDecoder().decode(encodedStr);
+		
+		 try{     		
+			 InputStream in = new ByteArrayInputStream(decodedBytes);
+			 BufferedImage bImageFromConvert = ImageIO.read(in);
+			 ImageIO.write(bImageFromConvert, "png", path.toFile()); // File might be null
+			
+		 } catch (Exception ex) {
+			 ex.printStackTrace();
+	     }
+	        
+	     return path.toString();
 	}
 	
 	public static String getEncodedArtistArtwork(int id) {
-		
 		return "";
-	}
-	
+	}	
 }

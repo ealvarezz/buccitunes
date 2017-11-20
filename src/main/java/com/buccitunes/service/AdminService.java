@@ -94,23 +94,20 @@ public class AdminService {
 		}
 		requestedAlbum.setPrimaryArtist(artist);
 		
+		Album album = albumRepository.save(new Album(requestedAlbum));
 		
-		Album album = new Album(requestedAlbum);
+		//The songs may delete itself
+		//requestedAlbumRepository.delete(requestedAlbum);
 		
 		if(requestedAlbum.getArtwork() != null) {
 			try {
-				String artworkPath = FileManager.saveArtwork(requestedAlbum.getArtwork(), requestedAlbum.getId());
-				album.setArtworkPath(artworkPath);
+				String artwork = FileManager.saveAlbumAlias(requestedAlbum.getArtwork(), album.getId());
+				album.setArtwork(artwork);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
 			}
 		}
-		//The songs may delete itself
-		//requestedAlbumRepository.delete(requestedAlbum);
-		
-		album = albumRepository.save(album);
-		
 		return album;
 	}
 	

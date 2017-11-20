@@ -4,6 +4,7 @@ package com.buccitunes.service;
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import java.util.Date;
@@ -89,6 +90,33 @@ public class MusicCollectionService {
 	       playlist.getSongs().size();
 	       return playlist;
 	}
+	
+	public Playlist newPlaylist(Playlist playlist) throws BucciException {
+		List<Song> playlistSongs = new ArrayList<Song>(playlist.getSongs().size());
+		for (Song song : playlist.getSongs()) {
+			Song songToAdd = songRepository.findOne(song.getId());
+			
+			if(songToAdd == null) {
+				throw new BucciException( "'" + song.getName() + "' doesn't exist");
+			}
+			playlistSongs.add(songToAdd);
+		}
+		playlist.setSongs(playlistSongs);
+		
+		String artwork = playlist.getArtwork();
+		playlist.setArtwork("");
+		Playlist newPlaylist = playlistRepository.save(playlist);
+		
+		if(artwork != null)  {
+			try {
+				artwork = FileManager.savePlaylistAlias(artwork, newPlaylist.getId());
+				newPlaylist.setArtwork(artwork);
+			} catch (IOException e) {
+				throw new BucciException("UNABLE TO SAVE ARTWORK");
+			}
+		}
+		return newPlaylist;
+	}
 
 	public void saveAlbum(Album album) throws BucciException{
 		
@@ -107,7 +135,7 @@ public class MusicCollectionService {
 				try {
 					
 					String artworkPath = FileManager.saveArtwork(artworkString, returnedAlbum.getId());
-					album.setArtworkPath(artworkPath);
+					album.setArtwork(artworkPath);
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -176,5 +204,19 @@ public class MusicCollectionService {
 	}
 
 	*/
+	
+	public Album albumOfSong(Song song) throws BucciException {
+		if(!songRepository.exists(song.getId())) {
+			throw new BucciException("No such song exists");
+		}
+		
+		Album album = albumRepository.findBySongs(song);
+		if(album == null) {
+			throw new BucciException("Could not find the album of the song");
+		}
+		
+		album.getSongs().size();
+		return album;
+	}
 
 }
