@@ -76,7 +76,7 @@ public class MusicCollectionController {
 			Playlist newPlaylist = musicCollectionService.newPlaylist(playlist);
 			return BucciResponseBuilder.successfulResponseMessage("New playlist created", newPlaylist);
 		} catch (BucciException e) {
-			return BucciResponseBuilder.failedMessage(e.getMessage());
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		} 
 	}
 	/*

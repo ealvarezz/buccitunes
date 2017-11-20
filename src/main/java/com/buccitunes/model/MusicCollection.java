@@ -15,13 +15,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
-
-import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="MUSIC_COLLECTION")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -52,11 +46,13 @@ public class MusicCollection {
 	
 	public MusicCollection(){
 		this.stats = new StatCache();
+		this.dateCreated = new Date();
 	};
 	
 	public MusicCollection(List<Song> songs){
 		this.songs = songs;
 		this.stats = new StatCache();
+		this.dateCreated = new Date();
 	};
 	
 	public MusicCollection(String title) {
