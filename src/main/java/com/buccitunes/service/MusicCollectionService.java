@@ -60,19 +60,19 @@ public class MusicCollectionService {
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
-		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES);
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.NEWRELASESLIMIT);
 		return albumRepository.getNewReleasesOfMonth(pageRequest);
 	}
 	
 	
 	public List<Album> getTopAlbumsByWeek() {
-		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES,
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.TOPALBUMSLIMIT,
 				Sort.Direction.DESC, "numPlays");
 		return albumRepository.topAlbumsOfTheWeek(pageRequest);
 	}
 	
 	public List<Playlist> getTopPlaylist() {
-		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES,
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Playlist.PLAYLISTSLIMIT,
 				Sort.Direction.DESC, "stats.total_plays");
 		return playlistRepository.getTopPlaylistOfAllTime();
 	}
@@ -82,6 +82,9 @@ public class MusicCollectionService {
 	       Album album = albumRepository.findOne(albumId);
 	       album.getSongs().size();
 	       return album;
+	}
+	public Album getAlbumNoSongs(int albumId) {
+			return albumRepository.findOne(albumId);
 	}
 	
 	public Playlist getPlaylist(int playlistId) {
@@ -189,12 +192,10 @@ public class MusicCollectionService {
 	
 	public List<Album> getTopAlbumsByGenre(int genreId) {
 		
-		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.LIMITNEWRELASES,
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.TOPALBUMSLIMIT,
 				Sort.Direction.DESC, "stats.monthly_plays");
 		return albumRepository.topAlbumsByGenre(genreId,pageRequest);
 	}
-	
-
 	
 	/*
 
@@ -224,5 +225,4 @@ public class MusicCollectionService {
 		album.getSongs().size();
 		return album;
 	}
-
 }

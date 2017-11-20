@@ -12,15 +12,20 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
+import com.buccitunes.dao.SongRepository;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
 
 @Service
@@ -30,12 +35,15 @@ public class ArtistService {
 private final ArtistRepository artistRepository;
 private final RequestedAlbumRepository requestedAlbumRepository;
 private final ArtistUserRepository artistUserRepository;
+private final SongRepository songRepository;
 	
-	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository, ArtistUserRepository artistUserRepository) {
+	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
+			ArtistUserRepository artistUserRepository,SongRepository songRepository) {
 		
 		this.artistRepository = artistRepository;
 		this.requestedAlbumRepository = requestedAlbumRepository;
 		this.artistUserRepository = artistUserRepository;
+		this.songRepository = songRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -95,5 +103,12 @@ private final ArtistUserRepository artistUserRepository;
 		
 		
 		artistRepository.delete(id);
+	}
+
+	public List<Song> getTopTenSongs(int artistId) {
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Artist.TOPSONGSLIMIT,
+				Sort.Direction.DESC, "stats.total_plays");
+		return songRepository.getTopSongsOfAllTimeByArtist(artistId, pageRequest);
+		
 	}
 }

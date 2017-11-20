@@ -6,7 +6,16 @@ public class BucciConstants {
 	}
 	
 	public static class Album {
-		public static final int LIMITNEWRELASES = 10;
+		public static final int NEWRELASESLIMIT = 10;
+		public static final int TOPALBUMSLIMIT = 10;
+	}
+	
+	public static class Artist {
+		public static final int TOPSONGSLIMIT = 10;
+	}
+	
+	public static class Playlist {
+		public static final int PLAYLISTSLIMIT = 10;
 	}
 	
 }

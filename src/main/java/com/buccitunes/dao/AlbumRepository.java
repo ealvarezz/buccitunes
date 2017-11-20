@@ -63,13 +63,7 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "group by s.name, s.id "
 			+ "\n#pageable\n ", nativeQuery = true)
 	public List<Song> topSongsOfTheWeek(Pageable page);
-	/*
-	@Query(value=""
-			+ "SELECT * FROM music_collection m "
-			+ "Join album a on a.id = m.id "
-			+ "where Month(a.release_date) = :currentMonth", nativeQuery = true)
-	public List<Album> getByReleasesMonth(@Param("currentMonth") int currentMonth);
-*/
+
 	
 	public Album findBySongs(Song song);
 }

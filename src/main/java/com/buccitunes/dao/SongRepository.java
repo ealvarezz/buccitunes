@@ -2,9 +2,11 @@ package com.buccitunes.dao;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
 
 import com.buccitunes.model.Song;
 
@@ -19,7 +21,14 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 			"LIMIT 50", nativeQuery = true)
 	public List<Song> getCurrentTopSongs();
 
-	// TODO make query
-	//public List<Song> topSongsByArtist(int artistId);
+	
+	@Query(value=""
+			+ "select s.*, a.* "
+			+ "from artist a "
+			+ "join song s on s.owner_id = a.id "
+			+ "join stat_cache stats on stats.id = s.stats_id "
+			+ "where a.id = :artistId "
+			+ "\n#pageable\n ", nativeQuery = true)
+	public List<Song> getTopSongsOfAllTimeByArtist(@Param("artistId") int artistId, Pageable page);
 	
 }

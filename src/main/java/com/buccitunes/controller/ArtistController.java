@@ -1,5 +1,7 @@
 package com.buccitunes.controller;
 
+import java.util.List;
+
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +20,7 @@ import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.Song;
 import com.buccitunes.service.ArtistService;
 import com.buccitunes.service.UserService;
 
@@ -57,5 +60,11 @@ public class ArtistController {
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
+	}
+	
+	@RequestMapping(value="topSongsOfArtist", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Song>> getTopSongsOfArtist(@RequestParam int id) {
+		 List<Song> songs = artistService.getTopTenSongs(id);
+		 return BucciResponseBuilder.successfulResponse(songs);
 	}
 }

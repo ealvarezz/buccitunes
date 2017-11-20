@@ -94,8 +94,12 @@ public class MusicCollectionController {
 	
 	@RequestMapping(value="album", method = RequestMethod.GET)
 	public @ResponseBody Album getAlbum(@RequestParam int id) {
-		
 		return musicCollectionService.getAlbum(id);
+	}
+	
+	@RequestMapping(value="albumNoSong", method = RequestMethod.GET)
+	public @ResponseBody Album getAlbumWithNoSongs(@RequestParam int id) {
+		return musicCollectionService.getAlbumNoSongs(id);
 	}
 	
 	@Cacheable(value="popularityCache")
