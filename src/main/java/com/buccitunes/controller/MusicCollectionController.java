@@ -65,6 +65,25 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
 	}
 	*/
+	@RequestMapping(value="playlist", method = RequestMethod.GET)
+	public @ResponseBody Playlist getPlaylist(@RequestParam int id) {
+		return musicCollectionService.getPlaylist(id);
+	}
+	
+	@RequestMapping(value="newPlaylist", method = RequestMethod.POST)
+	public @ResponseBody  BucciResponse<Playlist> getPlaylist(@RequestBody Playlist playlist) {
+		try {
+			Playlist newPlaylist = musicCollectionService.newPlaylist(playlist);
+			return BucciResponseBuilder.successfulResponseMessage("New playlist created", newPlaylist);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage());
+		} 
+	}
+	/*
+	@RequestMapping(value="addSongsToPlaylist", method = RequestMethod.POST)
+	public @ResponseBody Playlist getPlaylist(@RequestBody Playlist song) {
+		return musicCollectionService.getPlaylist(id);
+	}*/
 	
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="topalbumsbygenre", method = RequestMethod.GET)
@@ -73,17 +92,10 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse(topAlbums);
 	}
 	
-	
 	@RequestMapping(value="album", method = RequestMethod.GET)
 	public @ResponseBody Album getAlbum(@RequestParam int id) {
 		
 		return musicCollectionService.getAlbum(id);
-	}
-	
-	@RequestMapping(value="playlist", method = RequestMethod.GET)
-	public @ResponseBody Playlist getPlaylist(@RequestParam int id) {
-		
-		return musicCollectionService.getPlaylist(id);
 	}
 	
 	@Cacheable(value="popularityCache")
@@ -134,8 +146,17 @@ public class MusicCollectionController {
 			
 			return BucciResponseBuilder.failedMessage(e.getMessage()); 
 		}
-		
 		return BucciResponseBuilder.successfulResponse(album);
+	}
+	
+	@RequestMapping(value="getAlbumOfSong", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Song song) {
+		try {
+			Album album = musicCollectionService.albumOfSong(song);
+			return BucciResponseBuilder.successfulResponse(album);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage()); 
+		}
 	}
 	
 	@Scheduled(fixedRate=60000)

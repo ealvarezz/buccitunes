@@ -70,4 +70,6 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "where Month(a.release_date) = :currentMonth", nativeQuery = true)
 	public List<Album> getByReleasesMonth(@Param("currentMonth") int currentMonth);
 */
+	
+	public Album findBySongs(Song song);
 }

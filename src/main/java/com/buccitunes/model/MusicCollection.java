@@ -46,7 +46,7 @@ public class MusicCollection {
 	
 	private String artworkPath;
 	
-	@JsonInclude(JsonInclude.Include.NON_NULL)
+	//@Transient
 	private String artwork;
 	
 	@OneToOne(cascade = CascadeType.ALL)

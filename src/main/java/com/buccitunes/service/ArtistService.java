@@ -69,12 +69,7 @@ private final ArtistUserRepository artistUserRepository;
 	}
 	
 	public void save(Artist artist) {
-		
-		
-		
-		
-		artistRepository.save(artist);
-		
+		artistRepository.save(artist);	
 	}
 	
 	public void saveArtistUser(ArtistUser artistUser) throws BucciException {
@@ -87,7 +82,6 @@ private final ArtistUserRepository artistUserRepository;
 			ArtistUser savedArtist = artistUserRepository.findOne(artistUser.getEmail());
 			
 			if(avatar != null)  {
-				
 				String avatarPath = FileManager.saveArtistAlias(avatar, savedArtist.getArtist().getId());
 				savedArtist.getArtist().setAvatar(avatarPath);
 			}
