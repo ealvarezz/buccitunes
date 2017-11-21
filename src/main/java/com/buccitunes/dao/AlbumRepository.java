@@ -15,9 +15,9 @@ import com.buccitunes.model.Song;
 @Transactional
 public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, CrudRepository<Album, Integer> {
 
-	
-
 	public Album findByPrimaryArtist_Name(String name);
+	
+	public Album findBySongs(Song song);
 	
 	@Query(value=""
 			+ "select * FROM music_collection m "
@@ -25,7 +25,6 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "where Month(a.release_date) = Month(CURDATE()) and YEAR(a.release_date) = YEAR(CURDATE()) "
 			+ "\n#pageable\n", nativeQuery = true)
 	public List<Album> getNewReleasesOfMonth(Pageable page);
-	
 	
 	@Query(value=""
 			+ "select m.*, a.* "
@@ -53,17 +52,4 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "group by a.id, m.title "
 			+ "\n#pageable\n ", nativeQuery = true)
 	public List<Album> topAlbumsOfTheWeek(Pageable page);
-	
-	
-	@Query(value=""
-			+ "select s.name, s.id, count(s.name) as song_count "
-			+ "from song_plays sp "
-			+ "join song s ON s.id = sp.song_id "
-			+ "where sp.date_played <= NOW() and sp.date_played >= CURDATE()-7 "
-			+ "group by s.name, s.id "
-			+ "\n#pageable\n ", nativeQuery = true)
-	public List<Song> topSongsOfTheWeek(Pageable page);
-
-	
-	public Album findBySongs(Song song);
 }

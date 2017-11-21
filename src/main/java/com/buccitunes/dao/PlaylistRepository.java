@@ -19,9 +19,5 @@ public interface PlaylistRepository extends BaseMusicCollectionRepository<Playli
 			+ "join stat_cache stats on stats.id = m.stats_id "
 			+ "where g.id = :genreId "
 			+ "\n#pageable\n ", nativeQuery = true)
-	List<Playlist> getTopPlaylistOfAllTime();
-
-	// TODO make query
-	//List<Playlist> topPlaylistsByGenre(int genreId);
-
+	public List<Playlist> getTopPlaylistOfAllTime();
 }
