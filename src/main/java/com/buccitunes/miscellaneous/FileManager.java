@@ -16,15 +16,17 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 
 public class FileManager {
-	private final static String FILESDIR = "/BucciTunesFiles";
-	private final static Path FILESPATH = Paths.get(System.getProperty("user.home").toString() + FILESDIR + "/");
+	
+	private final static String RESOURCEPATHALIAS = "/resources/";
+	private final static String FILESDIR = "/BucciTunesFiles/";
+	private final static Path FILESPATH = Paths.get(System.getProperty("user.home").toString() + FILESDIR);
 	private final static Path USERPATH = Paths.get(FILESPATH.toString() + "/USERS/");
 	private final static Path ARTISTPATH = Paths.get(FILESPATH.toString() + "/ARTISTS/");
 	private final static Path ALBUMPATH = Paths.get(FILESPATH.toString() + "/ALBUMS/");
 	private final static Path PLAYLISTPATH = Paths.get(FILESPATH.toString() + "/PLAYLISTS/");
 	private final static Path SONGPATH = Paths.get(FILESPATH.toString() + "/SONGS/");
 	private final static String ARTWORKIMAGE = "artwork.png";
-	//private final static String AVATARIMAGE = "avatar.png";
+	private final static String AVATARIMAGE = "avatar.png";
 
 	
 	public static void setUpFileDirectory() throws IOException {
@@ -75,6 +77,11 @@ public class FileManager {
 		}
 	}
 	
+	private static String createResourcePathString(String path) {
+		String folderPath = path.substring(FILESPATH.toString().length()+1);
+		return RESOURCEPATHALIAS + folderPath;
+	}
+	
 	public static String saveArtwork(String encodedStr, int albumId) throws IOException {
 		
 		 byte[] decodedBytes = Base64.getMimeDecoder().decode(encodedStr);
@@ -104,7 +111,7 @@ public class FileManager {
              ex.printStackTrace();
          }
          
-         return path.toString();
+         return createResourcePathString(path.toString());
 	}
 	
 	public static String saveAlbumAlias(String encodedStr, int albumId) throws IOException {
@@ -120,7 +127,7 @@ public class FileManager {
 	}
 	
 	public static String saveArtistAlias(String encodedStr, int artistId) throws IOException {
-        Path path = Paths.get(ARTISTPATH + "/" + artistId +  "/" + ARTWORKIMAGE);
+        Path path = Paths.get(ARTISTPATH + "/" + artistId +  "/" + AVATARIMAGE);
         System.out.println(path);
         
         if(Files.notExists(path)) {
@@ -128,6 +135,7 @@ public class FileManager {
         }
         
         String strPath = saveImage(encodedStr, path);
+        System.out.println("RESOURCE : " + strPath);
         return strPath; 
 	}
 	
@@ -145,7 +153,6 @@ public class FileManager {
 	
 	private static String saveImage(String encodedStr, Path path) {
 		byte[] decodedBytes = Base64.getMimeDecoder().decode(encodedStr);
-		
 		 try{     		
 			 InputStream in = new ByteArrayInputStream(decodedBytes);
 			 BufferedImage bImageFromConvert = ImageIO.read(in);
@@ -155,10 +162,22 @@ public class FileManager {
 			 ex.printStackTrace();
 	     }
 	        
-	     return path.toString();
+	     return createResourcePathString(path.toString());
 	}
 	
-	public static String getEncodedArtistArtwork(int id) {
-		return "";
-	}	
+	public static String getFilesPath() {
+		return FILESPATH.toString() + "/";
+	}
+	
+	public static String getFilesAliasPath() {
+		return FILESPATH.toString() + "/";
+	}
+	
+	public static String getResourcePath() {
+		return RESOURCEPATHALIAS;
+	}
+	
+	public static String getResourceAliasPath() {
+		return RESOURCEPATHALIAS + "**";
+	}
 }

@@ -128,13 +128,11 @@ public class MusicCollectionService {
 	}
 
 	public void saveAlbum(Album album) throws BucciException{
-		
-			
 			String artworkString = album.getArtwork();
 			Artist albumOwner = artistRepository.findByName(album.getPrimaryArtist().getName());
 			album.setPrimaryArtist(albumOwner);
 			for(Song song: album.getSongs()) song.setOwner(albumOwner);
-			album.setArtwork("");
+			album.setArtwork(null);
 			Album returnedAlbum = albumRepository.save(album);
 			
 			albumOwner.getAlbums().add(album); // suppose to add album by adding to artist's album list

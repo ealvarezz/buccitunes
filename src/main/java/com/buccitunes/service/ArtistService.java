@@ -84,7 +84,7 @@ private final SongRepository songRepository;
 		
 		try{
 			String avatar = artistUser.getArtist().getAvatar();
-			artistUser.getArtist().setAvatar("");
+			artistUser.getArtist().setAvatar(null);
 			artistUserRepository.save(artistUser);
 			ArtistUser savedArtist = artistUserRepository.findOne(artistUser.getEmail());
 			

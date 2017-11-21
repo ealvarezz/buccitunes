@@ -104,7 +104,6 @@ public class AdminService {
 				String artwork = FileManager.saveAlbumAlias(requestedAlbum.getArtwork(), album.getId());
 				album.setArtwork(artwork);
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
 			}
 		}
