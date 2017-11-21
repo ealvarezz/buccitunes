@@ -17,8 +17,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class testCaching {
-	
-	
 	static int counter = 0;
 	
 	//Cache the result of this method
@@ -33,8 +31,6 @@ public class testCaching {
 	@Scheduled(fixedRate=30000)
 	@CacheEvict(allEntries=true, cacheNames={"testCaching"})
 	public void clearTest(){}
-	
-	
 	
 	@RequestMapping(value="putCache", method = RequestMethod.GET)
 	public @ResponseBody Integer putCache(){

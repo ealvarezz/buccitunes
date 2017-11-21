@@ -52,11 +52,12 @@ public class MusicCollectionController {
 	}
 	
 	@Cacheable(value="popularityCache")
-	@RequestMapping(value="toplaylists", method = RequestMethod.GET)
+	@RequestMapping(value="topPlaylists", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Playlist>> topPlaylistsOfAllTime() {
 		List<Playlist> topPlaylists = musicCollectionService.getTopPlaylist();
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
 	}
+	
 	/*
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="toplaylistsbygenre", method = RequestMethod.GET)
@@ -65,6 +66,7 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
 	}
 	*/
+	
 	@RequestMapping(value="playlist", method = RequestMethod.GET)
 	public @ResponseBody Playlist getPlaylist(@RequestParam int id) {
 		return musicCollectionService.getPlaylist(id);
@@ -72,13 +74,15 @@ public class MusicCollectionController {
 	
 	@RequestMapping(value="newPlaylist", method = RequestMethod.POST)
 	public @ResponseBody  BucciResponse<Playlist> getPlaylist(@RequestBody Playlist playlist) {
+		Playlist newPlaylist;
 		try {
-			Playlist newPlaylist = musicCollectionService.newPlaylist(playlist);
+			newPlaylist = musicCollectionService.newPlaylist(playlist);
 			return BucciResponseBuilder.successfulResponseMessage("New playlist created", newPlaylist);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		} 
 	}
+	
 	/*
 	@RequestMapping(value="addSongsToPlaylist", method = RequestMethod.POST)
 	public @ResponseBody Playlist getPlaylist(@RequestBody Playlist song) {
@@ -86,7 +90,7 @@ public class MusicCollectionController {
 	}*/
 	
 	@Cacheable(value="popularityCache")
-	@RequestMapping(value="topalbumsbygenre", method = RequestMethod.GET)
+	@RequestMapping(value="topAlbumsByGenre", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> topAlbumByGenre(@RequestParam int genreId) {
 		List<Album> topAlbums = musicCollectionService.getTopAlbumsByGenre(genreId);
 		return BucciResponseBuilder.successfulResponse(topAlbums);
@@ -97,7 +101,7 @@ public class MusicCollectionController {
 		return musicCollectionService.getAlbum(id);
 	}
 	
-	@RequestMapping(value="albumNoSong", method = RequestMethod.GET)
+	@RequestMapping(value="albumWithNoSongs", method = RequestMethod.GET)
 	public @ResponseBody Album getAlbumWithNoSongs(@RequestParam int id) {
 		return musicCollectionService.getAlbumNoSongs(id);
 	}
@@ -105,7 +109,6 @@ public class MusicCollectionController {
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="gettopsongs", method = RequestMethod.GET)
 	public @ResponseBody List<Song> topSongs() {
-		
 		System.out.println(env.getProperty("email"));
 		return musicCollectionService.getTopSongs();
 	}
@@ -118,6 +121,7 @@ public class MusicCollectionController {
 		return musicCollectionService.getTopSongsByArtist(artistId);
 	}
 	*/
+	
 	//For testing purposes
 	@RequestMapping(value="checkDate", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> check(@RequestBody Album album) {
@@ -127,12 +131,10 @@ public class MusicCollectionController {
 	
 	@RequestMapping(value="playsong", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestParam String userId, int songId) {
-		
 		Song bucciSong;
 		try {
 			bucciSong = musicCollectionService.PlaySong(userId, songId);
 		} catch (ParseException e) {
-			
 			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}
 		return BucciResponseBuilder.successfulResponse(bucciSong);
@@ -141,13 +143,9 @@ public class MusicCollectionController {
 	//For testing purposes
 	@RequestMapping(value="addAlbum", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Album album) {
-		
 		try {
-			
 			musicCollectionService.saveAlbum(album);
-			
 		} catch (BucciException e) {
-			
 			return BucciResponseBuilder.failedMessage(e.getMessage()); 
 		}
 		return BucciResponseBuilder.successfulResponse(album);
@@ -155,8 +153,9 @@ public class MusicCollectionController {
 	
 	@RequestMapping(value="getAlbumOfSong", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Song song) {
+		Album album;
 		try {
-			Album album = musicCollectionService.albumOfSong(song);
+			album = musicCollectionService.albumOfSong(song);
 			return BucciResponseBuilder.successfulResponse(album);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage()); 
@@ -166,5 +165,4 @@ public class MusicCollectionController {
 	@Scheduled(fixedRate=60000)
 	@CacheEvict(allEntries=true, cacheNames={"popularityCache"})
 	public void clearPopularCache(){}
-	
 }
