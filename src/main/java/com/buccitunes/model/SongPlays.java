@@ -27,6 +27,8 @@ public class SongPlays {
 	
 	Date datePlayed;
 	
+	public SongPlays() {}
+	
 	public SongPlays(User user, Song song) {
 		
 		this.user = user;

@@ -9,6 +9,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buccitunes.miscellaneous.BucciException;
@@ -16,6 +17,7 @@ import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
@@ -52,5 +54,17 @@ public class AdminController {
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
+	}
+	
+	@RequestMapping(value="getplaysongsthismonth", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<SongPlays>> getAllPlayedSongsThisMonth(@RequestParam int artist_id) {
+		List<SongPlays> plays = adminService.getSongPLays(artist_id);
+		return BucciResponseBuilder.successfulResponse(plays);
+	}
+	
+	@RequestMapping(value="payroyalties", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<Double> payRoyaltiesToArtists() {
+		double totalPayed = adminService.payRoyalties();
+		return BucciResponseBuilder.successfulResponse(new Double(totalPayed));
 	}
 }

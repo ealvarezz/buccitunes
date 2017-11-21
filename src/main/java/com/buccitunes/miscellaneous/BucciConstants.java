@@ -14,6 +14,14 @@ public class BucciConstants {
 		public static final int TOPSONGSLIMIT = 10;
 	}
 	
+	public static class Admin {
+		public static final double ROYALTY_PRICE = 0.03;
+		public static final int MOONMAN_TIER_MONTHLY_PRICE = 30;
+		public static final int TREX_TIER_MONTHLY_PRICE = 45;
+		public static final int NITRODUBS_TIER_MONTHLY_PRICE = 100;
+		
+	}
+	
 	public static class Playlist {
 		public static final int PLAYLISTSLIMIT = 10;
 	}

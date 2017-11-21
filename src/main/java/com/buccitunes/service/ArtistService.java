@@ -26,6 +26,7 @@ import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.Tier;
 import com.buccitunes.model.User;
 
 @Service
@@ -85,6 +86,7 @@ private final SongRepository songRepository;
 		try{
 			String avatar = artistUser.getArtist().getAvatar();
 			artistUser.getArtist().setAvatar(null);
+			artistUser.setTier(Tier.NO_TIER);
 			artistUserRepository.save(artistUser);
 			ArtistUser savedArtist = artistUserRepository.findOne(artistUser.getEmail());
 			

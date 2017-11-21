@@ -1,21 +1,27 @@
 package com.buccitunes.service;
 
 import java.io.IOException;
+import java.util.Date;
+import java.util.List;
 
 import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.*;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.PaymentType;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.User;
+import com.buccitunes.model.SongPlays;
 
 
 @Service
@@ -31,13 +37,16 @@ public class AdminService {
 	private final RequestedArtistRepository requestedArtistRepository;
 	private final RequestedConcertRepository requestedConcertRepository;
 	private final ArtistUserRepository artistUserRepository;
+	private final ArtistTransactionRepository artistTransactionRepository;
 	private final UserRepository userRepository;
+	private final SongPlaysRepository songPlaysRepository;
 	
 	public AdminService(AdminUserRepository adminUserRepository, AlbumRepository albumRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, ConcertRepository concertRepository,
 			RequestedAlbumRepository requestedAlbumRepository, RequestedSongRepository requestedSongRepository,
 			RequestedArtistRepository requestedArtistRepository, RequestedConcertRepository requestedConcertRepository, 
-			ArtistUserRepository artistUserRepository, UserRepository userRepository) {
+			ArtistUserRepository artistUserRepository, UserRepository userRepository, SongPlaysRepository songPlaysRepository,
+			ArtistTransactionRepository artistTransactionRepository) {
 		this.adminUserRepository = adminUserRepository;
 		this.albumRepository = albumRepository;
 		this.songRepository = songRepository;
@@ -49,6 +58,8 @@ public class AdminService {
 		this.requestedConcertRepository = requestedConcertRepository;
 		this.artistUserRepository = artistUserRepository;
 		this.userRepository = userRepository;
+		this.songPlaysRepository = songPlaysRepository;
+		this.artistTransactionRepository = artistTransactionRepository;
 	}
 	
 	public Artist addNewArtist(Artist artist) throws BucciException {
@@ -108,6 +119,38 @@ public class AdminService {
 			}
 		}
 		return album;
+	}
+	
+	public List<SongPlays> getSongPLays(int artist_id) {
+		
+		return songPlaysRepository.getCurrentSongPlaysByArtist(artist_id);
+	}
+	
+	/**
+	 * This function pays royalties to artists monthly. 
+	 * @return Total amount payed.
+	 */
+	
+	public double payRoyalties() {
+		
+		double total = 0;
+		for(ArtistUser artist: artistUserRepository.findAll()){
+			
+			int songPlays = songPlaysRepository.getCurrentSongPlaysByArtist(artist.getArtist().getId()).size();
+			if(songPlays > 0) {
+				
+				total += songPlays * BucciConstants.Admin.ROYALTY_PRICE;
+				ArtistTransaction transaction  = new ArtistTransaction();
+				transaction.setAmount(songPlays * BucciConstants.Admin.ROYALTY_PRICE);
+				transaction.setArtistUser(artist);
+				transaction.setDate(new Date());
+				transaction.setPaymentType(PaymentType.ROYALTY_PAYMENT); // Change this to transaction type instead later
+				artistTransactionRepository.save(transaction);
+			}
+			
+		}
+		
+		return total;
 	}
 	
 }
