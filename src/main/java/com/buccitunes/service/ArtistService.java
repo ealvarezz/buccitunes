@@ -108,9 +108,9 @@ private final SongRepository songRepository;
 	}
 
 	public List<Song> getTopTenSongs(int artistId) {
-		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Artist.TOPSONGSLIMIT,
-				Sort.Direction.DESC, "stats.total_plays");
-		return songRepository.getTopSongsOfAllTimeByArtist(artistId, pageRequest);
+		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Artist.TOP_SONGS_LIMIT,
+				Sort.Direction.DESC, BucciConstants.Stats.PLAY_COUNT);
+		return songRepository.getTopSongsOfArtist(BucciConstants.TimeAgo.ALL_TIME, artistId, pageRequest);
 		
 	}
 }

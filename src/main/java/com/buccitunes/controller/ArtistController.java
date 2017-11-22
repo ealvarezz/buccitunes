@@ -63,7 +63,7 @@ public class ArtistController {
 		}
 	}
 	
-	@RequestMapping(value="topSongsOfArtist", method = RequestMethod.GET)
+	@RequestMapping(value="topsongsofartist", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Song>> getTopSongsOfArtist(@RequestParam int id) {
 		 List<Song> songs = artistService.getTopTenSongs(id);
 		 return BucciResponseBuilder.successfulResponse(songs);

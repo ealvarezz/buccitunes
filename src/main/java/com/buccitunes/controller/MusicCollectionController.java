@@ -58,14 +58,13 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
 	}
 	
-	/*
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="toplaylistsbygenre", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Playlist>> topPlaylistsByGenre(@RequestParam int genreId) {
 		List<Playlist> topPlaylists = musicCollectionService.getTopPlaylistByGenre(genreId);
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
 	}
-	*/
+	
 	
 	@RequestMapping(value="playlist", method = RequestMethod.GET)
 	public @ResponseBody Playlist getPlaylist(@RequestParam int id) {
