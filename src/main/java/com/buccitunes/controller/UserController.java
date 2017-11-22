@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.buccitunes.jsonmodel.LoginInfo;
+import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.miscellaneous.*;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.PremiumUser;

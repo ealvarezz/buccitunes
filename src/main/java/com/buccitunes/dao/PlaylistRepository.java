@@ -24,7 +24,7 @@ public interface PlaylistRepository extends BaseMusicCollectionRepository<Playli
 			+ "\n#pageable\n ", nativeQuery = true)
 	public List<Playlist> getTopPlaylistOfAllTime();
 	
-	/*
+	
 	@Query(value=""
 			+ "select p.*, m.*, " + QueryHelper.SELECT_PLAY_COUNTS
 			+ "from playlist p "
@@ -33,7 +33,7 @@ public interface PlaylistRepository extends BaseMusicCollectionRepository<Playli
 			+ "join song s on s.id = ms.song_id "
 			+  QueryHelper.PLAY_COUNTS_BY_TIME_QUERY
 			+ "group by a.id, m.title "
-			+ "\n#pageable\n ", nativeQuery = true)*/
-	//We need a playlist_plays table
-	public List<Playlist> getTopPlaylistByWeeks(@Param("timeAgo") String timeAgo, Pageable page); 
+			+ "\n#pageable\n ", nativeQuery = true)
+	public List<Playlist> getTopPlaylistByWeeks(@Param("timeAgo") String timeAgo, Pageable page);
+	//**************We need a playlist_plays table*************
 }

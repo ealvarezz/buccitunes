@@ -15,7 +15,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.buccitunes.jsonmodel.CurrentStats;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="MUSIC_COLLECTION")
 @Inheritance(strategy = InheritanceType.JOINED)
@@ -42,6 +47,10 @@ public class MusicCollection {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "stats_id")
 	private StatCache stats;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private CurrentStats currentStats;
 	
 	public MusicCollection(){
 		this.stats = new StatCache();
@@ -103,6 +112,14 @@ public class MusicCollection {
 
 	public void setArtwork(String artwork) {
 		this.artwork = artwork;
+	}
+
+	public CurrentStats getCurrentStats() {
+		return currentStats;
+	}
+
+	public void setCurrentStats(CurrentStats currentStats) {
+		this.currentStats = currentStats;
 	}
 	
 	

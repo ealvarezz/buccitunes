@@ -100,7 +100,7 @@ public class MusicCollectionController {
 		return musicCollectionService.getAlbum(id);
 	}
 	
-	@RequestMapping(value="albumWithNoSongs", method = RequestMethod.GET)
+	@RequestMapping(value="albumwithnosongs", method = RequestMethod.GET)
 	public @ResponseBody Album getAlbumWithNoSongs(@RequestParam int id) {
 		return musicCollectionService.getAlbumNoSongs(id);
 	}

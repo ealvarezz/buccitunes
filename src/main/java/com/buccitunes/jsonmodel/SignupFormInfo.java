@@ -1,4 +1,4 @@
-package com.buccitunes.miscellaneous;
+package com.buccitunes.jsonmodel;
 
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.User;

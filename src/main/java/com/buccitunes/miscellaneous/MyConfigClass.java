@@ -24,9 +24,10 @@ public class MyConfigClass extends WebMvcConfigurerAdapter{
         MappingJackson2HttpMessageConverter messageConverter = new MappingJackson2HttpMessageConverter();
 
         ObjectMapper mapper = new ObjectMapper();
-        //Registering Hibernate4Module to support lazy objects
-        mapper.registerModule(new Hibernate5Module());
-
+        //Registering Hibernate5Module to support lazy objects
+        Hibernate5Module module = new Hibernate5Module();
+        module.disable(Hibernate5Module.Feature.USE_TRANSIENT_ANNOTATION);
+        mapper.registerModule(module);
         messageConverter.setObjectMapper(mapper);
         return messageConverter;
 
