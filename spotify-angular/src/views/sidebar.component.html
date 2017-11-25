@@ -29,10 +29,10 @@
             <h4 class ="side-list"><a routerLink="/playlist">Songs</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/album">Albums</a> </h4>
+            <h4 class ="side-list"><a routerLink="/album/37">Albums</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/artist">Artists</a> </h4>
+            <h4 class ="side-list"><a routerLink="/artist/14">Artists</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
             <h4 class ="side-list"><a routerLink="/">Recommended</a></h4>
@@ -41,7 +41,7 @@
     </md-list-item>
        <md-divider></md-divider>
     <md-list-item>
-        <h3 mdLine md-subheader>Your Playlist</h3>
+        <h3 mdLine md-subheader>Your Playlist <button (click)="addPlaylist()" md-icon-button style="float:right; color:white; margin-top:-5%;"><i class="material-icons">add_circle</i></button></h3>
         <div *ngFor="let playlist of savedPlaylists" mdLine >
             <i md-list-icon *ngIf= "playlist.source == 'friend'" class="material-icons playlist-icons">people</i>
             <i *ngIf= "playlist.source == 'public'" class="material-icons playlist-icons">public</i>
@@ -58,4 +58,4 @@
 
 
 </md-list>
-<div>
+</div>

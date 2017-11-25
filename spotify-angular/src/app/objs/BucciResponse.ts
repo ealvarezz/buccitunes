@@ -1,6 +1,7 @@
-export class BucciResponse{
-    private message : string;
-	private successful: boolean;
-	private response : any;
-	private status: string;
+export class BucciResponse<E>{
+    message : string;
+	successful: boolean;
+	response : E;
+	status: string;
+
 }

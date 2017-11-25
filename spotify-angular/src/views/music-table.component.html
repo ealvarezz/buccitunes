@@ -14,7 +14,7 @@
     <!-- Progress Column -->
     <ng-container mdColumnDef="songName">
       <md-header-cell *mdHeaderCellDef> Title </md-header-cell>
-      <md-cell *mdCellDef="let row"> {{row.song_name}} </md-cell>
+      <md-cell *mdCellDef="let row"> {{row.name}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="add">
@@ -24,7 +24,7 @@
 
     <ng-container mdColumnDef="artist">
       <md-header-cell *mdHeaderCellDef> <div *ngIf="isAlbum == false" >Artist</div> </md-header-cell>
-      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false" >{{row.artist_name}}</div> </md-cell>
+      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false" >{{row.owner.name}}</div> </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="album">
@@ -55,7 +55,7 @@
     
     <ng-container mdColumnDef="duration">
       <md-header-cell *mdHeaderCellDef> <i class="material-icons" >access_time</i> </md-header-cell>
-      <md-cell *mdCellDef="let row"> {{row.duration}} </md-cell>
+      <md-cell *mdCellDef="let row"> 3:30 </md-cell>
     </ng-container>
 
 
