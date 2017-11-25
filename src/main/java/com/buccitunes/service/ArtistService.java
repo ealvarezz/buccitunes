@@ -61,7 +61,6 @@ private final SongRepository songRepository;
 		
 		if(artist != null) {
 			artist.getAlbums().size();
-			
 			return artist;
 		} else {
 			throw new BucciException("Artist not found");

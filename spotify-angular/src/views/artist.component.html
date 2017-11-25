@@ -1,10 +1,9 @@
-<div *ngIf="artist">
 <md-card style="margin-bottom:10%">
     <md-card-header>
         <div style="margin-bottom: 1%">
             <div >
                 <div><h3>Artist<i class="material-icons" style="color:#3f51b5;">verified_user</i></h3></div>
-                <div><h1>{{artist.name}}</h1></div>
+                <div><h1>Yung Gravy</h1></div>
                 <button md-raised-button class="rounded-button">Play</button>
                 <button md-raised-button class="rounded-button">Follow</button>
                 <button md-mini-fab  style="color: white; background-color:#3f51b5; top:5px;" [mdMenuTriggerFor]="artistMenu"><i class="material-icons " style="font-size:24px; ">more_horiz</i></button>
@@ -42,9 +41,7 @@
                 <md-list>
                     <h3 >Albums</h3>
                     <md-divider></md-divider>
-                    <div *ngFor = "let album of artist.albums">
-                        <mini-album [album]="album" ></mini-album>
-                    </div>
+                    <mini-album [songs]="songs" ></mini-album>
                 </md-list>
             </div>
             
@@ -53,7 +50,7 @@
             <button mdTooltip="Edit Bio" style="float:right;" *ngIf="isEditModeBio == false" (click)="toggleEditModeBio()"md-icon-button><i class="material-icons">mode_edit</i></button>
             <h2>Bio</h2>
             <img src="../assets/ugly_god.png">
-            <p *ngIf="isEditModeBio == false">{{artist.biography}}</p>
+            <p *ngIf="isEditModeBio == false">Lyrically crude and rhythmically sluggish, Ugly God is a rapper and producer who broke out during the latter half of the 2010s. Born in Indiana, he has lived in other areas of the Midwest, as well as the South, including Texas, Mississippi, and Louisiana. He attended the University of Southern Mississippi and dropped out, subsequently forming the Little Dick Clique and releasing material -- such as "Booty from a Distance" and "I Beat My Meat" -- through a SoundCloud page. In 2016, one of the more successful tracks, "Water," was picked up for release by major-label Asylum. By the end of the year, the single made Billboard's Spotify Velocity and Spotify Viral 50 charts. Ugly God issued his full-length Asylum debut, The Booty Tape, in 2017. The mixtape climbed into the Top 30 of the Billboard 200. ~ Andy Kellman, Rovi</p>
             <div *ngIf="isEditModeBio == true">
                 <div>
                     <input style = "margin-top:1%; margin-bottom:1%;" [disabled] = "true" placeholder="Upload Image...." mdInput value="../assets/ugly_god.png" required>
@@ -64,7 +61,7 @@
                 <div class="txtarea">
                     <md-form-field class="txtarea">
                         <textarea mdInput placeholder="Artist Bio" mdTextareaAutosize mdAutosizeMinRows="2"
-                                    mdAutosizeMaxRows="10">{{artist.biography}}
+                                    mdAutosizeMaxRows="10">Lyrically crude and rhythmically sluggish, Ugly God is a rapper and producer who broke out during the latter half of the 2010s. Born in Indiana, he has lived in other areas of the Midwest, as well as the South, including Texas, Mississippi, and Louisiana. He attended the University of Southern Mississippi and dropped out, subsequently forming the Little Dick Clique and releasing material -- such as "Booty from a Distance" and "I Beat My Meat" -- through a SoundCloud page. In 2016, one of the more successful tracks, "Water," was picked up for release by major-label Asylum. By the end of the year, the single made Billboard's Spotify Velocity and Spotify Viral 50 charts. Ugly God issued his full-length Asylum debut, The Booty Tape, in 2017. The mixtape climbed into the Top 30 of the Billboard 200. ~ Andy Kellman, Rovi
                                 </textarea>
                     </md-form-field>
                 </div>
@@ -93,4 +90,3 @@
     </md-tab-group>
 
 </md-card>
-</div>

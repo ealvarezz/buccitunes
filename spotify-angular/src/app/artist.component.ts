@@ -1,53 +1,24 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component } from '@angular/core';
+import {PlayerComponent} from './player.component'
 import {Song} from './objs/Song';
 import {Album} from './objs/Album';
-import {RequestedAlbum} from './objs/RequestedAlbum';
-import {Artist} from './objs/Artist';
-
 import {MdDialog, MdDialogRef} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdChipInputEvent, ENTER} from '@angular/material';
-
-import {ArtistService} from './services/artist.service';
-import {MusicCollectionService} from './services/music.service';
-
-import { Observable } from 'rxjs/Rx';
-
-import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
   selector: 'artist-page',
   templateUrl: '../views/artist.component.html',
   styleUrls: ['../views/styles/artist.component.css']
 })
-export class ArtistComponent implements OnInit {
-
-  artist : Artist;
-
+export class ArtistComponent {
   songs : Song[] =  [new Song(), new Song(), new Song(), new Song(), new Song(), new Song() , new Song() , new Song() , new Song() , new Song()];
   viewSongs : Song[] = this.songs.slice(0,5);
   showAllSongs : boolean = false;
+
   isEditModeBio : boolean = false;
 
-  constructor(public dialog: MdDialog, private artistService : ArtistService, private route: ActivatedRoute){}
-
-  ngOnInit(){
-    this.route.params.subscribe(params => {
-        this.getArtist(+params['id']);
-    });
-  }
-
-  getArtist(id : number ){
-   this.artistService.getArtist(id)
-            .subscribe(
-                (data) => {
-                    this.artist = data;
-                },
-                (err) => {
-                    console.log(err.message);
-                });
-  }
+  constructor(public dialog: MdDialog){}
 
   addAlbum(){
     let dialogRef = this.dialog.open(AddAlbumDialog);
@@ -95,7 +66,7 @@ export class ArtistComponent implements OnInit {
 })
 export class AddAlbumDialog {
 
-  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>, private _formBuilder: FormBuilder, private musicService : MusicCollectionService) {
+  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>, private _formBuilder: FormBuilder) {
      }
 
   infoFormGroup: FormGroup;
@@ -140,13 +111,6 @@ export class AddAlbumDialog {
   addNewSong(){
     this.currentAlbum.songs.push(new Song());
   }
-  
-  removeSong(song: Song){
-    let index = this.currentAlbum.songs.indexOf(song);
-    if (index >= 0) {
-      this.currentAlbum.songs.splice(index, 1);
-    }
-  }
 
   add(event: MdChipInputEvent): void {
     let input = event.input;
@@ -167,7 +131,7 @@ export class AddAlbumDialog {
     this.albumArtworkPath = fileList[0].name;
 
     if(fileList.length > 0) {
-        // this.currentAlbum.artwork = fileList[0];
+        this.currentAlbum.artwork = fileList[0];
 
         let reader = new FileReader();
 
@@ -191,19 +155,6 @@ export class AddAlbumDialog {
     this.currentAlbum.releaseDate.setMonth(this.months.indexOf(this.releaseMonth));
     this.currentAlbum.releaseDate.setDate(this.releaseDay);
     this.currentAlbum.releaseDate.setFullYear(this.releaseYear);
-  }
-
-  submitAlbum(){
-
-    this.musicService.addAlbum(this.currentAlbum)
-            .subscribe(
-                (data) => {
-                    console.log(data);
-                    this.dialogRef.close();
-                },
-                (err) => {
-                    console.log(err.message);
-                });
 
   }
 

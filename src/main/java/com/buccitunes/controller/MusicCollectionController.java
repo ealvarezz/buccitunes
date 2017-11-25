@@ -97,15 +97,8 @@ public class MusicCollectionController {
 	}
 	
 	@RequestMapping(value="album", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<Album> getAlbum(@RequestParam int id) {
-		try {
-			Album album = musicCollectionService.getAlbum(id);
-			return BucciResponseBuilder.successfulResponse(album);
-		}
-		catch(Exception e) {
-			return BucciResponseBuilder.failedMessage(e.getMessage());
-		}
-		
+	public @ResponseBody Album getAlbum(@RequestParam int id) {
+		return musicCollectionService.getAlbum(id);
 	}
 	
 

@@ -49,9 +49,9 @@
       <div *ngFor="let song of currentAlbum.songs;">
         <div>
             <md-form-field>
-                <input mdInput placeholder="Song Title" name="song_title" [(ngModel)]= "song.name" formControlName="song_title" required>
+                <input mdInput placeholder="Song Title" name="song_title" [(ngModel)]= "song.song_name" formControlName="song_title" required>
             </md-form-field>
-            <button (click)= "removeSong(song)" md-icon-button style="float:right"><i class="material-icons">close</i></button>
+            <button md-icon-button style="float:right"><i class="material-icons">close</i></button>
         </div>
         <div>
             <md-slide-toggle>Mark As Explicit</md-slide-toggle>
@@ -97,8 +97,7 @@
     </md-grid-list>
     <span style="position:absolute; left:0px;"><img [src]="currentAlbum.artwork"></span>
     <div>
-      <button md-raised-button mdStepperPrevious>Back</button>
-      <button md-raised-button (click)="submitAlbum()">Submit Album</button>
+      <button md-button mdStepperPrevious>Back</button>
     </div>
     </div>
   </md-step>

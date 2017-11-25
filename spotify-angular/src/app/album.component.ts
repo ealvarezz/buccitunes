@@ -1,11 +1,5 @@
 import { Component, Input } from '@angular/core';
 import {Song} from './objs/Song'
-import {Album} from './objs/Album'
-// import {DomSanitizer} from '@angular/platform-browser';
-
-import {MusicCollectionService} from './services/music.service';
-
-import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
 @Component({
@@ -15,31 +9,11 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class AlbumComponent{
 
-    album : Album;
-    artworkUrl : string;
-    file_path : string = "http://localhost:8080"
+    songs: Song[];
     
-
-    constructor(private route: ActivatedRoute, private musicService : MusicCollectionService){}
-
-
     ngOnInit(){
-        this.route.params.subscribe(params => {
-            this.getAlbum(+params['id']);
-        });
+        this.songs = [new Song(), new Song(), new Song(), new Song()];
     }
-
-    getAlbum(id : number ){
-    this.musicService.getAlbum(id)
-                .subscribe(
-                    (data) => {
-                        this.album = data;
-                        this.artworkUrl = this.file_path + this.album.artwork;
-                    },
-                    (err) => {
-                        console.log(err.message);
-                    });
-  }
     
 
 }
