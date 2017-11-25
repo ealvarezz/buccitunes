@@ -32,9 +32,12 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.Genre;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.SongPlays;
+import com.buccitunes.model.Tier;
 import com.buccitunes.model.User;
 import com.buccitunes.resultset.AlbumWithStats;
 
@@ -49,16 +52,18 @@ public class MusicCollectionService {
 	private final ArtistRepository artistRepository;
 	private final SongPlaysRepository songPlaysRepository;
 	private final UserRepository userRepository;
+	private final ArtistUserRepository artistUserRepository;
 	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, SongPlaysRepository songPlaysRepository,
-			UserRepository userRepository) {
+			UserRepository userRepository, ArtistUserRepository artistUserRepository) {
 		this.albumRepository = albumRepository;
 		this.playlistRepository = playlistRepository;
 		this.songRepository = songRepository;
 		this.artistRepository = artistRepository;
 		this.songPlaysRepository = songPlaysRepository;
 		this.userRepository = userRepository;
+		this.artistUserRepository = artistUserRepository;
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
@@ -225,5 +230,30 @@ public class MusicCollectionService {
 		
 		album.getSongs().size();
 		return album;
+	}
+	
+	public void populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums) {
+		
+		int populateAmount = 0;
+		switch(tier){
+			case MOONMAN_TIER: 		populateAmount = BucciConstants.Admin.MOONMAN_MAX; break;
+			case TREX_TIER: 			populateAmount = BucciConstants.Admin.TREX_MAX; break;
+			case NITRO_DUBS_TIER: 	populateAmount = BucciConstants.Admin.NITRODUBS_MAX; break;
+			default: break;
+		}
+		
+		for(Genre genre: genres) {
+			
+			
+			
+			if(populateAmount == 0) break;
+		}
+		
+	}
+	
+	public void assignTierToArtistUser(String email, Tier tier) {
+		
+		ArtistUser artist = artistUserRepository.findOne(email);
+		artist.setTier(tier);
 	}
 }

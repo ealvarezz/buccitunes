@@ -19,6 +19,9 @@ public class BucciConstants {
 		public static final int MOONMAN_TIER_MONTHLY_PRICE = 30;
 		public static final int TREX_TIER_MONTHLY_PRICE = 45;
 		public static final int NITRODUBS_TIER_MONTHLY_PRICE = 100;
+		public static final int MOONMAN_MAX = 4;
+		public static final int TREX_MAX = 9;
+		public static final int NITRODUBS_MAX = 17;
 		
 	}
 	
