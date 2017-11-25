@@ -52,7 +52,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<String> followUser(@RequestBody User followedUser, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(BucciConstants.User.NOT_LOGGED_IN);
 		}	
 		
 		try{
@@ -64,13 +64,36 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="getfollowers", method = RequestMethod.GET)
-	public @ResponseBody List<User> getAllFollowers(@RequestParam String email) {
-		return userService.getFollowers(email);
+	public @ResponseBody BucciResponse<List<User>> getAllFollowers(@RequestParam String email) {
+		List<User> users;
+		try {
+			users = userService.getFollowers(email);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage()); 
+		}
+		
+		if(users.size() == 0) {
+			return BucciResponseBuilder.successfulResponseMessage("There are no followers", users);
+		} else {
+			return BucciResponseBuilder.successfulResponse(users);
+		}
+		
 	}
 	
 	@RequestMapping(value="getfollowing", method = RequestMethod.GET)
-	public @ResponseBody List<User> getAllFollowings(@RequestParam String email) {
-		return userService.getFollowing(email);
+	public @ResponseBody BucciResponse<List<User>> getAllFollowings(@RequestParam String email) {
+		List<User> users;
+		try {
+			users = userService.getFollowing(email);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage()); 
+		}
+		
+		if(users.size() == 0) {
+			return BucciResponseBuilder.successfulResponseMessage("There is no user following", users);
+		} else {
+			return BucciResponseBuilder.successfulResponse(users);
+		}
 	}
 	
 	@RequestMapping(value="findbyname", method = RequestMethod.GET)
@@ -115,10 +138,10 @@ public class UserController {
 	
 	@RequestMapping(value="logout", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<String> logout(@RequestBody User user, HttpSession session) {
-		User sessionUser = (User) session.getAttribute("user");
+		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
 		
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(BucciConstants.User.NOT_LOGGED_IN);
 		} 
 		if(!sessionUser.getEmail().equals(user.getEmail())) {
 			return BucciResponseBuilder.failedMessage("Invalid Email");

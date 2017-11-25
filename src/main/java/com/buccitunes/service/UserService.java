@@ -76,16 +76,22 @@ public class UserService  {
 	}
 	
 	
-	public List<User> getFollowing(String email){
+	public List<User> getFollowing(String email) throws BucciException{
 		
 		User user = userRepository.findOne(email);
+		if(user == null) {
+			throw new BucciException("User not found"); 
+		}
 		
 		return user.getFollowing();
 	}
 	
-	public List<User> getFollowers(String email){
+	public List<User> getFollowers(String email) throws BucciException{
 		
 		User user = userRepository.findOne(email);
+		if(user == null) {
+			throw new BucciException("User not found"); 
+		}
 		
 		return user.getFollowers();
 	}

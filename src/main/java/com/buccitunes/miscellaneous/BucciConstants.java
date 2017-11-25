@@ -36,4 +36,10 @@ public class BucciConstants {
 		public static final String SONG_COUNT = "stats.song_count";
 		public static final String PLAY_COUNT = "numPlays";
 	}
+	
+	public static class User {
+		public static final String NOT_LOGGED_IN = "Not Logged In";
+		public static final String LOGGED_IN = "Already Logged In";
+		public static final String SESSION = "user";
+	}
 }
