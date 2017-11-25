@@ -47,11 +47,18 @@ public class UserController {
 	public @ResponseBody void removeUser(@RequestParam String email) {
 		userService.remove(email);
 	}
-	
-	@RequestMapping(value="follow", method = RequestMethod.GET)
-	public @ResponseBody void followUser(@RequestParam String following, @RequestParam String followed) {
-		userService.follow(following, followed);
+	/*
+	@RequestMapping(value="follow", method = RequestMethod.POST)
+	public @ResponseBody BucciReponse followUser(@RequestBody User user, HttpSession session) {
+		User loggedUser = (User) session.getAttribute("user");
+		try{
+			userService.follow(loggedUser.getEmail(), userFollowing.followed);
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}	
 	}
+	*/
+	
 	
 	@RequestMapping(value="getfollowers", method = RequestMethod.GET)
 	public @ResponseBody List<User> getAllFollowers(@RequestParam String email) {
@@ -88,12 +95,14 @@ public class UserController {
 	
 	@RequestMapping(value="login", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> login(@RequestBody LoginInfo loginInfo, HttpSession session) {
-		User account = userService.findOne(loginInfo.email);
 		
-		if(account != null) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser != null) {
 			return BucciResponseBuilder.failedMessage("Already Logged In");
 		}
-		if(BucciPassword.checkPassword(loginInfo.password, account.getPassword())) {
+		
+		User account = userService.findOne(loginInfo.email);
+		if(account != null && BucciPassword.checkPassword(loginInfo.password, account.getPassword())) {
 			session.setAttribute("user", account);
 			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
 		} else {
@@ -115,10 +124,15 @@ public class UserController {
 		return BucciResponseBuilder.successMessage("LoggedOut");
 	}
 	
-	@RequestMapping(value="sessionInfo", method = RequestMethod.GET)
+	@RequestMapping(value="loggedin", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> sessionTest(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute("user");
-		return BucciResponseBuilder.successfulResponse(sessionUser);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			return BucciResponseBuilder.successfulResponse(sessionUser);
+		}
 	}
 	
 	@RequestMapping(value="premiumUpgrade", method = RequestMethod.POST)
