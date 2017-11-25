@@ -4,13 +4,13 @@ import json
 
 PATH = "./bucci/"
 
-ARTIST_ENDPOINT = "http://localhost:8080/changetier?email="
-
+TIER_ENDPOINT = "http://localhost:8080/changetier?email="
+count = 0
 
 print("\n==============Assigning Tiers==============\n")
-r = requests.get("http://localhost:8080/getallusers");
+r = requests.get("http://localhost:8080/getallusers").json()
 for i in r:
-    print(i["email"])
-   # artist_obj = json.loads(open(artpath+i, 'r').read())
-   # requests.get(ARTIST_ENDPOINT + artist_obj["email"] + "&tier=" + str(i % 4))
+    print("processing " + i['email'])
+    requests.get(TIER_ENDPOINT + i["email"] + "&tiercode=" + str(count % 4))
+    count += 1
 

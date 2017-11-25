@@ -232,7 +232,7 @@ public class MusicCollectionService {
 		return album;
 	}
 	
-	public void populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums) {
+	public int populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums, int rem) {
 		
 		int populateAmount = 0;
 		switch(tier){
@@ -245,15 +245,17 @@ public class MusicCollectionService {
 		for(Genre genre: genres) {
 			
 			
-			
 			if(populateAmount == 0) break;
 		}
 		
+		return populateAmount;
+		
 	}
 	
-	public void assignTierToArtistUser(String email, Tier tier) {
+	public void assignTierToArtistUser(String email, Tier tier) throws BucciException {
 		
 		ArtistUser artist = artistUserRepository.findOne(email);
-		artist.setTier(tier);
+		if(artist != null) artist.setTier(tier);
+		else throw new BucciException("Artist user with the email: " + email + "does not extist");
 	}
 }

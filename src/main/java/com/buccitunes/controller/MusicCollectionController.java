@@ -171,6 +171,18 @@ public class MusicCollectionController {
 		}
 	}
 	
+	@RequestMapping(value="changetier", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<String> changeUserTier(@RequestParam String email, @RequestParam int tiercode) {
+		try {
+			musicCollectionService.assignTierToArtistUser(email, Tier.fromCode(tiercode));
+		} catch (BucciException e) {
+			// TODO Auto-generated catch block
+			return BucciResponseBuilder.failedMessage(e.getMessage()); 
+		}
+		
+		return BucciResponseBuilder.successfulResponse("Switched tier");
+	}
+	
 	@Scheduled(fixedRate=60000)
 	@CacheEvict(allEntries=true, cacheNames={"popularityCache"})
 	public void clearPopularCache(){}
