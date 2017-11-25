@@ -110,7 +110,8 @@ private final SongRepository songRepository;
 	public List<Song> getTopTenSongs(int artistId) {
 		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Artist.TOP_SONGS_LIMIT,
 				Sort.Direction.DESC, BucciConstants.Stats.PLAY_COUNT);
-		return songRepository.getTopSongsOfArtist(BucciConstants.TimeAgo.ALL_TIME, artistId, pageRequest);
+		//return songRepository.getTopSongsOfArtist(BucciConstants.TimeAgo.ALL_TIME, artistId, pageRequest);
+		return null;
 		
 	}
 }

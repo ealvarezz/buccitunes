@@ -1,0 +1,37 @@
+constants:
+  PageRequest:
+    START: 0
+  
+  Album:
+    NEW_RELEASES_LIMIT: 10
+    TOP_ALBUMS_LIMIT: 10
+  
+  Artist:
+    TOP_SONGS_LIMIT: 10
+    
+  Admin:  
+    PLAYLISTS_LIMIT: 10
+    ROYALTY_PRICE: 0.03
+    MOONMAN_TIER_MONTHLY_PRICE: 30
+    TREX_TIER_MONTHLY_PRICE: 45
+    NITRODUBS_TIER_MONTHLY_PRICE: 100
+    MOONMAN_MAX: 4
+    TREX_MAX: 9
+    NITRODUBS_MAX: 17 
+  
+  Playlist:
+    TOP_PLAYLISTS_LIMIT: 10
+    
+  TimeAgo:
+    WEEK_AGO: 7
+    TWO_WEEKS_AGO: 14
+    ALL_TIME: CURDATE()
+    
+  Stats:
+    SONG_COUNT: stats.song_count
+    PLAY_COUNT: numPlays
+    
+  User:
+    NOT_LOGGED_IN: Not Logged In 
+    LOGGED_IN: Already Logged In
+    SESSION: user

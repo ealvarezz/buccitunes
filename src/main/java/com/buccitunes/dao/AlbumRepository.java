@@ -29,7 +29,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "\n#pageable\n", nativeQuery = true)
 	public List<Album> getNewReleasesOfMonth(Pageable page);
 	
-	@Query(value=""
+	
+	/*
+	 * 	@Query(value=""
 			+ "select a.*, m.*, " + QueryHelper.SELECT_PLAY_COUNTS
 			+ "from genre g "
 			+ "join genre_album ga ON ga.genre_id = g.id "
@@ -41,12 +43,15 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "where g.id = :genreId "
 			+ "group by a.id, m.title "
 			+ "\n#pageable\n ", nativeQuery = true)
-	public List<Album> topAlbumsByGenre(@Param("genreId") int genreId, @Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
+	 */
 	
 	
+	//@Query(value="Select * from Album", nativeQuery = true)
+	//public List<Album> topAlbumsByGenre(@Param("genreId") int genreId, @Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
 	
 	
-	@Query(value=""
+/*
+ * 	@Query(value=""
 			+ "select a.*, m.*, " + QueryHelper.SELECT_PLAY_COUNTS
 			+ "from album a "
 			+ "join music_collection m on m.id = a.id "
@@ -54,6 +59,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "join song s on s.id = ms.song_id "
 			+ QueryHelper.PLAY_COUNTS_BY_TIME_QUERY
 			+ "group by a.id, m.title "
-			+ "\n#pageable\n ", nativeQuery = true)
-	public List<Album> topAlbumsOfTheWeek(@Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
+			+ "\n#pageable\n ", nativeQuery = true)	
+ */
+	
+	//@Query(value="Select * from Album", nativeQuery = true)
+    //public List<Album> topAlbumsOfTheWeek(@Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
 }
