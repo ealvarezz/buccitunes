@@ -29,17 +29,21 @@ import {AuthenticationService} from './services/authentication.service'
   import { DatePipe } from '@angular/common';
   import {UserTableComponent} from './user-table.component';
 import { HttpModule } from '@angular/http';
-
+import {HttpClientModule} from '@angular/common/http';
 import { AuthGuard } from './services/AuthGuard';
+import {ArtistService} from './services/artist.service';
+import {MusicCollectionService} from './services/music.service';
+import {AddPlaylistDialog} from './sidebar.component';
+import {DomSanitizer} from '@angular/platform-browser';
 
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, 
         children:[
           { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
-          {path: 'album', component: AlbumComponent, canActivate: [AuthGuard]},
+          {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist', component: PlaylistComponent, canActivate: [AuthGuard]},
-          {path: 'artist', component: ArtistComponent, canActivate: [AuthGuard]},
+          {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
           {path: 'admin',component:AdminComponent, canActivate: [AuthGuard]}
         ] 
   },
@@ -68,6 +72,7 @@ const appRoutes: Routes = [
     RequestTableComponent,
     DetailDialog,
     AddAlbumDialog,
+    AddPlaylistDialog,
     UserTableComponent
   ],
   imports: [
@@ -100,18 +105,22 @@ const appRoutes: Routes = [
     MdTooltipModule,
     MdSlideToggleModule,
     MdCheckboxModule,
-    MdChipsModule
+    MdChipsModule,
+    HttpClientModule,
   ],
   providers: [
     MusicService,
     AuthenticationService,
+    ArtistService,
+    MusicCollectionService,
     AuthGuard,
     { provide: MD_DIALOG_DATA, useValue: {} },
     { provide: MdDialogRef, useValue: {} }
   ],
   entryComponents: [
     DetailDialog,
-    AddAlbumDialog
+    AddAlbumDialog,
+    AddPlaylistDialog
   ],
   bootstrap: [AppComponent]
 })

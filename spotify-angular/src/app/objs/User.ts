@@ -1,3 +1,4 @@
+
 export class User{
     username : string = "skamal";
     first_name : string = "Sajid";
@@ -6,5 +7,4 @@ export class User{
     type : string = "ADMIN";
     status : string = "ACTIVE";
     join_date: Date = new Date("February 4, 2016 10:13:00");
-
 }

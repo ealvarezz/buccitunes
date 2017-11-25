@@ -1,0 +1,243 @@
+{
+    "genres": [
+        {
+            "id": 11
+        }
+    ], 
+    "primaryArtist": {
+        "name": "The White Stripes"
+    }, 
+    "title": "The White Stripes", 
+    "releaseDate": "1999-06-15", 
+    "artwork": "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", 
+    "songs": [
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Now, Jimmy\nWell, do you want an explosion now?\nYeah, Jimmy\nDo you want to explode now?\n\nYeah, monkey\nNow you seeing red now\nYeah, monkey\nJumpin' on the bed now\n\nHoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo\n\nGreen apples\nOn the tree and growin' now\nGreen apples\nAre gonna be explodin' now\n(One, two, three, four)\n\nYeah, monkey\nAre you seeing red now?\nYeah, monkey\nJumpin' on the bed now\n\nHoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo, hoo"
+            }, 
+            "name": "Jimmy The Exploder", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "I can't walk the streets now to consolate my mind,\nSome pretty mama, she starts breaking down, stop breaking down.\nThe stuff I got is gonna bust your brains out,\nWell, it'll make you lose your mind.\n\nYou Saturday night women, you love to ape and clown.\nYou won't do nothing but tear a good man's reputation down.\nStop breaking down, stop breaking down.\nThe stuff I got is gonna bust your brains out,\nWell, it'll make you lose your mind.\n\nI gave my baby the ninety-nine degree,\nShe jumped up and throwed a pistol down on me,\nStop breaking down, stop breaking down.\nThe stuff I got is gonna bust your brains out,\nYeah, it'll make you lose your mind."
+            }, 
+            "name": "Stop Breaking Down", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "The Big Three killed my baby\nNo money in my hand again\nThe Big Three killed my baby\nNobody's comin' home again\n\nTheir ideas made me want to spit\nA hundred dollars goes down the pit\nThirty-thousand wheels are rollin'\nAnd my stick shift hands are swollen\nEverything involved is shady\nThe Big Three killed my baby\nYeah yeah yeah\n\nThe Big Three killed my baby\nNo money in my hand again\nThe Big Three killed my baby\nNobody's comin' home again\n\nWhy don't you take the day off and try to repair?\nA billion others don't seem to care\nBetter ideas are stuck in the mud\nThe motor's runnin' on Tucker's blood\nDon't let them tell you the future's electric\n'Cause gasoline's not measured in metric\n\nThirty-thousand wheels are spinnin'\nAnd oil company faces are grinnin'\nNow my hands are turnin' red\nAnd I found out my baby is dead\nYeah yeah yeah\n\nThe Big Three killed my baby\nNo money in my hand again\nThe Big Three killed my baby\nNobody's comin' home again\n\nWell, I've said it now, nothing's changed\nPeople are burnin' for pocket change\nAnd creative minds are lazy\nAnd The Big Three killed my baby\nYeah yeah yeah\n\nAnd my baby's my common sense\nSo don't feed me planned obsolescence\nYeah, my baby's my common sense\nSo don't feed me planned obsolescence\nI'm about to have another blowout, yeah\nI'm about to have another blowout"
+            }, 
+            "name": "The Big Three Killed My Baby", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "There's a story\nI would like to tell\nMy problem is\nIt's one you know too well\nIt's one you know too well\n\nMiss Suzy Lee\nThe one I'm speakin' of\nThe question is:\nIs she the one I love?\nIs she the one I love? (All right)\n\nIs she the one I love?\nIs she the one I love?\n\nShe'll send me flowers\nWith her tears burned inside\nAnd you know what I'd do\nI would run and hide\nI would run and hide\n\nAnd the paper\nOn it was my name\nWith the question:\n\"Do you feel the same?\"\nDo you feel the same?\n\nTo end this tale\nThe one I'm speakin' of\nI wish I had an answer, but I just don't know\nIs this really love?\nIs this really love? (Yeah)\n\nIs this really love?\nIs this really love?"
+            }, 
+            "name": "Suzy Lee", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Sugar never tasted so good, sugar never tasted so good,\nSugar never tasted good to me, yeah.\n\nUntil her eyes crossed over, until her mind crossed over,\nUntil her soul fell next to me...\n\nNow, if the wrinkle that is in your brain has given you quite a sting,\nYour fingers have become a crane pulling on these puppet strings.\n\nYeah...\n\nWhat a feeling that's begun, what a feeling that's begun.\nWhat a feeling that's begun, what a feeling that's begun.\n\nAll right...\n\nI felt just like a baby until I held a baby,\nWhat a fool this boy can be, yeah...\n\nAnd her thoughts like a daisy, how my mind gets lazy,\nI must've been crazy not to see.\n\nAll right...\nIf the wrinkle that is in your brain has given you quite a sting,\nYour fingers have become a crane, your fingers have become a crane,\nYour fingers have become a crane pulling on these puppet strings.\n\nWater never tasted so good, water never tasted so good,\nWater never tasted good to me."
+            }, 
+            "name": "Sugar Never Tasted So Good", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "And if I'm wasting my time,\nThen nothing could be better, than hanging on the line,\nAnd waiting for an honest word forever. Yeah.\n\nAnd if you're saying goodbye,\nPlease don't you think me bitter, for recalling every rhyme\nFrom the book, the page, the line, the word, the letter. Yeah.\n\nWell, the window's turning blue, and the water's ever flowing,\nAnd I hope I'm not a fool, for laughing at myself as you are going."
+            }, 
+            "name": "Wasting My Time", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Outside\nMy door\nUnlocked\nI'm lookin'\nAt this sound\nThat chime out of nowhere\nYeah, nowhere\n\nWhoo\nWheels turnin'\nScratchin'\nAnd burnin'\nYeah\nI fought guns\nTanks\nCannon\nCannon\nYeah\n \nTell me who's that writin'\nJohn the revelator\nTell me who's that writin'\nJohn the revelator\nTell me who's that writin'\nJohn the revelator\nWrote the book on the Seven Seas\nChrist went down on Easter mornin'\nMary mother went down to see\nGotta tell my disciples to meet me in Galilee\nWho's writin'\nJohn the revelator\nTell me who's that writin'\nJohn the revelator\nTell me who's that writin'\nJohn the revelator\nWrote the book on the Seven Seas\nYeah\nWhoo\n\nLord above\nI command\nI've been evil\nEvil\nYeah\n\nEvil"
+            }, 
+            "name": "Cannon", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "One, two, three, four\n\nMaybe Jasper does the astro\nMaybe Jasper does the astro\nMaybe Jasper does the astro, astro\n\nYeah\n\nMaybe Lilly does the astro\nMaybe Lilly does the astro\nMaybe Lilly does the astro, astro\n\nWhoo, hey\n\nMaybe Jackson does the astro\nMaybe Jackson does the astro\nMaybe Jackson does the astro, astro (Hey)\n\nMaybe Momma does the astro\nMaybe Momma does the astro\nMaybe Momma does the astro, astro\n\nMaybe Tesla does the astro\nMaybe Tesla does the astro\nMaybe Edison is AC/DC"
+            }, 
+            "name": "Astro", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Well, have you been to the broken bricks, girl?\nSnuck down through the cyclone fence\nPast the caution tape and the security gate\nBackwards to the break room bench\n\nWell, there was a little corner where you first got kissed\nAnd felt your boyfriend's fist and made the company list\nAnd there's a little spot where your dad ate lunch\nAnd your brother landed his first punch, yeah, yeah, yeah\n\nWell, now you've been to the broken bricks, girl\nSeen the barrels that they've left behind\nSeen the machine that got aluminum clean\nAnd cut tape from the caution sign\nI've broken two window panes\nJust a rusty colored rain that drives a man insane\nYou tried jump over water but you land in oil\nClimbed the metal of a broken crane, yeah, yeah, yeah\n\nDon't go to the broken bricks, girl\nIt's not a place that you want to be\nThink about the spot your father spent his life\nDemolition calls it building C\nDemolition calls it building C, now\nDemolition calls it building C, now, yeah"
+            }, 
+            "name": "Broken Bricks", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "When I hear my name\nI wanna disappear\nWhoa-ooh-o\nWhoa-ooh-o\nWhoa-ooh-o\n\nWhen I see my face\nI wanna disappear\nWhoa-ooh-o\nWhoa-ooh-o\nWhoa-ooh-o\n\nWhen I see my face\nI wanna disappear\nWhoa-ooh-o\nWhoa-ooh-o\nOoh-ooh-o\n\nWhen I hear my name\nI wanna disappear\nWhoa-ooh-o\nWhoa-ooh-o\nWhoa-ooh-o"
+            }, 
+            "name": "When I Hear My Name", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Well, somebody walked up to me but I didn't know what to do\nThen somebody said hello to me, but I didn't know what to do\nBecause I think that my words could get twisted\nSo I bend my back over, take a gulp, be funny\n'Cause I know there's nothing I can do\n\nThen my mother tried to pick me up as I was sittin' down on the ground\nSomething forced my little eyes come open, but I couldn't make out the sound\nIt doesn't matter 'cause my eyes are lying and they don't have emotion\nDon't wanna be social, can't take it when they hate me\nBut I know there's nothing I can do\n\nWhen my thoughts start to feel like mine\nThey're taken from me, it seems to happen every time\nAnd the feelings that are fine for you\nThere's somebody there who doesn't think they are true\nSo think of something new\nThere's nothing left to do\n\nThen my idols walk next to me, I look up at them, they fade away\nIt's a destruction of a mystery, the more I listen to what they say\nSo does that mean that there's no more doing and there's no more thinking\nAnd there's no more feeling, 'cause there's no right opinion?\nCan you tell me what I'm supposed to do?"
+            }, 
+            "name": "Do", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Tuesday morning now\nI gotta have somewhere to go\nI call up Tommy now\nI call him on the telephone\nWon't you wake up and come with me now?\nI'm going to the pawn and loan\nI'm walkin' down thirty-three\nI'm walkin' down thirty-o\n\nWhat am I supposed to think?\nI drop a nickel in a sink\nI love people like a brother now\nBut I'm not gonna be their mother now\nWhat if someone walked up to me and\nLike an apple cut right through me?\nI'm not just gonna stand there grinnin'\n'Cause I'm not the one who's sinnin'\nScrewdriver\n\nOoh-hoo, ooh-hoo\n\nNow that you have heard my story now\nI've got a little ending to it now\nWhenever you go out alone\nTake a little dog a bone\nAnd think about your little sister\nAnd then you got to drive it home\nScrewdriver\n\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nI got a little feeling goin' now\nNow, now, now"
+            }, 
+            "name": "Screwdriver", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Your breath is sweet and weak, your eyes are like two jewels in the sky.\nYour back is straight, your hair is smooth on the pillow where you lie.\nBut I don't sense affection, no gratitude or love.\nYour loyalty is not to me, but to the stars above.\n\nOne more cup of coffee for the road,\nOne more cup of coffee 'fore I go,\nTo the valley below.\n\nYour daddy, he's an outlaw, and a wanderer by trade.\nHe'll teach you how to pick and choose, and how to throw the blade.\nHe oversees his kingdom so no stranger does intrude.\nHis voice, it trembles as he calls out for another plate of food.\n\nOne more cup of coffee for the road,\nOne more cup of coffee 'fore I go,\nTo the valley below.\n\nYour sister sees the future like your mother and yourself,\nYou've never learned to read or write, there's no books upon your shelf.\nBut your pleasure knows no limits, and your voice is like a meadowlark.\nYour heart is like the ocean, mysterious and dark.\n\nOne more cup of coffee for the road,\nOne more cup of coffee 'fore I go,\nTo the valley below."
+            }, 
+            "name": "One More Cup Of Coffee", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "There's a little girl who says 'bink bink bop'\nThere's a little girl who says 'bink bink bop'\nHello\nOh, oh\n\nThere's a little boy with a spider in his hand\nThere's a little boy with a spider in his hand\nHello\nOh, oh\n\nThere's a little girl with the red shoes on\nThere's a little girl with the red shoes on\nHello\nOh, oh\n\nThere's a little boy with twenty-five cents\nThere's a little boy with twenty-five cents\nHello\nOh, oh\n\nAnd there's a little girl with a tiger on her bed\nThere's a little girl with a tiger on her bed\nHello\nOh, oh\n\nThere's a little boy with nothin' on his mind\nThere's a little boy with nothin' on his mind\nHello"
+            }, 
+            "name": "Little People", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "You're lookin' at me, nowhere to go,\nWhat they're sayin', I just don't know.\nA floor below me, ceiling above,\nAnd I'm in the middle with nobody to love.\nNobody to love, nobody to love, nobody to love, yeah.\n\nWell, lookin' at me, nowhere to go,\nKnow what they're saying? I just don't know.\nA floor below me, a ceiling up above,\nAnd I'm in the middle with nobody to love.\nNobody to love..."
+            }, 
+            "name": "Slicker Drips", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Oh, Koko\n\nWell, folks, I'm goin' down to St. James Infirmary\nSee my little baby there\nShe's stretched out on a long, white table\nWell, she looks so good, so cold, so fair\n\nLet her go, let her go, God bless her\nWherever she may be\nYou may search this whole wide world over\nBut you'll never find another sweetheart like me, yeah\n\nTake apart your bones and put 'em back together\nTell your mama that you're somebody new\nFeel the breeze blowin', tell 'em all \"Look out, here it comes\"\nNow I can say whatever I feel like to you\n\nThen get me six craps-shootin' pallbearers\nLet a chorus girl sing me a song\nPut a red-hot jazz band at the top so that we can raise\nHallelujah as we go along, well\n\nWell, folks, now that you have heard my story\nSay, boy, hand me another shot of that rye\nAnd if anyone else should ask you\nJust tell 'em I've got some of those St. James Infirmary blues"
+            }, 
+            "name": "St. James Infirmary Blues", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Well, I hold the rope, and I hold the sail\nAnd I kept my papers, to keep from landin' in jail\nAnd I fought piranhas, and I fought the cold\nThere was no one with me, I was all alone, yeah\n\nYeah\n\nWell, it's Easter mornin' now, and there's no one around\nSo I unroll the cement and walk into the town\nThere was no one with me, I was all alone\nAnd I fought piranhas, and I fought the cold, yeah\n\nYeah\n\nWell, you know what it's like, I don't got to tell you\nWho puts up a fight, walking out of Hell now?\nWhen you fought piranhas, and you fought the cold\nThere's nobody with you, yes, you're all alone, yeah"
+            }, 
+            "name": "I Fought Piranhas", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Oh, let's shake hands.\nOh, baby, let's shake hands.\nWell, there's something here in the air,\nSo jump up and let me know when you're there,\nBaby, let's shake hands.\n\nOh, let's be friends.\nOh, baby, let's be friends.\nI can't come up with a better plan,\nSo put your fingers in my hand,\nBaby, let's be friends.\n\nOh, say my name.\nOh, baby, say my name.\nWell, you can do what you want to do,\nYou can throw it in the garbage can,\nBut just say my name."
+            }, 
+            "name": "Let's Shake Hands", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "1,2,3,4)\n(Yeah)\nMarantette,\nLeverette,\nLannette,\nLafayette,\nLivernois,\nLabrosse,\nLouis,\nMetatal,\nRochelle,\nMarcelle,\nRiopelle,\nManistique,\nAnd Armour,\n(?)\nOh, oh, hmmm\nHey\nMercier,\nLe May,\nTournier,\nSalliote,\nAnd Le Roy,\n(?)\nMontlieu,\nCadieux,\nNeveaux Avenue En Detroit,\n(?)\nWell I'm ready teddy\nI'm ready, ready teddy\nTo rock 'n' roll\nGo\nAh\nLamphere,\nBelle Terre,\nMarcelle,\nMetetal,\nRouge,\nLe Blanc"
+            }, 
+            "name": "Lafayette Blues", 
+            "isExplicit": false
+        }
+    ]
+}

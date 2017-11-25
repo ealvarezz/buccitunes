@@ -1,5 +1,5 @@
 <div class="con" style="position: relative; z-index: 1; display: inline-block;" (mouseenter)="toggleOverlay()" (mouseleave)="toggleOverlay()" >
-    <img [src]="src"/>
+    <img  class ="image" [src]="src"/>
     <div *ngIf="showOverlay" class="tag">
         <button md-icon-button routerLink = "/playlist" class="play-button"> 
             <i class="material-icons" style="font-size: 80px">play_circle_outline</i>

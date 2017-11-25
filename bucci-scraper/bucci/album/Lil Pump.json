@@ -1,0 +1,192 @@
+{
+    "genres": [
+        {
+            "id": 1
+        }
+    ], 
+    "primaryArtist": {
+        "name": "Lil Pump"
+    }, 
+    "title": "Lil Pump", 
+    "releaseDate": "2017-10-06", 
+    "artwork": null, 
+    "songs": [
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Hm, what you gotta say?\nOoh, damn, ooh\nOoh, what you gotta say?\nOoh, Lil Pump\nDamn, ooh, yeah\n\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nPull up in a Wraith, flexin' every day\nGucci everything, Louis everything\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\n\nWhat you gotta say? Bitch I'm gettin' paid\nBitch you gettin' laid, spend it in a day\nSpend a hunnid thousand on m'fuckin' maid\nSwear to God, put it on my grandfather's grave\nI'll go and pop two Mollys to the face\nHop out Lambo like you won a fuckin' race\nNiggas gettin' mad 'cause I went and took they place\nCome to the trap where you know it ain't safe\nHunnids on hunnids on hunnids, ooh\nPull up on a teacher, I'm stuntin' (damn)\nCountin' up racks, it ain't nothin'\nSold you rerock and Robitussin\nPurp all up in the coupe, everybody know I flex like ouu\nBitch, I don't know who the fuck is you\nPour a four tec in my Mountain Dew\n\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nPull up in a Wraith, flexin' every day\nGucci everything, Louis everything\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\n\nSpend a hunnid thousand every day\nAnd my yoppa Macarena every day\nTurn 'em down, I'ma stick 'em like some tape\nCall my thirty, got his own fuckin' brain\nLil Purp, I be thuggin' every day\nIf I catch him, I'ma pop him like a safe\nPop a Xan, catch a body, skip a date\nGTA, got a star on my face\nAnd I keep a pistol on me, lil' dawg\nLil Pump, he a smacker, lil' dawg\nAnd I only hit designer in the mall\nAll these diamonds on me, Paul Wall\nLookin' at my body, all this Louis\nGun 'em down in the trap, then we move 'em\nNow they lookin' for his body in the sewer\nLil Pump do the work like a student\n\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nPull up in a Wraith, flexin' every day\nGucci everything, Louis everything\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?\nWhat you gotta say? What you gotta say?"
+            }, 
+            "name": "What U Sayin'", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Yo, ooh, brr, brr\nGucci gang, ooh\nYo, Lil Pump, yo\nGucci gang, ooh\nOoh, Bi-Big Head on the beat\nYo, brr\n\nGucci gang, Gucci gang, Gucci gang, Gucci gang (Gucci gang)\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\nSpend three racks on a new chain (yo)\nMy bih love do cocaine, ooh (ooh)\nI fuck a bitch, I forgot her name (brr, yuh)\nI can't buy a bih no wedding ring (ooh)\nRather go and buy Balmains (brr)\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\nGucci gang, Gucci gang, Gucci gang, Gucci gang (Gucci gang)\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\nSpend three racks on a new chain (huh?)\nMy bih love do cocaine, ooh (brr)\nI fuck a bitch, I forgot her name, yuh (yuh, yuh)\nI can't buy no bih no wedding ring, ooh (nope)\nRather go and buy Balmains, ay (brr)\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\n\nMy lean cost more than your rent, ooh (it do)\nYour momma still live in a tent, yuh (brr)\nStill slangin' dope in the jects, huh? (yeah)\nMe and my grandma take meds, ooh (huh?)\nNone of this shit be new to me (nope)\nFuckin' my teacher, call it tutory (yo)\nBought some red bottoms, cost hella Gs (huh?)\nFuck your airline, fuck your company (fuck it!)\nBitch, your breath smell like some cigarettes (cigarettes)\nI'd rather fuck a bitch from the projects (yo)\nThey kicked me out the plane off a percocet (brr)\nNow Lil Pump flyin' private jet (yo)\nEverybody scream, \"Fuck WestJet\" (fuck 'em)\nLil Pump still sell that meth (yo)\nHunnid on my wrist, sippin' on Tech (brr)\nFuck a lil bitch, make her pussy wet (what?)\n\nGucci gang, Gucci gang, Gucci gang, Gucci gang (Gucci gang)\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\nSpend three racks on a new chain (huh?)\nMy bih love do cocaine, ooh (yo)\nI fuck a bitch, I forgot her name (brr)\nI can't buy a bih no wedding ring (huh?)\nRather go and buy Balmains (yo)\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\nGucci gang, Gucci gang, Gucci gang, Gucci gang\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\nSpend three racks on a new chain (huh?)\nMy bih love do cocaine, ooh (brr)\nI fuck a bitch, I forgot her name, yuh (yo)\nI can't buy no bih no wedding ring, ooh (nope)\nRather go and buy Balmains, ay (huh?)\nGucci gang, Gucci gang, Gucci gang (Gucci gang)\n\nLil Pump, yuh\nLil Pump, ooh"
+            }, 
+            "name": "Gucci Gang", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Yuh, yuh\nLil Purpp, Lil Pump\nYuh, huh\nPrrrrt\nOkay, what, yeah, what, yeah, yuh, ooh\nYuh, ooh, huh, ooh, huh\nRonny J, listen up\n\nI just smoke my dope\nSuck me 'til she choke (suck me 'til she)\nI just smoke my dope (huh)\nSuck me 'til she choke (uh)\nDick up in her throat (yeah, throat!)\nDick up in her throat (yeah)\nCocaine on the boat (okay, ooh)\nCocaine on the boat (ooh, yeah)\nI just smoke my dope\nSuck me 'til she choke (suck me 'til she)\nI just smoke my dope (huh)\nSuck me 'til she choke (uh)\nDick up in her throat (yeah, throat!)\nDick up in her throat (yeah)\nCocaine on the boat (okay, ooh)\nCocaine on the boat (ooh, yeah)\n\nCocaine on the boat (yeah, ooh)\nI just had a stroke\nYeah, your baby daddy broke\nLegit pay no child support (yuh, yuh, yuh, yuh, yuh)\nWalk in the club and I flex like oou\nTake a nigga bitch in a Bentley coupe\nNiggas hate me, but I don't see you\nBitch pussy bald just like Caillou (yuh, yuh, yuh, yuh, yuh)\n\nI just smoke my dope (what)\nHoles in the back of the coat (of the coat, prrr)\nCame to the party in a boat (yuh)\nChains on my neck make me choke (huh)\nBalmain on my jeans (yuh)\nPour a four of lean (Lil Purpp)\nShe gon' swallow kids (huh, yeah)\nThat's a Kid's Cuisine, yeah\n\nI just smoke my dope\nSuck me 'til she choke (suck me 'til she)\nI just smoke my dope (huh)\nSuck me 'til she choke (uh)\nDick up in her throat (yeah, throat!)\nDick up in her throat (yeah)\nCocaine on the boat (okay, ooh)\nCocaine on the boat (ooh, yeah)\n\nDope up in the stove (ooh, damn)\nMama told me no (ooh, no)\nI feel like El Chapo (yuh)\nEvery time I whip a bowl (yuh, yuh, ooh)\nWhippin' up dope in the trap spot (what)\nSellin' cocaine to your grandma (yuh)\nWhippin' up dope in the trap spot (yuh, yuh)\nSellin' cocaine to your grandma (yuh, yuh, yuh, yuh)\n\nLil Pump still sell crack (ooh)\nHis mom still move packs (uh)\nFuckin' up the racks up at Sak's (uh)\nIn the trap, still movin' dime sacks (uh)\nPoppin' hella Molly and X (uh, yuh)\nFuckin' on your bitch and your ex (what)\nShe rubbin' on my dick like a pet (uh)\nWanna ride me like a jet (yuh, yuh, yuh, yuh)\n\nI just smoke my dope\nSuck me 'til she choke (suck me 'til she)\nI just smoke my dope (huh)\nSuck me 'til she choke (uh)\nDick up in her throat (yeah, throat!)\nDick up in her throat (yeah)\nCocaine on the boat (okay, ooh)\nCocaine on the boat (ooh, yeah)"
+            }, 
+            "name": "Smoke My Dope", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "name": "Crazy", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Yeah, yeah\n2-17 on the track, man\nLil Pump\nYeah, yeah, ooh\nHuh, yeah, huh, ay\nYeah, yeah, yeah\n\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\n\nThrow it back, yeah\nThrow it back, yeah\nI fuck that bitch in a Cadillac, ooh\nAfter that she didn't know how to act, ooh\nBack then I used to be quarterback\nGo to the bank and I pull out 100 racks\nPut the AR in the trunk of my Pontiac\nWant me fo' show, bitch I'm chargin' 'bout 40 bands\nI'm in the trap and I'm shippin' out hella packs (damn)\nDiamonds dance so crazy, ooh\nYour diamonds so fugazi, ooh\nBeen sellin' crack since the eighties, yeah\nI just bought a brand new Mercedes, huh\nIn the kitchen whippin' up babies, ooh\nIn the kitchen whippin' up baby, yeah\nAnd I got a bitch named Hailey, huh\nAnd I got a bitch named Hailey (brr)\n\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nThrow it back, yeah\nThrow it back, yeah\nLil Boat\nThrow it back, huh\nThrow it back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nLil Boat, Lil Boat, Lil Boat, Lil Boat, Lil Boat\n\nYoung rich nigga need a dick rub\nHit it from the back, make her jump like a hiccup\nBang, bang, bang, like ya knockin' on the front door\nBitch brown skin like a muhfuckin' fronto\nUsed to post at the Citgo, uh\nNow I got chips in the Citgo, uh\nNow I got a wrist like a igloo, huh\nAnd it glow like a disco ball\nBih, bend it over like your shoe's untied\nSide bitch still got a iPhone 5\nMain bitch still got a iPhone 7\nStill caught a Uzi, pistol, or a MAC-11\nStill fuck a nigga main bitch while I got my own bitch\nAnd I better still make it up to Heaven, uh\nI'ma have a kid just to dress him up in Gucci\nTo the seven, goddamn, I'm a reverend\nLil Boat, Lil Pump\n\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nAll I do is count racks, ooh\nTold that bih throw that shit back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh\nThrow it back, yeah\nThrow it back, yeah\nThrow it back, huh\nThrow it back, ooh"
+            }, 
+            "name": "Back", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Lil Pump, D Rose, ooh\n100 on my wrist (Lil Pump)\n80 on my wrist (ooh, D Rose)\nAy, ay (D Rose)\n\n100 on my wrist, 80 on my wrist (what?)\n100 on my wrist, 80 on my wrist (brr)\n100 on my wrist, 80 on my wrist (ooh)\n100 on my wrist, 80 on my wrist\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\n80 on my wrist, 100 on my wrist (ooh, what?)\n80 on my wrist, 100 on my wrist (brr, ooh)\n80 on my wrist, 100 on my wrist (what, ay)\n80 on my wrist, 100 on my wrist (ooh)\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\n\n100 on my wrist, bitch, I'm feelin' like D Rose\nPop 4 Xans, now I'm feelin' like a hero (Superman)\nLean got me like Rio (Rio)\nAnd my auntie on P.O. (P.O.)\n100 on my wrist, 80 on a brick\nLil Pump never spend his money on a bitch (never)\nNever trust a nigga, 'cause he actin' like a bitch (ooh)\nTake a nigga bitch to the Motel 6 (brr)\nI just broke my wrist, 'cause I'm whippin' in the kitchen (yoop)\nPass a brick to my mom, and I told her whip it (whip)\n4 bands in the kitchen (ay)\n9 bands in the kitchen (ay)\nI just fucked your bitch (what?)\nI just broke my wrist (okay)\nI just fucked your bitch (ooh)\nI just fucked your bitch (okay)\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\n\n80 on my wrist, 100 on my wrist (ooh, what?)\n80 on my wrist, 100 on my wrist (brr, ooh)\n80 on my wrist, 100 on my wrist (what, ay)\n80 on my wrist, 100 on my wrist (ooh)\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose\nD Rose, D Rose, D Rose, D Rose (and my auntie on P.O.)"
+            }, 
+            "name": "D Rose", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Ooh, Big Head on the beat\nLil Pump\nOoh, ooh, ooh, ooh\nThis is CB\n\nI be, I be drippin' head to toe\nEverywhere I fuckin' go\nI drop forty racks a show\nI could go flex on your hoe\nI got junkies at the door, I got junkies at the door\nI got junkies at the door, I got junkies at the door\nI be drippin' head to toe\nEverywhere I fuckin' go\nI drop forty racks a show\nI could go flex on your hoe\nI got junkies at the door, I got junkies at the door\nI got junkies at the door, I got junkies at the door\n\nI got junkies at the door\nI could serve you 2 for 4\nI could serve you couple Xans\nI could feed your bitch some coke\nYeah, my Uzi automatic, make your grandma do a backflip\nYeah, that .45 do that magic\nYeah, my wrist do that gymnastics\nGot a bust down on my wrist\nIt look like I took a piss\nSo you cannot tell me shit\nMake your auntie do a flip\nYeah, I'm drinkin' Molly water\nWhile I'm fuckin' on your daughter\nBitch, I'm bustin' at your father\nCall me Lil Pump Vince Carter\n\nI be, I be drippin' head to toe\nEverywhere I fuckin' go\nI drop forty racks a show\nI could go flex on your hoe\nI got junkies at the door, I got junkies at the door\nI got junkies at the door, I got junkies at the door\nI be drippin' head to toe\nEverywhere I fuckin' go\nI drop forty racks a show\nI could go flex on your hoe\nI got junkies at the door, I got junkies at the door\nI got junkies at the door, I got junkies at the door\n\nI be drip, I be drip, I be drip\nI be, I be drippin' head to toe\nEverywhere I fuckin' go\nI drop forty racks a show\nI could go flex on your hoe\nI got junkies at the door, I got junkies at the door\nI got junkies at the door, I got junkies at the door"
+            }, 
+            "name": "At The Door", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Ooh, Lil Pump, ooh, Lil Pump\nYeah, yeah, brr, yuh, yuh\nKnow we smoke a lot of gas on this side\nOoh, Big Head on the beat\n(Hah)\n\nI just bought 3 thousand dollar Gucci pants (Gucci pants)\nI just left the trap, and I'm off the Xans (and I'm off the Xans)\nBitch, I'm high as fuck, I feel like Superman (what, what?)\nI'm the biggest flexer, you know who I am (yeah, yeah, yeah, yeah, yeah)\nI'm the youngest flexer (what), I'm the youngest flexer (ooh)\nI'm the youngest flexer (yeah), I'm the youngest flexer\nI'm the youngest flexer, I'm the youngest flexer (ooh)\nI'm the youngest flexer (ooh), I'm the youngest flexer\n\nI'm the youngest flexer, Louis on my dresser\nPut her on a stretcher, all these bitches acting extra (extra)\nI just bought a Uzi (Uzi), my bitch dress in Gucci (brr)\nPut a Xan in smoothie, I don't watch no movies (I don't)\nI go to the bank, take out thirty thangs (brr)\nForty diamond chains, sixty bricks, I make it rain (huh)\nAnd I'm eating Wingstop, posted in the trap (in the trap what)\nLil Pump, don't know how to act (damn)\n\nI just bought 3 thousand dollar Gucci pants (Gucci pants)\nI just left the trap, and I'm off the Xans (and I'm off the Xans)\nBitch, I'm high as fuck, I feel like Superman (what, what?)\nI'm the biggest flexer, you know who I am (yeah, yeah, yeah, yeah, yeah)\nI'm the youngest flexer (what), I'm the youngest flexer (ooh)\nI'm the youngest flexer (yeah), I'm the youngest flexer\nI'm the youngest flexer, I'm the youngest flexer (ooh)\nI'm the youngest flexer (ooh), I'm the youngest flexer\n\nSomebody please tell me where my money machine at\nMy money dirty, I'm tryna think of ways I can clean that\nI spent at least 3 million dollars just on the pieces\nThese haters think they can keep up, man, they can't believe it\nGucci got a six-pack, they can't believe it\nBut hey, lil bitch, here's three stacks, let's have a threesome\nI wanna own it outright, don't wanna lease it\nHe wanna be Guwop so bad that he talkin' greasy\nShe wanna be with Wop so bad that she fuck the DJ\nThat bitch should prolly' ride a bicycle on the freeway\nThree years ago, I stacked my paper the long way\nNow I'm stacking million dollar checks up the grown way\n\nI just bought 3 thousand dollar Gucci pants (Gucci pants)\nI just left the trap, and I'm off the Xans (and I'm off the Xans)\nBitch, I'm high as fuck, I feel like Superman (what, what?)\nI'm the biggest flexer, you know who I am (yeah, yeah, yeah, yeah, yeah)\nI'm the youngest flexer (what), I'm the youngest flexer (ooh)\nI'm the youngest flexer (yeah), I'm the youngest flexer\nI'm the youngest flexer, I'm the youngest flexer (ooh)\nI'm the youngest flexer (ooh), I'm the youngest flexer"
+            }, 
+            "name": "Youngest Flexer", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Ooh, yeah, huh, ooh\nLil Pump, Lil Pump, ooh\n\nI fuck foreign bitches, I ride foreign cars\nI fuck foreign bitches, I ride foreign cars\nBitch, look at my wrist, all you see is stars\nI fuck three bitches in one day, off a bar\nI ride foreign cars, ooh\nI ride foreign cars, ooh\nI ride foreign cars, yeah\nI ride foreign cars, ooh\nBitch, look at my wrist, all you see is stars\nI fuck three bitches in one day, off a bar\n\nPull up to the strip, ooh\nBust down on my wrist, ooh\nWhat's yo' birthday wish? Huh\nBitch, come suck my dick, ooh\nI don't ask her questions, I'm the youngest flexin'\nLil Pump a blessin', I could teach you lessons\nPull up to a party, oou, and I'm off a molly, damn\nI'ma prolly' fuck yo' daughter 'cause she hella thottie\nSwervin' Maserati's, bitches in the lobby\nBitch, I'm choppin' up a brick like I know karate\n\nI fuck foreign bitches, I ride foreign cars\nI fuck foreign bitches, I ride foreign cars\nBitch, look at my wrist, all you see is stars\nI fuck three bitches in one day, off a bar\nI ride foreign cars, ooh\nI ride foreign cars, ooh\nI ride foreign cars, yeah\nI ride foreign cars, ooh\nBitch, look at my wrist, all you see is stars\nI fuck three bitches in one day, off a bar"
+            }, 
+            "name": "Foreign", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Bring ten bitches to the back\nWhippin' up Whitney, boy how you do that, ooh\nBring ten bitches to the back\nWhippin' up Whitney, boy how you do that, ooh\nWhippin' up Whitney, Whippin' up Whitney, Lil Pump how you do that? Ooh\nWhippin' up Whitney, Whippin' up Whitney, Lil Pump how you do that? Ooh\nDamn, I went and flexed like this\nDiamonds so yellow it look like piss, ooh\nI can't wife no bitch, spent a couple racks up on my wrist, ooh\nI can't wife no thot, damn, bitch I'm sippin' Wok, damn\nAnd I'm off this xan, damn, this will never stop, damn\n\nHop in a foreign and step on it\nSippin' on good drank, and I got a loaf on\nCops pull me over right now they gon' lock me up\n'Cause I got all this smoke on me\nAnd I'm so motherfuckin' inked\nLookin' like the tattoo man just wrote on me\nIn the all white P1 lookin' like I got a whole bunch of coke on me\nSlide down, ride down, I'm the king, bow down\nOne day smoke a half pound, milkin' up, cash cow\nI'm very important, me and my gang don't do pat downs\nI bet I fucked yo' bitch, told foenem put the racks out\nYou know me and gang goin' for the slide\nThe shit we on finna fly\nYo bitch pointin' up to the sky\nShe know I got them mob ties\nHammer ridin' 'round with the grass\nHammer ridin' 'round with the cash\nShooters on your ass, ASAP\n\nBring ten bitches to the back\nWhippin' up Whitney, boy how you do that, ooh\nBring ten bitches to the back\nWhippin' up Whitney, boy how you do that, ooh\nWhippin' up Whitney, Whippin' up Whitney, Lil Pump how you do that? Ooh\nWhippin' up Whitney, Whippin' up Whitney, Lil Pump how you do that? Ooh\nDamn, I went and flexed like this\nDiamonds so yellow it look like piss, ooh\nI can't wife no bitch, spent a couple racks up on my wrist, ooh\nI can't wife no thot, damn, bitch I'm sippin' Wok, damn\nAnd I'm off this xan, damn, this will never stop, damn\n\nDamn, Gucci Gang on top\nDamn, yo' bitch gave me top\nDamn, I just gave that bitch some dick and took her to the block\nDamn, pull up, drop top 'Rari\nOoh, my bitch off a molly\nOoh, I just gave that bitch some perc and now she actin' thottie\nOoh, ten bands on my neck\nOoh, I just love to flex\nYeah, off four xans Rick Rubin on a jet, wrists so cold, wrists so wet\nLil Pump do be runnin' that check\nWrists so cold, wrists so wet\nLil Pump do be runnin' that check\nWrists so cold, wrists so wet\n\nBring ten bitches to the back\nWhippin' up Whitney, boy how you do that, ooh\nBring ten bitches to the back\nWhippin' up Whitney, boy how you do that, ooh\nWhippin' up Whitney, Whippin' up Whitney, Lil Pump how you do that? Ooh\nWhippin' up Whitney, Whippin' up Whitney, Lil Pump how you do that? Ooh\nDamn, I went and flexed like this\nDiamonds so yellow it look like piss, ooh\nI can't wife no bitch, spent a couple racks up on my wrist, ooh\nI can't wife no thot, damn, bitch I'm sippin' Wok, damn\nAnd I'm off this xan, damn, this will never stop"
+            }, 
+            "name": "Whitney", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Huh? Ay, Lil Pump (ooh, Big Head on the beat)\nLil Pump, ay (Ronny J on the beat, bitch)\n\nI got designer from head to my toe\nI'm on the Xan, and my bitch on that coke\nI got Givenchy all over my coat\nI'm off that X, and I just poured a 4\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\n\nLil Pump, rich, he finna get richer\nI popped a bean, and fuck on your sister\nNut on her lip, and then you gon' kiss her\nIce on my neck, it lookin' like glitter (brr, brr)\nI got designer from head to my feet (ooh)\nI pop a X, so you know I be geek (damn)\nRockin' Balmains and they all on my jeans (ooh)\nI'm off the Xans, and I pour me some lean (Lil Pump)\nI sell your mama some crack, she a fiend (huh?)\nI crash the Porsche and I just left the scene (brr)\nDrippin' designer, Burberry my sweater\nLil Pump pulled up, he changin' the weather (brr, brr)\nI popped a molly, I popped a bean\nI fuck your bih, 'cause she down for the team\nJump in a car and hit you with the beam (huh?)\nI chug a pint and I just go to sleep\n\nI got designer from head to my toe\nI'm on the Xan, and my bitch on that coke\nI got Givenchy all over my coat\nI'm off that X, and I just poured a 4\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\nI got designer from head to my toe\nI'm on the Xan, and my bitch on that coke\nI got Givenchy all over my coat\nI'm off that X, and I just poured a 4\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean\nI'm on the molly, I'm on the bean"
+            }, 
+            "name": "Molly", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Ooh, Lil Pump, yuh\nHuh? Lil Pump, Lil Pump!\n2-17 on the track!\n\nIced out chain (yeah)\nIced out ring (yeah)\nForeign bitch with me (huh?)\nShe do anything\nYeah, she love my diamonds\nThat bitch wanna give me brain (oh shit)\nWhite diamonds on my wrist\nBitch, it's Gucci Gang (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nYeah, she love my diamonds\nThat bitch wanna give me brain (oh shit)\n\nIced out chain, iced out ring\nYeah, I feel like Gucci Mane, diamonds Aquafina, rain\nI could pay your bitch a trip, Maseratis at the crib\nShe just love the way I drip, only wear designer kicks\nAy, ay, iced out chain, I'm a walkin' Brinks truck\nKeep my thang tucked, if I bust you better stay ducked\nDropped out 9th grade, dropped out straight to the Milwaukee Bucks\nCould've been at Harvard servin' juugs, but I don't give a fuck\n\nIced out chain (yeah)\nIced out ring (yeah)\nForeign bitch with me (huh?)\nShe do anything\nYeah, she love my diamonds\nThat bitch wanna give me brain (oh shit)\nWhite diamonds on my wrist\nBitch, it's Gucci Gang (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nYeah, she love my diamonds\nThat bitch wanna give me brain (oh shit)\n\nDeuces\nIce, ice, ice, ice, ice, freezin' (ice freezin')\nIce, ice, ice, ice, ice, sneezin' (achoo, sneezin')\n4, 5, 6 on (4, 5, 6 on)\nNeck on freon (neck on freon)\nYellow like I peed on (yellow like I peed on)\nI don't fuck with peons (peons)\nPrimetime, Deion\nWhat's up, Lil Pump? (What's up, Lil Pump?)\n12 gauge, lil' pump (lil', lil' pump)\nGet money, rule one (rule one)\nLil' waist, big butt (big butt)\nI like the way it sit up (sit up)\nYou ain't really gettin' money (what?)\nPut that lil' shit up (hah, lil' shit up)\nI make 'em open stores (yeah)\nI make 'em close the store (yeah)\nI'm in the Gucci store (what?)\nI'm 'bout to overdose (huh)\nPockets on overload\nI never sold my soul\nWhat you want me to turn it on?\nI got the remote control\n\nIced out chain (yeah)\nIced out ring (yeah)\nForeign bitch with me (huh?)\nShe do anything\nYeah, she love my diamonds\nThat bitch wanna give me brain (oh shit)\nWhite diamonds on my wrist\nBitch, it's Gucci Gang (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nYeah, she love my diamonds\nThat bitch wanna give me brain (oh shit)\n\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nIced out chain (yeah)\nIced out ring (yeah)\nYeah, she love my diamonds\nThat bitch wanna give me brain (oh shit)"
+            }, 
+            "name": "Iced Out", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Ooh, yeah\nLil Pump!\nYeah\n\nYeah, I came in with the sauce, ooh\nYeah, I came in with a saw, yeah\nBitch, I flex, Rick Ross, yeah\nBitch, I flex, Rick Ross, yeah\nYeah, I came in with the sauce, ooh\nYeah, I came in with a saw, ooh\nBitch, I flex, Rick Ross, yeah\nBitch, I flex, Rick Ross, yeah\n\nWalk in the trap like a boss (ooh)\nWalk in the trap like a boss (brr)\nWalk in the trap like a boss (ooh)\nWalk in the trap like a boss (trap)\nYeah, I came in with the sauce, (ooh)\nYeah, I came in with a saw, ooh\nBitch, I flex, Rick Ross, ooh\nBitch, I flex, Rick Ross, ooh\n\nWalk in the trap, Ric Flair, ooh\nFuck a nigga bitch, don't care, damn\nThrowing up racks in the air, damn\nTold that bitch \"Lil Pump yeah, ooh\"\nDamn, I just broke my wrist\n100 on my wrist, can't tell me shit\nPop 4 xans then I fucked a nigga's bitch\nNever went to school 'cause I was always flippin' bricks\nAye, yeah I came up with the sauce\nDamn, yeah I sold crack in the halls\nDamn, Lil Pump, bands on top\nDamn, gave my mom 2 Glocks\nDamn, everybody do wanna be me\nLookin' at my neck and it's Fiji, ooh\nDamn, everybody do wanna be me\nLookin' at my neck and it's Fiji, ooh\n\nYeah, I came in with the sauce, ooh\nYeah, I came in with a saw, yeah\nBitch, I flex, Rick Ross, yeah\nBitch, I flex, Rick Ross, yeah\nYeah, I came in with the sauce, ooh\nYeah, I came in with a saw, ooh\nBitch, I flex, Rick Ross, yeah\nBitch, I flex, Rick Ross, yeah"
+            }, 
+            "name": "Boss", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Ouu, ouu\nLil Pump\nAye, aye, aye\n\nMove them bricks to the bando like, ouu\nMove them bricks to the bando like, ouu\nDiamond on my wrist and it look like glue\nDiamond on my wrist and it look like glue\nWalk in the club and I flex like ouu\nWalk in the club and I flex like ouu\nMaison Margiela all over my shoe\nMaison Margiela all over my shoe\nPull up swerving in a coupe\nPull up swerving in a coupe\nPull up swerving in a coupe\nPull up swerving in a coupe\nMove them bricks to the bando like, ouu\nDiamond on my wrist and it look like glue\nWalk in the club and I flex like, ouu\nMaison Margiela all over my shoe\n\nMade a couple bands in the kitchen (kitchen)\nMade a couple bands water whippin' (brrr)\nTake a nigga bitch, go missing, oou\nBitch I ball like a piston, ouu\nBitch I flex Ric Flair, damn\nAll they do is stare, ouu\nLil Pump really don't care, no\nTold a bih lil pump yeah, ouu\nEverybody know I'm up next, yeah\nEverybody know I flex, ouu\nI run through these checks, ouu\nI flex on my ex, ouu\nLeft 4 bands in the trap (trap)\nLeft 4 bands in the trap (four)\nSmokin' on loud pack, ouu\nSmokin' on loud pack, ouu\n\nMove them bricks to the bando like, ouu\nMove them bricks to the bando like, ouu\nDiamond on my wrist and it look like glue\nDiamond on my wrist and it look like glue\nWalk in the club and I flex like ouu\nWalk in the club and I flex like ouu\nMaison Margiela all over my shoe\nMaison Margiela all over my shoe\nPull up swerving in a coupe\nPull up swerving in a coupe\nPull up swerving in a coupe\nPull up swerving in a coupe\nMove them bricks to the bando like, ouu\nDiamond on my wrist and it look like glue\nWalk in the club and I flex like, ouu\nMaison Margiela all over my shoe"
+            }, 
+            "name": "Flex Like Ouu", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 1
+                }
+            ], 
+            "lyrics": {
+                "lyric": "We finna make history\nCarol City in this m'fucker\nLil Pump, what's up?\nI started right where you at, nigga\n50 million later, ya hear me?\nWhoa\nMaybach Music\n\nAll the hoes wanna suck dick\nAll the hoes wanna fuck me\nAll the niggas wanna hate though\nGet whacked in the front seat\nFace down when she topless\nCan't post all the choppas\nDade County where I came from\nNo room for imposters\nCocaine on the stovetop\nYayo up, won't lie\nFast break like a b-ball\nBullet hole like a donut\nBel-Air for the new crib\nBel-Air for the black bottom\nBel-Air my new old school\nGettin' out like I'm John Gotti\nFuck nigga don't want none\nGoin' bad like I'm on somethin'\n50 grand for the new watch\nRob me and I won't run\nWindow on the photo\nCall her up on the polo\nEverybody still gang-gang but your ass die solo\nEverybody die solo, everybody die solo\nEverybody die solo, everybody die solo\n\nBang\nLil Pump, ooh, ay\n\nSpent 20 racks on a pinky ring\nWalk in the club with a diamond chain\nSpent 20 racks on a pinky ring\nWalk in the club with a diamond chain\nPinky ring, pinky ring, pinky ring\nPinky ring, pinky ring\nPinky ring, pinky ring, pinky ring\nPinky ring, pinky ring\n\nI fuck your bitch in some Gucci loafers\nI bust a nut in her Louis sofa\nVVS all on my diamond choker\nI crashed the Porsche and I crashed the Rover\nI told my mama I'm sorry, ooh\nI think I just popped a Molly, yuh\nI think I'm whippin' up Whitney\nI'm whippin' up Whitney, I turn into Scotty, ooh\nLil Pump in Maserati, ooh\nLil Pump ain't got no license, yeah\nI fuck a bitch, I ain't wifin', ooh\nBite a bitch ear like Mike Tyson, yuh\n\nHard, got lean in my backpack (backpack)\nMAC-11 turned to a Big Mac (blat, blat, blat)\nNiggas gettin' pulled like a thumb tack (woo)\nLet me get the pen, hit a Chase bank (Chase bank)\nNiggas want beer, we got that\nAnd I got water on me like Flapjack (water, water, water)\nCame in the club with a big rack\nBitch, I want the lean and I'm doin' up the zig-zags\nPinky ring, diamond ring\nFuck up the pot with like 10 chains\nHood rich, bitch, I don't need fame\nPull up on your bitch in an airplane\nI just got brand new shoes\nAll day zap up, crash the Coupe\nAnd I brought a dog in the club, too\nEverything I buy, I gotta buy two\n\nSpent 20 racks on a pinky ring\nWalk in the club with a diamond chain\nSpent 20 racks on a pinky ring\nWalk in the club with a diamond chain\nPinky ring, pinky ring, pinky ring\nPinky ring, pinky ring\nPinky ring, pinky ring, pinky ring\nPinky ring, pinky ring\nSpent 20 racks on a pinky ring\nWalk in the club with a diamond chain\nSpent 20 racks on a pinky ring\nWalk in the club with a diamond chain\nPinky ring, pinky ring, pinky ring\nPinky ring, pinky ring\nPinky ring, pinky ring, pinky ring\nPinky ring, pinky ring"
+            }, 
+            "name": "Pinky Ring", 
+            "isExplicit": false
+        }
+    ]
+}

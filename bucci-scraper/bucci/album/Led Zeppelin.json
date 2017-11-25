@@ -1,0 +1,121 @@
+{
+    "genres": [
+        {
+            "id": 11
+        }
+    ], 
+    "primaryArtist": {
+        "name": "Led Zeppelin"
+    }, 
+    "title": "Led Zeppelin", 
+    "releaseDate": "1971-11-08", 
+    "artwork": "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", 
+    "songs": [
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "In the days of my youth\nI was told what it means to be a man\nAnd now I've reached that age\nI've tried to do all those things the best I can\nNo matter how I try\nI find my way to the same old jam\n\nGood times, bad times, you know I've had my share\nWhen my woman left home for a brown-eyed man\nBut I still don't seem to care\n\nSixteen, I fell in love with a girl as sweet as could be\nIt only took a couple of days till she was rid of me\nShe swore that she would be all mine and love me till the end\nBut when I whispered in her ear, I lost another friend, oh\n\nGood times, bad times, you know I've had my share\nWhen my woman left home for a brown-eyed man\nBut I still don't seem to care\n\nGood times, bad times, you know I've had my share\nWhen my woman left home for a brown-eyed man\nBut I still don't seem to care\n\nI know what it means to be alone\nI sure do wish I was at home\nI don't care what the neighbors say\nI'm gonna love you each and every day\n\nYou can feel the beat within my heart\nRealize, sweet babe, we ain't never gonna part\nI feel good when I look into your eyes."
+            }, 
+            "name": "Good Times Bad Times", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Babe, baby, baby, I'm gonna leave you\nI said, baby, you know I'm gonna leave you\nI'm leave you when the summertime\nLeave you when the summer comes a-rollin'\nLeave you when the summer comes along\n\nBabe, babe, babe, babe, babe, babe, baby, mm-baby\nI'll wanna leave you\nI ain't jokin', woman, I've got to ramble\nOh, yeah, baby, baby, I'll be leavin', really nn-got to ramble\n(I can hear it callin' me)\nI can hear it callin' me the way it used to do\nOh, I can hear it callin' me back ho-wome\n\nBaby, oh, babe, I'm gonna leave you\nOh, baby, you know I've really got to leave you\nOh, I can hear it callin' me\nI said, don't you hear it callin' me the way it used to do, oh\n\nI know, I know\nI know I never, never, never, never, never gonna leave you, babe\nBut I gotta go away from this place, I gotta quit you, yeah\nOh, baby, baby, baby, baby, baby, baby, baby, oh\nYou hear it callin'\nDon't you hear it callin' me\n\nOh, woman, ah, a-woman, I know, I know\nFeels good to have you back again, and I know that one day, baby\nIt's gonna really grow, yes it is\nWe're gonna go walkin' through the park every day\nCome what may, every day, oh, my, my, my, my, my, my babe\nI'm gonna leave you, go away\nOh, alright\n\nSo good sweet baby\nIt was really, really good\nYou made me happy every single day\nBut now I've got to go away, oh, oh, oh\n\nBaby, baby, baby\nThat's when it's callin' me\nI said, that's when it's callin' me back home"
+            }, 
+            "name": "Babe I'm Gonna Leave You", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "You know you shook me, you shook me all night long\nYou know you shook me baby, you shook me all night long\nYou shook me so hard baby, baby, baby, please come home\n\nI have a bird that whistles, and I have birds that sing\nI have a bird that whistles, and I have birds that sing\nHa-ha-ha, I have a bird won't do nothin', ah-ah, oh-whoa\nBuy a diamond ring, yeah\n\nOw, ow\nHuh, hah\nAll right, ah, yeah\n\nYou know, you shook me, baby, you shook me all night long\nI know you really, really did, babe\nI said, you shook me, baby, you shook me all night long\nYou shook me so hard, baby\nBabe, ah-ah, ah-ow, ah-ah, ah-ah-ah, ah-da-da, ah-ah-ah-da-da\nYou shook me aw-ooh-aw-ooh-aw-ooh-aw-ooh\nAw-ooh-aw-ooh-aw-ooh-all night lo-ooh-ong"
+            }, 
+            "name": "You Shook Me", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Been dazed and confused for so long, it's not true\nWanted a woman, never bargained for you\nLotsa people talkin', few of them know\nSoul of a woman was created below, yeah\n\nYou hurt and abuse, tellin' all of your lies\nRun 'round, sweet baby, lord, how they hypnotize\nSweet little baby, I don't know where you been\nGonna love you, baby, here I come again\n\nEvery day I work so hard, bringin' home my hard-earned pay\nTry to love you, baby, but you push me away\nDon't know where you're goin', only know just where you've been\nSweet little baby, I want you again\n\n(That's not my babe)\nAh, ah, ah, ah\n(Did you ever look up my woman)\nAh, ah, ah, ah-ah-ah-ah\nAhh, ah, ah, ah, ah\n\nOh, yeah, alright, alright\nAh, ah, ah, ah, ah, ah, ah\nAh, ah, ah, ah\n\nOh, I don't like when you're mystifyin' me\nOh, don't leave me so confused, now\nWhoa, baby\n\nBeen dazed and confused for so long, it's not true\nWanted a woman, never bargained for you\nTake it easy, baby, let them say what they will\nTongue wag so much when I send you the bill, oh yeah, alright\n\nOh, oh, oh, oh, oh, oh, oh, oh, oh, oh, oh, oh, ah, ah, ah\nAh, ah, ah, ah"
+            }, 
+            "name": "Dazed And Confused", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Lyin', cheatin', hurtin', that's all you seem to do\nMessin' around, every guy in town\nPuttin' me down for thinkin' of someone new\nAlways the same, playin' your game\nDrive me insane, trouble's gonna come to you\nOne of these days, and it won't be long\nYou'll look for me, but, baby, I'll be gone\n\nThis is all I gotta say to ya, woman\nYour time is gonna come, your time is gonna come\nYour time is gonna come, your time is gonna come\n\nMade up my mind, break you this time\nWon't be so fine, it's my turn to cry\nDo what you want, I won't take the brunt\nIt's fadin' away, can't feel you anymore\nDon't care what you say, 'cause I'm goin' away to stay\nGonna make you pay for that great big hole in my heart\nPeople talkin' all around\nWatch out, woman, no longer is the joke gonna be on my heart\n\nYou been bad to me, woman, but it's comin' back home to you\nYour time is gonna come, your time is gonna come\nYour time is gonna come, your time is gonna come\nYour time is gonna come, bye, bye-bye, baby\nYour time is gonna come, Bye, bye. Bye, bye.\nYour time is gonna come, See you my babe.\nYour time is gonna come, oh, oh, oh, oh-oh\nYour time is gonna come, Bye, bye. Bye, bye. Bye, bye.\nYour time is gonna come, I gotta get away from here.\nYour time is gonna come, goodbye, my baby\nYour time"
+            }, 
+            "name": "Your Time Is Gonna Come", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": null, 
+            "name": "Black Mountain Side", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Hey, girl, stop what you're doin'\nHey, girl, you'll drive me to ruin\nI don't know what it is I like about you, but I like it a lot\nWon't you let me hold you, let me feel your lovin' touch\n\nCommunication breakdown, it's always the same\nHavin' a nervous breakdown, will drive you insane\n\nHey, babe, I got somethin' I think you oughta know\nHey, babe, I wanna tell ya that I love you so\nI wanna hold you in my arms, yeah\nI'm never gonna let you go, 'cause I like your charm\n\nCommunication breakdown, it's always the same\nHavin' a nervous breakdown, will drive you insane, oh, suck\n\nCommunication breakdown, it's always the same\nHavin' a nervous breakdown, will drive you insane, yeah\n\nCommunicate, I want you to love me all night\nI want you to love me all night, I want, hey, I want, yeah\nI want you to love me, I want you to love, babe\nI want you to love, yeah, I want you to love\nHey, I want you to love, yeah, I want you to"
+            }, 
+            "name": "Communication Breakdown", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "I-I, I can't quit you, babe\nSo I'm gonna put you down for a while\nI said, I can't quit you, babe\nI guess I got to put you down for a while\nSaid, you messed-up my happy home\nMade me mistreat my only child\nYes, you did, babe, oh\n\nSaid, you know I love you, baby\nMy love for you I could never hide\nOh, you know I love you, babe\nMy love for you I could never hide\nA-when I feel you near me, little girl\nI know you are my one desire, whoa-oh, oh-oh, yeah\n\nOh, that's wonderful, whoa\nWhoa\nThat's wonderful yeah!\n\nWhen ya hear me moanin' and groanin', baby\nYou know it hurts me deep down inside\nOh, when ya hear me moanin' and groanin', babe\nYou know it hurts me deep down inside\nOh, a-when you hear me hollar, baby\nYou know you're my one desire, yes, you are, oh alright"
+            }, 
+            "name": "I Can't Quit You Baby", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Ah\nHow many more times, treat me the way you wanna do\nHow many more times, treat me the way you wanna do\nWhen I give you all my love, please, please be true\n\nI give you all I've got to give, rings, pearls and all\nI give you all I've got to give, rings, pearls and all\nI got to get you together, baby\nI'm sure, sure you're gonna call\nOh, wanna love some other man too\n\nOoh\nI was a young man, I couldn't resist\nStarted thinkin' it over just what I had missed\nGot me a girl and I kissed her, and then, and then\nWhoops, oh, no, yeah, well I did it again\nNow I've got ten children of my own\nI got another child on the way, that makes eleven\nBut I'm in constant Heaven\n\nI know it's all right in my mind\n'Cause I got a little schoolgirl and she's all mine\nI can't get through to her 'cause it doesn't permit\nBut I'm gonna give her everything I've got to give\n\nOh, Rosie, oh, girl\nOh, Rosie, oh, girl\nSteal away, now, steal away\nSteal away, baby, steal away\nLittle Robert Anthony wants to come and play\nA-why don'tcha come with me, baby, steal away\nAll right, all right\n\nWell, they call me the Hunter, that's my name\nCall me the Hunter, that's how I got my fame\nAin't no need to hide, ain't no need to run\n'Cause I got you in the sights of my gun\n\nHow many more times, barrelhouse all night long, all right\nHow many more times, barrelhouse all night long\nWell, I've got to get to you, baby\nSo-whoa-whoa-whoa please come home\nWhy don't you listen to me, babe\nWhy don't you please come home\nWhy don't you please come home\nWhy don't you please come home"
+            }, 
+            "name": "How Many More Times", 
+            "isExplicit": false
+        }
+    ]
+}

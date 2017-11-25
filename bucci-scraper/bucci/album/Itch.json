@@ -1,0 +1,111 @@
+{
+    "genres": [
+        {
+            "id": 11
+        }
+    ], 
+    "primaryArtist": {
+        "name": "Radiohead"
+    }, 
+    "title": "Itch", 
+    "releaseDate": null, 
+    "artwork": null, 
+    "songs": [
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "And the wise man say, \"I don't want to hear your voice\"\nAnd the thin man say, \"I don't want to hear your voice\"\n\nAnd they're cursing me\nAnd they won't let me be\nAnd there's nothing to say\nAnd there's nothing to do\n\nStop whispering, start shouting\nStop whispering, start shouting\n\nAnd the mother say, \"We spit on your son some more\"\nAnd the buildings say, \"We spit on your face some more\"\n\nAnd the feeling is\nThat there's something wrong\nBecause I can't find the words\nAnd I can't find the songs\n\nStop whispering, start shouting\nStop whispering, start shouting\n\nDear sir, I have a complaint\n\nDear sir, I have a complaint\nCan't remember what it is\n\nIt doesn't matter anyway\nIt doesn't matter anyway\n\nStop whispering\nStop whispering\nStop whispering\nStop whispering, start shout..."
+            }, 
+            "name": "Stop Whispering", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Been thinking about you\nYour records are here\nYour eyes are on my wall\nYour teeth are over there\nBut I'm still no one\nAnd you're now a star\nWhat do you care?\n\nBeen thinking about you\nAnd there's no rest\nShit, I still love you\nStill see you in bed\nBut I'm playing with myself\nAnd what do you care\nWhen the other men are far, far better?\n\nAll the things you've got\nAll the things you need\nWho bought you cigarettes\nWho bribed the company to come and\nSee you, honey?\n\nI've been thinking about you\nSo how can you sleep?\nThese people aren't your friends\nThey're paid to kiss your feet\nThey don't know what I know\nAnd why should you care\nWhen I'm not there?\n\nBeen thinking about you\nAnd there's no rest\nShould I still love you\nStill see you in bed?\nBut I'm playing with myself\nAnd what do you care\nWhen I'm not there?\n\nAll the things you've got\nShe'll never need\nAll the things you've got\nI've bled and I bleed to\nPlease you\n\nBeen thinking about you"
+            }, 
+            "name": "Thinking About You", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "I've had these jeans since I was born \nAnd now they're ripped\nAnd now they're torn\nAnd all my friends have skateboards\n\nI want the toys of other boys\nI want a knife and a gun and things\nBut mum and dad will not give in\n\nAnd I can't put the needle in\nI can't put the needle in\nI can't put the needle in\n\nNo, I can't put the needle in\nI can't put the needle in\nI can't put the needle in\n\nAnd now I know what it is\nIt's called disease and it's got my head\nIt always runs where I hide\n\nToo scared to talk, too scared to try\nToo scared to know the reasons why\nAnd all my friends say bye bye\n\nAnd I can't put the needle in\nI can't put the needle in\nI can't put the needle in\n\nNo, I can't put the needle in\nI can't put the needle in\nI can't put the needle in\n\nAnd I can't put the needle in\nI can't put the needle in\nI can't put the needle in\n\nNo, I can't put the needle in\nI can't put the needle in\nI can't put the needle in"
+            }, 
+            "name": "Faithless, The Wonder Boy", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Oh, Banana Co. \nWe really love you and we need you \nAnd oh, Banana Co.\nWe'd really love to believe you\n\nBut everything's underground \nWe gotta dig it up somehow \nYeah, yeah\n\nOh, she said, \"No go\"\nShe said she'd like to, she's seen you \nAnd oh, Banana Co.\nShe knows if you die then we all do\n\nAnd everything's underground\nWe've gotta dig it up somehow \nYeah, yeah\n\nEverything's burning down \nWe gotta put it out somehow \nYeah, yeah"
+            }, 
+            "name": "Banana Co.", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "Killer cars, cars\nKiller cars\n\nToo hard on the brakes again\nWhat if these brakes just give in?\nWhat if they don't get outta the way?\nWhat if there's someone overtaking?\n\nI'm going out for a little drive\nAnd it could be the last time you see me alive\nThere could be an idiot on the road\nThe only kick in life is pumping the steel\n\nWrap me up in the back of the trunk\nPacked with foam and blind drunk\nThey won't ever take me alive\n'Cause they all drive\n\nDon't die on the motorway\nThe moon would freeze, the plants would die\nI couldn't cope if you crashed today\nAll the things I forgot to say\n\nI'm going out for a little drive\nAnd it could be the last time you see me alive\nWhat if the car loses control?\nWhat if there's someone overtaking?\n\nWrap me up in the back of the trunk\nPacked with foam and blind drunk\nThey won't ever take me alive\n'Cause they all drive\n\nKiller cars\nHey, uh\nHey, uh\nHey, uh\nHey, hey\n\nWrap me up in the back of a trunk\nPacked with foam and blind drunk\nThey won't ever take me alive\n'Cause they all drive killer cars\n\nThey all drive killer cars\nThey all drive killer cars\n\nKiller cars\nKiller, killer\nKiller cars\nKiller cars\nKiller cars\nKiller cars\nKiller cars\nKiller cars"
+            }, 
+            "name": "Killer Cars", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "I never wanted anything but this\nI worked hard, tried hard\nI ran around in domestic bliss\nI fought hard, died hard\n\nEverytime you're running\nOut of here\nEverytime you're running\nI get the fear\n\nI never wanted any broken bones\nScarred face, no home\nYour words surround me and I asphyxiate\nAnd I burn all hate\n\nEverytime you're running\nOut on me\nEverytime you're running\nI can see\n\nI'm not a vegetable\nI will not control myself\nI spit on the hand that feeds me\nI will not control myself\n\nThe waters break, the waters run\nAll over me\nThe waters break, the waters run\nAnd this time you're gonna pay\n\nI'm not a vegetable\nI will not control myself\nI spit on the hand that feeds me\nI will not control myself"
+            }, 
+            "name": "Vegetable", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "You are the sun and moon and stars, are you?\nAnd I could never run away from you\n\nYou try at working out chaotic things\nAnd why should I believe myself, not you?\n\nIt's like the world is going to end so soon\nAnd why should I believe myself?\n\nYou, me and everything\nCaught in the fire\nI can see me drowning\nCaught in the fire\n\nYou, me and everything\nCaught in the fire\nI can see me drowning\nCaught in the fire"
+            }, 
+            "name": "You", 
+            "isExplicit": false
+        }, 
+        {
+            "genres": [
+                {
+                    "id": 11
+                }
+            ], 
+            "lyrics": {
+                "lyric": "When you were here before\nCouldn't look you in the eye\nYou're just like an angel\nYour skin makes me cry\n\nYou float like a feather\nIn a beautiful world\nI wish I was special\nYou're so fuckin' special\n\nBut I'm a creep\nI'm a weirdo\nWhat the hell am I doin' here?\nI don't belong here\n\nI don't care if it hurts\nI wanna have control\nI want a perfect body\nI want a perfect soul\n\nI want you to notice\nWhen I'm not around\nYou're so fuckin' special\nI wish I was special\n\nBut I'm a creep\nI'm a weirdo\nWhat the hell am I doin' here?\nI don't belong here, oh oh\n\nShe's running out the door\nShe's running out\nShe run, run, run, run\nRun\n\nWhatever makes you happy\nWhatever you want\nYou're so fuckin' special\nI wish I was special\n\nBut I'm a creep\nI'm a weirdo\nWhat the hell am I doin' here?\nI don't belong here\nI don't belong here"
+            }, 
+            "name": "Creep", 
+            "isExplicit": false
+        }
+    ]
+}
