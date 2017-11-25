@@ -1,4 +1,4 @@
-package com.buccitunes.miscellaneous;
+package com.buccitunes.jsonmodel;
 
 
 public class LoginInfo {

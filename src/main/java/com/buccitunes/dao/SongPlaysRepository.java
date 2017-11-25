@@ -17,6 +17,4 @@ public interface SongPlaysRepository extends CrudRepository<SongPlays, Integer> 
 				"WHERE A.id = :artistId AND S.owner_id = A.id AND SP.song_id = S.id\n" + 
 				"AND SP.date_played > NOW() - INTERVAL 4 WEEK", nativeQuery = true)
 	List<SongPlays> getCurrentSongPlaysByArtist(@Param("artistId") int artistId);
-
-	
 }

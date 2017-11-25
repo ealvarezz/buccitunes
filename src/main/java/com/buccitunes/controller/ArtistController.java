@@ -28,9 +28,9 @@ import com.buccitunes.service.UserService;
 	
 @Controller	
 public class ArtistController {
+	
 	@Autowired
 	private ArtistService artistService;
-	
 	
 	@RequestMapping(value="getArtistByName", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Artist> findArtistByName(@RequestBody String name) {
@@ -54,15 +54,16 @@ public class ArtistController {
 	
 	@RequestMapping(value="artist", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<Artist> getArtist(@RequestParam int id) {
+		Artist artist;
 		try {
-			Artist artist = artistService.getArtist(id);
+			artist = artistService.getArtist(id);
 			return BucciResponseBuilder.successfulResponse(artist);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
 	
-	@RequestMapping(value="topSongsOfArtist", method = RequestMethod.GET)
+	@RequestMapping(value="topsongsofartist", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Song>> getTopSongsOfArtist(@RequestParam int id) {
 		 List<Song> songs = artistService.getTopTenSongs(id);
 		 return BucciResponseBuilder.successfulResponse(songs);

@@ -6,12 +6,12 @@ public class BucciConstants {
 	}
 	
 	public static class Album {
-		public static final int NEWRELASESLIMIT = 10;
-		public static final int TOPALBUMSLIMIT = 10;
+		public static final int NEW_RELASES_LIMIT = 10;
+		public static final int TOP_ALBUMS_LIMIT = 10;
 	}
 	
 	public static class Artist {
-		public static final int TOPSONGSLIMIT = 10;
+		public static final int TOP_SONGS_LIMIT = 10;
 	}
 	
 	public static class Admin {
@@ -23,7 +23,17 @@ public class BucciConstants {
 	}
 	
 	public static class Playlist {
-		public static final int PLAYLISTSLIMIT = 10;
+		public static final int TOP_PLAYLISTS_LIMIT = 10;
 	}
 	
+	public static class TimeAgo {
+		public static final String WEEK_AGO = "7";
+		public static final String TWO_WEEKS_AGO = "14";
+		public static final String ALL_TIME = "CURDATE()";
+	}
+	
+	public static class Stats {
+		public static final String SONG_COUNT = "stats.song_count";
+		public static final String PLAY_COUNT = "numPlays";
+	}
 }

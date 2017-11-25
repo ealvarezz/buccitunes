@@ -26,18 +26,20 @@ import com.buccitunes.service.AdminService;
 
 @Controller
 public class AdminController {
+	
 	@Autowired
 	private AdminService adminService;
 	
 	@RequestMapping(value="addArtist", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Artist> addArtist(@RequestBody Artist artist, HttpSession session) throws BucciException {
-		artist = adminService.addNewArtist(artist);
-		return BucciResponseBuilder.successfulResponseMessage("New Artist Added", artist);
+		Artist newArtist = adminService.addNewArtist(artist);
+		return BucciResponseBuilder.successfulResponseMessage("New Artist Added", newArtist);
 	}
 	
 	@RequestMapping(value="approveArtist", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<ArtistUser> approveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
 		ArtistUser artist;
+		
 		try {
 			artist = adminService.adminApproveArtist(requested);
 		} catch(BucciException e) {
@@ -48,21 +50,23 @@ public class AdminController {
 	
 	@RequestMapping(value="approveAlbum", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> approveAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
+		Album album;
+		
 		try {
-			Album album = adminService.adminApproveAlbum(requested);
+			album = adminService.adminApproveAlbum(requested);
 			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
 	}
 	
-	@RequestMapping(value="getplaysongsthismonth", method = RequestMethod.GET)
+	@RequestMapping(value="getPlaySongsThisMonth", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<SongPlays>> getAllPlayedSongsThisMonth(@RequestParam int artist_id) {
 		List<SongPlays> plays = adminService.getSongPLays(artist_id);
 		return BucciResponseBuilder.successfulResponse(plays);
 	}
 	
-	@RequestMapping(value="payroyalties", method = RequestMethod.GET)
+	@RequestMapping(value="payRoyalties", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<Double> payRoyaltiesToArtists() {
 		double totalPayed = adminService.payRoyalties();
 		return BucciResponseBuilder.successfulResponse(new Double(totalPayed));
