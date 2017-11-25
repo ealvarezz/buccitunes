@@ -23,6 +23,7 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.*;
+import com.buccitunes.resultset.AlbumWithStats;
 import com.buccitunes.service.MusicCollectionService;
 import com.buccitunes.service.UserService;
 @Configuration

@@ -13,6 +13,7 @@ import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Song;
+import com.buccitunes.resultset.AlbumWithStats;
 
 @Transactional
 public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, CrudRepository<Album, Integer> {

@@ -10,6 +10,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
+import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 
 import org.springframework.data.domain.PageRequest;
@@ -36,6 +37,7 @@ import com.buccitunes.model.Playlist;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.User;
+import com.buccitunes.resultset.AlbumWithStats;
 
 @Service
 @Transactional
@@ -192,7 +194,10 @@ public class MusicCollectionService {
 	public List<Album> getTopAlbumsByGenre(int genreId) {
 		PageRequest pageRequest = new PageRequest(BucciConstants.PageRequest.START, BucciConstants.Album.TOP_ALBUMS_LIMIT,
 				Sort.Direction.DESC, BucciConstants.Stats.PLAY_COUNT);
-		return albumRepository.topAlbumsByGenre(genreId, BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
+		List<Album> albums = albumRepository.topAlbumsByGenre(genreId, BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
+		return albums;
+		//return albumRepository.topAlbumsByGenre(genreId, BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
+		 
 	}
 	
 	public List<Playlist> getTopPlaylistByGenre(int genreId) {
