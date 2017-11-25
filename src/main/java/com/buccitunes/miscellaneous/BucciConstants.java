@@ -1,48 +1,54 @@
 package com.buccitunes.miscellaneous;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.context.properties.ConfigurationProperties;
+import org.springframework.stereotype.Component;
+
+@Component
+@ConfigurationProperties(prefix="constants")
 public class BucciConstants {
 	public static class PageRequest {
-		public static final int START = 0;
+		public static int START;
 	}
 	
 	public static class Album {
-		public static final int NEW_RELASES_LIMIT = 10;
-		public static final int TOP_ALBUMS_LIMIT = 10;
+		public static int NEW_RELASES_LIMIT;
+		public static int TOP_ALBUMS_LIMIT;
 	}
 	
 	public static class Artist {
-		public static final int TOP_SONGS_LIMIT = 10;
+		public static int TOP_SONGS_LIMIT;
 	}
 	
 	public static class Admin {
-		public static final double ROYALTY_PRICE = 0.03;
-		public static final int MOONMAN_TIER_MONTHLY_PRICE = 30;
-		public static final int TREX_TIER_MONTHLY_PRICE = 45;
-		public static final int NITRODUBS_TIER_MONTHLY_PRICE = 100;
-		public static final int MOONMAN_MAX = 4;
-		public static final int TREX_MAX = 9;
-		public static final int NITRODUBS_MAX = 17;
+		public static double ROYALTY_PRICE;
+		public static  int MOONMAN_TIER_MONTHLY_PRICE;
+		public static int TREX_TIER_MONTHLY_PRICE;
+		public static int NITRODUBS_TIER_MONTHLY_PRICE;
+		public static int MOONMAN_MAX;
+		public static int TREX_MAX;
+		public static int NITRODUBS_MAX;
 		
 	}
 	
 	public static class Playlist {
-		public static final int TOP_PLAYLISTS_LIMIT = 10;
+		public static int TOP_PLAYLISTS_LIMIT;
 	}
 	
 	public static class TimeAgo {
-		public static final String WEEK_AGO = "7";
-		public static final String TWO_WEEKS_AGO = "14";
-		public static final String ALL_TIME = "CURDATE()";
+		public static String WEEK_AGO;
+		public static String TWO_WEEKS_AGO;
+		public static String ALL_TIME;
 	}
 	
 	public static class Stats {
-		public static final String SONG_COUNT = "stats.song_count";
-		public static final String PLAY_COUNT = "numPlays";
+		public static String SONG_COUNT;
+		public static String PLAY_COUNT;
 	}
 	
 	public static class User {
-		public static final String NOT_LOGGED_IN = "Not Logged In";
-		public static final String LOGGED_IN = "Already Logged In";
-		public static final String SESSION = "user";
+		public static String NOT_LOGGED_IN;
+		public static String LOGGED_IN;
+		public static String SESSION;
 	}
 }

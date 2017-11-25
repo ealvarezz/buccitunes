@@ -68,7 +68,7 @@ public class AdminController {
 	
 	@RequestMapping(value="payRoyalties", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<Double> payRoyaltiesToArtists() {
-		double totalPayed = adminService.payRoyalties();
-		return BucciResponseBuilder.successfulResponse(new Double(totalPayed));
+		double totalPaid = adminService.payRoyalties();
+		return BucciResponseBuilder.successfulResponse(new Double(totalPaid));
 	}
 }

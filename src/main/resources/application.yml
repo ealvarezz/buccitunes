@@ -1,0 +1,25 @@
+spring:
+  jpa:
+   generate-ddl: false
+   hibernate:
+     ddl-auto: false
+     properties:
+       dialect: org.hibernate.dialect.MySQL5Dialect
+  datasource:
+    url: jdbc:mysql://localhost/buccidb2?useSSL=false
+    username: root
+    password: hey
+    driver: com.mysql.jdbc.Driver
+  profiles:
+    include: constants
+
+logging:
+  level:
+    org:
+      hibernate:
+        SQL: debug
+    
+settings:
+  caching:
+    popularityCache:
+      delay_ms: 100000      

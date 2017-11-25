@@ -13,14 +13,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.PremiumUser;
+import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.User;
 import com.buccitunes.service.ArtistService;
 import com.buccitunes.service.UserService;
 
@@ -45,8 +48,8 @@ public class ArtistController {
 	@RequestMapping(value="addArtistUser", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<ArtistUser> addArtistUser(@RequestBody ArtistUser artistUser) {
 		try {
-			artistService.saveArtistUser(artistUser);
-			return BucciResponseBuilder.successfulResponse(artistUser);
+			ArtistUser newArtistUser = artistService.saveArtistUser(artistUser);
+			return BucciResponseBuilder.successfulResponse(newArtistUser);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
@@ -67,5 +70,17 @@ public class ArtistController {
 	public @ResponseBody BucciResponse<List<Song>> getTopSongsOfArtist(@RequestParam int id) {
 		 List<Song> songs = artistService.getTopTenSongs(id);
 		 return BucciResponseBuilder.successfulResponse(songs);
+	}
+	
+	@RequestMapping(value="requestalbum", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(BucciConstants.User.SESSION);
+		if(loggedUser instanceof ArtistUser) {
+			RequestedAlbum newRequestedAlbum = artistService.requestNewAlbum(requested);
+			return BucciResponseBuilder.successfulResponseMessage("Album request was sent to an admin user", newRequestedAlbum);
+		} else {
+			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+		}
 	}
 }
