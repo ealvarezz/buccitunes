@@ -45,7 +45,7 @@ public class MusicCollectionController {
 	}
 	
 	@Cacheable(value="popularityCache")
-	@RequestMapping(value="topAlbumsOfWeek", method = RequestMethod.GET)
+	@RequestMapping(value="topalbumsofweek", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Album>> topAlbumsByWeek() {
 		List<Album> newAlbums = musicCollectionService.getTopAlbumsByWeek();
 		return BucciResponseBuilder.successfulResponse(newAlbums);
@@ -59,7 +59,7 @@ public class MusicCollectionController {
 	}
 	/*
 	@Cacheable(value="popularityCache")
-	@RequestMapping(value="toplaylistsbygenre", method = RequestMethod.GET)
+	@RequestMapping(value="topplaylistsbygenre", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Playlist>> topPlaylistsByGenre(@RequestParam int genreId) {
 		List<Playlist> topPlaylists = musicCollectionService.getTopPlaylistByGenre(genreId);
 		return BucciResponseBuilder.successfulResponse(topPlaylists);
@@ -70,7 +70,7 @@ public class MusicCollectionController {
 		return musicCollectionService.getPlaylist(id);
 	}
 	
-	@RequestMapping(value="newPlaylist", method = RequestMethod.POST)
+	@RequestMapping(value="newplaylist", method = RequestMethod.POST)
 	public @ResponseBody  BucciResponse<Playlist> getPlaylist(@RequestBody Playlist playlist) {
 		try {
 			Playlist newPlaylist = musicCollectionService.newPlaylist(playlist);
@@ -97,7 +97,7 @@ public class MusicCollectionController {
 		return musicCollectionService.getAlbum(id);
 	}
 	
-	@RequestMapping(value="albumNoSong", method = RequestMethod.GET)
+	@RequestMapping(value="albumnosong", method = RequestMethod.GET)
 	public @ResponseBody Album getAlbumWithNoSongs(@RequestParam int id) {
 		return musicCollectionService.getAlbumNoSongs(id);
 	}
@@ -119,7 +119,7 @@ public class MusicCollectionController {
 	}
 	*/
 	//For testing purposes
-	@RequestMapping(value="checkDate", method = RequestMethod.POST)
+	@RequestMapping(value="checkdate", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> check(@RequestBody Album album) {
 		System.out.println(album.getReleaseDate());
 		return BucciResponseBuilder.successfulResponse(album);
@@ -139,7 +139,7 @@ public class MusicCollectionController {
 	}
 	
 	//For testing purposes
-	@RequestMapping(value="addAlbum", method = RequestMethod.POST)
+	@RequestMapping(value="addalbum", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Album album) {
 		
 		try {
@@ -153,7 +153,7 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse(album);
 	}
 	
-	@RequestMapping(value="getAlbumOfSong", method = RequestMethod.POST)
+	@RequestMapping(value="getalbumofsong", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Song song) {
 		try {
 			Album album = musicCollectionService.albumOfSong(song);
