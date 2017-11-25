@@ -57,15 +57,17 @@ public class UserService  {
 		userRepository.delete(email);
 	}
 	
-	public void follow(String follower, String followed) {
+	public User follow(String follower, String followed) throws BucciException {
 		
 		User followingUser = userRepository.findOne(follower);
 		User followedUser = userRepository.findOne(followed);
 		
+		if(followingUser == null || followedUser == null) {
+			throw new BucciException("User not found");
+		}
+		
 		followingUser.getFollowing().add(followedUser);
-		
-		
-		
+		return followedUser;
 	}
 	
 	public User findOne(String email){
@@ -74,16 +76,22 @@ public class UserService  {
 	}
 	
 	
-	public List<User> getFollowing(String email){
+	public List<User> getFollowing(String email) throws BucciException{
 		
 		User user = userRepository.findOne(email);
+		if(user == null) {
+			throw new BucciException("User not found"); 
+		}
 		
 		return user.getFollowing();
 	}
 	
-	public List<User> getFollowers(String email){
+	public List<User> getFollowers(String email) throws BucciException{
 		
 		User user = userRepository.findOne(email);
+		if(user == null) {
+			throw new BucciException("User not found"); 
+		}
 		
 		return user.getFollowers();
 	}

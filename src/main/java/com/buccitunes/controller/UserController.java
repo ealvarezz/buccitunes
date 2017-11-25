@@ -48,19 +48,52 @@ public class UserController {
 		userService.remove(email);
 	}
 	
-	@RequestMapping(value="follow", method = RequestMethod.GET)
-	public @ResponseBody void followUser(@RequestParam String following, @RequestParam String followed) {
-		userService.follow(following, followed);
+	@RequestMapping(value="follow", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> followUser(@RequestBody User followedUser, HttpSession session) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(BucciConstants.User.NOT_LOGGED_IN);
+		}	
+		
+		try{
+			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
+			return BucciResponseBuilder.successMessage("You are now following " + user.getEmail()); 
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
 	}
 	
 	@RequestMapping(value="getfollowers", method = RequestMethod.GET)
-	public @ResponseBody List<User> getAllFollowers(@RequestParam String email) {
-		return userService.getFollowers(email);
+	public @ResponseBody BucciResponse<List<User>> getAllFollowers(@RequestParam String email) {
+		List<User> users;
+		try {
+			users = userService.getFollowers(email);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage()); 
+		}
+		
+		if(users.size() == 0) {
+			return BucciResponseBuilder.successfulResponseMessage("There are no followers", users);
+		} else {
+			return BucciResponseBuilder.successfulResponse(users);
+		}
+		
 	}
 	
 	@RequestMapping(value="getfollowing", method = RequestMethod.GET)
-	public @ResponseBody List<User> getAllFollowings(@RequestParam String email) {
-		return userService.getFollowing(email);
+	public @ResponseBody BucciResponse<List<User>> getAllFollowings(@RequestParam String email) {
+		List<User> users;
+		try {
+			users = userService.getFollowing(email);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage()); 
+		}
+		
+		if(users.size() == 0) {
+			return BucciResponseBuilder.successfulResponseMessage("There is no user following", users);
+		} else {
+			return BucciResponseBuilder.successfulResponse(users);
+		}
 	}
 	
 	@RequestMapping(value="findbyname", method = RequestMethod.GET)
@@ -88,12 +121,14 @@ public class UserController {
 	
 	@RequestMapping(value="login", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> login(@RequestBody LoginInfo loginInfo, HttpSession session) {
-		User account = userService.findOne(loginInfo.email);
 		
-		if(account != null) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser != null) {
 			return BucciResponseBuilder.failedMessage("Already Logged In");
 		}
-		if(BucciPassword.checkPassword(loginInfo.password, account.getPassword())) {
+		
+		User account = userService.findOne(loginInfo.email);
+		if(account != null && BucciPassword.checkPassword(loginInfo.password, account.getPassword())) {
 			session.setAttribute("user", account);
 			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
 		} else {
@@ -103,10 +138,10 @@ public class UserController {
 	
 	@RequestMapping(value="logout", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<String> logout(@RequestBody User user, HttpSession session) {
-		User sessionUser = (User) session.getAttribute("user");
+		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
 		
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(BucciConstants.User.NOT_LOGGED_IN);
 		} 
 		if(!sessionUser.getEmail().equals(user.getEmail())) {
 			return BucciResponseBuilder.failedMessage("Invalid Email");
@@ -115,10 +150,15 @@ public class UserController {
 		return BucciResponseBuilder.successMessage("LoggedOut");
 	}
 	
-	@RequestMapping(value="sessionInfo", method = RequestMethod.GET)
+	@RequestMapping(value="loggedin", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> sessionTest(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute("user");
-		return BucciResponseBuilder.successfulResponse(sessionUser);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			return BucciResponseBuilder.successfulResponse(sessionUser);
+		}
 	}
 	
 	@RequestMapping(value="premiumUpgrade", method = RequestMethod.POST)

@@ -1,15 +1,17 @@
 <div style="height:250px;">
 <div class="albumPic">
-    <image src="../assets/coloring_book.png"> </image>
+    <!-- <image src="../assets/coloring_book.png"> </image> -->
+    <image style="max-height: 220px; max-width:220px;"[src]="albumArtworkUrl"></image>
 </div>
     <div class="albumInfo">
-        <div><p>2017</p></div>
-        <div><h1>Coloring Book</h1></div>
+        <div *ngIf="album.releaseDate != null"><p>{{album.releaseDate | date:'y'}}</p></div>
+        <div *ngIf="album.releaseDate == null"><p>{{album.dateCreated | date:'y'}}</p></div>
+        <div><h1>{{album.title}}</h1></div>
         <button md-raised-button  class="rounded-button">Play</button>
         <button md-raised-button  class="rounded-button">Save</button>
         <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
     </div>
 </div>
 <div>
-    <music-table [data]="songs" [isAlbum] = "true"></music-table>
+    <music-table [data]="album.songs" [isAlbum] = "true"></music-table>
 </div>
