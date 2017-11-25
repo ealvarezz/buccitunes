@@ -47,18 +47,21 @@ public class UserController {
 	public @ResponseBody void removeUser(@RequestParam String email) {
 		userService.remove(email);
 	}
-	/*
+	
 	@RequestMapping(value="follow", method = RequestMethod.POST)
-	public @ResponseBody BucciReponse followUser(@RequestBody User user, HttpSession session) {
+	public @ResponseBody BucciResponse<String> followUser(@RequestBody User followedUser, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}	
+		
 		try{
-			userService.follow(loggedUser.getEmail(), userFollowing.followed);
+			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
+			return BucciResponseBuilder.successMessage("You are now following " + user.getEmail()); 
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
-		}	
+		}
 	}
-	*/
-	
 	
 	@RequestMapping(value="getfollowers", method = RequestMethod.GET)
 	public @ResponseBody List<User> getAllFollowers(@RequestParam String email) {

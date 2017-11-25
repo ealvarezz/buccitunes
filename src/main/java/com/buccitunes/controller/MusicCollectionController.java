@@ -73,8 +73,16 @@ public class MusicCollectionController {
 	}
 	
 	@RequestMapping(value="newplaylist", method = RequestMethod.POST)
-	public @ResponseBody  BucciResponse<Playlist> getPlaylist(@RequestBody Playlist playlist) {
+	public @ResponseBody  BucciResponse<Playlist> getPlaylist(@RequestBody Playlist playlist, HttpSession session) {
 		Playlist newPlaylist;
+		
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		playlist.setOwner(loggedUser);
+		
 		try {
 			newPlaylist = musicCollectionService.newPlaylist(playlist);
 			return BucciResponseBuilder.successfulResponseMessage("New playlist created", newPlaylist);
