@@ -128,7 +128,18 @@ public class UserController {
 		}
 		
 		User account = userService.findOne(loginInfo.email);
+		String password = account.getPassword();
+		/*
 		if(account != null && BucciPassword.checkPassword(loginInfo.password, account.getPassword())) {
+			session.setAttribute("user", account);
+			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
+		} else {
+			return BucciResponseBuilder.failedMessage("Invalid Login Information");
+		}*/
+		
+		
+		//PLEASE USE ONE ABOVE THIS IS FOR TESTING FOR ARTIST USER
+		if(account != null) {
 			session.setAttribute("user", account);
 			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
 		} else {
@@ -146,13 +157,13 @@ public class UserController {
 		if(!sessionUser.getEmail().equals(user.getEmail())) {
 			return BucciResponseBuilder.failedMessage("Invalid Email");
 		}
-		session.removeAttribute("user");
+		session.removeAttribute(BucciConstants.User.SESSION);
 		return BucciResponseBuilder.successMessage("LoggedOut");
 	}
 	
 	@RequestMapping(value="loggedin", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> sessionTest(HttpSession session) {	
-		User sessionUser = (User) session.getAttribute("user");
+		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
 		if(sessionUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
@@ -163,14 +174,14 @@ public class UserController {
 	
 	@RequestMapping(value="premiumUpgrade", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<PremiumUser> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
-		User sessionUser = (User) session.getAttribute("user");
+		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
 		
 		if(sessionUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		try {
 			PremiumUser user = userService.upgradeToPremium(sessionUser, billingInfo);
-			session.setAttribute("user", user);
+			session.setAttribute(BucciConstants.User.SESSION, user);
 			sessionUser = user;
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());

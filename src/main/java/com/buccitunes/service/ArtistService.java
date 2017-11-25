@@ -25,6 +25,7 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.Tier;
 import com.buccitunes.model.User;
@@ -81,7 +82,7 @@ private final SongRepository songRepository;
 		artistRepository.save(artist);	
 	}
 	
-	public void saveArtistUser(ArtistUser artistUser) throws BucciException {
+	public ArtistUser saveArtistUser(ArtistUser artistUser) throws BucciException {
 		
 		try{
 			String avatar = artistUser.getArtist().getAvatar();
@@ -94,16 +95,13 @@ private final SongRepository songRepository;
 				String avatarPath = FileManager.saveArtistAlias(avatar, savedArtist.getArtist().getId());
 				savedArtist.getArtist().setAvatar(avatarPath);
 			}
+			return savedArtist;
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			throw new BucciException("UNABLE TO SAVE ARTWORK");
 		}
-		
 	}
 	
 	public void remove(Integer id) {
-		
-		
 		artistRepository.delete(id);
 	}
 
@@ -113,5 +111,9 @@ private final SongRepository songRepository;
 		//return songRepository.getTopSongsOfArtist(BucciConstants.TimeAgo.ALL_TIME, artistId, pageRequest);
 		return null;
 		
+	}
+	
+	public RequestedAlbum requestNewAlbum(RequestedAlbum album) {
+		return requestedAlbumRepository.save(album);
 	}
 }

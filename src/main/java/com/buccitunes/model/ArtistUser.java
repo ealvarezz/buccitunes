@@ -31,15 +31,17 @@ public class ArtistUser extends User {
 
 	private Tier tier;
 	
-	public ArtistUser(){}
+	public ArtistUser(){
+		createDate = new Date();
+	}
 	
 	public ArtistUser(String email, String name, String password, String username) {
 		super(email, name, password, username);
-		// TODO Auto-generated constructor stub
+		createDate = new Date();
 	}
 
 	public ArtistUser(RequestedArtist requestedArtist) {
-		//Artist artist = 
+		createDate = new Date(); 
 	}
 
 	
