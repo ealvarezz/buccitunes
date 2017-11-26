@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import org.springframework.data.annotation.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
@@ -42,12 +43,14 @@ public class RequestedAlbum {
 	
 	private boolean isASingle;
 	
-	@DateTimeFormat(pattern="MM/dd/yyyy")
+	//@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date releaseDate;
 	
 	private String label;
 	
 	private String artwork;
+	
+	private String dateCreated;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Album",
@@ -67,6 +70,7 @@ public class RequestedAlbum {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
 	private ArtistUser user;
+	
 	
 	
 	public int getId() {

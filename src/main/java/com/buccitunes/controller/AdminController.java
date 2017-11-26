@@ -71,4 +71,10 @@ public class AdminController {
 		double totalPaid = adminService.payRoyalties();
 		return BucciResponseBuilder.successfulResponse(new Double(totalPaid));
 	}
+	
+	@RequestMapping(value="requestedalbums", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<RequestedAlbum>> getRequestedAlbums() {
+		List<RequestedAlbum> requested = adminService.getRequestedAlbums();
+		return BucciResponseBuilder.successfulResponse(requested);
+	}
 }

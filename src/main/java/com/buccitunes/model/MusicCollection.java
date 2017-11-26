@@ -20,6 +20,7 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.buccitunes.jsonmodel.CurrentStats;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="MUSIC_COLLECTION")
@@ -39,7 +40,6 @@ public class MusicCollection {
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") comment this out just incase script doesn't work
 	private Date dateCreated;
 	
 	private String artwork;

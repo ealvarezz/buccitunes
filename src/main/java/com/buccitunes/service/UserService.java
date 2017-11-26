@@ -41,18 +41,15 @@ public class UserService  {
 		List<User> result = new ArrayList<>();
 		for(User user: userRepository.findAll()) result.add(user);
 			
-
 		return result;
 	}
 	
 	public void save(User user) {
 		
-		
 		userRepository.save(user);
 	}
 	
 	public void remove(String email) {
-		
 		
 		userRepository.delete(email);
 	}

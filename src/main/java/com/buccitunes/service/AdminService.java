@@ -1,6 +1,7 @@
 package com.buccitunes.service;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -153,4 +154,12 @@ public class AdminService {
 		return total;
 	}
 	
+	
+	public List<RequestedAlbum> getRequestedAlbums() {
+				
+		List<RequestedAlbum> result = new ArrayList<>();
+		for(RequestedAlbum requested: requestedAlbumRepository.findAll()) result.add(requested);
+		
+		return result;
+	}
 }
