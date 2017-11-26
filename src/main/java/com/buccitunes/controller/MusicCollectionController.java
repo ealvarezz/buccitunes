@@ -117,7 +117,7 @@ public class MusicCollectionController {
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="get_top_songs", method = RequestMethod.GET)
 	public @ResponseBody List<Song> topSongs() {
-		System.out.println(env.getProperty("email"));
+		
 		return musicCollectionService.getTopSongs();
 	}
 	

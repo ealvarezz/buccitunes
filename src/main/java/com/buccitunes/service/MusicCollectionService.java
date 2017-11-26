@@ -156,7 +156,7 @@ public class MusicCollectionService {
 					album.setArtwork(artworkPath);
 					
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					throw new BucciException("UNABLE TO SAVE ALBUM");
 				}
 			}
