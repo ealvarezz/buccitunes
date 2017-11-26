@@ -17,7 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.buccitunes.jsonmodel.LoginInfo;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.miscellaneous.*;
+import com.buccitunes.model.Album;
+import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
+import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
@@ -158,6 +161,42 @@ public class UserController {
 		}
 		else {
 			return BucciResponseBuilder.successfulResponse(sessionUser);
+		}
+	}
+	
+	@RequestMapping(value="saved_albums", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Album>> getUserSavedAlbums(HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Album> savedAlbums = userService.getSavedAlbums(sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse(savedAlbums);
+		}
+	}
+	
+	@RequestMapping(value="followed_artists", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Artist>> getUserFollowedArtist(HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Artist> followedArtists = userService.getFollowedArtist(sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse(followedArtists);
+		}
+	}
+	
+	@RequestMapping(value="followed_playlists", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Playlist>> getUserFollowedPlaylists(HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Playlist> followedPlaylist = userService.getFollowedPlaylist(sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse(followedPlaylist);
 		}
 	}
 	
