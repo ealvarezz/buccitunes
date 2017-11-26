@@ -2,7 +2,7 @@ spring:
   jpa:
    generate-ddl: true
    hibernate:
-     ddl-auto: create
+     ddl-auto: true
      properties:
        dialect: org.hibernate.dialect.MySQL5Dialect
   datasource:

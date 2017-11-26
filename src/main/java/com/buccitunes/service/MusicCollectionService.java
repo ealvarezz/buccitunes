@@ -122,15 +122,14 @@ public class MusicCollectionService {
 		}
 		
 		String artwork = playlist.getArtwork();
-		playlist.setArtwork(null);
 		playlist.setSongs(playlistSongs);
 		playlist.setOwner(user);
 		Playlist newPlaylist = playlistRepository.save(playlist);
 		
 		if(artwork != null)  {
 			try {
-				artwork = FileManager.savePlaylistAlias(artwork, newPlaylist.getId());
-				newPlaylist.setArtwork(artwork);
+				String artworkPath = FileManager.savePlaylistArtwork(artwork, newPlaylist.getId());
+				newPlaylist.setArtworkPath(artworkPath);
 			} catch (IOException e) {
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
 			}
@@ -143,7 +142,7 @@ public class MusicCollectionService {
 			Artist albumOwner = artistRepository.findByName(album.getPrimaryArtist().getName());
 			album.setPrimaryArtist(albumOwner);
 			for(Song song: album.getSongs()) song.setOwner(albumOwner);
-			album.setArtwork(null);
+			
 			Album returnedAlbum = albumRepository.save(album);
 			
 			albumOwner.getAlbums().add(album); // suppose to add album by adding to artist's album list
@@ -151,10 +150,8 @@ public class MusicCollectionService {
 			
 			if(artworkString != null)  {
 				try {
-					
-					String artworkPath = FileManager.saveArtwork(artworkString, returnedAlbum.getId());
-					album.setArtwork(artworkPath);
-					
+					String artworkPath = FileManager.saveAlbumArtwork(artworkString, returnedAlbum.getId());
+					album.setArtworkPath(artworkPath);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					throw new BucciException("UNABLE TO SAVE ALBUM");

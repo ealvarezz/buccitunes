@@ -1,5 +1,6 @@
 package com.buccitunes.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,9 +14,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="RequestedSong")
 public class RequestedSong{
@@ -52,11 +55,15 @@ public class RequestedSong{
 	
 	private String picturePath;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String picture;
+	
 	private boolean isExplicit;	
 
 	private String comments;
 	
-	private String dateCreated;
+	private Date dateCreated;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
@@ -66,8 +73,34 @@ public class RequestedSong{
     @JoinColumn(name = "lyric_id")
 	private Lyrics lyrics;
 
-	public RequestedSong() {}
+	public RequestedSong() {
+		this.dateCreated = new Date();
+	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Artist getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Artist owner) {
+		this.owner = owner;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	public String getName() {
 		return name;
 	}

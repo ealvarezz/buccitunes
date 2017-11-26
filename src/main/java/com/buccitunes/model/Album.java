@@ -70,7 +70,6 @@ public class Album extends MusicCollection {
 		this.label = requested.getLabel();
 		this.genres = requested.getGenres();
 		
-		
 		List<Song> newSongs = new ArrayList<Song>();
 		List<RequestedSong> requestedSongs = requested.getSongs();
 		
