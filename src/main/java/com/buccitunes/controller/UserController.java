@@ -25,6 +25,7 @@ import com.buccitunes.service.UserService;
 @Controller
 public class UserController {
 	
+	
 	@Autowired
 	private UserService userService;
 	
@@ -35,6 +36,8 @@ public class UserController {
 	
 	@RequestMapping(value="get_all_users", method = RequestMethod.GET)
 	public @ResponseBody List<User> getAllUsers() {
+		System.out.println(BucciConstants.MOONMAN_TIER_MONTHLY_PRICE);
+		System.out.println(BucciConstants.NITRODUBS_TIER_MONTHLY_PRICE);
 		return userService.findAll();
 	}
 	
@@ -52,7 +55,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<String> followUser(@RequestBody User followedUser, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(BucciConstants.User.NOT_LOGGED_IN);
+			return BucciResponseBuilder.failedMessage(BucciConstants.NOT_LOGGED_IN);
 		}	
 		try{
 			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
@@ -147,21 +150,21 @@ public class UserController {
 	
 	@RequestMapping(value="logout", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<String> logout(@RequestBody User user, HttpSession session) {
-		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
 		
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(BucciConstants.User.NOT_LOGGED_IN);
+			return BucciResponseBuilder.failedMessage(BucciConstants.NOT_LOGGED_IN);
 		} 
 		if(!sessionUser.getEmail().equals(user.getEmail())) {
 			return BucciResponseBuilder.failedMessage("Invalid Email");
 		}
-		session.removeAttribute(BucciConstants.User.SESSION);
+		session.removeAttribute(BucciConstants.SESSION);
 		return BucciResponseBuilder.successMessage("LoggedOut");
 	}
 	
 	@RequestMapping(value="logged_in", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> sessionTest(HttpSession session) {	
-		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
 		if(sessionUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
@@ -172,14 +175,14 @@ public class UserController {
 	
 	@RequestMapping(value="premium_upgrade", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<PremiumUser> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
-		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
 		
 		if(sessionUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		try {
 			PremiumUser user = userService.upgradeToPremium(sessionUser, billingInfo);
-			session.setAttribute(BucciConstants.User.SESSION, user);
+			session.setAttribute(BucciConstants.SESSION, user);
 			sessionUser = user;
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());

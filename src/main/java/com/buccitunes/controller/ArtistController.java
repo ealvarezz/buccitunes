@@ -74,7 +74,7 @@ public class ArtistController {
 	
 	@RequestMapping(value="request_album", method = RequestMethod.POST)
 	public BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
-		User loggedUser = (User) session.getAttribute(BucciConstants.User.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
 		if(loggedUser instanceof ArtistUser) {
 			RequestedAlbum newRequestedAlbum;
 			try {

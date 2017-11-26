@@ -140,9 +140,9 @@ public class AdminService {
 			int songPlays = songPlaysRepository.getCurrentSongPlaysByArtist(artist.getArtist().getId()).size();
 			if(songPlays > 0) {
 				
-				total += songPlays * BucciConstants.Admin.ROYALTY_PRICE;
+				total += songPlays * BucciConstants.ROYALTY_PRICE;
 				ArtistTransaction transaction  = new ArtistTransaction();
-				transaction.setAmount(songPlays * BucciConstants.Admin.ROYALTY_PRICE);
+				transaction.setAmount(songPlays * BucciConstants.ROYALTY_PRICE);
 				transaction.setArtistUser(artist);
 				transaction.setDate(new Date());
 				transaction.setPaymentType(PaymentType.ROYALTY_PAYMENT); // Change this to transaction type instead later

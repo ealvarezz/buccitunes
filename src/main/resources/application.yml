@@ -1,17 +1,19 @@
 spring:
   jpa:
-   generate-ddl: true
+   generate-ddl: false
    hibernate:
-     ddl-auto: create
+     ddl-auto: false
      properties:
        dialect: org.hibernate.dialect.MySQL5Dialect
   datasource:
+    initialize: true
     url: jdbc:mysql://localhost/buccidb2?useSSL=false
     username: root
-    password: bucci
+    password: hey
     driver: com.mysql.jdbc.Driver
   profiles:
     include: constants
+    active: constants
 
 logging:
   level:
@@ -23,3 +25,39 @@ settings:
   caching:
     popularityCache:
       delay_ms: 100000      
+      
+      
+      
+      
+      
+constants:
+  START: 0
+  
+  NEW_RELEASES_LIMIT: 10
+  TOP_ALBUMS_LIMIT: 10
+  
+  TOP_SONGS_LIMIT: 10
+    
+  PLAYLISTS_LIMIT: 10
+  ROYALTY_PRICE: 0.03
+  _TIER_MONTHLY_PRICE: 30
+  TREX_TIER_MONTHLY_PRICE: 45
+  NITRODUBS_TIER_MONTHLY_PRICE: 100
+  MOONMAN_MAX: 4
+  TREX_MAX: 9
+  NITRODUBS_MAX: 17 
+  
+ 
+  
+  TOP_PLAYLISTS_LIMIT: 10
+    
+  WEEK_AGO: 7
+  TWO_WEEKS_AGO: 14
+  ALL_TIME: CURDATE()
+    
+  SONG_COUNT: stats.song_count
+  PLAY_COUNT: numPlays
+    
+  NOT_LOGGED_IN: Not Logged In 
+  LOGGED_IN: Already Logged In
+  SESSION: user
