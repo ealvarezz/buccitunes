@@ -86,14 +86,13 @@ private final SongRepository songRepository;
 		artistUser.encryptPassword();
 		try{
 			String avatar = artistUser.getArtist().getAvatar();
-			artistUser.getArtist().setAvatar(null);
 			artistUser.setTier(Tier.NO_TIER);
 			artistUserRepository.save(artistUser);
 			ArtistUser savedArtist = artistUserRepository.findOne(artistUser.getEmail());
 			
 			if(avatar != null)  {
-				String avatarPath = FileManager.saveArtistAlias(avatar, savedArtist.getArtist().getId());
-				savedArtist.getArtist().setAvatar(avatarPath);
+				String avatarPath = FileManager.saveArtistAvatar(avatar, savedArtist.getArtist().getId());
+				savedArtist.getArtist().setAvatarPath(avatarPath);
 			}
 			return savedArtist;
 		} catch (IOException e) {
@@ -113,15 +112,17 @@ private final SongRepository songRepository;
 		
 	}
 	
-	public RequestedAlbum requestNewAlbum(RequestedAlbum requested) throws BucciException {
+	public RequestedAlbum requestNewAlbum(RequestedAlbum requested, ArtistUser artistUser) throws BucciException {
+		
 		String artwork = requested.getArtwork();
-		requested.setArtwork(null);
+		requested.setUser(artistUser);
+		requested.setPrimaryArtist(artistUser.getArtist());
 		RequestedAlbum requestedAlbum = requestedAlbumRepository.save(requested);
 		
 		if(artwork != null) {
 			try {
-				String artworkPath = FileManager.saveRequestedAlbumAlias(artwork, requestedAlbum.getId());
-				requestedAlbum.setArtwork(artworkPath);
+				String artworkPath = FileManager.saveRequestedAlbumArtwork(artwork, requestedAlbum.getId());
+				requestedAlbum.setArtworkPath(artworkPath);
 			} catch (IOException e) {
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
 			}

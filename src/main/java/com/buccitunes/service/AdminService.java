@@ -93,10 +93,8 @@ public class AdminService {
 		return artUser;
 	}
 	
-	public Album adminApproveAlbum(RequestedAlbum requestedAlbum) throws BucciException {
+	public Album addAlbum(RequestedAlbum requestedAlbum) throws BucciException {
 		
-		//Used to make sure the requestedAlbum information is up to date
-		//requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
 		Artist artist = artistRepository.findOne(requestedAlbum.getPrimaryArtist().getId());
 		if(artist == null) {
 			artist = artistRepository.findByName(requestedAlbum.getPrimaryArtist().getName());
@@ -108,17 +106,53 @@ public class AdminService {
 		
 		Album album = albumRepository.save(new Album(requestedAlbum));
 		
-		//The songs may delete itself
-		//requestedAlbumRepository.delete(requestedAlbum);
-		
 		if(requestedAlbum.getArtwork() != null) {
 			try {
-				String artwork = FileManager.saveAlbumAlias(requestedAlbum.getArtwork(), album.getId());
-				album.setArtwork(artwork);
+				String artworkPath = FileManager.saveAlbumArtwork(requestedAlbum.getArtwork(), album.getId());
+				album.setArtworkPath(artworkPath);
 			} catch (IOException e) {
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
 			}
 		}
+		return album;
+	}
+	
+	public Album adminApproveAlbum(RequestedAlbum requestedAlbum) throws BucciException {
+		
+		requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
+		if(requestedAlbum == null) {
+			throw new BucciException("Requested album does not exist");
+		}
+		
+		Artist artist = artistRepository.findOne(requestedAlbum.getPrimaryArtist().getId());
+		if(artist == null) {
+			artist = artistRepository.findByName(requestedAlbum.getPrimaryArtist().getName());
+			if(artist == null) {
+				throw new BucciException("Artist not found");
+			}
+		}
+		requestedAlbum.setPrimaryArtist(artist);
+		
+		Album album = albumRepository.save(new Album(requestedAlbum));
+		
+		if(requestedAlbum.getArtworkPath() != null) {
+			try {				
+				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getId(), album.getId());
+				album.setArtworkPath(artworkPath);
+			} catch (IOException e) {
+				throw new BucciException("UNABLE TO SAVE ARTWORK");
+			}
+		}
+		
+		try {
+			FileManager.removeRequestedAlbumResources(requestedAlbum);
+		} catch (IOException e) {
+			throw new BucciException("UNABLE TO SAVE ARTWORK");
+		}
+		
+		//The songs may delete itself
+		requestedAlbumRepository.delete(requestedAlbum);
+		
 		return album;
 	}
 	
