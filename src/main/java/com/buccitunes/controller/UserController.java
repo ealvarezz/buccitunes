@@ -33,17 +33,17 @@ public class UserController {
 		return "index";
 	}
 	
-	@RequestMapping(value="getallusers", method = RequestMethod.GET)
+	@RequestMapping(value="get_all_users", method = RequestMethod.GET)
 	public @ResponseBody List<User> getAllUsers() {
 		return userService.findAll();
 	}
 	
-	@RequestMapping(value="adduser", method = RequestMethod.POST)
+	@RequestMapping(value="add_user", method = RequestMethod.POST)
 	public @ResponseBody void addUser(@RequestBody User user) {
 		userService.save(user);
 	}
 	
-	@RequestMapping(value="deleteuser", method = RequestMethod.GET)
+	@RequestMapping(value="delete_user", method = RequestMethod.GET)
 	public @ResponseBody void removeUser(@RequestParam String email) {
 		userService.remove(email);
 	}
@@ -54,7 +54,6 @@ public class UserController {
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(BucciConstants.User.NOT_LOGGED_IN);
 		}	
-		
 		try{
 			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
 			return BucciResponseBuilder.successMessage("You are now following " + user.getEmail()); 
@@ -63,7 +62,7 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="getfollowers", method = RequestMethod.GET)
+	@RequestMapping(value="get_followers", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<User>> getAllFollowers(@RequestParam String email) {
 		List<User> users;
 		try {
@@ -80,7 +79,7 @@ public class UserController {
 		
 	}
 	
-	@RequestMapping(value="getfollowing", method = RequestMethod.GET)
+	@RequestMapping(value="get_following", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<User>> getAllFollowings(@RequestParam String email) {
 		List<User> users;
 		try {
@@ -96,22 +95,20 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="findbyname", method = RequestMethod.GET)
+	@RequestMapping(value="find_by_name", method = RequestMethod.GET)
 	public @ResponseBody List<User> findUserByName(@RequestParam String name) {
 		return userService.findByName(name);
 	}
 	
-	@RequestMapping(value="updatename", method = RequestMethod.GET)
+	@RequestMapping(value="update_name", method = RequestMethod.GET)
 	public @ResponseBody void updateUserName(@RequestParam String email, @RequestParam String name) {
 		userService.updateName(email, name);
 	}
 	
 	@RequestMapping(value="signup", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> updateUserName(@RequestBody SignupFormInfo signupInfo) {
-		User newUser;
-		
 		try{
-			newUser = userService.signup(signupInfo);
+			User newUser = userService.signup(signupInfo);
 			BucciResponse<User> success = BucciResponseBuilder.successfulResponseMessage("Successful Signup", newUser);
 			return success;
 		} catch(BucciException e) {
@@ -145,6 +142,7 @@ public class UserController {
 		} else {
 			return BucciResponseBuilder.failedMessage("Invalid Login Information");
 		}
+		
 	}
 	
 	@RequestMapping(value="logout", method = RequestMethod.POST)
@@ -161,7 +159,7 @@ public class UserController {
 		return BucciResponseBuilder.successMessage("LoggedOut");
 	}
 	
-	@RequestMapping(value="loggedin", method = RequestMethod.GET)
+	@RequestMapping(value="logged_in", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> sessionTest(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
 		if(sessionUser == null) {
@@ -172,7 +170,7 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="premiumUpgrade", method = RequestMethod.POST)
+	@RequestMapping(value="premium_upgrade", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<PremiumUser> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
 		User sessionUser = (User) session.getAttribute(BucciConstants.User.SESSION);
 		
