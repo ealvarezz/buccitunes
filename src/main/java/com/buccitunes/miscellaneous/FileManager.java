@@ -2,7 +2,6 @@ package com.buccitunes.miscellaneous;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -11,9 +10,6 @@ import java.nio.file.Paths;
 import java.util.Base64;
 
 import javax.imageio.ImageIO;
-
-import com.buccitunes.model.Album;
-import com.buccitunes.model.Artist;
 
 public class FileManager {
 	
@@ -28,8 +24,8 @@ public class FileManager {
 	private final static Path REQUESTEDALBUMSPATH = Paths.get(FILESPATH.toString() + "/REQUESTED ALBUMS/");
 	private final static Path REQUESTEDSONGSMPATH = Paths.get(FILESPATH.toString() + "/REQUESTED SONGS/"); 
 	private final static String DEFAULTMIMETYPEIMAGE = "png";
-	private final static String ARTWORKIMAGE = "artwork.png";
-	private final static String AVATARIMAGE = "avatar.png";
+	private final static String ARTWORKIMAGE = "artwork." + DEFAULTMIMETYPEIMAGE;
+	private final static String AVATARIMAGE = "avatar." + DEFAULTMIMETYPEIMAGE;
 
 	
 	public static void setUpFileDirectory() throws IOException {
@@ -171,7 +167,7 @@ public class FileManager {
 		 try{     		
 			 InputStream in = new ByteArrayInputStream(decodedBytes);
 			 BufferedImage bImageFromConvert = ImageIO.read(in);
-			 ImageIO.write(bImageFromConvert, "png", path.toFile()); // File might be null
+			 ImageIO.write(bImageFromConvert, DEFAULTMIMETYPEIMAGE, path.toFile()); // File might be null
 			
 		 } catch (Exception ex) {
 			 ex.printStackTrace();

@@ -46,7 +46,7 @@ public class ArtistController {
 		}
 	}
 	
-	@RequestMapping(value="add_artist+user", method = RequestMethod.POST)
+	@RequestMapping(value="add_artist_user", method = RequestMethod.POST)
 	public BucciResponse<ArtistUser> addArtistUser(@RequestBody ArtistUser artistUser) {
 		try {
 			ArtistUser newArtistUser = artistService.saveArtistUser(artistUser);

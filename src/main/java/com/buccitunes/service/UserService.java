@@ -121,7 +121,7 @@ public class UserService  {
 		
 		user = signupInfo.userInfo;
 		
-		user.encryptAndSetPassword(signupInfo.userInfo.getPassword());
+		user.setPasswordAndEncrypt(signupInfo.userInfo.getPassword());
 		
 		if(signedForPremium) {
 			String invalidBillingInfo = signupInfo.billingInfo.checkInvalidInfo(); 

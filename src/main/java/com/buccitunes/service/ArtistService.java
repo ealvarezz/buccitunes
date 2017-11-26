@@ -83,7 +83,7 @@ private final SongRepository songRepository;
 	}
 	
 	public ArtistUser saveArtistUser(ArtistUser artistUser) throws BucciException {
-		
+		artistUser.encryptPassword();
 		try{
 			String avatar = artistUser.getArtist().getAvatar();
 			artistUser.getArtist().setAvatar(null);

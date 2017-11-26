@@ -13,6 +13,7 @@ import javax.persistence.InheritanceType;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.Transient;
 
 import com.buccitunes.miscellaneous.BucciPassword;
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -37,7 +38,11 @@ public class User {
 	
 	boolean verified;
 	
-	String profilePicturePath;
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	String avatar;
+	
+	String avatarPath;
 
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "following",
@@ -154,11 +159,11 @@ public class User {
 	}
 	
 	public String getProfilePicturePath() {
-		return profilePicturePath;
+		return avatarPath;
 	}
 	
 	public void setProfilePicturePath(String profilePicture) {
-		this.profilePicturePath = profilePicture;
+		this.avatarPath = profilePicture;
 	}
 	
 	public List<Playlist> getFollowingPlaylists() {
@@ -217,10 +222,14 @@ public class User {
 		this.collaboratingPlaylitst = collaboratingPlaylitst;
 	}
 	
-	public void encryptAndSetPassword(String password) {
+	public void encryptPassword() {
+		this.password = BucciPassword.encryptPassword(this.password);
+	}
+	
+	public void setPasswordAndEncrypt(String password) {
 		this.password = BucciPassword.encryptPassword(password);
 	}
-
+	
 	/*
 	public String getProfilePicture() {
 		return profilePicture;
