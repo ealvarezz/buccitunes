@@ -22,6 +22,7 @@ import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
+import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
 
@@ -197,6 +198,30 @@ public class UserController {
 		else {
 			List<Playlist> followedPlaylist = userService.getFollowedPlaylist(sessionUser.getEmail());
 			return BucciResponseBuilder.successfulResponse(followedPlaylist);
+		}
+	}
+	
+	@RequestMapping(value="save_album", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> userSaveAlbum(HttpSession session, @RequestBody Album album) {	
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			userService.saveAlbum(album.getId(), sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse("Album saved!");	
+		}
+	}
+	
+	@RequestMapping(value="save_song", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> userSaveSong(HttpSession session, @RequestBody Song song) {	
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			userService.saveSong(song.getId(), sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse("Song saved!");	
 		}
 	}
 	
