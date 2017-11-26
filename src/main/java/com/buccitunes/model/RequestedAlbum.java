@@ -15,12 +15,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import org.springframework.data.annotation.Transient;
-import org.springframework.format.annotation.DateTimeFormat;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="RequestedAlbum")
 public class RequestedAlbum {
@@ -50,7 +44,7 @@ public class RequestedAlbum {
 	
 	private String artwork;
 	
-	private String dateCreated;
+	private Date dateCreated;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Album",
@@ -73,6 +67,24 @@ public class RequestedAlbum {
 	
 	
 	
+	public RequestedAlbum(int id, String title, Artist primaryArtist, List<Artist> featuredArtists, boolean isASingle,
+			Date releaseDate, String label, String artwork, List<Genre> genres, List<RequestedSong> songs,
+			String comments, ArtistUser user) {
+		this.id = id;
+		this.title = title;
+		this.primaryArtist = primaryArtist;
+		this.featuredArtists = featuredArtists;
+		this.isASingle = isASingle;
+		this.releaseDate = releaseDate;
+		this.label = label;
+		this.artwork = artwork;
+		this.genres = genres;
+		this.songs = songs;
+		this.comments = comments;
+		this.user = user;
+		this.dateCreated = new Date();
+	}
+
 	public int getId() {
 		return id;
 	}

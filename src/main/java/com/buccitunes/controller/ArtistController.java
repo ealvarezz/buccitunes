@@ -76,8 +76,14 @@ public class ArtistController {
 	public BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(BucciConstants.User.SESSION);
 		if(loggedUser instanceof ArtistUser) {
-			RequestedAlbum newRequestedAlbum = artistService.requestNewAlbum(requested);
-			return BucciResponseBuilder.successfulResponseMessage("Album request was sent to an admin user", newRequestedAlbum);
+			RequestedAlbum newRequestedAlbum;
+			try {
+				newRequestedAlbum = artistService.requestNewAlbum(requested);
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage(e.getErrMessage());
+			}
+			
+			return BucciResponseBuilder.successfulResponseMessage("Album request was submitted", newRequestedAlbum);
 		} else {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
 		}
