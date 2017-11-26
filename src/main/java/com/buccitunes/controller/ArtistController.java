@@ -2,9 +2,11 @@ package com.buccitunes.controller;
 
 import java.util.List;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -74,6 +76,7 @@ public class ArtistController {
 	
 	@RequestMapping(value="request_album", method = RequestMethod.POST)
 	public BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
+		
 		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
 		
 		if(loggedUser == null) {

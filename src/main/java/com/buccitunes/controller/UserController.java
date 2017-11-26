@@ -121,31 +121,19 @@ public class UserController {
 	
 	@RequestMapping(value="login", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> login(@RequestBody LoginInfo loginInfo, HttpSession session) {
-		
-		User loggedUser = (User) session.getAttribute("user");
+		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
 		if(loggedUser != null) {
 			return BucciResponseBuilder.failedMessage("Already Logged In");
 		}
 		
 		User account = userService.findOne(loginInfo.email);
-		String password = account.getPassword();
-		/*
+		
 		if(account != null && BucciPassword.checkPassword(loginInfo.password, account.getPassword())) {
-			session.setAttribute("user", account);
-			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
-		} else {
-			return BucciResponseBuilder.failedMessage("Invalid Login Information");
-		}*/
-		
-		
-		//PLEASE USE ONE ABOVE THIS IS FOR TESTING FOR ARTIST USER
-		if(account != null) {
-			session.setAttribute("user", account);
+			session.setAttribute(BucciConstants.SESSION, account);
 			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
 		} else {
 			return BucciResponseBuilder.failedMessage("Invalid Login Information");
 		}
-		
 	}
 	
 	@RequestMapping(value="logout", method = RequestMethod.POST)

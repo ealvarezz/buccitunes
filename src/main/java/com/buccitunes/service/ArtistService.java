@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
+import com.buccitunes.dao.RequestedSongRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
@@ -26,6 +27,7 @@ import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
+import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.Tier;
 import com.buccitunes.model.User;
@@ -38,14 +40,17 @@ private final ArtistRepository artistRepository;
 private final RequestedAlbumRepository requestedAlbumRepository;
 private final ArtistUserRepository artistUserRepository;
 private final SongRepository songRepository;
+private final RequestedSongRepository requestedSongRepository;
 	
 	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
-			ArtistUserRepository artistUserRepository,SongRepository songRepository) {
+			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
+			RequestedSongRepository requestedSongRepository) {
 		
 		this.artistRepository = artistRepository;
 		this.requestedAlbumRepository = requestedAlbumRepository;
 		this.artistUserRepository = artistUserRepository;
 		this.songRepository = songRepository;
+		this.requestedSongRepository = requestedSongRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -115,8 +120,9 @@ private final SongRepository songRepository;
 	public RequestedAlbum requestNewAlbum(RequestedAlbum requested, ArtistUser artistUser) throws BucciException {
 		
 		String artwork = requested.getArtwork();
-		requested.setUser(artistUser);
-		requested.setPrimaryArtist(artistUser.getArtist());
+		artistUser = artistUserRepository.findOne(artistUser.getEmail());
+		requested.setArtistRequester(artistUser);
+		//requestedSongRepository.save(requested.getSongs());
 		RequestedAlbum requestedAlbum = requestedAlbumRepository.save(requested);
 		
 		if(artwork != null) {

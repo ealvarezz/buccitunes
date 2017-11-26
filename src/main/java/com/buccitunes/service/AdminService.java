@@ -131,8 +131,10 @@ public class AdminService {
 				throw new BucciException("Artist not found");
 			}
 		}
-		requestedAlbum.setPrimaryArtist(artist);
 		
+		
+		System.out.println("\n=====\nREADY TO SAVE ?\n=====\n");
+		 
 		Album album = albumRepository.save(new Album(requestedAlbum));
 		
 		if(requestedAlbum.getArtworkPath() != null) {
@@ -150,7 +152,6 @@ public class AdminService {
 			throw new BucciException("UNABLE TO SAVE ARTWORK");
 		}
 		
-		//The songs may delete itself
 		requestedAlbumRepository.delete(requestedAlbum);
 		
 		return album;

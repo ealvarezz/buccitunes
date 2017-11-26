@@ -144,7 +144,4 @@ public class MusicCollection {
 	public void setCurrentStats(CurrentStats currentStats) {
 		this.currentStats = currentStats;
 	}
-	
-	
-	
 }

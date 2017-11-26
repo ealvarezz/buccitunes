@@ -83,7 +83,7 @@ public class Song {
 		this.mimeType = song.getMimeType();
 		this.picturePath = song.getPicturePath();
 		this.audioPath = song.getAudioPath();
-		this.lyrics = song.getLyrics();
+		this.lyrics = new Lyrics(song.getLyrics().getLyric());
 		this.stats = new StatCache();
 	}
 	

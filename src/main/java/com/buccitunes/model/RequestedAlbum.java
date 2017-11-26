@@ -34,13 +34,12 @@ public class RequestedAlbum {
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Featured_Album_Artist_Requested",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
 	private List<Artist> featuredArtists;
 	
 	private boolean isASingle;
 	
-	//@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date releaseDate;
 	
 	private String label;
@@ -55,22 +54,21 @@ public class RequestedAlbum {
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Album",
-		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 	private List<Genre> genres;
 	
-	//@JsonIgnore Caused a problem with saving songs to album
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinTable(name = "Requested_Songs_For_Album",
-		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<RequestedSong> songs;
 	
 	private String comments;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
-	private ArtistUser user;
+	@OneToOne
+    @JoinColumn(name = "requested_artist_id")
+	private ArtistUser requester;
 	
 	public RequestedAlbum() {
 		this.dateCreated = new Date();
@@ -90,7 +88,7 @@ public class RequestedAlbum {
 		this.genres = genres;
 		this.songs = songs;
 		this.comments = comments;
-		this.user = user;
+		this.requester = user;
 		this.dateCreated = new Date();
 	}
 
@@ -166,12 +164,18 @@ public class RequestedAlbum {
 		this.comments = comments;
 	}
 
-	public ArtistUser getUser() {
-		return user;
+	public ArtistUser getRequester() {
+		return requester;
 	}
 
-	public void setUser(ArtistUser user) {
-		this.user = user;
+	public void setRequester(ArtistUser user) {
+		this.requester = user;
+		
+		if(songs != null) {
+			for (RequestedSong song : songs) {
+				song.setRequester(user);
+			}
+		}
 	}
 
 	public Artist getPrimaryArtist() {
@@ -180,6 +184,24 @@ public class RequestedAlbum {
 
 	public void setPrimaryArtist(Artist primaryArtist) {
 		this.primaryArtist = primaryArtist;
+		
+		if(songs != null) {
+			for (RequestedSong song : songs) {
+				song.setArtist(primaryArtist);
+			}
+		}
+	}
+	
+	public void setArtistRequester(ArtistUser user) {
+		this.requester = user;
+		this.primaryArtist = user.getArtist();
+		
+		if(songs != null) {
+			for (RequestedSong song : songs) {
+				song.setRequester(user);
+				song.setArtist(user.getArtist());
+			}
+		}
 	}
 
 	public String getArtwork() {

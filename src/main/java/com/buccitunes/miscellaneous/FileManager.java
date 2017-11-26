@@ -7,6 +7,7 @@ import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.Base64;
 
 import javax.imageio.ImageIO;
@@ -40,14 +41,14 @@ public class FileManager {
 		}
 	}
 	
-	public static void createDirectory(Path parentPath, Path path, int id) throws IOException {
+	public static void createDirectory(Path parentPath, int id) throws IOException {
 		if(Files.notExists(parentPath)) {
 			setUpFileDirectory(parentPath);
 		}
 		
-		Path dir = Paths.get(path.toString() + "/" + id + "/");
-		if(Files.notExists(dir)) {
-			Files.createDirectory(dir);
+		Path path = Paths.get(parentPath.toString() + "/" + id + "/");
+		if(Files.notExists(path)) {
+			Files.createDirectory(path);
 		}
 	}
 	
@@ -66,7 +67,7 @@ public class FileManager {
         System.out.println(path);
         
         if(Files.notExists(path)) {
-        	createDirectory(ALBUMPATH, path, albumId);
+        	createDirectory(ALBUMPATH, albumId);
         }
         
         String strPath = saveImage(encodedStr, path);
@@ -83,7 +84,7 @@ public class FileManager {
 		Path newPath = Paths.get(ALBUMPATH + "/" + albumId +  "/" + ARTWORKIMAGE);
 		
 		if(Files.notExists(newPath)) {
-        	createDirectory(ALBUMPATH, newPath, albumId);
+        	createDirectory(ALBUMPATH, albumId);
         }
 		System.out.println("Moving From " + oldPath + " 	To 		" + newPath);
 		
@@ -96,7 +97,7 @@ public class FileManager {
         System.out.println(path);
         
         if(Files.notExists(path)) {
-        	createDirectory(ARTISTPATH, path, artistId);
+        	createDirectory(ARTISTPATH, artistId);
         }
         
         String strPath = saveImage(encodedStr, path);
@@ -108,7 +109,7 @@ public class FileManager {
         System.out.println(path);
         
         if(Files.notExists(path)) {
-        	createDirectory(PLAYLISTPATH, path, playlistId);
+        	createDirectory(PLAYLISTPATH, playlistId);
         }
         
         String strPath = saveImage(encodedStr, path);
@@ -120,7 +121,7 @@ public class FileManager {
         System.out.println(path);
         
         if(Files.notExists(path)) {
-        	createDirectory(REQUESTEDALBUMSPATH, path, requestedId);
+        	createDirectory(REQUESTEDALBUMSPATH, requestedId);
         }
         
         String strPath = saveImage(encodedStr, path);
@@ -152,7 +153,7 @@ public class FileManager {
 	}
 	
 	private static String moveFile(Path oldPath, Path newPath) throws IOException {
-		Files.move(oldPath, newPath);
+		Files.move(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
 		return getResourcePathString(newPath.toString());
 	}
 	

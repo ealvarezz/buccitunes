@@ -31,14 +31,14 @@ public class RequestedSong{
 	
 	private int duration;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "owner_id")
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Featured_Artist_Requested",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
+		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
 	private List<Artist> featuredArtists;
 	
 	private String audioPath;
@@ -49,8 +49,8 @@ public class RequestedSong{
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Song",
-		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
+		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 	private List<Genre> genres;
 	
 	private String picturePath;
@@ -65,13 +65,13 @@ public class RequestedSong{
 	
 	private Date dateCreated;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
+	@OneToOne
+    @JoinColumn(name = "requested_artist_id")
 	private ArtistUser requester;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lyric_id")
-	private Lyrics lyrics;
+	private RequestedLyrics lyrics;
 
 	public RequestedSong() {
 		this.dateCreated = new Date();
@@ -197,11 +197,11 @@ public class RequestedSong{
 		this.featuredArtists = featuredArtists;
 	}
 
-	public Lyrics getLyrics() {
+	public RequestedLyrics getLyrics() {
 		return lyrics;
 	}
 
-	public void setLyrics(Lyrics lyrics) {
+	public void setLyrics(RequestedLyrics lyrics) {
 		this.lyrics = lyrics;
 	}
 }
