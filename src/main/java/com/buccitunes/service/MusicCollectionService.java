@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +22,7 @@ import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
+import com.buccitunes.dao.GenreRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongPlaysRepository;
@@ -52,11 +53,12 @@ public class MusicCollectionService {
 	private final ArtistRepository artistRepository;
 	private final SongPlaysRepository songPlaysRepository;
 	private final UserRepository userRepository;
+	private final GenreRepository genreRepository;
 	private final ArtistUserRepository artistUserRepository;
 	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, SongPlaysRepository songPlaysRepository,
-			UserRepository userRepository, ArtistUserRepository artistUserRepository) {
+			UserRepository userRepository, ArtistUserRepository artistUserRepository, GenreRepository genreRepository) {
 		this.albumRepository = albumRepository;
 		this.playlistRepository = playlistRepository;
 		this.songRepository = songRepository;
@@ -64,6 +66,7 @@ public class MusicCollectionService {
 		this.songPlaysRepository = songPlaysRepository;
 		this.userRepository = userRepository;
 		this.artistUserRepository = artistUserRepository;
+		this.genreRepository = genreRepository;
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
@@ -234,19 +237,38 @@ public class MusicCollectionService {
 		return album;
 	}
 	
-	public int populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums, int rem) {
+	public List<Album> getFeaturedAlbums(String userEmail) {
+		
+		int additionalAlbumsNum = 0;
+		List<Genre> topGenres = genreRepository.topGenresForCurrentUser(userEmail);
+		List<Album> returnAlbums = new ArrayList<>();
+		additionalAlbumsNum = populateFeaturedAlbums(Tier.NITRO_DUBS_TIER, topGenres, returnAlbums, additionalAlbumsNum);
+		additionalAlbumsNum = populateFeaturedAlbums(Tier.TREX_TIER, topGenres, returnAlbums, additionalAlbumsNum);
+		additionalAlbumsNum = populateFeaturedAlbums(Tier.MOONMAN_TIER, topGenres, returnAlbums, additionalAlbumsNum);
+		Collections.shuffle(returnAlbums);
+		return returnAlbums;
+	}
+	
+	private int populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums, int rem) {
+		
+		//System.out.println(BucciConstants.Admin.MOONMAN_MAX);
 		
 		int populateAmount = 0;
 		switch(tier){
-			case MOONMAN_TIER: 		populateAmount = BucciConstants.Admin.MOONMAN_MAX; break;
-			case TREX_TIER: 			populateAmount = BucciConstants.Admin.TREX_MAX; break;
-			case NITRO_DUBS_TIER: 	populateAmount = BucciConstants.Admin.NITRODUBS_MAX; break;
+			case MOONMAN_TIER: 		populateAmount = 4; break;
+			case TREX_TIER: 			populateAmount = 9; break;
+			case NITRO_DUBS_TIER: 	populateAmount = 17; break;
 			default: break;
 		}
-		
+		populateAmount += rem;
 		for(Genre genre: genres) {
 			
-			
+			//System.out.println("Calling prodecure with tier " + tier.getCode() + " genre " + genre.getId() + " and limit " + populateAmount);
+			List<Album> current = albumRepository.albumsByGenreAndTierness(tier.getCode(), genre.getId(), populateAmount);
+			//System.out.println(current.size());
+			//current.forEach(album -> System.out.println("Name: " + album.getTitle() + "\nId: " + album.getId()));
+			albums.addAll(current);
+			populateAmount -= current.size();
 			if(populateAmount == 0) break;
 		}
 		

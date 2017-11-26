@@ -13,6 +13,7 @@ import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.Tier;
 import com.buccitunes.resultset.AlbumWithStats;
 
 @Transactional
@@ -21,6 +22,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	public Album findByPrimaryArtist_Name(String name);
 	
 	public Album findBySongs(Song song);
+	
+	@Query(value="CALL get_albums_by_tier_genre(:tiercode, :genre_id, :limit);", nativeQuery = true)
+	public List<Album> albumsByGenreAndTierness(@Param("tiercode") int tiercode, @Param("genre_id") int genre_id, @Param("limit") int limit);
 	
 	@Query(value=""
 			+ "select * FROM music_collection m "

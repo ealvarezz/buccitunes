@@ -183,6 +183,12 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse("Switched tier");
 	}
 	
+	@RequestMapping(value="get_featured_albums", method = RequestMethod.GET)
+	public @ResponseBody List<Album> getFeaturedAlbums(@RequestParam String email) {
+		
+		return musicCollectionService.getFeaturedAlbums(email);
+	}
+	
 	@Scheduled(fixedRate=60000)
 	@CacheEvict(allEntries=true, cacheNames={"popularityCache"})
 	public void clearPopularCache(){}
