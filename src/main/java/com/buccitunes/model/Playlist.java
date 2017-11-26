@@ -17,6 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 public class Playlist extends MusicCollection {
 	
 	private boolean isCollaborative;
+	
 	private boolean isPublic;
 	
 	@ManyToOne

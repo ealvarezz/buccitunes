@@ -41,10 +41,9 @@ public class Album extends MusicCollection {
 	
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
 	private Date releaseDate;
-	private String label;
 	
+	private String label;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "genre_album",

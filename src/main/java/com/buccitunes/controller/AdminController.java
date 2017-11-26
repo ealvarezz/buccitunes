@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciResponse;
@@ -24,51 +25,53 @@ import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.service.AdminService;
 
 
-@Controller
+@RestController
 public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
 	
-	@RequestMapping(value="addArtist", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<Artist> addArtist(@RequestBody Artist artist, HttpSession session) throws BucciException {
+	@RequestMapping(value="add_artist", method = RequestMethod.POST)
+	public BucciResponse<Artist> addArtist(@RequestBody Artist artist, HttpSession session) throws BucciException {
 		Artist newArtist = adminService.addNewArtist(artist);
 		return BucciResponseBuilder.successfulResponseMessage("New Artist Added", newArtist);
 	}
 	
-	@RequestMapping(value="approveArtist", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<ArtistUser> approveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
-		ArtistUser artist;
-		
+	@RequestMapping(value="approve_artist", method = RequestMethod.POST)
+	public BucciResponse<ArtistUser> approveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
 		try {
-			artist = adminService.adminApproveArtist(requested);
+			ArtistUser artist = adminService.adminApproveArtist(requested);
+			return BucciResponseBuilder.successfulResponseMessage("New Artist Added", artist);
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
-		return BucciResponseBuilder.successfulResponseMessage("New Artist Added", artist);
 	}
 	
-	@RequestMapping(value="approveAlbum", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<Album> approveAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
-		Album album;
-		
+	@RequestMapping(value="approve_album", method = RequestMethod.POST)
+	public BucciResponse<Album> approveAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
 		try {
-			album = adminService.adminApproveAlbum(requested);
+			Album album = adminService.adminApproveAlbum(requested);
 			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
 	}
 	
-	@RequestMapping(value="getPlaySongsThisMonth", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<List<SongPlays>> getAllPlayedSongsThisMonth(@RequestParam int artist_id) {
+	@RequestMapping(value="get_playsongs_this_month", method = RequestMethod.GET)
+	public BucciResponse<List<SongPlays>> getAllPlayedSongsThisMonth(@RequestParam int artist_id) {		
 		List<SongPlays> plays = adminService.getSongPLays(artist_id);
 		return BucciResponseBuilder.successfulResponse(plays);
 	}
 	
-	@RequestMapping(value="payRoyalties", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<Double> payRoyaltiesToArtists() {
+	@RequestMapping(value="pay_royalties", method = RequestMethod.GET)
+	public BucciResponse<Double> payRoyaltiesToArtists() {
 		double totalPaid = adminService.payRoyalties();
 		return BucciResponseBuilder.successfulResponse(new Double(totalPaid));
+	}
+	
+	@RequestMapping(value="requestedalbums", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<RequestedAlbum>> getRequestedAlbums() {
+		List<RequestedAlbum> requested = adminService.getRequestedAlbums();
+		return BucciResponseBuilder.successfulResponse(requested);
 	}
 }

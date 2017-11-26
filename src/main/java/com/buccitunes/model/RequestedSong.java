@@ -14,6 +14,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="RequestedSong")
@@ -28,22 +29,21 @@ public class RequestedSong{
 	private int duration;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
+    @JoinColumn(name = "owner_id")
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Featured_Artist_Requested",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<Artist> featuredArtists;
 	
 	private String audioPath;
 	
 	@ManyToOne
-    @JoinColumn(name = "mime_id", insertable = false, updatable = false)
+    @JoinColumn(name = "mime_id")
 	private MimeType mimeType;
 	
-	//@JsonIgnore Causing issue with saving into song
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Song",
 		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"),
@@ -55,6 +55,8 @@ public class RequestedSong{
 	private boolean isExplicit;	
 
 	private String comments;
+	
+	private String dateCreated;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)

@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="ARTIST")
 public class Artist {
@@ -30,11 +31,12 @@ public class Artist {
 	
 	@Column(columnDefinition = "VARCHAR(5000)")
 	private String biography;
-	
-	// This won't be stored into database we will just read it from requests and store it into file system
-	
+
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String avatar;
 	
+	String avatarPath;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "primaryArtist", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties(value = "primaryArtist")
@@ -167,5 +169,4 @@ public class Artist {
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
-	
 }

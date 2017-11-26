@@ -83,7 +83,7 @@ private final SongRepository songRepository;
 	}
 	
 	public ArtistUser saveArtistUser(ArtistUser artistUser) throws BucciException {
-		
+		artistUser.encryptPassword();
 		try{
 			String avatar = artistUser.getArtist().getAvatar();
 			artistUser.getArtist().setAvatar(null);
@@ -113,7 +113,19 @@ private final SongRepository songRepository;
 		
 	}
 	
-	public RequestedAlbum requestNewAlbum(RequestedAlbum album) {
-		return requestedAlbumRepository.save(album);
+	public RequestedAlbum requestNewAlbum(RequestedAlbum requested) throws BucciException {
+		String artwork = requested.getArtwork();
+		requested.setArtwork(null);
+		RequestedAlbum requestedAlbum = requestedAlbumRepository.save(requested);
+		
+		if(artwork != null) {
+			try {
+				String artworkPath = FileManager.saveRequestedAlbumAlias(artwork, requestedAlbum.getId());
+				requestedAlbum.setArtwork(artworkPath);
+			} catch (IOException e) {
+				throw new BucciException("UNABLE TO SAVE ARTWORK");
+			}
+		}
+		return requestedAlbum;
 	}
 }

@@ -41,18 +41,15 @@ public class UserService  {
 		List<User> result = new ArrayList<>();
 		for(User user: userRepository.findAll()) result.add(user);
 			
-
 		return result;
 	}
 	
 	public void save(User user) {
 		
-		
 		userRepository.save(user);
 	}
 	
 	public void remove(String email) {
-		
 		
 		userRepository.delete(email);
 	}
@@ -124,7 +121,7 @@ public class UserService  {
 		
 		user = signupInfo.userInfo;
 		
-		user.encryptAndSetPassword(signupInfo.userInfo.getPassword());
+		user.setPasswordAndEncrypt(signupInfo.userInfo.getPassword());
 		
 		if(signedForPremium) {
 			String invalidBillingInfo = signupInfo.billingInfo.checkInvalidInfo(); 

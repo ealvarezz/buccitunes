@@ -116,9 +116,9 @@ def get_albums(artist):
                 print e
                 print "Problem in album " + str(album)
                 continue
-        
+
         f = open('./bucci/artist/'+str(artist[0])+'.json', 'w+')
-        f.write(json.dumps({'artist': artistdict, 'email': str(songcounter)+"@fake.com"}, indent=4))
+        f.write(json.dumps({'artist': artistdict, 'email': str(songcounter)+"@fake.com", 'password': 'tmp'}, indent=4))
         f.close()
     except Exception as e:
         print "could not find albums for: " + artist
@@ -134,7 +134,7 @@ def get_info(artist):
         k = wikipedia.summary(artist)
         return k
 
-
+# month day year
 def get_wikipage(name, type_of_page, date=False):
     global release_reg
     global Months
