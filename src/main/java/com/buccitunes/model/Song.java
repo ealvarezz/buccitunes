@@ -14,7 +14,10 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="SONG")
 public class Song {
@@ -22,9 +25,13 @@ public class Song {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
+	
 	private String name;
+	
 	private int duration;
+	
 	private int rating;
+	
 	private boolean isExplicit; // change to explicit, rob kelly doesn't like verbs in variables
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -42,13 +49,18 @@ public class Song {
 	private MimeType mimeType;
 	
 	
-	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "genre_song",
 		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false),
 		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
+	
 	private String picturePath;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String picture;
+	
 	private String audioPath;
 	
 	@OneToOne(cascade = CascadeType.ALL)
@@ -163,6 +175,14 @@ public class Song {
 		return picturePath;
 	}
 	
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	public void setPicturePath(String picturePath) {
 		this.picturePath = picturePath;
 	}
@@ -182,8 +202,4 @@ public class Song {
 	public void setLyrics(Lyrics lyrics) {
 		this.lyrics = lyrics;
 	}
-	
-	
-	
-
 }

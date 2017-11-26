@@ -64,16 +64,6 @@ public class Artist {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "stats_id")
 	private StatCache stats;
-	
-	
-	
-	public String getAvatar() {
-		return avatar;
-	}
-
-	public void setAvatar(String avatar) {
-		this.avatar = avatar;
-	}
 
 	public Artist() {
 		this.stats = new StatCache();
@@ -169,4 +159,20 @@ public class Artist {
 	public void setBiography(String biography) {
 		this.biography = biography;
 	}
+	
+	public String getAvatar() {
+		return avatar;
+	}
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
+	}
+
+	public String getAvatarPath() {
+		return avatarPath;
+	}
+
+	public void setAvatarPath(String avatarPath) {
+		this.avatarPath = avatarPath;
+	}	
 }

@@ -14,6 +14,9 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 @Entity(name="RequestedAlbum")
@@ -42,7 +45,11 @@ public class RequestedAlbum {
 	
 	private String label;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String artwork;
+	
+	private String artworkPath;
 	
 	private Date dateCreated;
 	
@@ -65,7 +72,9 @@ public class RequestedAlbum {
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
 	private ArtistUser user;
 	
-	
+	public RequestedAlbum() {
+		this.dateCreated = new Date();
+	}
 	
 	public RequestedAlbum(int id, String title, Artist primaryArtist, List<Artist> featuredArtists, boolean isASingle,
 			Date releaseDate, String label, String artwork, List<Genre> genres, List<RequestedSong> songs,
@@ -180,8 +189,12 @@ public class RequestedAlbum {
 	public void setArtwork(String artwork) {
 		this.artwork = artwork;
 	}
-	
-	
-	
-	
+
+	public String getArtworkPath() {
+		return artworkPath;
+	}
+
+	public void setArtworkPath(String artworkPath) {
+		this.artworkPath = artworkPath;
+	}
 }

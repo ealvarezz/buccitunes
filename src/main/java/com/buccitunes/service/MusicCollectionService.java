@@ -6,7 +6,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -22,6 +22,7 @@ import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
+import com.buccitunes.dao.GenreRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongPlaysRepository;
@@ -52,11 +53,12 @@ public class MusicCollectionService {
 	private final ArtistRepository artistRepository;
 	private final SongPlaysRepository songPlaysRepository;
 	private final UserRepository userRepository;
+	private final GenreRepository genreRepository;
 	private final ArtistUserRepository artistUserRepository;
 	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, SongPlaysRepository songPlaysRepository,
-			UserRepository userRepository, ArtistUserRepository artistUserRepository) {
+			UserRepository userRepository, ArtistUserRepository artistUserRepository, GenreRepository genreRepository) {
 		this.albumRepository = albumRepository;
 		this.playlistRepository = playlistRepository;
 		this.songRepository = songRepository;
@@ -64,6 +66,7 @@ public class MusicCollectionService {
 		this.songPlaysRepository = songPlaysRepository;
 		this.userRepository = userRepository;
 		this.artistUserRepository = artistUserRepository;
+		this.genreRepository = genreRepository;
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
@@ -119,15 +122,14 @@ public class MusicCollectionService {
 		}
 		
 		String artwork = playlist.getArtwork();
-		playlist.setArtwork(null);
 		playlist.setSongs(playlistSongs);
 		playlist.setOwner(user);
 		Playlist newPlaylist = playlistRepository.save(playlist);
 		
 		if(artwork != null)  {
 			try {
-				artwork = FileManager.savePlaylistAlias(artwork, newPlaylist.getId());
-				newPlaylist.setArtwork(artwork);
+				String artworkPath = FileManager.savePlaylistArtwork(artwork, newPlaylist.getId());
+				newPlaylist.setArtworkPath(artworkPath);
 			} catch (IOException e) {
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
 			}
@@ -140,7 +142,7 @@ public class MusicCollectionService {
 			Artist albumOwner = artistRepository.findByName(album.getPrimaryArtist().getName());
 			album.setPrimaryArtist(albumOwner);
 			for(Song song: album.getSongs()) song.setOwner(albumOwner);
-			album.setArtwork(null);
+			
 			Album returnedAlbum = albumRepository.save(album);
 			
 			albumOwner.getAlbums().add(album); // suppose to add album by adding to artist's album list
@@ -148,12 +150,10 @@ public class MusicCollectionService {
 			
 			if(artworkString != null)  {
 				try {
-					
-					String artworkPath = FileManager.saveArtwork(artworkString, returnedAlbum.getId());
-					album.setArtwork(artworkPath);
-					
+					String artworkPath = FileManager.saveAlbumArtwork(artworkString, returnedAlbum.getId());
+					album.setArtworkPath(artworkPath);
 				} catch (IOException e) {
-					// TODO Auto-generated catch block
+					
 					throw new BucciException("UNABLE TO SAVE ALBUM");
 				}
 			}
@@ -234,7 +234,21 @@ public class MusicCollectionService {
 		return album;
 	}
 	
-	public int populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums, int rem) {
+	public List<Album> getFeaturedAlbums(String userEmail) {
+		
+		int additionalAlbumsNum = 0;
+		List<Genre> topGenres = genreRepository.topGenresForCurrentUser(userEmail);
+		List<Album> returnAlbums = new ArrayList<>();
+		additionalAlbumsNum = populateFeaturedAlbums(Tier.NITRO_DUBS_TIER, topGenres, returnAlbums, additionalAlbumsNum);
+		additionalAlbumsNum = populateFeaturedAlbums(Tier.TREX_TIER, topGenres, returnAlbums, additionalAlbumsNum);
+		additionalAlbumsNum = populateFeaturedAlbums(Tier.MOONMAN_TIER, topGenres, returnAlbums, additionalAlbumsNum);
+		Collections.shuffle(returnAlbums);
+		return returnAlbums;
+	}
+	
+	private int populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums, int rem) {
+		
+		//System.out.println(BucciConstants.Admin.MOONMAN_MAX);
 		
 		int populateAmount = 0;
 		switch(tier){
@@ -243,10 +257,15 @@ public class MusicCollectionService {
 			case NITRO_DUBS_TIER: 	populateAmount = BucciConstants.NITRODUBS_MAX; break;
 			default: break;
 		}
-		
+		populateAmount += rem;
 		for(Genre genre: genres) {
 			
-			
+			//System.out.println("Calling prodecure with tier " + tier.getCode() + " genre " + genre.getId() + " and limit " + populateAmount);
+			List<Album> current = albumRepository.albumsByGenreAndTierness(tier.getCode(), genre.getId(), populateAmount);
+			//System.out.println(current.size());
+			//current.forEach(album -> System.out.println("Name: " + album.getTitle() + "\nId: " + album.getId()));
+			albums.addAll(current);
+			populateAmount -= current.size();
 			if(populateAmount == 0) break;
 		}
 		

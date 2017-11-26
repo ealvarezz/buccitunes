@@ -75,10 +75,16 @@ public class ArtistController {
 	@RequestMapping(value="request_album", method = RequestMethod.POST)
 	public BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
 		if(loggedUser instanceof ArtistUser) {
 			RequestedAlbum newRequestedAlbum;
+			
 			try {
-				newRequestedAlbum = artistService.requestNewAlbum(requested);
+				newRequestedAlbum = artistService.requestNewAlbum(requested, ((ArtistUser) loggedUser));
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(e.getErrMessage());
 			}
