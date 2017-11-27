@@ -152,6 +152,7 @@ public class FileManager {
 	}
 	
 	private static String saveImage(String encodedStr, Path path) {
+		
 		byte[] decodedBytes = Base64.getMimeDecoder().decode(encodedStr);
 		 try{     		
 			 InputStream in = new ByteArrayInputStream(decodedBytes);

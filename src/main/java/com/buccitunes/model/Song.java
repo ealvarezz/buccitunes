@@ -15,7 +15,9 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(name="SONG")
 public class Song {
 	
@@ -27,8 +29,9 @@ public class Song {
 	private int rating;
 	private boolean isExplicit; // change to explicit, rob kelly doesn't like verbs in variables
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
+	@JsonIgnoreProperties(value = "albums")
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)

@@ -18,6 +18,7 @@ import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.SongPlays;
+import com.buccitunes.model.User;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;

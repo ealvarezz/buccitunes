@@ -9,22 +9,22 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 @Injectable()
 export class MusicService {
 
-    public audioChange = new BehaviorSubject<HTMLAudioElement>(new Audio());
-    public muteChange =  new BehaviorSubject<boolean>(false);
-    public pauseChange = new BehaviorSubject<boolean>(false);
-    public playingChange = new BehaviorSubject<boolean>(false);
-    public currTimeChange = new BehaviorSubject<number>(0);
-    public currSongChange = new BehaviorSubject<Song>(new Song());
-    public volumeChange = new BehaviorSubject<number>(100);
+    public audioChange      = new BehaviorSubject<HTMLAudioElement>(new Audio());
+    public muteChange       =  new BehaviorSubject<boolean>(false);
+    public pauseChange      = new BehaviorSubject<boolean>(false);
+    public playingChange    = new BehaviorSubject<boolean>(false);
+    public currTimeChange   = new BehaviorSubject<number>(0);
+    public currSongChange   = new BehaviorSubject<Song>(new Song());
+    public volumeChange     = new BehaviorSubject<number>(100);
 
 
-    get audio() : HTMLAudioElement { return this.audioChange.value;}
-    get muted() : boolean { return this.muteChange.value; }
-    get isPaused() : boolean { return this.pauseChange.value }
-    get isPlaying() : boolean {return this.playingChange.value }
-    get currTime() : number {return this.currTimeChange.value }
-    get currSong() : Song { return this.currSongChange.value }
-    get volume() : number { return this.volumeChange.value }
+    get audio()         : HTMLAudioElement { return this.audioChange.value;}
+    get muted()         : boolean { return this.muteChange.value; }
+    get isPaused()      : boolean { return this.pauseChange.value }
+    get isPlaying()     : boolean {return this.playingChange.value }
+    get currTime()      : number {return this.currTimeChange.value }
+    get currSong()      : Song { return this.currSongChange.value }
+    get volume()        : number { return this.volumeChange.value }
 
 
     constructor(){
@@ -43,7 +43,7 @@ export class MusicService {
             this.audio.play();
         }
         else{
-            this.audio.src = this.currSong.song_file;
+            this.audio.src = this.currSong.audioPath;
             this.audio.load();
             this.audio.play();
         }

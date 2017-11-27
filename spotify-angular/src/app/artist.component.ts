@@ -1,19 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-
+import { Component, OnInit, Inject } from '@angular/core';
+import { environment } from '../environments/environment';
 import {Song} from './objs/Song';
 import {Album} from './objs/Album';
 import {RequestedAlbum} from './objs/RequestedAlbum';
 import {Artist} from './objs/Artist';
-
-import {MdDialog, MdDialogRef} from '@angular/material';
+import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdChipInputEvent, ENTER} from '@angular/material';
-
 import {ArtistService} from './services/artist.service';
 import {MusicCollectionService} from './services/music.service';
-
 import { Observable } from 'rxjs/Rx';
-
+import {NotificationsService} from 'angular4-notifications';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -23,34 +20,39 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 })
 export class ArtistComponent implements OnInit {
 
-  artist : Artist;
-
-  songs : Song[] =  [new Song(), new Song(), new Song(), new Song(), new Song(), new Song() , new Song() , new Song() , new Song() , new Song()];
-  viewSongs : Song[] = this.songs.slice(0,5);
-  showAllSongs : boolean = false;
+  artist        : Artist;
+  songs         : Song[] =  [new Song(), new Song(), new Song(), new Song(), new Song(), new Song() , new Song() , new Song() , new Song() , new Song()];
+  viewSongs     : Song[] = this.songs.slice(0,5);
+  showAllSongs  : boolean = false;
   isEditModeBio : boolean = false;
 
-  constructor(public dialog: MdDialog, private artistService : ArtistService, private route: ActivatedRoute){}
+  constructor(public dialog: MdDialog, private artistService : ArtistService, private route: ActivatedRoute, private notificationService : NotificationsService){}
 
   ngOnInit(){
     this.route.params.subscribe(params => {
         this.getArtist(+params['id']);
     });
   }
-
   getArtist(id : number ){
    this.artistService.getArtist(id)
-            .subscribe(
-                (data) => {
+      .subscribe(
+          (data) => {
                     this.artist = data;
-                },
-                (err) => {
+                  },  
+          (err) => {
                     console.log(err.message);
                 });
   }
 
   addAlbum(){
-    let dialogRef = this.dialog.open(AddAlbumDialog);
+    let dialogRef = this.dialog.open(AddAlbumDialog,{data: {artist: this.artist}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.getArtist(this.artist.id)
+        this.notificationService.success("SUCCESS", "The album has been sucessfully added for the artist "+ this.artist.name);
+      }
+    });
   }
 
   toggleShow(showAllSongs){
@@ -68,24 +70,6 @@ export class ArtistComponent implements OnInit {
     this.isEditModeBio = !this.isEditModeBio;
   }
 
-  previewImage(event){
-    let fileList: FileList = event.target.files;
-    let file = fileList[0].name;
-
-    if(fileList.length > 0) {
-        let file = fileList[0];
-
-        let reader = new FileReader();
-
-        reader.onload = (e: any) => {
-            let file = e.target.result;
-        }
-
-        reader.readAsDataURL(fileList[0]);
-    }
-  }
-
-
 }
 
 @Component({
@@ -95,53 +79,62 @@ export class ArtistComponent implements OnInit {
 })
 export class AddAlbumDialog {
 
-  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>, private _formBuilder: FormBuilder, private musicService : MusicCollectionService) {
+  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>, @Inject(MD_DIALOG_DATA) public data: any,  private _formBuilder: FormBuilder, private musicService : MusicCollectionService) {
      }
 
-  infoFormGroup: FormGroup;
-  artworkFormGroup: FormGroup;
-  songsFormGroup : FormGroup;
-  months : string[] = ['January','Feburary','March','April','May','June','July','August','September','October','November','Decemeber']
+  infoFormGroup     : FormGroup;
+  artworkFormGroup  : FormGroup;
+  songsFormGroup    : FormGroup;
+  months            : string[] = ['January','Feburary','March','April','May','June','July','August','September','October','November','Decemeber']
+  currentAlbum      : RequestedAlbum;
+  artist            : Artist;
+  albumArtworkPath  : string = '';
+  releaseMonth      : string;
+  releaseDay        : number;
+  releaseYear       : number;
 
-  currentAlbum : Album = new Album();
 
-  songs : Song[] = [];
-  albumArtworkPath : string = '';
-  albumArtwork : any;
+  artworkError = {
+    status : false,
+    message : ''
+  }
 
+  mdChipOptions = {
+    visible     : true,
+    selectable  : true,
+    removable   : true,
+    addOnBlur   : true
+  }
 
-  visible: boolean = true;
-  selectable: boolean = true;
-  removable: boolean = true;
-  addOnBlur: boolean = true;
-    
-  releaseMonth: string;
-  releaseDay: number;
-  releaseYear: number;
 
   ngOnInit() {
-    this.currentAlbum.featuredArtists = ['R Kelly', 'Lil Jon', 'Lil B','Big Shaq'];
+    // this.currentAlbum.featuredArtist = ['R Kelly', 'Lil Jon', 'Lil B','Big Shaq'];
+    this.artist = this.data.artist;
+    this.currentAlbum = new RequestedAlbum();
+
     this.infoFormGroup = this._formBuilder.group({
       title: ['', Validators.required],
-      dayCtrl: ['', Validators.max(31)],
+      dayCtrl: ['', [Validators.max(31), Validators.min(1)]],
       yearCtrl:['',Validators.max((new Date()).getFullYear() + 1)]
     });
-    this.artworkFormGroup = this._formBuilder.group({
-    });
+
     this.songsFormGroup= this._formBuilder.group({
-      song_title: ['',Validators.required]
+      song_title: ['']
     });
+
+    this.artworkFormGroup = this._formBuilder.group({});
   }
 
   onNoClick(): void {
-    this.dialogRef.close();
+    this.dialogRef.close(false);
   }
 
-  addNewSong(){
+  addNewSong(): void{
     this.currentAlbum.songs.push(new Song());
+    this.currentAlbum.songs = this.currentAlbum.songs.slice();
   }
   
-  removeSong(song: Song){
+  removeSong(song: Song): void{
     let index = this.currentAlbum.songs.indexOf(song);
     if (index >= 0) {
       this.currentAlbum.songs.splice(index, 1);
@@ -154,7 +147,7 @@ export class AddAlbumDialog {
 
     // Add our person
     if ((value || '').trim()) {
-      this.currentAlbum.featuredArtists.push(value.trim());
+      // this.currentAlbum.featuredArtist.push(value.trim());
     }
     // Reset the input value
     if (input) {
@@ -164,27 +157,42 @@ export class AddAlbumDialog {
 
   previewImage(event){
     let fileList: FileList = event.target.files;
-    this.albumArtworkPath = fileList[0].name;
+    let file = fileList[0];
 
     if(fileList.length > 0) {
-        // this.currentAlbum.artwork = fileList[0];
 
         let reader = new FileReader();
 
         reader.onload = (e: any) => {
+          if(this.validateImage(file)){
             this.currentAlbum.artwork = e.target.result;
+            this.albumArtworkPath = file.name;
+          }
+          else{
+            this.artworkError.status = true;
+            this.artworkError.message = environment.EXCEED_FILE_LIMIT;
+          }   
         }
 
-        reader.readAsDataURL(fileList[0]);
+        reader.readAsDataURL(file);
     }
   }
 
-  remove(artist: any): void {
-    let index = this.currentAlbum.featuredArtists.indexOf(artist);
+  validateImage(image: File){
+      if(image.size > environment.IMAGE_SIZE_LIMIT){
+          return false;
+      }
+      else{
+        return true;
+      }
+  }
 
-    if (index >= 0) {
-      this.currentAlbum.featuredArtists.splice(index, 1);
-    }
+  remove(artist: any): void {
+    // let index = this.currentAlbum.featuredArtists.indexOf(artist);
+
+    // if (index >= 0) {
+    //   this.currentAlbum.featuredArtists.splice(index, 1);
+    // }
   }
 
   setDate(){
@@ -194,12 +202,13 @@ export class AddAlbumDialog {
   }
 
   submitAlbum(){
-
+    this.currentAlbum.primaryArtist = this.artist;
+    this.currentAlbum.artwork = this.currentAlbum.artwork.split(",")[1];
     this.musicService.addAlbum(this.currentAlbum)
             .subscribe(
                 (data) => {
                     console.log(data);
-                    this.dialogRef.close();
+                    this.dialogRef.close(true);
                 },
                 (err) => {
                     console.log(err.message);

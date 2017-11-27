@@ -91,6 +91,17 @@ public class MusicCollectionController {
 		} 
 	}
 	
+	@RequestMapping(value="test", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<User> test(HttpSession session) {
+		User sessionUser = (User) session.getAttribute("user");
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			return BucciResponseBuilder.successfulResponse(sessionUser);
+		}
+	}
+	
 	/*
 	@RequestMapping(value="addSongsToPlaylist", method = RequestMethod.POST)
 	public @ResponseBody Playlist getPlaylist(@RequestBody Playlist song) {
@@ -105,8 +116,8 @@ public class MusicCollectionController {
 	}
 	
 	@RequestMapping(value="album", method = RequestMethod.GET)
-	public @ResponseBody Album getAlbum(@RequestParam int id) {
-		return musicCollectionService.getAlbum(id);
+	public @ResponseBody BucciResponse<Album> getAlbum(@RequestParam int id) {
+		return BucciResponseBuilder.successfulResponse(musicCollectionService.getAlbum(id));
 	}
 	
 
