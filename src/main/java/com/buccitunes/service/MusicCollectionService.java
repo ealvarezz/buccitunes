@@ -125,7 +125,6 @@ public class MusicCollectionService {
 		}
 
 		String artwork = playlist.getArtwork();
-		playlist.setSongs(playlistSongs);
 		playlist.setOwner(user);
 		Playlist newPlaylist = playlistRepository.save(playlist);
 		
