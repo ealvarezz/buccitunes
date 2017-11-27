@@ -28,6 +28,8 @@ public class RequestedConcert {
 	
 	private String name;
 	
+	private boolean add;
+	
 	@ManyToOne
     @JoinColumn(name = "location_id", insertable = false, updatable = false)
 	private Location location;

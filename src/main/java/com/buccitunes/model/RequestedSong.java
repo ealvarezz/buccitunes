@@ -31,6 +31,12 @@ public class RequestedSong{
 	
 	private int duration;
 	
+	private boolean add;
+	
+	@ManyToOne
+    @JoinColumn(name = "album_id")
+	private Album album;
+	
 	@OneToOne
     @JoinColumn(name = "owner_id")
 	private Artist owner;

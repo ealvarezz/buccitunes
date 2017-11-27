@@ -25,6 +25,8 @@ public class RequestedArtist {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User requester;
+	
+	private boolean add;
 
 	public int getId() {
 		return id;

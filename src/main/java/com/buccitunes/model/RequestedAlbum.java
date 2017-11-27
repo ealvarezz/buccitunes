@@ -44,6 +44,8 @@ public class RequestedAlbum {
 	
 	private String label;
 	
+	private boolean add;
+	
 	@Transient
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String artwork;
