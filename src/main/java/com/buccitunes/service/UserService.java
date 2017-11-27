@@ -7,15 +7,21 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.BillingInfoRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PremiumUserRepository;
+import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.model.Album;
+import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.CreditCompany;
+import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
+import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
 
 @Service
@@ -23,17 +29,22 @@ import com.buccitunes.model.User;
 public class UserService  {
 	
 	private final UserRepository userRepository;
+	private final AlbumRepository albumRepository;
+	private final SongRepository songRepository;
 	private final PremiumUserRepository premiumUserRepository;
 	private final CreditCompanyRepository creditCompanyRepository;
 	private final BillingInfoRepository billingInfoRepository;
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
-			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository) {
+			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository, 
+			AlbumRepository albumRepository, SongRepository songRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
 		this.creditCompanyRepository = creditCompanyRepository;
 		this.billingInfoRepository = billingInfoRepository;
+		this.albumRepository = albumRepository;
+		this.songRepository = songRepository;
 	}
 	
 	public List<User> findAll(){
@@ -41,18 +52,15 @@ public class UserService  {
 		List<User> result = new ArrayList<>();
 		for(User user: userRepository.findAll()) result.add(user);
 			
-
 		return result;
 	}
 	
 	public void save(User user) {
 		
-		
 		userRepository.save(user);
 	}
 	
 	public void remove(String email) {
-		
 		
 		userRepository.delete(email);
 	}
@@ -124,7 +132,7 @@ public class UserService  {
 		
 		user = signupInfo.userInfo;
 		
-		user.encryptAndSetPassword(signupInfo.userInfo.getPassword());
+		user.setPasswordAndEncrypt(signupInfo.userInfo.getPassword());
 		
 		if(signedForPremium) {
 			String invalidBillingInfo = signupInfo.billingInfo.checkInvalidInfo(); 
@@ -174,5 +182,42 @@ public class UserService  {
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
 
 		return pUser;
+	}
+	
+	public List<Playlist> getFollowedPlaylist(String email){
+		
+		User user = userRepository.findOne(email);
+		user.getFollowingPlaylists().size();
+		return user.getFollowingPlaylists();
+	}
+	
+	public List<Artist> getFollowedArtist(String email){
+		
+		User user = userRepository.findOne(email);
+		user.getFollowingArtists().size();
+		return user.getFollowingArtists();
+	}
+	
+	public List<Album> getSavedAlbums(String email){
+		
+		User user = userRepository.findOne(email);
+		user.getSavedAlbums().size();
+		return user.getSavedAlbums();
+	}
+	
+	public void saveAlbum(int albumId, String email) {
+		
+		User user = userRepository.findOne(email);
+		Album album = albumRepository.findOne(albumId);
+		user.getSavedAlbums().add(album);
+		
+	}
+	
+	public void saveSong(int songId, String email) {
+		
+		User user = userRepository.findOne(email);
+		Song song = songRepository.findOne(songId);
+		user.getSavedSongs().add(song);
+		
 	}
 }

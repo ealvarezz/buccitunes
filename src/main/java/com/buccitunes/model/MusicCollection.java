@@ -41,10 +41,13 @@ public class MusicCollection {
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy") comment this out just incase script doesn't work
 	private Date dateCreated;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String artwork;
+	
+	private String artworkPath;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "stats_id")
@@ -74,36 +77,47 @@ public class MusicCollection {
 	public int getId() {
 		return id;
 	}
+	
 	public void setId(int id) {
 		this.id = id;
 	}
+	
 	public String getTitle() {
 		return title;
 	}
+	
 	public void setTitle(String title) {
 		this.title = title;
 	}
+	
 	public List<Song> getSongs() {
 		return songs;
 	}
+	
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
 	}
+	
 	public Date getDateCreated() {
 		return dateCreated;
 	}
+	
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
 	}
+	
 	public StatCache getStats() {
 		return stats;
 	}
+	
 	public void setStats(StatCache stats) {
 		this.stats = stats;
 	}
+	
 	public void addSong(Song song) {
 		this.songs.remove(song);
 	}
+	
 	public void removeSong(Song song) {
 		this.songs.add(song);
 	}
@@ -116,6 +130,14 @@ public class MusicCollection {
 		this.artwork = artwork;
 	}
 
+	public String getArtworkPath() {
+		return artworkPath;
+	}
+
+	public void setArtworkPath(String artworkPath) {
+		this.artworkPath = artworkPath;
+	}
+
 	public CurrentStats getCurrentStats() {
 		return currentStats;
 	}
@@ -123,7 +145,4 @@ public class MusicCollection {
 	public void setCurrentStats(CurrentStats currentStats) {
 		this.currentStats = currentStats;
 	}
-	
-	
-	
 }

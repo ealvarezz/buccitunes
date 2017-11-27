@@ -1,5 +1,6 @@
 package com.buccitunes.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -13,8 +14,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="RequestedSong")
 public class RequestedSong{
@@ -27,45 +31,76 @@ public class RequestedSong{
 	
 	private int duration;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "owner_id", insertable = false, updatable = false)
+	@OneToOne
+    @JoinColumn(name = "owner_id")
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Featured_Artist_Requested",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
 	private List<Artist> featuredArtists;
 	
 	private String audioPath;
 	
 	@ManyToOne
-    @JoinColumn(name = "mime_id", insertable = false, updatable = false)
+    @JoinColumn(name = "mime_id")
 	private MimeType mimeType;
 	
-	//@JsonIgnore Causing issue with saving into song
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Song",
-		joinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
+		joinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 	private List<Genre> genres;
 	
 	private String picturePath;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String picture;
 	
 	private boolean isExplicit;	
 
 	private String comments;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
+	private Date dateCreated;
+	
+	@OneToOne
+    @JoinColumn(name = "requested_artist_id")
 	private ArtistUser requester;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "lyric_id")
-	private Lyrics lyrics;
+	private RequestedLyrics lyrics;
 
-	public RequestedSong() {}
+	public RequestedSong() {
+		this.dateCreated = new Date();
+	}
 	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Artist getOwner() {
+		return owner;
+	}
+
+	public void setOwner(Artist owner) {
+		this.owner = owner;
+	}
+
+	public String getPicture() {
+		return picture;
+	}
+
+	public void setPicture(String picture) {
+		this.picture = picture;
+	}
+
 	public String getName() {
 		return name;
 	}
@@ -162,11 +197,11 @@ public class RequestedSong{
 		this.featuredArtists = featuredArtists;
 	}
 
-	public Lyrics getLyrics() {
+	public RequestedLyrics getLyrics() {
 		return lyrics;
 	}
 
-	public void setLyrics(Lyrics lyrics) {
+	public void setLyrics(RequestedLyrics lyrics) {
 		this.lyrics = lyrics;
 	}
 }

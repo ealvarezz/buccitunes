@@ -13,15 +13,19 @@ import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Song;
 
 public interface SongRepository extends CrudRepository<Song, Integer>{
+
 	
-	@Query(value=""
+	/*
+	 * 	@Query(value=""
 			+ "select s.name, s.id, count(s.name) as song_count "
 			+ "from song_plays sp "
 			+ "join song s ON s.id = sp.song_id "
 			+ "where sp.date_played <= NOW() and sp.date_played >= CURDATE() - " + BucciConstants.TimeAgo.WEEK_AGO + " "
 			+ "group by s.name, s.id "
 			+ "\n#pageable\n ", nativeQuery = true)
-	public List<Song> topSongsOfTheWeek(Pageable page);
+	 */
+	//@Query(value="", nativeQuery = true)
+	//public List<Song> topSongsOfTheWeek(Pageable page);
 	
 	/*
 	@Query(value=""
@@ -33,7 +37,9 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 			+ "\n#pageable\n ", nativeQuery = true)
 	public List<Song> getTopSongsOfAllTimeByArtist(@Param("artistId") int artistId, Pageable page);
 	*/
-	@Query(value=""
+	
+	/*
+	 * 	@Query(value=""
 			+ "select s.*, " + QueryHelper.SELECT_PLAY_COUNTS
 			+ "from artist a "
 			+ "join song s on s.owner_id = a.id "
@@ -41,7 +47,10 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 			+ "where a.id = :artistId "
 			+ "group by s.id "
 			+ "\n#pageable\n ", nativeQuery = true)
-	public List<Song> getTopSongsOfArtist(@Param(QueryHelper.TIME_PARAM) String timeAgo, @Param("artistId") int artistId, Pageable page);
+	 */
+	
+	//@Query(value="", nativeQuery = true)
+	//public List<Song> getTopSongsOfArtist(@Param(QueryHelper.TIME_PARAM) String timeAgo, @Param("artistId") int artistId, Pageable page);
 	
 	
 	@Modifying

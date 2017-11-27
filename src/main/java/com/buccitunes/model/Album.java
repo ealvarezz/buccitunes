@@ -23,8 +23,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
-
-
 @Entity(name="Album")
 public class Album extends MusicCollection {
 	
@@ -43,10 +41,9 @@ public class Album extends MusicCollection {
 	
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
-	//@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "MM-dd-yyyy")
 	private Date releaseDate;
-	private String label;
 	
+	private String label;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "genre_album",
@@ -72,7 +69,6 @@ public class Album extends MusicCollection {
 		this.releaseDate = requested.getReleaseDate();
 		this.label = requested.getLabel();
 		this.genres = requested.getGenres();
-		
 		
 		List<Song> newSongs = new ArrayList<Song>();
 		List<RequestedSong> requestedSongs = requested.getSongs();

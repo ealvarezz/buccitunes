@@ -6,8 +6,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
-@Entity(name="Lyrics")
-public class Lyrics {
+@Entity(name="RequestedLyrics")
+public class RequestedLyrics {
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
@@ -15,9 +15,9 @@ public class Lyrics {
 	@Column(columnDefinition = "VARCHAR(7000)")
 	private String lyric;
 
-	public Lyrics() {}
+	public RequestedLyrics() {}
 	
-	public Lyrics(String lyric) {
+	public RequestedLyrics(String lyric) {
 		this.lyric = lyric;
 	}
 

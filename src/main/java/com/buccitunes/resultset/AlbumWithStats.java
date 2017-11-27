@@ -1,6 +1,6 @@
 package com.buccitunes.resultset;
 
-import com.buccitunes.miscellaneous.BucciConstants.Album;
+import com.buccitunes.model.Album;
 
 public class AlbumWithStats extends Album{
 	private int numPlays;

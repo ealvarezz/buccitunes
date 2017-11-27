@@ -13,6 +13,7 @@ import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.Tier;
 import com.buccitunes.resultset.AlbumWithStats;
 
 @Transactional
@@ -22,6 +23,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	
 	public Album findBySongs(Song song);
 	
+	@Query(value="CALL get_albums_by_tier_genre(:tiercode, :genre_id, :limit);", nativeQuery = true)
+	public List<Album> albumsByGenreAndTierness(@Param("tiercode") int tiercode, @Param("genre_id") int genre_id, @Param("limit") int limit);
+	
 	@Query(value=""
 			+ "select * FROM music_collection m "
 			+ "Join album a on a.id = m.id "
@@ -29,7 +33,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "\n#pageable\n", nativeQuery = true)
 	public List<Album> getNewReleasesOfMonth(Pageable page);
 	
-	@Query(value=""
+	
+	/*
+	 * 	@Query(value=""
 			+ "select a.*, m.*, " + QueryHelper.SELECT_PLAY_COUNTS
 			+ "from genre g "
 			+ "join genre_album ga ON ga.genre_id = g.id "
@@ -41,12 +47,15 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "where g.id = :genreId "
 			+ "group by a.id, m.title "
 			+ "\n#pageable\n ", nativeQuery = true)
-	public List<Album> topAlbumsByGenre(@Param("genreId") int genreId, @Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
+	 */
 	
 	
+	//@Query(value="Select * from Album", nativeQuery = true)
+	//public List<Album> topAlbumsByGenre(@Param("genreId") int genreId, @Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
 	
 	
-	@Query(value=""
+/*
+ * 	@Query(value=""
 			+ "select a.*, m.*, " + QueryHelper.SELECT_PLAY_COUNTS
 			+ "from album a "
 			+ "join music_collection m on m.id = a.id "
@@ -54,6 +63,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "join song s on s.id = ms.song_id "
 			+ QueryHelper.PLAY_COUNTS_BY_TIME_QUERY
 			+ "group by a.id, m.title "
-			+ "\n#pageable\n ", nativeQuery = true)
-	public List<Album> topAlbumsOfTheWeek(@Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
+			+ "\n#pageable\n ", nativeQuery = true)	
+ */
+	
+	//@Query(value="Select * from Album", nativeQuery = true)
+    //public List<Album> topAlbumsOfTheWeek(@Param(QueryHelper.TIME_PARAM) String timeAgo, Pageable page);
 }

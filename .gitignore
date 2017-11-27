@@ -16,5 +16,8 @@ bin/
 log/
 target/
 
-#
+#Properties
 ./src/main/resources/application.properties
+
+#SampleData Folder
+bucci-scraper/bucci/

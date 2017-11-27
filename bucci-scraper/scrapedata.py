@@ -7,11 +7,13 @@ from pylyrics_fixed import *
 import wikipedia
 
 
+
 file_extension_reg = re.compile(".*\.(\w+)$")
 release_reg = re.compile("eleased.*\s(\w+)\s(\d+),\s(\d+)")
 release_euro = re.compile("eleased.*\s(\d+)\s(\w+)\s(\d+)")
 NUM_ALBUMS = 3
 songcounter = 0
+
 Months = {
         "January": "01",
         "February": "02",
@@ -26,6 +28,7 @@ Months = {
         "November": "11",
         "December": "12",
         }
+
 Genres = {
         "HIPHOP": 1,
         "COUNTRY": 2,
@@ -47,6 +50,8 @@ Genres = {
         "WEEB": 18,
         "UK_RAP": 19
         }
+
+
 
 def create_data(artist_list):
     if not os.path.exists('./bucci'):
@@ -110,17 +115,13 @@ def get_albums(artist):
             except Exception as e:
                 print e
                 print "Problem in album " + str(album)
-                print "========================================"
                 continue
-        
+
         f = open('./bucci/artist/'+str(artist[0])+'.json', 'w+')
-        f.write(json.dumps({'artist': artistdict, 'email': str(songcounter)+"@fake.com"}, indent=4))
+        f.write(json.dumps({'artist': artistdict, 'email': str(songcounter)+"@fake.com", 'password': 'tmp'}, indent=4))
         f.close()
-        print "========================================"
     except Exception as e:
-        print e
         print "could not find albums for: " + artist
-        print "========================================"
 
 
 def get_info(artist):
@@ -133,7 +134,7 @@ def get_info(artist):
         k = wikipedia.summary(artist)
         return k
 
-#YYYY-MM-DD released on July 3, 2001
+# month day year
 def get_wikipage(name, type_of_page, date=False):
     global release_reg
     global Months
@@ -143,7 +144,6 @@ def get_wikipage(name, type_of_page, date=False):
         k = wikipedia.page(name + type_of_page)
     except:
         return (None,None)
-
 
     image = None
     if k.images:
@@ -172,6 +172,8 @@ def get_wikipage(name, type_of_page, date=False):
 
     
 
+#TODO leann gibbons
+
 # PROGRAM ARTIST SONG
 if __name__ == "__main__":
     f = open(os.devnull, 'w')
@@ -179,7 +181,6 @@ if __name__ == "__main__":
 
     artist_list = sys.stdin.read().split("\n")[:-1]
 
-    #TODO FIX GENRE ID
     artist_list = [(i.split(",")[0], {"name": i.split(",")[0]}, Genres[i.split(",")[1]]) for i in artist_list]
 
     try:
