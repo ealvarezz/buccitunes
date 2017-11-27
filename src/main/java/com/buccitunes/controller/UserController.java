@@ -225,6 +225,18 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="saved_songs", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Song>> getUserSavedSongs(HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Song> savedSongs = userService.getSavedSongs(sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse(savedSongs);	
+		}
+	}
+	
 	@RequestMapping(value="premium_upgrade", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<PremiumUser> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
 		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);

@@ -220,4 +220,11 @@ public class UserService  {
 		user.getSavedSongs().add(song);
 		
 	}
+	
+	public List<Song> getSavedSongs(String email) {
+		
+		User user = userRepository.findOne(email);
+		return user.getSavedSongs();
+		
+	}
 }
