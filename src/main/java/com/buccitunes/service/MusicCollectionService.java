@@ -112,17 +112,19 @@ public class MusicCollectionService {
 			throw new BucciException( "The user does not exist");
 		}
 		
-		List<Song> playlistSongs = new ArrayList<Song>(playlist.getSongs().size());
-		for (Song song : playlist.getSongs()) {
-			Song songToAdd = songRepository.findOne(song.getId());
-			if(songToAdd == null) {
-				throw new BucciException("The song '" + song.getName() + "' does not exist");
+		if(playlist.getSongs() !=null) {
+			List<Song> playlistSongs = new ArrayList<Song>(playlist.getSongs().size());
+			for (Song song : playlist.getSongs()) {
+				Song songToAdd = songRepository.findOne(song.getId());
+				if(songToAdd == null) {
+					throw new BucciException("The song '" + song.getName() + "' does not exist");
+				}
+				playlistSongs.add(songToAdd);
 			}
-			playlistSongs.add(songToAdd);
+			playlist.setSongs(playlistSongs);
 		}
-		
+
 		String artwork = playlist.getArtwork();
-		playlist.setSongs(playlistSongs);
 		playlist.setOwner(user);
 		Playlist newPlaylist = playlistRepository.save(playlist);
 		

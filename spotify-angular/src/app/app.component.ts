@@ -7,16 +7,11 @@ import {PlayerComponent} from './player.component'
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'app';
-  private audio: any;
-
-
-  playMusic(){
-    this.audio = new Audio();
-    this.audio.src = "../assets/sample.mp3";
-    this.audio.load();
-    this.audio.play();
-    this.audio.currentTime = 3;
+  
+  public options = {
+    position: ["bottom", "right"],
+    timeOut: 5000,
+    showProgressBar: true,
 
   }
 }

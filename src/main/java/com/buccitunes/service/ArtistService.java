@@ -24,6 +24,7 @@ import com.buccitunes.dao.SongRepository;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
@@ -67,6 +68,9 @@ private final RequestedSongRepository requestedSongRepository;
 		
 		if(artist != null) {
 			artist.getAlbums().size();
+			for(Album album : artist.getAlbums()) {
+				album.getSongs().size();
+			}
 			return artist;
 		} else {
 			throw new BucciException("Artist not found");

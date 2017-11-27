@@ -26,15 +26,16 @@ import {RequestTableComponent} from './request-table.component';
 import {DetailDialog} from './admin.component';
 import {AddAlbumDialog} from './artist.component'
 import {AuthenticationService} from './services/authentication.service'
-  import { DatePipe } from '@angular/common';
-  import {UserTableComponent} from './user-table.component';
+import { DatePipe } from '@angular/common';
+import {UserTableComponent} from './user-table.component';
 import { HttpModule } from '@angular/http';
 import {HttpClientModule} from '@angular/common/http';
 import { AuthGuard } from './services/AuthGuard';
 import {ArtistService} from './services/artist.service';
 import {MusicCollectionService} from './services/music.service';
-import {AddPlaylistDialog} from './sidebar.component';
+import {AddPlaylistDialog} from './add-playlist.component';
 import {DomSanitizer} from '@angular/platform-browser';
+import { SimpleNotificationsModule } from 'angular4-notifications';
 
 
 const appRoutes: Routes = [
@@ -107,6 +108,7 @@ const appRoutes: Routes = [
     MdCheckboxModule,
     MdChipsModule,
     HttpClientModule,
+    SimpleNotificationsModule.forRoot()
   ],
   providers: [
     MusicService,

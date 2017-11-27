@@ -7,11 +7,11 @@ export class RequestedAlbum{
     primaryArtist  : Artist;
     featuredArtist : Artist[];
     isASingle      : boolean;
-    releaseDate    : Date;
+    releaseDate    : Date = new Date();
     label          : string;
     artwork        : string;
     genres         : string[];
-    songs          : Song[];
+    songs          : Song[] = [];
     dateCreated    : Date;
     comments       : string;
 }
