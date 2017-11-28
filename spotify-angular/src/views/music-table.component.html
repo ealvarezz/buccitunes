@@ -19,7 +19,10 @@
 
     <ng-container mdColumnDef="add">
       <md-header-cell *mdHeaderCellDef>  </md-header-cell>
-      <md-cell *mdCellDef="let row"> <button mdTooltip="Add to Library"  mdTooltipShowDelay="800" md-icon-button> <i class="material-icons" >add</i> </button>  </md-cell>
+      <md-cell *mdCellDef="let row"> 
+        <button *ngIf="!row.saved" (click)= "addSongToLibrary(row)"mdTooltip="Add to Library"  mdTooltipShowDelay="800" md-icon-button> <i class="material-icons" >add</i> </button>
+        <button *ngIf="row.saved" mdTooltip="Add to Library"  mdTooltipShowDelay="800" md-icon-button> <i class="material-icons" >check</i> </button>  
+      </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="artist">

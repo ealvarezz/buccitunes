@@ -14,7 +14,7 @@ export class MiniAlbumComponent implements OnInit {
   file_path : string = "http://localhost:8080"
 
   ngOnInit(){
-      this.albumArtworkUrl = this.file_path + this.album.artwork;
+      this.albumArtworkUrl = this.file_path + this.album.artworkPath;
   }
 
 

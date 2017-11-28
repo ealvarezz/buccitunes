@@ -1,7 +1,7 @@
 <div style="height:250px;">
 <div class="albumPic">
     <!-- <image src="../assets/coloring_book.png"> </image> -->
-    <image style="max-height: 220px; max-width:220px;"[src]="albumArtworkUrl"></image>
+    <image style="max-height: 220px; max-width:220px;"[src]="albumArtworkUrl" [route]="'/album/'+album.id"></image>
 </div>
     <div class="albumInfo">
         <div *ngIf="album.releaseDate != null"><p>{{album.releaseDate | date:'y'}}</p></div>

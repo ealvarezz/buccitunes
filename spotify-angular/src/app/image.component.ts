@@ -8,6 +8,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ImageComponent{
  @Input() src : String;
+ @Input() route : String;
  showOverlay : boolean = false;
 
  toggleOverlay(){

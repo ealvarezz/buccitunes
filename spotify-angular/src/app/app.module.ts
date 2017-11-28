@@ -36,7 +36,8 @@ import {MusicCollectionService} from './services/music.service';
 import {AddPlaylistDialog} from './add-playlist.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import { SimpleNotificationsModule } from 'angular4-notifications';
-
+import {SongLibrary} from './song-library.component'
+import {AlbumLibrary} from './saved-albums.component';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, 
@@ -45,7 +46,9 @@ const appRoutes: Routes = [
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist', component: PlaylistComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
-          {path: 'admin',component:AdminComponent, canActivate: [AuthGuard]}
+          {path: 'admin',component:AdminComponent, canActivate: [AuthGuard]},
+          {path: 'library', component: SongLibrary, canActivate: [AuthGuard]},
+          {path: 'album-library', component: AlbumLibrary, canActivate: [AuthGuard]}
         ] 
   },
   {path: 'login', component: LoginComponent},
@@ -74,6 +77,8 @@ const appRoutes: Routes = [
     DetailDialog,
     AddAlbumDialog,
     AddPlaylistDialog,
+    SongLibrary,
+    AlbumLibrary,
     UserTableComponent
   ],
   imports: [
