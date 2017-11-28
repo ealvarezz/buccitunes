@@ -25,18 +25,7 @@ public class RequestedArtist {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User requester;
-	
-	private boolean adding;
-	
-	
 
-	public boolean getAdding() {
-		return adding;
-	}
-
-	public void setAdding(boolean adding) {
-		this.adding = adding;
-	}
 
 	public int getId() {
 		return id;

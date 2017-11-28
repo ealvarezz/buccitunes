@@ -51,16 +51,7 @@ public class RequestedConcert {
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
 	private ArtistUser requester;
 	
-	private boolean adding;
 	
-	
-	
-	public boolean getAdding() {
-		return adding;
-	}
-	public void setAdding(boolean adding) {
-		this.adding = adding;
-	}
 	public int getId() {
 		return id;
 	}

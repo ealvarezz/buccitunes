@@ -40,8 +40,6 @@ public class RequestedAlbum {
 	
 	private boolean isASingle;
 	
-	private boolean adding;
-	
 	private Date releaseDate;
 	
 	private String label;
@@ -92,15 +90,6 @@ public class RequestedAlbum {
 		this.comments = comments;
 		this.requester = user;
 		this.dateCreated = new Date();
-	}
-
-
-	public boolean getAdding() {
-		return adding;
-	}
-
-	public void setAdding(boolean adding) {
-		this.adding = adding;
 	}
 
 	public Date getDateCreated() {
