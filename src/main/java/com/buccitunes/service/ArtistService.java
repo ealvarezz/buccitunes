@@ -157,6 +157,11 @@ private final RequestedSongRepository requestedSongRepository;
 		album.getSongs().remove(song);
 	}
 	
+	public void deleteAlbum(int albumId){
+		
+		albumRepository.delete(albumId);
+		
+	}
 	
 	
 }
