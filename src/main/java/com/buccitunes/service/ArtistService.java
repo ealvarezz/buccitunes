@@ -143,5 +143,25 @@ private final RequestedSongRepository requestedSongRepository;
 		return requestedAlbum;
 	}
 	
+	public void addSongToAlbum(RequestedSong requestedSong){
+		
+		requestedSongRepository.save(requestedSong);
+	}
+	
+	public void deleteSongFromAlbum(int songId, int albumId) {
+		
+		Album album = albumRepository.findOne(albumId);
+		Song song = songRepository.findOne(songId);
+		songRepository.delete(songId);
+		
+		album.getSongs().remove(song);
+	}
+	
+	public void deleteAlbum(int albumId){
+		
+		albumRepository.delete(albumId);
+		
+	}
+	
 	
 }

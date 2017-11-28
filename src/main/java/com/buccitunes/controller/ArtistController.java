@@ -25,6 +25,7 @@ import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
 import com.buccitunes.service.ArtistService;
@@ -97,4 +98,63 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
 		}
 	}
+	
+	@RequestMapping(value="request_song", method = RequestMethod.POST)
+	public BucciResponse<String> requestSongToAlbum(@RequestBody RequestedSong requested, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(loggedUser instanceof ArtistUser) {
+			
+			artistService.addSongToAlbum(requested);
+			
+			return BucciResponseBuilder.successfulResponse("Song request was submitted");
+		} else {
+			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+		}
+	}
+	
+	@RequestMapping(value="delete_album", method = RequestMethod.DELETE)
+	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(loggedUser instanceof ArtistUser) {
+			
+			artistService.deleteAlbum(albumId);
+			
+			return BucciResponseBuilder.successfulResponse("Song request was submitted");
+		} else {
+			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+		}
+	}
+	
+	@RequestMapping(value="delete_song_album", method = RequestMethod.DELETE)
+	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, @RequestParam int songId, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(loggedUser instanceof ArtistUser) {
+			
+			artistService.deleteSongFromAlbum(songId, albumId);
+			
+			return BucciResponseBuilder.successfulResponse("Song request was submitted");
+		} else {
+			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+		}
+	}
+	
+	
 }
