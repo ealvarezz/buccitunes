@@ -28,8 +28,6 @@ public class RequestedConcert {
 	
 	private String name;
 	
-	private boolean add;
-	
 	@ManyToOne
     @JoinColumn(name = "location_id", insertable = false, updatable = false)
 	private Location location;
@@ -53,8 +51,16 @@ public class RequestedConcert {
     @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
 	private ArtistUser requester;
 	
+	private boolean adding;
 	
 	
+	
+	public boolean getAdding() {
+		return adding;
+	}
+	public void setAdding(boolean adding) {
+		this.adding = adding;
+	}
 	public int getId() {
 		return id;
 	}

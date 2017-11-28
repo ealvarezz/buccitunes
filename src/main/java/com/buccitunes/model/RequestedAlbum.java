@@ -40,11 +40,11 @@ public class RequestedAlbum {
 	
 	private boolean isASingle;
 	
+	private boolean adding;
+	
 	private Date releaseDate;
 	
 	private String label;
-	
-	private boolean add;
 	
 	@Transient
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -94,6 +94,23 @@ public class RequestedAlbum {
 		this.dateCreated = new Date();
 	}
 
+
+	public boolean getAdding() {
+		return adding;
+	}
+
+	public void setAdding(boolean adding) {
+		this.adding = adding;
+	}
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -118,11 +135,11 @@ public class RequestedAlbum {
 		this.featuredArtists = featuredArtists;
 	}
 
-	public boolean isASingle() {
+	public boolean getIsASingle() {
 		return isASingle;
 	}
 
-	public void setASingle(boolean isASingle) {
+	public void setIsASingle(boolean isASingle) {
 		this.isASingle = isASingle;
 	}
 
