@@ -250,8 +250,6 @@ public class MusicCollectionService {
 	
 	private int populateFeaturedAlbums(Tier tier, List<Genre> genres, List<Album> albums, int rem) {
 		
-		//System.out.println(BucciConstants.Admin.MOONMAN_MAX);
-		
 		int populateAmount = 0;
 		switch(tier){
 			case MOONMAN_TIER: 		populateAmount = BucciConstants.MOONMAN_MAX; break;
@@ -262,10 +260,7 @@ public class MusicCollectionService {
 		populateAmount += rem;
 		for(Genre genre: genres) {
 			
-			//System.out.println("Calling prodecure with tier " + tier.getCode() + " genre " + genre.getId() + " and limit " + populateAmount);
 			List<Album> current = albumRepository.albumsByGenreAndTierness(tier.getCode(), genre.getId(), populateAmount);
-			//System.out.println(current.size());
-			//current.forEach(album -> System.out.println("Name: " + album.getTitle() + "\nId: " + album.getId()));
 			albums.addAll(current);
 			populateAmount -= current.size();
 			if(populateAmount == 0) break;
