@@ -92,6 +92,24 @@ public class FileManager {
 		return strPath;
 	}
 	
+	public static String moveRequestedArtworkToSong(int requestedId, int songId) throws BucciException, IOException {
+		Path oldPath = Paths.get(REQUESTEDSONGSMPATH + "/" + requestedId +  "/" + ARTWORKIMAGE);
+		
+		if(Files.notExists(oldPath)) {
+        	throw new BucciException("'"+ oldPath + "' does not exist");
+        }
+		
+		Path newPath = Paths.get(SONGPATH + "/" + songId +  "/" + ARTWORKIMAGE);
+		
+		if(Files.notExists(newPath)) {
+        	createDirectory(SONGPATH, songId);
+        }
+		System.out.println("Moving From " + oldPath + " 	To 		" + newPath);
+		
+		String strPath = moveFile(oldPath, newPath);
+		return strPath;
+	}
+	
 	public static String saveArtistAvatar(String encodedStr, int artistId) throws IOException {
         Path path = Paths.get(ARTISTPATH + "/" + artistId +  "/" + AVATARIMAGE);
         System.out.println(path);
@@ -172,6 +190,15 @@ public class FileManager {
 				Files.delete(path);
 				song.setPicturePath(null);
 			}
+		}
+	}
+	
+	public static void removeRequestedSongResources(RequestedSong song) throws IOException {
+	 	int id = song.getId();
+		Path path = Paths.get(REQUESTEDSONGSMPATH + "/" + id +  "/");
+		if(Files.exists(path)) {
+			Files.delete(path);
+			song.setPicturePath(null);
 		}
 	}
 	
