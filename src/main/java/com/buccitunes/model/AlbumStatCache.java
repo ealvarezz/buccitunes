@@ -12,6 +12,13 @@ public class AlbumStatCache extends StatCache{
 
 	public AlbumStatCache() {}
 	
+	
+	
+	public AlbumStatCache(int totalPlays, int monthlyPlays, double totalRevenue, double monthlyRevenue, int rank, Album album) {
+		super(totalPlays, monthlyPlays, totalRevenue, monthlyRevenue, rank);
+		this.album = album;
+	}
+
 	public Album getAlbum() {
 		return album;
 	}

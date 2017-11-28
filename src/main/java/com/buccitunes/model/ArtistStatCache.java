@@ -11,6 +11,11 @@ public class ArtistStatCache extends StatCache{
 	
 	public ArtistStatCache() {}
 	
+	public ArtistStatCache(int totalPlays, int monthlyPlays, double totalRevenue, double monthlyRevenue, int rank, Artist artist) {
+		super(totalPlays, monthlyPlays, totalRevenue, monthlyRevenue, rank);
+		this.artist = artist;
+	}
+	
 	public Artist getArtist() {
 		return artist;
 	}

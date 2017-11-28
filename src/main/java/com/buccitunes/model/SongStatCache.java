@@ -12,6 +12,13 @@ public class SongStatCache extends StatCache{
 	
 	public SongStatCache() {}
 	
+	public SongStatCache(int totalPlays, int monthlyPlays, double totalRevenue, double monthlyRevenue, int rank, Song song) {
+		super(totalPlays, monthlyPlays, totalRevenue, monthlyRevenue, rank);
+		this.song = song;
+	}
+
+
+
 	public Song getSong() {
 		return song;
 	}

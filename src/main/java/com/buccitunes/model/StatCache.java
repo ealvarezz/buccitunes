@@ -22,6 +22,15 @@ public class StatCache {
 	
 	public StatCache() {}
 	
+	public StatCache(int totalPlays, int monthlyPlays, double totalRevenue, double monthlyRevenue, int rank) {
+		super();
+		this.totalPlays = totalPlays;
+		this.monthlyPlays = monthlyPlays;
+		this.totalRevenue = totalRevenue;
+		this.monthlyRevenue = monthlyRevenue;
+		this.rank = rank;
+	}
+
 	public int getTotalPlays() {
 		return totalPlays;
 	}

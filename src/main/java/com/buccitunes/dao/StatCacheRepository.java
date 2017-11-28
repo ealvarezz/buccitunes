@@ -1,8 +1,11 @@
 package com.buccitunes.dao;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.repository.CrudRepository;
 import com.buccitunes.model.StatCache;
 
-public interface StatCacheRepository extends CrudRepository<StatCache, Integer> {
+@Transactional
+public interface StatCacheRepository extends BaseStatCacheRepository<StatCache>, CrudRepository<StatCache, Integer> {
 
 }
