@@ -21,6 +21,8 @@ import com.buccitunes.model.PaymentType;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.RequestedSong;
+import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
 import com.buccitunes.model.SongPlays;
 
@@ -132,7 +134,6 @@ public class AdminService {
 			}
 		}
 		
-		
 		System.out.println("\n=====\nREADY TO SAVE ?\n=====\n");
 		 
 		Album album = albumRepository.save(new Album(requestedAlbum));
@@ -142,19 +143,53 @@ public class AdminService {
 				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getId(), album.getId());
 				album.setArtworkPath(artworkPath);
 			} catch (IOException e) {
-				throw new BucciException("UNABLE TO SAVE ARTWORK");
+				throw new BucciException("Unable to add artwork");
 			}
 		}
 		
 		try {
 			FileManager.removeRequestedAlbumResources(requestedAlbum);
 		} catch (IOException e) {
-			throw new BucciException("UNABLE TO SAVE ARTWORK");
+			throw new BucciException("Unable to remove artwork");
 		}
 		
 		requestedAlbumRepository.delete(requestedAlbum);
 		
 		return album;
+	}
+	
+	public Song adminApproveSong(RequestedSong requestedSong) throws BucciException{
+		requestedSong = requestedSongRepository.findOne(requestedSong.getId());
+		if(requestedSong == null) {
+			throw new BucciException("Requested album does not exist");
+		}
+		
+		Artist artist = artistRepository.findOne(requestedSong.getArtist().getId());
+		if(artist == null) {
+			artist = artistRepository.findByName(requestedSong.getArtist().getName());
+			if(artist == null) {
+				throw new BucciException("Artist not found");
+			}
+		}
+		
+		Song song = songRepository.save(new Song(requestedSong));
+		
+		if(requestedSong.getPicturePath() != null) {
+			try {				
+				String artworkPath = FileManager.moveRequestedArtworkToSong(requestedSong.getId(), song.getId());
+				song.setPicturePath(artworkPath);
+			} catch (IOException e) {
+				throw new BucciException("Unable to add artwork");
+			}
+		}
+		
+		try {
+			FileManager.removeRequestedSongResources(requestedSong);
+		} catch (IOException e) {
+			throw new BucciException("Unable to remove artwork");
+		}
+		
+		return song;
 	}
 	
 	public List<SongPlays> getSongPLays(int artist_id) {

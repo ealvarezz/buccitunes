@@ -23,6 +23,8 @@ import com.buccitunes.model.User;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.RequestedSong;
+import com.buccitunes.model.Song;
 import com.buccitunes.service.AdminService;
 
 
@@ -68,6 +70,17 @@ public class AdminController {
 		}		
 	}
 	
+	@RequestMapping(value="approvesong", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<Song> approveSong(RequestedSong requested) {
+		try {
+			Song song = adminService.adminApproveSong(requested);
+			return BucciResponseBuilder.successfulResponse(song);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
+	}
+	
 	@RequestMapping(value="get_playsongs_this_month", method = RequestMethod.GET)
 	public BucciResponse<List<SongPlays>> getAllPlayedSongsThisMonth(@RequestParam int artist_id) {		
 		List<SongPlays> plays = adminService.getSongPLays(artist_id);
@@ -85,4 +98,8 @@ public class AdminController {
 		List<RequestedAlbum> requested = adminService.getRequestedAlbums();
 		return BucciResponseBuilder.successfulResponse(requested);
 	}
+	
+	
+	
+	
 }
