@@ -64,7 +64,7 @@ public class RequestedSong{
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String picture;
 	
-	private boolean isExplicit;	
+	private boolean explicit;	
 
 	private String comments;
 	
@@ -187,12 +187,12 @@ public class RequestedSong{
 		this.requester = requester;
 	}
 	
-	public boolean getIsExplicit() {
-		return isExplicit;
+	public boolean getExplicit() {
+		return explicit;
 	}
 
-	public void setIsExplicit(boolean isExplicit) {
-		this.isExplicit = isExplicit;
+	public void setExplicit(boolean explicit) {
+		this.explicit = explicit;
 	}
 
 	public List<Artist> getFeaturedArtists() {

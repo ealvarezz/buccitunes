@@ -34,7 +34,7 @@ public class Song {
 	
 	private int rating;
 	
-	private boolean isExplicit; // change to explicit, rob kelly doesn't like verbs in variables
+	private boolean explicit; /* change to explicit, rob kelly doesn't like verbs in variables */
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
@@ -81,7 +81,7 @@ public class Song {
 		this.duration = song.getDuration();
 		this.owner = song.getArtist();
 		this.featuredArtists = song.getFeatures();
-		this.isExplicit = song.getIsExplicit();
+		this.explicit = song.getExplicit();
 		this.genres = song.getGenres();
 		this.mimeType = song.getMimeType();
 		this.picturePath = song.getPicturePath();
@@ -158,12 +158,12 @@ public class Song {
 		this.mimeType = mimeType;
 	}
 	
-	public boolean getIsExplicit() {
-		return isExplicit;
+	public boolean getExplicit() {
+		return explicit;
 	}
 	
-	public void setIsExplicit(boolean isExplicit) {
-		this.isExplicit = isExplicit;
+	public void setExplicit(boolean explicit) {
+		this.explicit = explicit;
 	}
 
 	public List<Genre> getGenres() {
