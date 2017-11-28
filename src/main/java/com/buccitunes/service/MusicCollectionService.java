@@ -281,4 +281,8 @@ public class MusicCollectionService {
 		if(artist != null) artist.setTier(tier);
 		else throw new BucciException("Artist user with the email: " + email + "does not extist");
 	}
+	
+	public void getAlbumsOfSavedSongs(User user) {
+		//user.ge
+	}
 }

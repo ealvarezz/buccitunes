@@ -253,6 +253,23 @@ public class UserController {
 		}
 		return BucciResponseBuilder.successfulResponseMessage("Congratulations, you have upgraded to premium", (PremiumUser)sessionUser);
 	}
+	
+	@RequestMapping(value="albums_of_saved_songs", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<PremiumUser> albumsOfSavedSongs(@RequestBody BillingInfo billingInfo, HttpSession session) {
+		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		/*
+		try {
+			return null;
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}*/
+		return null;
+		//return BucciResponseBuilder.successfulResponseMessage("Congratulations, you have upgraded to premium", (PremiumUser)sessionUser);
+	}
 	/*
 	@RequestMapping(value="followingAlbums", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> followingAlbums(@RequestBody BillingInfo billingInfo, HttpSession session) {

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Artist;
@@ -84,7 +85,7 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser)) {
 			RequestedAlbum newRequestedAlbum;
 			
 			try {
@@ -108,7 +109,7 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser)) {
 			
 			artistService.addSongToAlbum(requested);
 			
@@ -127,7 +128,7 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			
 			artistService.deleteAlbum(albumId);
 			
@@ -146,7 +147,7 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			
 			artistService.deleteSongFromAlbum(songId, albumId);
 			
@@ -155,6 +156,4 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
 		}
 	}
-	
-	
 }

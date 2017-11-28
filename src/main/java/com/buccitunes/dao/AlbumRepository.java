@@ -23,6 +23,8 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	
 	public Album findBySongs(Song song);
 	
+	public List<Album> findAllBySongsContains(List<Song> songs);
+	
 	@Query(value="CALL get_albums_by_tier_genre(:tiercode, :genre_id, :limit);", nativeQuery = true)
 	public List<Album> albumsByGenreAndTierness(@Param("tiercode") int tiercode, @Param("genre_id") int genre_id, @Param("limit") int limit);
 	

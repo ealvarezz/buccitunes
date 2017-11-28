@@ -189,6 +189,7 @@ public class AdminService {
 			throw new BucciException("Unable to remove artwork");
 		}
 		
+		requestedSongRepository.delete(requestedSong);
 		return song;
 	}
 	
