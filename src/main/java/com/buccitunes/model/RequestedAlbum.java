@@ -92,6 +92,14 @@ public class RequestedAlbum {
 		this.dateCreated = new Date();
 	}
 
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -116,11 +124,11 @@ public class RequestedAlbum {
 		this.featuredArtists = featuredArtists;
 	}
 
-	public boolean isASingle() {
+	public boolean getIsASingle() {
 		return isASingle;
 	}
 
-	public void setASingle(boolean isASingle) {
+	public void setIsASingle(boolean isASingle) {
 		this.isASingle = isASingle;
 	}
 

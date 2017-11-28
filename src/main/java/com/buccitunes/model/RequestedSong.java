@@ -31,6 +31,11 @@ public class RequestedSong{
 	
 	private int duration;
 	
+	
+	@ManyToOne
+    @JoinColumn(name = "album_id")
+	private Album album;
+	
 	@OneToOne
     @JoinColumn(name = "owner_id")
 	private Artist owner;
@@ -76,7 +81,8 @@ public class RequestedSong{
 	public RequestedSong() {
 		this.dateCreated = new Date();
 	}
-	
+
+
 	public int getId() {
 		return id;
 	}

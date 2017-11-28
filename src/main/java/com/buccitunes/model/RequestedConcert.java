@@ -52,7 +52,6 @@ public class RequestedConcert {
 	private ArtistUser requester;
 	
 	
-	
 	public int getId() {
 		return id;
 	}

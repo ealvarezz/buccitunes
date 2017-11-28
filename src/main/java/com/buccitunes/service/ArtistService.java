@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
@@ -38,6 +39,7 @@ import com.buccitunes.model.User;
 public class ArtistService {
 	
 private final ArtistRepository artistRepository;
+private final AlbumRepository albumRepository;
 private final RequestedAlbumRepository requestedAlbumRepository;
 private final ArtistUserRepository artistUserRepository;
 private final SongRepository songRepository;
@@ -45,8 +47,9 @@ private final RequestedSongRepository requestedSongRepository;
 	
 	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
-			RequestedSongRepository requestedSongRepository) {
+			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository) {
 		
+		this.albumRepository = albumRepository;
 		this.artistRepository = artistRepository;
 		this.requestedAlbumRepository = requestedAlbumRepository;
 		this.artistUserRepository = artistUserRepository;
@@ -139,4 +142,26 @@ private final RequestedSongRepository requestedSongRepository;
 		}
 		return requestedAlbum;
 	}
+	
+	public void addSongToAlbum(RequestedSong requestedSong){
+		
+		requestedSongRepository.save(requestedSong);
+	}
+	
+	public void deleteSongFromAlbum(int songId, int albumId) {
+		
+		Album album = albumRepository.findOne(albumId);
+		Song song = songRepository.findOne(songId);
+		songRepository.delete(songId);
+		
+		album.getSongs().remove(song);
+	}
+	
+	public void deleteAlbum(int albumId){
+		
+		albumRepository.delete(albumId);
+		
+	}
+	
+	
 }

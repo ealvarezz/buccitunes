@@ -26,6 +26,7 @@ public class RequestedArtist {
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
 	private User requester;
 
+
 	public int getId() {
 		return id;
 	}
