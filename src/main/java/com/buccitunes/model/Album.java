@@ -10,9 +10,11 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.SqlResultSetMapping;
 import javax.persistence.ConstructorResult;
+import javax.persistence.CascadeType;
 import javax.persistence.ColumnResult;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -50,6 +52,11 @@ public class Album extends MusicCollection {
 		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false),
 		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
+	
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "album_stats_id")
+	private AlbumStatCache albumStats;
+	
 	private boolean isPublic;
 	
 	
@@ -57,6 +64,14 @@ public class Album extends MusicCollection {
 		super();
 	};
 	
+	public AlbumStatCache getAlbumStats() {
+		return albumStats;
+	}
+
+	public void setAlbumStats(AlbumStatCache albumStats) {
+		this.albumStats = albumStats;
+	}
+
 	public Album(List<Song> newSongs){
 		super(newSongs);
 	};

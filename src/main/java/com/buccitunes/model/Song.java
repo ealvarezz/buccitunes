@@ -67,8 +67,8 @@ public class Song {
 	private String audioPath;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stats_id")
-	private StatCache stats;
+    @JoinColumn(name = "song_stats_id")
+	private SongStatCache songStats;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "lyric_id")
@@ -87,7 +87,7 @@ public class Song {
 		this.picturePath = song.getPicturePath();
 		this.audioPath = song.getAudioPath();
 		this.lyrics = new Lyrics(song.getLyrics().getLyric());
-		this.stats = new StatCache();
+		this.songStats = new SongStatCache();
 	}
 	
 	public int getId() {
@@ -190,12 +190,12 @@ public class Song {
 		this.picturePath = picturePath;
 	}
 	
-	public StatCache getStats() {
-		return stats;
+	public SongStatCache getStats() {
+		return songStats;
 	}
 	
-	public void setStats(StatCache stats) {
-		this.stats = stats;
+	public void setStats(SongStatCache songStats) {
+		this.songStats = songStats;
 	}
 
 	public Lyrics getLyrics() {
