@@ -42,6 +42,8 @@ public class User {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	String avatar;
 	
+	String role;
+	
 	String avatarPath;
 
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -229,13 +231,28 @@ public class User {
 	public void setPasswordAndEncrypt(String password) {
 		this.password = BucciPassword.encryptPassword(password);
 	}
-	
-	/*
-	public String getProfilePicture() {
-		return profilePicture;
+
+	public String getAvatar() {
+		return avatar;
 	}
-	public void setProfilePicture(String profilePicture) {
-		this.profilePicture = profilePicture;
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
-	*/
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getAvatarPath() {
+		return avatarPath;
+	}
+
+	public void setAvatarPath(String avatarPath) {
+		this.avatarPath = avatarPath;
+	}
 }

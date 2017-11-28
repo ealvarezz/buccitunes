@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.buccitunes.miscellaneous.BucciConstants;
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Song;

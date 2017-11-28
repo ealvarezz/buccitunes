@@ -10,7 +10,7 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.*;
-import com.buccitunes.miscellaneous.BucciConstants;
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
@@ -211,9 +211,9 @@ public class AdminService {
 			int songPlays = songPlaysRepository.getCurrentSongPlaysByArtist(artist.getArtist().getId()).size();
 			if(songPlays > 0) {
 				
-				total += songPlays * BucciConstants.ROYALTY_PRICE;
+				total += songPlays * BucciConstant.ROYALTY_PRICE;
 				ArtistTransaction transaction  = new ArtistTransaction();
-				transaction.setAmount(songPlays * BucciConstants.ROYALTY_PRICE);
+				transaction.setAmount(songPlays * BucciConstant.ROYALTY_PRICE);
 				transaction.setArtistUser(artist);
 				transaction.setDate(new Date());
 				transaction.setPaymentType(PaymentType.ROYALTY_PAYMENT); // Change this to transaction type instead later

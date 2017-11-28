@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.buccitunes.miscellaneous.BucciConstants;
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
@@ -79,7 +79,7 @@ public class ArtistController {
 	@RequestMapping(value="request_album", method = RequestMethod.POST)
 	public BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
@@ -103,7 +103,7 @@ public class ArtistController {
 	@RequestMapping(value="request_song", method = RequestMethod.POST)
 	public BucciResponse<String> requestSongToAlbum(@RequestBody RequestedSong requested, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
@@ -122,7 +122,7 @@ public class ArtistController {
 	@RequestMapping(value="delete_album", method = RequestMethod.DELETE)
 	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
@@ -141,7 +141,7 @@ public class ArtistController {
 	@RequestMapping(value="delete_song_album", method = RequestMethod.DELETE)
 	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, @RequestParam int songId, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");

@@ -7,6 +7,12 @@ import com.buccitunes.model.User;
 
 public class BucciPrivilege {
 	
+	public static final String USER = "User";
+	public static final String PREMIUM = "Premium";
+	public static final String ARTIST = "Artist";
+	public static final String ADMIN = "Admin";
+	
+	
 	public static boolean isPremium(User user) {
 		return (user instanceof PremiumUser);
 	}
@@ -17,5 +23,21 @@ public class BucciPrivilege {
 	
 	public static boolean isAdmin(User user) {
 		return (user instanceof AdminUser);
+	}
+	
+	public static User setRole(User user) {
+		if(isPremium(user)) {
+			user.setRole(PREMIUM);
+		}
+		else if(isArtist(user)){
+			user.setRole(ARTIST);
+		}
+		else if(isAdmin(user)){
+			user.setRole(ADMIN);
+		}
+		else {
+			user.setRole(USER);
+		}
+		return user;
 	}
 }

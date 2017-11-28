@@ -28,7 +28,7 @@ import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
-import com.buccitunes.miscellaneous.BucciConstants;
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
@@ -70,20 +70,20 @@ public class MusicCollectionService {
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
-		PageRequest pageRequest = new PageRequest(BucciConstants.START, BucciConstants.NEW_RELASES_LIMIT);
+		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.NEW_RELASES_LIMIT);
 		return albumRepository.getNewReleasesOfMonth(pageRequest);
 	}
 	
 	
 	public List<Album> getTopAlbumsByWeek() {
-		PageRequest pageRequest = new PageRequest(BucciConstants.START, BucciConstants.TOP_ALBUMS_LIMIT,
-				Sort.Direction.DESC, BucciConstants.PLAY_COUNT);
+		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_ALBUMS_LIMIT,
+				Sort.Direction.DESC, BucciConstant.PLAY_COUNT);
 		//return albumRepository.topAlbumsOfTheWeek(BucciConstants.TimeAgo.WEEK_AGO,pageRequest);
 		return null;
 	}
 	
 	public List<Playlist> getTopPlaylist() {
-		PageRequest pageRequest = new PageRequest(BucciConstants.START, BucciConstants.TOP_PLAYLISTS_LIMIT,
+		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_PLAYLISTS_LIMIT,
 				Sort.Direction.DESC, "stats.total_plays");
 		return playlistRepository.getTopPlaylistOfAllTime();
 	}
@@ -199,8 +199,8 @@ public class MusicCollectionService {
 	}
 	
 	public List<Album> getTopAlbumsByGenre(int genreId) {
-		PageRequest pageRequest = new PageRequest(BucciConstants.START, BucciConstants.TOP_ALBUMS_LIMIT,
-				Sort.Direction.DESC, BucciConstants.PLAY_COUNT);
+		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_ALBUMS_LIMIT,
+				Sort.Direction.DESC, BucciConstant.PLAY_COUNT);
 		//List<Album> albums = albumRepository.topAlbumsByGenre(genreId, BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
 		return null;
 		//return albumRepository.topAlbumsByGenre(genreId, BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
@@ -208,7 +208,7 @@ public class MusicCollectionService {
 	}
 	
 	public List<Playlist> getTopPlaylistByGenre(int genreId) {
-		PageRequest pageRequest = new PageRequest(BucciConstants.START, BucciConstants.TOP_PLAYLISTS_LIMIT,
+		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_PLAYLISTS_LIMIT,
 				Sort.Direction.DESC, "stats.monthly_plays");
 		//return playlistRepository.getTopPlaylistByWeeks(BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
 		return null;
@@ -254,9 +254,9 @@ public class MusicCollectionService {
 		
 		int populateAmount = 0;
 		switch(tier){
-			case MOONMAN_TIER: 		populateAmount = BucciConstants.MOONMAN_MAX; break;
-			case TREX_TIER: 			populateAmount = BucciConstants.TREX_MAX; break;
-			case NITRO_DUBS_TIER: 	populateAmount = BucciConstants.NITRODUBS_MAX; break;
+			case MOONMAN_TIER: 		populateAmount = BucciConstant.MOONMAN_MAX; break;
+			case TREX_TIER: 			populateAmount = BucciConstant.TREX_MAX; break;
+			case NITRO_DUBS_TIER: 	populateAmount = BucciConstant.NITRODUBS_MAX; break;
 			default: break;
 		}
 		populateAmount += rem;
