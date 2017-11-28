@@ -31,7 +31,7 @@ public class RequestedSong{
 	
 	private int duration;
 	
-	private boolean add;
+	private boolean adding;
 	
 	@ManyToOne
     @JoinColumn(name = "album_id")
@@ -82,7 +82,15 @@ public class RequestedSong{
 	public RequestedSong() {
 		this.dateCreated = new Date();
 	}
-	
+
+	public boolean getAdding() {
+		return adding;
+	}
+
+	public void setAdding(boolean adding) {
+		this.adding = adding;
+	}
+
 	public int getId() {
 		return id;
 	}
