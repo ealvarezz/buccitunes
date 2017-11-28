@@ -22,8 +22,9 @@ import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
 import com.buccitunes.dao.RequestedSongRepository;
 import com.buccitunes.dao.SongRepository;
-import com.buccitunes.miscellaneous.BucciConstants;
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
@@ -101,6 +102,7 @@ private final RequestedSongRepository requestedSongRepository;
 			artistUser.setTier(Tier.NO_TIER);
 			artistUserRepository.save(artistUser);
 			ArtistUser savedArtist = artistUserRepository.findOne(artistUser.getEmail());
+			savedArtist = (ArtistUser) BucciPrivilege.setRole(savedArtist);
 			
 			if(avatar != null)  {
 				String avatarPath = FileManager.saveArtistAvatar(avatar, savedArtist.getArtist().getId());
@@ -117,8 +119,8 @@ private final RequestedSongRepository requestedSongRepository;
 	}
 
 	public List<Song> getTopTenSongs(int artistId) {
-		PageRequest pageRequest = new PageRequest(BucciConstants.START, BucciConstants.TOP_SONGS_LIMIT,
-				Sort.Direction.DESC, BucciConstants.PLAY_COUNT);
+		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_SONGS_LIMIT,
+				Sort.Direction.DESC, BucciConstant.PLAY_COUNT);
 		//return songRepository.getTopSongsOfArtist(BucciConstants.TimeAgo.ALL_TIME, artistId, pageRequest);
 		return null;
 		

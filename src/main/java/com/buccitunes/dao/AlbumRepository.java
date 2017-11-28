@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
-import com.buccitunes.miscellaneous.BucciConstants;
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Song;
@@ -22,6 +22,8 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	public Album findByPrimaryArtist_Name(String name);
 	
 	public Album findBySongs(Song song);
+	
+	public List<Album> findAllBySongsContains(List<Song> songs);
 	
 	@Query(value="CALL get_albums_by_tier_genre(:tiercode, :genre_id, :limit);", nativeQuery = true)
 	public List<Album> albumsByGenreAndTierness(@Param("tiercode") int tiercode, @Param("genre_id") int genre_id, @Param("limit") int limit);

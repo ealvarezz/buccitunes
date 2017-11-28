@@ -8,6 +8,7 @@ export class Album{
     artworkPath     : string;
     dateCreated     : Date = new Date();
     featuredArtists : String[] = [];
+    primaryArtist : Artist;
     //featuredArtist : Artist[] = [];
     genres          : string[] = [];
     label           : string;

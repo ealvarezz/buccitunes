@@ -15,6 +15,7 @@ import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
@@ -146,10 +147,12 @@ public class UserService  {
 		if(signedForPremium) {
 			PremiumUser pUser = new PremiumUser(user,signupInfo.billingInfo);
 			PremiumUser newUser = premiumUserRepository.save(pUser);
+			newUser = (PremiumUser) BucciPrivilege.setRole(newUser);
 			return newUser;
 		}
 		else {
 			User newUser = userRepository.save(user);
+			newUser = BucciPrivilege.setRole(newUser);
 			return newUser;
 		}
 	}
@@ -180,6 +183,7 @@ public class UserService  {
 		billingInfo = billingInfoRepository.save(billingInfo);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
+		pUser = (PremiumUser) BucciPrivilege.setRole(pUser);
 
 		return pUser;
 	}
@@ -224,6 +228,7 @@ public class UserService  {
 	public List<Song> getSavedSongs(String email) {
 		
 		User user = userRepository.findOne(email);
+		user.getSavedSongs().size();
 		return user.getSavedSongs();
 		
 	}

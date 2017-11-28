@@ -12,6 +12,7 @@ export class Song{
     public picturePath      : string;
     public audioPath        : string;
     public lyrics           : string;
+    public saved            : boolean;
     // public album_image      : string = "/assets/graduation.png";
     // public song_file        : string = "/assets/rockstar.mp3";
     //public album            : String = "Graduation"
