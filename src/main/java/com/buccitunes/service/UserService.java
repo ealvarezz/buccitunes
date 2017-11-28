@@ -224,6 +224,7 @@ public class UserService  {
 	public List<Song> getSavedSongs(String email) {
 		
 		User user = userRepository.findOne(email);
+		user.getSavedSongs().size();
 		return user.getSavedSongs();
 		
 	}

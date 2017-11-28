@@ -3,6 +3,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Song} from './objs/Song';
+import {MusicCollectionService } from './services/music.service';
 import 'rxjs/add/observable/of';
 
 @Component({
@@ -16,6 +17,8 @@ export class MusicTableComponent implements OnChanges {
     dataSource : MusicDataSource;
     hoveredRow : number = -1;
     displayedColumns = ['num','add', 'songName','artist','album', 'more','duration'];
+
+    constructor(private musicService : MusicCollectionService){}
 
     ngOnChanges(change : SimpleChanges){
       if(change['data'] && !change['data'].isFirstChange()){
@@ -38,6 +41,20 @@ export class MusicTableComponent implements OnChanges {
     unHover(){
       this.hoveredRow = -1;
     }
+
+    addSongToLibrary(song : Song){
+      this.musicService.addSongToLibrary(song).
+      subscribe(
+        (data) => {
+          song.saved = true;
+        },
+        (err) =>{
+
+        }
+      )
+    }
+      
+      
 }
 
 

@@ -7,12 +7,17 @@ export const environment = {
   production                : false,
 
   SERVER_PATH               : "http://localhost:8080",
-  GET_ARTIST_ENDPOINT       : this.SERVER_PATH + "/artist",
-  LOGIN_ENDPOINT            : this.SERVER_PATH + "/login",
-  GET_ALBUM_ENDPOINT        : this.SERVER_PATH + "/album",
-  ADD_ALBUM_ENDPOINT        : this.SERVER_PATH + "/approveAlbum",
-  ADD_PLAYLIST_ENDPOINT     : this.SERVER_PATH + "/newplaylist",
-  
+  GET_ARTIST_ENDPOINT       : "http://localhost:8080" + "/artist",
+  LOGIN_ENDPOINT            : "http://localhost:8080" + "/login",
+  GET_ALBUM_ENDPOINT        : "http://localhost:8080" + "/album",
+  ADD_ALBUM_ENDPOINT        : "http://localhost:8080" + "/approveAlbum",
+  ADD_PLAYLIST_ENDPOINT     : "http://localhost:8080" + "/newplaylist",
+  SAVE_SONG_ENDPOINT        : "http://localhost:8080" + "/save_song",
+  GET_SONG_LIBRARY_ENDPOINT : "http://localhost:8080" + "/saved_songs",
+  SAVE_ALBUM_ENDPOINT       : "http://localhost:8080" + "/save_album",
+  GET_SAVED_ALBUMS_ENDPOINT : "http://localhost:8080" + "/saved_albums",
+
+
   //LOGIN PAGE
   INVALID_EMAIL         : "Not a valid email address",
   REQUIRED_VALUE        : "You must enter a value",
