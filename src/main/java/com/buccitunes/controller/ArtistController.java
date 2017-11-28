@@ -118,24 +118,6 @@ public class ArtistController {
 		}
 	}
 	
-	@RequestMapping(value="delete_album", method = RequestMethod.DELETE)
-	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, HttpSession session) {
-		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
-		
-		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
-		}
-		
-		if(loggedUser instanceof ArtistUser) {
-			
-			artistService.deleteAlbum(albumId);
-			
-			return BucciResponseBuilder.successfulResponse("Song request was submitted");
-		} else {
-			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
-		}
-	}
 	
 	@RequestMapping(value="delete_song_album", method = RequestMethod.DELETE)
 	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, @RequestParam int songId, HttpSession session) {
