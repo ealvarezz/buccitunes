@@ -13,9 +13,14 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity(name="PLAYLIST")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Playlist extends MusicCollection {
 	
 	private boolean isCollaborative;
@@ -33,6 +38,7 @@ public class Playlist extends MusicCollection {
 	private List<User> followers;
 	
 	@OneToOne(mappedBy="playlist", cascade=CascadeType.ALL)
+	@JsonIgnoreProperties(value = "playlist")
 	private PlaylistStatCache playlistStatCache; 
 	
 	public Playlist(){

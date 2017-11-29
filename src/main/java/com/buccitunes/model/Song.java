@@ -44,8 +44,8 @@ public class Song {
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
-	//@JsonIgnoreProperties(value = "albums")
-	@JsonBackReference
+	@JsonIgnoreProperties(value = "recentlyPlayed")
+	//@JsonBackReference
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
@@ -78,6 +78,7 @@ public class Song {
 	private String audio;
 	
 	@OneToOne(mappedBy="song", cascade=CascadeType.ALL)
+	@JsonIgnoreProperties(value = "song")
 	private SongStatCache songStats;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)

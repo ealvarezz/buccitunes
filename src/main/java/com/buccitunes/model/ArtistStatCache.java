@@ -23,7 +23,7 @@ public class ArtistStatCache extends StatCache{
 	@JoinTable(name="artist_artist_stat_cache", 
 	joinColumns = @JoinColumn(name="artist_stat_cache_id", referencedColumnName = "id", insertable = false, updatable = false),
 	inverseJoinColumns = @JoinColumn(name="artist_id", referencedColumnName = "id", insertable = false, updatable = false))
-	@JsonIgnoreProperties(value = "albums")
+	@JsonIgnoreProperties(value = "artistStats")
 	private Artist artist;
 	
 	public ArtistStatCache() {}

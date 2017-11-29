@@ -25,6 +25,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
@@ -38,6 +39,7 @@ public class Album extends MusicCollection {
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
 	@JsonIgnoreProperties(value = "albums")
+	//@JsonBackReference
 	private Artist primaryArtist;
 	
 

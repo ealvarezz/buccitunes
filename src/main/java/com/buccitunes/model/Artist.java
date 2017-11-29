@@ -60,17 +60,18 @@ public class Artist {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "featured_album_id", insertable = false, updatable = false)
-	@JsonManagedReference
+	@JsonIgnoreProperties(value = "primaryArtist")
 	private Album featuredAlbum;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "recently_played_song_artist",
 		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
-	@JsonManagedReference
+	@JsonIgnoreProperties(value = "owner")
 	private List<Song> recentlyPlayed;
 	
 	@OneToOne(mappedBy="artist", cascade=CascadeType.ALL)
+	@JsonIgnoreProperties(value = "artist")
 	private ArtistStatCache artistStats;
 
 	public Artist() {

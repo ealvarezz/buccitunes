@@ -21,6 +21,7 @@ public class SongStatCache extends StatCache{
 	@JoinTable(name="song_song_stat_cache", 
 	joinColumns = @JoinColumn(name="song_stat_cache_id", referencedColumnName = "id", insertable = false, updatable = false),
 	inverseJoinColumns = @JoinColumn(name="song_id", referencedColumnName = "id", insertable = false, updatable = false))
+	@JsonIgnoreProperties(value = "songStats")
 	private Song song;
 	
 	public SongStatCache() {}
