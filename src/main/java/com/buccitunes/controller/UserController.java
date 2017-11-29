@@ -142,12 +142,12 @@ public class UserController {
 	
 	@RequestMapping(value="logout", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<String> logout(HttpSession session) {
-		User sessionUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User sessionUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(sessionUser == null) {
 			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
 		} 
-		session.removeAttribute(BucciConstants.SESSION);
+		session.removeAttribute(BucciConstant.SESSION);
 		return BucciResponseBuilder.successMessage("LoggedOut");
 	}
 	
