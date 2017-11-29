@@ -12,7 +12,7 @@ import javax.persistence.InheritanceType;
 public class StatCache {
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue
 	private int id;
 	private int totalPlays;
 	private int monthlyPlays;

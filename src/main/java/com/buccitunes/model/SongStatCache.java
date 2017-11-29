@@ -1,13 +1,19 @@
 package com.buccitunes.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 
 @Entity(name="SONG_STAT_CACHE")
 public class SongStatCache extends StatCache{
 
 	
-	@OneToOne(mappedBy = "songStats")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name="song_song_stat_cache", 
+	joinColumns = @JoinColumn(name="song_stat_cache_id", referencedColumnName = "id", insertable = false, updatable = false),
+	inverseJoinColumns = @JoinColumn(name="song_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private Song song;
 	
 	public SongStatCache() {}

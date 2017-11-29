@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -61,8 +62,7 @@ public class Artist {
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Song> recentlyPlayed;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "artist_stats_id")
+	@OneToOne(mappedBy="artist", cascade=CascadeType.ALL)
 	private ArtistStatCache artistStats;
 
 	public Artist() {
