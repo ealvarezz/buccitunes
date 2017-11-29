@@ -16,8 +16,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.buccitunes.miscellaneous.BucciConstants;
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Artist;
@@ -78,13 +79,13 @@ public class ArtistController {
 	@RequestMapping(value="request_album", method = RequestMethod.POST)
 	public BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser)) {
 			RequestedAlbum newRequestedAlbum;
 			
 			try {
@@ -102,13 +103,13 @@ public class ArtistController {
 	@RequestMapping(value="request_song", method = RequestMethod.POST)
 	public BucciResponse<String> requestSongToAlbum(@RequestBody RequestedSong requested, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser)) {
 			
 			artistService.addSongToAlbum(requested);
 			
@@ -121,13 +122,13 @@ public class ArtistController {
 	@RequestMapping(value="delete_album", method = RequestMethod.DELETE)
 	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			
 			artistService.deleteAlbum(albumId);
 			
@@ -140,13 +141,13 @@ public class ArtistController {
 	@RequestMapping(value="delete_song_album", method = RequestMethod.DELETE)
 	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, @RequestParam int songId, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstants.SESSION);
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
 		
-		if(loggedUser instanceof ArtistUser) {
+		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			
 			artistService.deleteSongFromAlbum(songId, albumId);
 			
@@ -156,5 +157,25 @@ public class ArtistController {
 		}
 	}
 	
-	
+	@RequestMapping(value="add_audio_to_song", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Song> addAudio(@RequestBody Song song, HttpSession session) {
+
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
+			try {
+				song = artistService.saveAudioFile(song, loggedUser);
+				return BucciResponseBuilder.successfulResponseMessage("The audio for the song has been saved", song);
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage(e.getMessage()); 
+			}
+		}
+		else {
+			return BucciResponseBuilder.failedMessage("You don't have the privileges to add audio"); 
+		}
+	}
 }

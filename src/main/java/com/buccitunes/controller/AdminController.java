@@ -98,8 +98,4 @@ public class AdminController {
 		List<RequestedAlbum> requested = adminService.getRequestedAlbums();
 		return BucciResponseBuilder.successfulResponse(requested);
 	}
-	
-	
-	
-	
 }

@@ -4,20 +4,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 
-@Entity
+@Entity(name="STAT_CACHE")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class StatCache {
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.AUTO)
-	int id;
+	private int id;
 	private int totalPlays;
 	private int monthlyPlays;
 	private double totalRevenue;
 	private double monthlyRevenue;
-	private double popularity;
-	private double monthlyStats;
+	private int rank;
 	
+	public StatCache() {}
+	
+	public StatCache(int totalPlays, int monthlyPlays, double totalRevenue, double monthlyRevenue, int rank) {
+		super();
+		this.totalPlays = totalPlays;
+		this.monthlyPlays = monthlyPlays;
+		this.totalRevenue = totalRevenue;
+		this.monthlyRevenue = monthlyRevenue;
+		this.rank = rank;
+	}
+
 	public int getTotalPlays() {
 		return totalPlays;
 	}
@@ -42,18 +55,13 @@ public class StatCache {
 	public void setMonthlyRevenue(double monthlyRevenue) {
 		this.monthlyRevenue = monthlyRevenue;
 	}
-	public double getPopularity() {
-		return popularity;
+	public int getRank() {
+		return rank;
 	}
-	public void setPopularity(double popularity) {
-		this.popularity = popularity;
+	public void setRank(int rank) {
+		this.rank = rank;
 	}
-	public double getMonthlyStats() {
-		return monthlyStats;
-	}
-	public void setMonthlyStats(double monthlyStats) {
-		this.monthlyStats = monthlyStats;
-	}
+	
 	
 	
 }

@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 
 
 @Component
-public class BucciConstants {
+public class BucciConstant {
 
 	public static int START;
 	

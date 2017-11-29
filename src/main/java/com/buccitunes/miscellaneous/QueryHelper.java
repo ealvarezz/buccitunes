@@ -4,7 +4,7 @@ public class QueryHelper {
 		
 	public static final String TIME_PARAM = "timeAgo";
 	
-	public static final String SELECT_PLAY_COUNTS = "sum(sp_count.song_count) as " + BucciConstants.PLAY_COUNT + " ";
+	public static final String SELECT_PLAY_COUNTS = "sum(sp_count.song_count) as " + BucciConstant.PLAY_COUNT + " ";
 	
 	public static final String PLAY_COUNTS_BY_TIME_QUERY = ""
 			+ "join( "

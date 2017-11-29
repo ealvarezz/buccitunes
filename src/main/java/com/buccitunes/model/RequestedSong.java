@@ -31,7 +31,6 @@ public class RequestedSong{
 	
 	private int duration;
 	
-	
 	@ManyToOne
     @JoinColumn(name = "album_id")
 	private Album album;
@@ -47,6 +46,10 @@ public class RequestedSong{
 	private List<Artist> featuredArtists;
 	
 	private String audioPath;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String audio;
 	
 	@ManyToOne
     @JoinColumn(name = "mime_id")
@@ -64,7 +67,7 @@ public class RequestedSong{
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String picture;
 	
-	private boolean isExplicit;	
+	private boolean explicit;	
 
 	private String comments;
 	
@@ -187,12 +190,12 @@ public class RequestedSong{
 		this.requester = requester;
 	}
 	
-	public boolean getIsExplicit() {
-		return isExplicit;
+	public boolean getExplicit() {
+		return explicit;
 	}
 
-	public void setIsExplicit(boolean isExplicit) {
-		this.isExplicit = isExplicit;
+	public void setExplicit(boolean explicit) {
+		this.explicit = explicit;
 	}
 
 	public List<Artist> getFeaturedArtists() {
@@ -210,4 +213,26 @@ public class RequestedSong{
 	public void setLyrics(RequestedLyrics lyrics) {
 		this.lyrics = lyrics;
 	}
+
+
+	public Album getAlbum() {
+		return album;
+	}
+
+
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
+
+
+	public String getAudio() {
+		return audio;
+	}
+
+
+	public void setAudio(String audio) {
+		this.audio = audio;
+	}
+	
+	
 }

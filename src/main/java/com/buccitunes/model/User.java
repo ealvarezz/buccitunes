@@ -5,8 +5,6 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -16,7 +14,6 @@ import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
 import com.buccitunes.miscellaneous.BucciPassword;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -41,6 +38,8 @@ public class User {
 	@Transient
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	String avatar;
+	
+	String role;
 	
 	String avatarPath;
 
@@ -229,13 +228,28 @@ public class User {
 	public void setPasswordAndEncrypt(String password) {
 		this.password = BucciPassword.encryptPassword(password);
 	}
-	
-	/*
-	public String getProfilePicture() {
-		return profilePicture;
+
+	public String getAvatar() {
+		return avatar;
 	}
-	public void setProfilePicture(String profilePicture) {
-		this.profilePicture = profilePicture;
+
+	public void setAvatar(String avatar) {
+		this.avatar = avatar;
 	}
-	*/
+
+	public String getRole() {
+		return role;
+	}
+
+	public void setRole(String role) {
+		this.role = role;
+	}
+
+	public String getAvatarPath() {
+		return avatarPath;
+	}
+
+	public void setAvatarPath(String avatarPath) {
+		this.avatarPath = avatarPath;
+	}
 }

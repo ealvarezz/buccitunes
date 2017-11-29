@@ -34,7 +34,7 @@ public class Song {
 	
 	private int rating;
 	
-	private boolean isExplicit; // change to explicit, rob kelly doesn't like verbs in variables
+	private boolean explicit; /* change to explicit, rob kelly doesn't like verbs in variables */
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
@@ -66,9 +66,14 @@ public class Song {
 	
 	private String audioPath;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String audio;
+	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stats_id")
-	private StatCache stats;
+    @JoinColumn(name = "song_stats_id")
+	@JsonIgnoreProperties(value = "song")
+	private SongStatCache songStats;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "lyric_id")
@@ -81,13 +86,13 @@ public class Song {
 		this.duration = song.getDuration();
 		this.owner = song.getArtist();
 		this.featuredArtists = song.getFeatures();
-		this.isExplicit = song.getIsExplicit();
+		this.explicit = song.getExplicit();
 		this.genres = song.getGenres();
 		this.mimeType = song.getMimeType();
 		this.picturePath = song.getPicturePath();
 		this.audioPath = song.getAudioPath();
 		this.lyrics = new Lyrics(song.getLyrics().getLyric());
-		this.stats = new StatCache();
+		this.songStats = new SongStatCache();
 	}
 	
 	public int getId() {
@@ -158,12 +163,12 @@ public class Song {
 		this.mimeType = mimeType;
 	}
 	
-	public boolean getIsExplicit() {
-		return isExplicit;
+	public boolean getExplicit() {
+		return explicit;
 	}
 	
-	public void setIsExplicit(boolean isExplicit) {
-		this.isExplicit = isExplicit;
+	public void setExplicit(boolean explicit) {
+		this.explicit = explicit;
 	}
 
 	public List<Genre> getGenres() {
@@ -190,12 +195,12 @@ public class Song {
 		this.picturePath = picturePath;
 	}
 	
-	public StatCache getStats() {
-		return stats;
+	public SongStatCache getStats() {
+		return songStats;
 	}
 	
-	public void setStats(StatCache stats) {
-		this.stats = stats;
+	public void setStats(SongStatCache songStats) {
+		this.songStats = songStats;
 	}
 
 	public Lyrics getLyrics() {
@@ -204,5 +209,13 @@ public class Song {
 	
 	public void setLyrics(Lyrics lyrics) {
 		this.lyrics = lyrics;
+	}
+
+	public String getAudio() {
+		return audio;
+	}
+
+	public void setAudio(String audio) {
+		this.audio = audio;
 	}
 }

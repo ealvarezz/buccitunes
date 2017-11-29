@@ -19,7 +19,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.*;
@@ -194,6 +196,16 @@ public class MusicCollectionController {
 	public @ResponseBody List<Album> getFeaturedAlbums(@RequestParam String email) {
 		
 		return musicCollectionService.getFeaturedAlbums(email);
+	}
+	
+	@RequestMapping(value="add_audio", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Song> addAudio(@RequestBody Song song) {
+		try {
+			song = musicCollectionService.saveAudioFile(song);
+			return BucciResponseBuilder.successfulResponseMessage("The audio for the song has been saved", song);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage()); 
+		}
 	}
 	
 	@Scheduled(fixedRate=60000)
