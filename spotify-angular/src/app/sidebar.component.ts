@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from "@angular/router"; 
 import {MdDialog, MdDialogRef} from '@angular/material';
+import {AuthenticationService} from './services/authentication.service';
 
 import {AddPlaylistDialog} from './add-playlist.component';
 import {Playlist} from './objs/Playlist';
@@ -12,11 +13,20 @@ import {Playlist} from './objs/Playlist';
   styleUrls: ['../views/styles/sidebar.component.css']
 })
 export class SideBarComponent {
-    constructor(public dialog: MdDialog, private router: Router) {}
+    constructor(public dialog: MdDialog,
+                private router: Router,
+                private authService : AuthenticationService) {}
 
     logout() {
-        // Do Stuff for logging out
-        this.router.navigate(["/login"]);
+        this.authService.logout().subscribe(
+            (data) =>{
+                this.router.navigate(["/login"]);
+            },
+            (err) =>{
+                console.log("error");
+            }
+        )
+        
     }
 
     addPlaylist(){

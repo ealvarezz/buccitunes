@@ -40,10 +40,24 @@ export class AuthenticationService {
 
     
     logout(){
-        localStorage.removeItem('currentUser');
+        return this.http.post<BucciResponse<User>>('http://localhost:8080/logout', null, {withCredentials: true})
+        .map(bucci =>{
+            if(bucci.successful){
+                localStorage.removeItem('currentUser');
+                return bucci.response;
+            }
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error : any) =>{
+            return Observable.throw(new Error(error));
+        });
+        
     }
 
     getLoggedInUser() : User{
         return JSON.parse(localStorage.getItem('currentUser'));
     }
+
 }
