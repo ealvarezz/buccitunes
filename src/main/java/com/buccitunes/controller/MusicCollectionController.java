@@ -163,10 +163,10 @@ public class MusicCollectionController {
 	
 	//For testing purposes
 	@RequestMapping(value="add_album", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<Album> addArtistAlbum(@RequestBody Album album) {
+	public @ResponseBody BucciResponse<String> addArtistAlbum(@RequestBody Album album) {
 		try {
 			musicCollectionService.saveAlbum(album);
-			return BucciResponseBuilder.successfulResponse(album);
+			return BucciResponseBuilder.successMessage("Album Added");
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage()); 
 		}

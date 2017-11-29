@@ -16,11 +16,17 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity(name="ARTIST")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Artist {
 	
 	@Id
@@ -53,12 +59,14 @@ public class Artist {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "featured_album_id", insertable = false, updatable = false)
+	@JsonManagedReference
 	private Album featuredAlbum;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "recently_played_song_artist",
 		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+	@JsonManagedReference
 	private List<Song> recentlyPlayed;
 	
 	@OneToOne(cascade = CascadeType.ALL)

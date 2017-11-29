@@ -20,12 +20,18 @@ import javax.persistence.ColumnResult;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.buccitunes.resultset.AlbumWithStats;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity(name="Album")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Album extends MusicCollection {
 	
 	
@@ -56,6 +62,7 @@ public class Album extends MusicCollection {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "album_stats_id")
 	@JsonIgnoreProperties(value = "album")
+	//@JsonBackReference
 	private AlbumStatCache albumStats;
 	
 	private boolean isPublic;

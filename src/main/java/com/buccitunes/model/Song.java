@@ -16,12 +16,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Entity(name="SONG")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Song {
 	
 	@Id
@@ -38,7 +44,8 @@ public class Song {
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
-	@JsonIgnoreProperties(value = "albums")
+	//@JsonIgnoreProperties(value = "albums")
+	@JsonBackReference
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)

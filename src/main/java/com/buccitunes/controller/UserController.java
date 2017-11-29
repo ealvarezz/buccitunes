@@ -126,9 +126,9 @@ public class UserController {
 	@RequestMapping(value="login", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> login(@RequestBody LoginInfo loginInfo, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
-		if(loggedUser != null) {
+		/*if(loggedUser != null) {
 			return BucciResponseBuilder.failedMessage("Already Logged In");
-		}
+		}*/
 		
 		User account = userService.findOne(loginInfo.email);
 		
