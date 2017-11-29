@@ -3,10 +3,13 @@ package com.buccitunes.model;
 import javax.persistence.Entity;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 @Entity(name="ARTIST_STAT_CACHE")
 public class ArtistStatCache extends StatCache{
 	
 	@OneToOne(mappedBy = "artistStats")
+	@JsonIgnoreProperties(value = "artistStats")
 	private Artist artist;
 	
 	public ArtistStatCache() {}

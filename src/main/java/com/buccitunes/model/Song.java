@@ -72,6 +72,7 @@ public class Song {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "song_stats_id")
+	@JsonIgnoreProperties(value = "song")
 	private SongStatCache songStats;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)

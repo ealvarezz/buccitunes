@@ -55,6 +55,7 @@ public class Album extends MusicCollection {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "album_stats_id")
+	@JsonIgnoreProperties(value = "album")
 	private AlbumStatCache albumStats;
 	
 	private boolean isPublic;

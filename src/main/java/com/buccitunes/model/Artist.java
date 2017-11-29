@@ -63,6 +63,7 @@ public class Artist {
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "artist_stats_id")
+	@JsonIgnoreProperties(value = "artist")
 	private ArtistStatCache artistStats;
 
 	public Artist() {
