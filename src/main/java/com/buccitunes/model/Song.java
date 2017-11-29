@@ -66,6 +66,10 @@ public class Song {
 	
 	private String audioPath;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String audio;
+	
 	@OneToOne(mappedBy="song", cascade=CascadeType.ALL)
 	private SongStatCache songStats;
 	
