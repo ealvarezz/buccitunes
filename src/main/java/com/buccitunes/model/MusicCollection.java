@@ -49,29 +49,22 @@ public class MusicCollection {
 	
 	private String artworkPath;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "stats_id")
-	private StatCache stats;
-	
 	@Transient
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private CurrentStats currentStats;
 	
 	public MusicCollection(){
-		this.stats = new StatCache();
 		this.dateCreated = new Date();
 	};
 	
 	public MusicCollection(List<Song> songs){
 		this.songs = songs;
-		this.stats = new StatCache();
 		this.dateCreated = new Date();
 	};
 	
 	public MusicCollection(String title) {
 		this.title = title;
 		this.dateCreated = new Date();
-		this.stats = new StatCache();
 	}
 	
 	public int getId() {
@@ -104,14 +97,6 @@ public class MusicCollection {
 	
 	public void setDateCreated(Date dateCreated) {
 		this.dateCreated = dateCreated;
-	}
-	
-	public StatCache getStats() {
-		return stats;
-	}
-	
-	public void setStats(StatCache stats) {
-		this.stats = stats;
 	}
 	
 	public void addSong(Song song) {

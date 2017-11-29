@@ -59,10 +59,8 @@ public class Album extends MusicCollection {
 		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "album_stats_id")
+	@OneToOne(mappedBy="album", cascade=CascadeType.ALL)
 	@JsonIgnoreProperties(value = "album")
-	//@JsonBackReference
 	private AlbumStatCache albumStats;
 	
 	private boolean isPublic;

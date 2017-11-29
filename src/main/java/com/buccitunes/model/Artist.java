@@ -14,6 +14,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -69,9 +70,7 @@ public class Artist {
 	@JsonManagedReference
 	private List<Song> recentlyPlayed;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "artist_stats_id")
-	@JsonIgnoreProperties(value = "artist")
+	@OneToOne(mappedBy="artist", cascade=CascadeType.ALL)
 	private ArtistStatCache artistStats;
 
 	public Artist() {

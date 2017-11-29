@@ -77,9 +77,7 @@ public class Song {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String audio;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "song_stats_id")
-	@JsonIgnoreProperties(value = "song")
+	@OneToOne(mappedBy="song", cascade=CascadeType.ALL)
 	private SongStatCache songStats;
 	
 	@OneToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)

@@ -1,6 +1,9 @@
 package com.buccitunes.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -15,8 +18,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 public class AlbumStatCache extends StatCache{
 
 
-	@OneToOne(mappedBy = "albumStats")
-	@JsonIgnoreProperties(value = "albumStats")
+	@OneToOne(cascade = CascadeType.ALL)
+	@JoinTable(name="album_album_stat_cache", 
+	joinColumns = @JoinColumn(name="album_stat_cache_id", referencedColumnName = "id", insertable = false, updatable = false),
+	inverseJoinColumns = @JoinColumn(name="album_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private Album album;
 
 	public AlbumStatCache() {}

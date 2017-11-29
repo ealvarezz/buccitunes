@@ -2,6 +2,7 @@ package com.buccitunes.model;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -30,10 +32,21 @@ public class Playlist extends MusicCollection {
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "followingPlaylists")
 	private List<User> followers;
 	
+	@OneToOne(mappedBy="playlist", cascade=CascadeType.ALL)
+	private PlaylistStatCache playlistStatCache; 
+	
 	public Playlist(){
 		super();
 	};
 	
+	public PlaylistStatCache getPlaylistStatCache() {
+		return playlistStatCache;
+	}
+
+	public void setPlaylistStatCache(PlaylistStatCache playlistStatCache) {
+		this.playlistStatCache = playlistStatCache;
+	}
+
 	public boolean isCollaborative() {
 		return isCollaborative;
 	}
