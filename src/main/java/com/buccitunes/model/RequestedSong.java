@@ -31,7 +31,6 @@ public class RequestedSong{
 	
 	private int duration;
 	
-	
 	@ManyToOne
     @JoinColumn(name = "album_id")
 	private Album album;
@@ -47,6 +46,10 @@ public class RequestedSong{
 	private List<Artist> featuredArtists;
 	
 	private String audioPath;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String audio;
 	
 	@ManyToOne
     @JoinColumn(name = "mime_id")
@@ -210,4 +213,26 @@ public class RequestedSong{
 	public void setLyrics(RequestedLyrics lyrics) {
 		this.lyrics = lyrics;
 	}
+
+
+	public Album getAlbum() {
+		return album;
+	}
+
+
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
+
+
+	public String getAudio() {
+		return audio;
+	}
+
+
+	public void setAudio(String audio) {
+		this.audio = audio;
+	}
+	
+	
 }

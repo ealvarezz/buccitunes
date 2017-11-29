@@ -156,4 +156,26 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
 		}
 	}
+	
+	@RequestMapping(value="add_audio_to_song", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Song> addAudio(@RequestBody Song song, HttpSession session) {
+
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
+			try {
+				song = artistService.saveAudioFile(song, loggedUser);
+				return BucciResponseBuilder.successfulResponseMessage("The audio for the song has been saved", song);
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage(e.getMessage()); 
+			}
+		}
+		else {
+			return BucciResponseBuilder.failedMessage("You don't have the privileges to add audio"); 
+		}
+	}
 }

@@ -204,4 +204,12 @@ public class Song {
 	public void setLyrics(Lyrics lyrics) {
 		this.lyrics = lyrics;
 	}
+
+	public String getAudio() {
+		return audio;
+	}
+
+	public void setAudio(String audio) {
+		this.audio = audio;
+	}
 }
