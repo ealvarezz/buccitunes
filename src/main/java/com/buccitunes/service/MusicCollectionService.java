@@ -2,6 +2,7 @@ package com.buccitunes.service;
 
 
 import java.io.IOException;
+import java.security.acl.Owner;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -30,12 +31,14 @@ import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Genre;
 import com.buccitunes.model.Playlist;
+import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.Tier;
@@ -279,5 +282,28 @@ public class MusicCollectionService {
 	
 	public void getAlbumsOfSavedSongs(User user) {
 		//user.ge
+	}
+	
+	public Song saveAudioFile(Song audioSong) throws BucciException {
+		
+		Song song = songRepository.findOne(audioSong.getId());
+		
+		if(song == null) {
+			throw new BucciException("Song not found");
+		}
+		
+		int duration = audioSong.getDuration();
+		if(duration == 0) {
+			throw new BucciException("Durantion of song is needed");
+		}
+		try {
+			String audioPath = FileManager.saveSong(audioSong.getAudio(), song.getId());
+			song.setAudioPath(audioPath);
+			song.setDuration(duration);
+		} catch (IOException e) {
+			throw new BucciException("Unable to save song");
+		}
+		
+		return song;
 	}
 }

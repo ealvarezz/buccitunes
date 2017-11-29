@@ -165,5 +165,34 @@ private final RequestedSongRepository requestedSongRepository;
 		
 	}
 	
+public Song saveAudioFile(Song audioSong, User user) throws BucciException {
+		
+		Song song = songRepository.findOne(audioSong.getId());
+		
+		if(song == null) {
+			throw new BucciException("Song not found");
+		}
+		
+		if(BucciPrivilege.isArtist(user)) {
+			Artist artist = ((ArtistUser) user).getArtist();
+			
+			if(artist.getId() != song.getOwner().getId()) {
+				throw new BucciException("You do not own this song!");
+			}
+		}
+		
+		int durantion = audioSong.getDuration();
+		if(durantion == 0) {
+			throw new BucciException("Durantion of song is needed");
+		}
+		try {
+			String audioPath = FileManager.saveSong(audioSong.getAudio(), song.getId());
+			song.setAudioPath(audioPath);
+		} catch (IOException e) {
+			throw new BucciException("Unable to save song");
+		}
+		
+		return song;
+	}
 	
 }

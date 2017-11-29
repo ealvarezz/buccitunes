@@ -30,6 +30,8 @@ public class FileManager {
 	private final static String DEFAULTMIMETYPEIMAGE = "png";
 	private final static String ARTWORKIMAGE = "artwork." + DEFAULTMIMETYPEIMAGE;
 	private final static String AVATARIMAGE = "avatar." + DEFAULTMIMETYPEIMAGE;
+	private final static String DEFAULTMIMETYPESONG = "mp3";
+	private final static String SONGAUDIO = "audio." + DEFAULTMIMETYPESONG;
 
 	
 	public static void setUpFileDirectory(Path newPath) throws IOException {
@@ -146,6 +148,19 @@ public class FileManager {
         return strPath; 
 	}
 	
+	public static String saveSong(String encodedStr, int songId) throws IOException {
+		Path path = Paths.get(SONGPATH + "/" + songId +  "/" + SONGAUDIO );
+        System.out.println(path);
+        
+        if(Files.notExists(path)) {
+        	createDirectory(SONGPATH, songId);
+        }
+        
+        String strPath = saveAudio(encodedStr, path);
+        return strPath;
+        
+	}
+	
 	/*
 	public static String saveRequestedSongArtwork(String encodedStr, int requestedId) throws IOException {
 		Path path = Paths.get(REQUESTEDALBUMSPATH + "/" + requestedId +  "/" + ARTWORKIMAGE);
@@ -168,6 +183,13 @@ public class FileManager {
 		ImageIO.write(bImageFromConvert, DEFAULTMIMETYPEIMAGE, path.toFile());
 	
 	    return getResourcePathString(path.toString());
+	}
+	
+	private static String saveAudio(String encodedStr, Path path) throws IOException {
+		byte[] decodedBytes = Base64.getMimeDecoder().decode(encodedStr);
+		Files.write(path, decodedBytes);
+		
+		return getResourcePathString(path.toString());
 	}
 	
 	private static String moveFile(Path oldPath, Path newPath) throws IOException {
