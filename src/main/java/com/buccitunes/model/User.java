@@ -13,6 +13,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.buccitunes.constants.UserRole;
 import com.buccitunes.miscellaneous.BucciPassword;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -39,7 +40,7 @@ public class User {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	String avatar;
 	
-	String role;
+	UserRole role;
 	
 	String avatarPath;
 
@@ -237,11 +238,11 @@ public class User {
 		this.avatar = avatar;
 	}
 
-	public String getRole() {
+	public UserRole getRole() {
 		return role;
 	}
 
-	public void setRole(String role) {
+	public void setRole(UserRole role) {
 		this.role = role;
 	}
 

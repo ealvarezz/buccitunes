@@ -1,0 +1,167 @@
+
+R version 3.3.1 (2016-06-21) -- "Bug in Your Hair"
+Copyright (C) 2016 The R Foundation for Statistical Computing
+Platform: x86_64-apple-darwin13.4.0 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> installed <- require("RMySQL")
+Loading required package: RMySQL
+Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘RMySQL’
+> if(!installed){
++   install.packages("RMySQL",repos = "https://cran.rstudio.com")
++   library(RMySQL)
++ }
+also installing the dependency ‘DBI’
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/DBI_0.7.tgz'
+Content type 'application/x-gzip' length 733136 bytes (715 KB)
+==================================================
+downloaded 715 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/RMySQL_0.10.13.tgz'
+Content type 'application/x-gzip' length 1343874 bytes (1.3 MB)
+==================================================
+downloaded 1.3 MB
+
+
+The downloaded binary packages are in
+	/var/folders/82/6cqy02ws7j3gl_8h2y2ygvzr0000gn/T//RtmpAXbHmf/downloaded_packages
+Loading required package: DBI
+Warning messages:
+1: package ‘RMySQL’ was built under R version 3.3.2 
+2: package ‘DBI’ was built under R version 3.3.2 
+> installed <- require("dplyr")
+Loading required package: dplyr
+Warning message:
+In library(package, lib.loc = lib.loc, character.only = TRUE, logical.return = TRUE,  :
+  there is no package called ‘dplyr’
+> if(!installed){
++   install.packages("dplyr", repos = "https://cran.rstudio.com")
++   library(dplyr)
++ }
+also installing the dependencies ‘bindr’, ‘assertthat’, ‘bindrcpp’, ‘glue’, ‘magrittr’, ‘pkgconfig’, ‘rlang’, ‘R6’, ‘Rcpp’, ‘tibble’, ‘BH’, ‘plogr’
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/bindr_0.1.tgz'
+Content type 'application/x-gzip' length 12121 bytes (11 KB)
+==================================================
+downloaded 11 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/assertthat_0.2.0.tgz'
+Content type 'application/x-gzip' length 41423 bytes (40 KB)
+==================================================
+downloaded 40 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/bindrcpp_0.2.tgz'
+Content type 'application/x-gzip' length 380129 bytes (371 KB)
+==================================================
+downloaded 371 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/glue_1.2.0.tgz'
+Content type 'application/x-gzip' length 56062 bytes (54 KB)
+==================================================
+downloaded 54 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/magrittr_1.5.tgz'
+Content type 'application/x-gzip' length 145876 bytes (142 KB)
+==================================================
+downloaded 142 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/pkgconfig_2.0.1.tgz'
+Content type 'application/x-gzip' length 15315 bytes (14 KB)
+==================================================
+downloaded 14 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/rlang_0.1.4.tgz'
+Content type 'application/x-gzip' length 457304 bytes (446 KB)
+==================================================
+downloaded 446 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/R6_2.2.2.tgz'
+Content type 'application/x-gzip' length 302478 bytes (295 KB)
+==================================================
+downloaded 295 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/Rcpp_0.12.14.tgz'
+Content type 'application/x-gzip' length 4091831 bytes (3.9 MB)
+==================================================
+downloaded 3.9 MB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/tibble_1.3.4.tgz'
+Content type 'application/x-gzip' length 351939 bytes (343 KB)
+==================================================
+downloaded 343 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/BH_1.65.0-1.tgz'
+Content type 'application/x-gzip' length 10252282 bytes (9.8 MB)
+==================================================
+downloaded 9.8 MB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/plogr_0.1-1.tgz'
+Content type 'application/x-gzip' length 11992 bytes (11 KB)
+==================================================
+downloaded 11 KB
+
+trying URL 'https://cran.rstudio.com/bin/macosx/mavericks/contrib/3.3/dplyr_0.7.4.tgz'
+Content type 'application/x-gzip' length 6006175 bytes (5.7 MB)
+==================================================
+downloaded 5.7 MB
+
+
+The downloaded binary packages are in
+	/var/folders/82/6cqy02ws7j3gl_8h2y2ygvzr0000gn/T//RtmpAXbHmf/downloaded_packages
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+Warning messages:
+1: 'tar' returned non-zero exit code 2 
+2: package ‘dplyr’ was built under R version 3.3.2 
+> 
+> mydb = dbConnect(MySQL(), user='root', password='bucci', dbname='buccidb2', host='localhost')
+> 
+> rs = dbSendQuery(mydb, "select * from song")
+> songs = fetch(rs, n=-1)
+> 
+> rs = dbSendQuery(mydb, "select  email from user LIMIT 50")
+> users = fetch(rs, n=-1)
+> 
+> rs = dbSendQuery(mydb, "select  * from song_plays")
+> song_plays = fetch(rs, n=-1)
+> 
+> max_range = 100
+> 
+> random = data.frame(replicate(1,sample(1:max_range,nrow(songs),rep=TRUE)))
+> colnames(random)[1] <-"num_rows"
+> 
+> songs$num_plays <- random$num_rows
+> 
+> songs.expanded <- songs[rep(seq_len(nrow(songs)), songs$num_plays), 1:2]
+> 
+> 
+> test <- songs.expanded %>% rowwise() %>% mutate(user= users[sample(nrow(users), 1), ] , date_played = sample(seq(as.Date('2017/01/01'), as.Date('2017/11/20'), by="day"), 1))
+
+Warning message:
+package ‘bindrcpp’ was built under R version 3.3.2 
+Execution halted

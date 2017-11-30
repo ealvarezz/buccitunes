@@ -10,6 +10,8 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.buccitunes.constants.Tier;
+
 @Entity(name="ArtistUser")
 public class ArtistUser extends User {
 	

@@ -1,5 +1,6 @@
 package com.buccitunes.miscellaneous;
 
+import com.buccitunes.constants.UserRole;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.PremiumUser;
@@ -7,10 +8,6 @@ import com.buccitunes.model.User;
 
 public class BucciPrivilege {
 	
-	public static final String USER = "User";
-	public static final String PREMIUM = "Premium";
-	public static final String ARTIST = "Artist";
-	public static final String ADMIN = "Admin";
 	
 	
 	public static boolean isPremium(User user) {
@@ -27,16 +24,16 @@ public class BucciPrivilege {
 	
 	public static User setRole(User user) {
 		if(isPremium(user)) {
-			user.setRole(PREMIUM);
+			user.setRole(UserRole.PREMIUM);
 		}
 		else if(isArtist(user)){
-			user.setRole(ARTIST);
+			user.setRole(UserRole.ARTIST);
 		}
 		else if(isAdmin(user)){
-			user.setRole(ADMIN);
+			user.setRole(UserRole.ADMIN);
 		}
 		else {
-			user.setRole(USER);
+			user.setRole(UserRole.USER);
 		}
 		return user;
 	}
