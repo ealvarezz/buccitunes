@@ -254,6 +254,10 @@ public class FileManager {
 		}
 	}
 	
+	public static void removeFileByStringPath(String strPath) {
+		Path path = getAbsolutePathFromResourceString(strPath);
+	}
+	
 	public static String getFilesPath() {
 		return FILESPATH.toString() + "/";
 	}

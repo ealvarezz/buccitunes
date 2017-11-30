@@ -255,4 +255,22 @@ public class AdminService {
 		
 		return result;
 	}
+	
+	public void removeRequestedSong(RequestedSong song) throws BucciException {
+		song = requestedSongRepository.findOne(song.getId());
+		if(song == null) {
+			throw new BucciException("Song not found");
+		}
+		
+		if(song.getPicturePath() != null) {
+			FileManager.removeFileByStringPath(song.getPicturePath());
+			song.setPicturePath(null);
+		}
+		if(song.getAudioPath() != null) {
+			FileManager.removeFileByStringPath(song.getAudioPath());
+			song.setAudioPath(null);
+		}
+		
+		requestedSongRepository.delete(song);
+	}
 }
