@@ -1,4 +1,4 @@
-package com.buccitunes.model;
+package com.buccitunes.constants;
 
 public enum Tier {
 

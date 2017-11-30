@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.constants.Tier;
 import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
@@ -32,7 +33,6 @@ import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
-import com.buccitunes.model.Tier;
 import com.buccitunes.model.User;
 
 @Service

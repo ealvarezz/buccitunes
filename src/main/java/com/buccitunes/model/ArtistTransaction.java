@@ -12,6 +12,8 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.buccitunes.constants.PaymentType;
+
 @Entity(name="ArtistTransaction")
 public class ArtistTransaction {
 

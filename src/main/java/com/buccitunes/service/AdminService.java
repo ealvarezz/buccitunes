@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.constants.PaymentType;
 import com.buccitunes.dao.*;
 import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
@@ -17,7 +18,6 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
-import com.buccitunes.model.PaymentType;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
