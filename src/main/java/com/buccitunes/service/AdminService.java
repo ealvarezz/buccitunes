@@ -140,12 +140,33 @@ public class AdminService {
 		
 		if(requestedAlbum.getArtworkPath() != null) {
 			try {				
-				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getId(), album.getId());
+				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getArtwork(), album.getId());
 				album.setArtworkPath(artworkPath);
 			} catch (IOException e) {
 				throw new BucciException("Unable to add artwork");
 			}
 		}
+		
+		if(requestedAlbum.getSongs() != null) {
+			List<RequestedSong> requestedSongs = requestedAlbum.getSongs();
+			List<Song> songs = album.getSongs();
+			
+			for (int i=0; i<requestedSongs.size() && i<songs.size(); i++) {
+				RequestedSong requestedSong = requestedSongs.get(i);
+				Song song = songs.get(i);
+				
+				if(requestedSong.getAudioPath() != null) {
+					try {
+						String audioPath = FileManager.moveRequestedAudio(requestedSong.getAudioPath(), song.getId());
+						song.setAudioPath(audioPath);
+					} catch (IOException e) {
+						System.out.println("\n================\n" + song.getName() + " could not save!!!==========\n");
+					}
+				}
+			}
+		}
+		
+		
 		
 		try {
 			FileManager.removeRequestedAlbumResources(requestedAlbum);
@@ -157,6 +178,7 @@ public class AdminService {
 		
 		return album;
 	}
+	
 	
 	public Song adminApproveSong(RequestedSong requestedSong) throws BucciException{
 		requestedSong = requestedSongRepository.findOne(requestedSong.getId());
@@ -176,7 +198,7 @@ public class AdminService {
 		
 		if(requestedSong.getPicturePath() != null) {
 			try {				
-				String artworkPath = FileManager.moveRequestedArtworkToSong(requestedSong.getId(), song.getId());
+				String artworkPath = FileManager.moveRequestedArtworkToSong(requestedSong.getPicturePath(), song.getId());
 				song.setPicturePath(artworkPath);
 			} catch (IOException e) {
 				throw new BucciException("Unable to add artwork");

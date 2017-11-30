@@ -129,9 +129,10 @@ private final RequestedSongRepository requestedSongRepository;
 	public RequestedAlbum requestNewAlbum(RequestedAlbum requested, ArtistUser artistUser) throws BucciException {
 		
 		String artwork = requested.getArtwork();
+		List<RequestedSong> audioSongs = requested.getSongs();
+		
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
 		requested.setArtistRequester(artistUser);
-		//requestedSongRepository.save(requested.getSongs());
 		RequestedAlbum requestedAlbum = requestedAlbumRepository.save(requested);
 		
 		if(artwork != null) {
@@ -139,9 +140,23 @@ private final RequestedSongRepository requestedSongRepository;
 				String artworkPath = FileManager.saveRequestedAlbumArtwork(artwork, requestedAlbum.getId());
 				requestedAlbum.setArtworkPath(artworkPath);
 			} catch (IOException e) {
-				throw new BucciException("UNABLE TO SAVE ARTWORK");
+				throw new BucciException("Unable to save artwork");
 			}
 		}
+		
+		if(audioSongs != null) {
+			requestedAlbum.getSongs().size();
+			for (RequestedSong songWithAudio : audioSongs) {
+				if(songWithAudio.getAudio() != null) {
+					try {
+						String audioPath = FileManager.saveRequestedSong(songWithAudio.getAudio(), songWithAudio.getId());
+						songWithAudio.setAudioPath(audioPath);
+					} catch (IOException e) {
+						System.out.println("\n================\n" + songWithAudio.getName() + " could not save!!!==========\n");
+					}
+				}
+			}
+		}		
 		return requestedAlbum;
 	}
 	

@@ -60,7 +60,7 @@ public class FileManager {
 	}
 	
 	private static Path getAbsolutePathFromResourceString(String path) {
-		String folderPath = path.toString().substring(RESOURCEPATHALIAS.length()+1);
+		String folderPath = path.toString().substring(RESOURCEPATHALIAS.length()-1);
 		return Paths.get(FILESPATH.toString() + folderPath);	
 	}
 	
@@ -74,42 +74,6 @@ public class FileManager {
         
         String strPath = saveImage(encodedStr, path);
         return strPath; 
-	}
-	
-	public static String moveRequestedArtworkToAlbum(int requestedId, int albumId) throws BucciException, IOException {
-		Path oldPath = Paths.get(REQUESTEDALBUMSPATH + "/" + requestedId +  "/" + ARTWORKIMAGE);
-		
-		if(Files.notExists(oldPath)) {
-        	throw new BucciException("'"+ oldPath + "' does not exist");
-        }
-		
-		Path newPath = Paths.get(ALBUMPATH + "/" + albumId +  "/" + ARTWORKIMAGE);
-		
-		if(Files.notExists(newPath)) {
-        	createDirectory(ALBUMPATH, albumId);
-        }
-		System.out.println("Moving From " + oldPath + " 	To 		" + newPath);
-		
-		String strPath = moveFile(oldPath, newPath);
-		return strPath;
-	}
-	
-	public static String moveRequestedArtworkToSong(int requestedId, int songId) throws BucciException, IOException {
-		Path oldPath = Paths.get(REQUESTEDSONGSMPATH + "/" + requestedId +  "/" + ARTWORKIMAGE);
-		
-		if(Files.notExists(oldPath)) {
-        	throw new BucciException("'"+ oldPath + "' does not exist");
-        }
-		
-		Path newPath = Paths.get(SONGPATH + "/" + songId +  "/" + ARTWORKIMAGE);
-		
-		if(Files.notExists(newPath)) {
-        	createDirectory(SONGPATH, songId);
-        }
-		System.out.println("Moving From " + oldPath + " 	To 		" + newPath);
-		
-		String strPath = moveFile(oldPath, newPath);
-		return strPath;
 	}
 	
 	public static String saveArtistAvatar(String encodedStr, int artistId) throws IOException {
@@ -161,6 +125,18 @@ public class FileManager {
         
 	}
 	
+	public static String saveRequestedSong(String encodedStr, int requestedId) throws IOException {
+		Path path = Paths.get(REQUESTEDSONGSMPATH + "/" + requestedId +  "/" + SONGAUDIO );
+        System.out.println(path);
+        
+        if(Files.notExists(path)) {
+        	createDirectory(REQUESTEDSONGSMPATH, requestedId);
+        }
+        
+        String strPath = saveAudio(encodedStr, path);
+        return strPath;
+	}
+	
 	/*
 	public static String saveRequestedSongArtwork(String encodedStr, int requestedId) throws IOException {
 		Path path = Paths.get(REQUESTEDALBUMSPATH + "/" + requestedId +  "/" + ARTWORKIMAGE);
@@ -190,6 +166,60 @@ public class FileManager {
 		Files.write(path, decodedBytes);
 		
 		return getResourcePathString(path.toString());
+	}
+	
+	public static String moveRequestedArtworkToAlbum(String requestedPath, int albumId) throws BucciException, IOException {
+		Path oldPath = getAbsolutePathFromResourceString(requestedPath);
+		
+		if(Files.notExists(oldPath)) {
+        	throw new BucciException("'"+ oldPath + "' does not exist");
+        }
+		
+		Path newPath = Paths.get(ALBUMPATH + "/" + albumId +  "/" + ARTWORKIMAGE);
+		
+		if(Files.notExists(newPath)) {
+        	createDirectory(ALBUMPATH, albumId);
+        }
+		System.out.println("Moving From " + oldPath + " 	To 		" + newPath);
+		
+		String strPath = moveFile(oldPath, newPath);
+		return strPath;
+	}
+	
+	public static String moveRequestedArtworkToSong(String requestedPath, int songId) throws BucciException, IOException {
+		Path oldPath = getAbsolutePathFromResourceString(requestedPath);
+		
+		if(Files.notExists(oldPath)) {
+        	throw new BucciException("'"+ oldPath + "' does not exist");
+        }
+		
+		Path newPath = Paths.get(SONGPATH + "/" + songId +  "/" + ARTWORKIMAGE);
+		
+		if(Files.notExists(newPath)) {
+        	createDirectory(SONGPATH, songId);
+        }
+		System.out.println("Moving From " + oldPath + " 	To 		" + newPath);
+		
+		String strPath = moveFile(oldPath, newPath);
+		return strPath;
+	}
+	
+	public static String moveRequestedAudio(String requestedPath, int songId) throws BucciException, IOException {
+		Path oldPath = getAbsolutePathFromResourceString(requestedPath);
+		
+		if(Files.notExists(oldPath)) {
+        	throw new BucciException("'"+ oldPath + "' does not exist");
+        }
+		
+		Path newPath = Paths.get(SONGPATH + "/" + songId +  "/" + SONGAUDIO);
+		
+		if(Files.notExists(newPath)) {
+        	createDirectory(SONGPATH, songId);
+        }
+		System.out.println("Moving From " + oldPath + " 	To 		" + newPath);
+		
+		String strPath = moveFile(oldPath, newPath);
+		return strPath;
 	}
 	
 	private static String moveFile(Path oldPath, Path newPath) throws IOException {
