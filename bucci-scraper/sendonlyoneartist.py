@@ -18,3 +18,4 @@ file = ARTISTPATH + ' '.join(sys.argv[1:cmdLength]) + ".json"
 artist_obj = json.loads(open(file, 'r').read())
 r = requests.post(ARTIST_ENDPOINT, json=artist_obj)
 print(file)
+print(r.json())
