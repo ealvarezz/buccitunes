@@ -50,10 +50,20 @@ public class AdminController {
 		}		
 	}
 	
-	@RequestMapping(value="add_album_admin", method = RequestMethod.POST)
-	public BucciResponse<Album> addAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
+	@RequestMapping(value="add_song", method = RequestMethod.POST)
+	public BucciResponse<Song> addSongToAlbum(@RequestBody Song song, HttpSession session) {
 		try {
-			Album album = adminService.addAlbum(requested);
+			Song newSong = adminService.addSongToAlbum(song);
+			return BucciResponseBuilder.successfulResponseMessage("New Album Added", newSong);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}		
+	}
+	
+	@RequestMapping(value="add_album_admin", method = RequestMethod.POST)
+	public BucciResponse<Album> addAlbum(@RequestBody Album albumToAdd, HttpSession session) {
+		try {
+			Album album = adminService.addAlbum(albumToAdd);
 			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
@@ -78,7 +88,6 @@ public class AdminController {
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
-		
 	}
 	
 	@RequestMapping(value="get_playsongs_this_month", method = RequestMethod.GET)
@@ -97,6 +106,16 @@ public class AdminController {
 	public @ResponseBody BucciResponse<List<RequestedAlbum>> getRequestedAlbums() {
 		List<RequestedAlbum> requested = adminService.getRequestedAlbums();
 		return BucciResponseBuilder.successfulResponse(requested);
+	}
+	
+	@RequestMapping(value="disapprove_request_album", method = RequestMethod.DELETE)
+	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedAlbum requestedAlbum) {		
+		try {
+			adminService.removeRequestedAlbum(requestedAlbum);
+			return BucciResponseBuilder.successMessage("Requested album deleted");
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
 	}
 	
 	@RequestMapping(value="disapprove_request_song", method = RequestMethod.DELETE)

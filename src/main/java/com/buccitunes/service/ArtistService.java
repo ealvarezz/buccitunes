@@ -161,8 +161,18 @@ private final RequestedSongRepository requestedSongRepository;
 		return requestedAlbum;
 	}
 	
-	public void addSongToAlbum(RequestedSong requestedSong){
+	public void requestSongToAlbum(RequestedSong requestedSong) throws BucciException{
 		
+		if(requestedSong.getAlbum() == null) {
+			throw new BucciException("No album specified");
+		}
+		RequestedAlbum album = requestedAlbumRepository.findOne(requestedSong.getAlbum().getId());
+		
+		if(album == null) {
+			throw new BucciException("Album does not exist");
+		}
+		
+		requestedSong.setAlbum(album);
 		requestedSongRepository.save(requestedSong);
 	}
 	
@@ -176,9 +186,7 @@ private final RequestedSongRepository requestedSongRepository;
 	}
 	
 	public void deleteAlbum(int albumId){
-		
 		albumRepository.delete(albumId);
-		
 	}
 	
 public Song saveAudioFile(Song audioSong, User user) throws BucciException {

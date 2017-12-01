@@ -95,22 +95,31 @@ public class AdminService {
 		return artUser;
 	}
 	
-	public Album addAlbum(RequestedAlbum requestedAlbum) throws BucciException {
+	public Song addSongToAlbum(Song song) throws BucciException{
+		/*if(song.getAlbum() == null) {
+			throw new BucciException("No album specified");
+		}
+		RequestedAlbum album = requestedAlbumRepository.findOne(requestedSong.getAlbum().getId());
+		*/
+		return null;
+	}
+	
+	public Album addAlbum(Album albumToAdd) throws BucciException {
 		
-		Artist artist = artistRepository.findOne(requestedAlbum.getPrimaryArtist().getId());
+		Artist artist = artistRepository.findOne(albumToAdd.getPrimaryArtist().getId());
 		if(artist == null) {
-			artist = artistRepository.findByName(requestedAlbum.getPrimaryArtist().getName());
+			artist = artistRepository.findByName(albumToAdd.getPrimaryArtist().getName());
 			if(artist == null) {
 				throw new BucciException("Artist not enter");
 			}
 		}
-		requestedAlbum.setPrimaryArtist(artist);
+		albumToAdd.setPrimaryArtist(artist);
 		
-		Album album = albumRepository.save(new Album(requestedAlbum));
+		Album album = albumRepository.save(albumToAdd);
 		
-		if(requestedAlbum.getArtwork() != null) {
+		if(albumToAdd.getArtwork() != null) {
 			try {
-				String artworkPath = FileManager.saveAlbumArtwork(requestedAlbum.getArtwork(), album.getId());
+				String artworkPath = FileManager.saveAlbumArtwork(albumToAdd.getArtwork(), album.getId());
 				album.setArtworkPath(artworkPath);
 			} catch (IOException e) {
 				throw new BucciException("UNABLE TO SAVE ARTWORK");
@@ -165,8 +174,6 @@ public class AdminService {
 				}
 			}
 		}
-		
-		
 		
 		try {
 			FileManager.removeRequestedAlbumResources(requestedAlbum);
@@ -254,6 +261,34 @@ public class AdminService {
 		for(RequestedAlbum requested: requestedAlbumRepository.findAll()) result.add(requested);
 		
 		return result;
+	}
+	
+	public void removeRequestedAlbum(RequestedAlbum album) throws BucciException {
+		album = requestedAlbumRepository.findOne(album.getId());
+		if(album == null) {
+			throw new BucciException("Album not found");
+		}
+		
+		if(album.getArtworkPath() != null) {
+			FileManager.removeFileByStringPath(album.getArtworkPath());
+			album.setArtworkPath(null);
+		}
+		
+		if(album.getSongs() != null && album.getSongs().size() > 0) {
+			for(RequestedSong song : album.getSongs()) {
+				if(song.getPicturePath() != null) {
+					FileManager.removeFileByStringPath(song.getPicturePath());
+					song.setPicturePath(null);
+				}
+				if(song.getAudioPath() != null) {
+					FileManager.removeFileByStringPath(song.getAudioPath());
+					song.setAudioPath(null);
+				}
+			}
+		}
+		
+		
+		requestedAlbumRepository.delete(album);
 	}
 	
 	public void removeRequestedSong(RequestedSong song) throws BucciException {

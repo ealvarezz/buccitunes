@@ -110,9 +110,11 @@ public class ArtistController {
 		}
 		
 		if(BucciPrivilege.isArtist(loggedUser)) {
-			
-			artistService.addSongToAlbum(requested);
-			
+			try {
+				artistService.requestSongToAlbum(requested);
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage(e.getErrMessage());
+			}
 			return BucciResponseBuilder.successfulResponse("Song request was submitted");
 		} else {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
