@@ -70,6 +70,21 @@ BEGIN
 	ORDER BY(genre_count) DESC;
 END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_recently_played`(IN email VARCHAR(100))
+BEGIN
+	SELECT DISTINCT M.artwork_path, M.date_created, M.title, A.* FROM
+	(
+		SELECT S.album_id, SP.date_played FROM 
+		buccidb2.song S
+		JOIN 
+		buccidb2.song_plays SP
+		ON S	.id = SP.song_id
+		WHERE SP.user_id = email
+		ORDER BY SP.date_played DESC
+		LIMIT 30			
+	) played_albums, buccidb2.album A, buccidb2.music_collection M
+	WHER	E A.id = played_albums.album_id AND A.id = M.id;
+END ^;
 
 
 
