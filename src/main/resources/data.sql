@@ -83,7 +83,7 @@ BEGIN
 		ORDER BY SP.date_played DESC
 		LIMIT 30			
 	) played_albums, buccidb2.album A, buccidb2.music_collection M
-	WHER	E A.id = played_albums.album_id AND A.id = M.id;
+	WHERE A.id = played_albums.album_id AND A.id = M.id;
 END ^;
 
 

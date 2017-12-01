@@ -70,24 +70,24 @@ public class Artist {
 	@JsonIgnoreProperties(value = "owner")
 	private List<Song> recentlyPlayed;
 	
-	@OneToOne(mappedBy="artist", cascade=CascadeType.ALL)
-	@JsonIgnoreProperties(value = "artist")
-	private ArtistStatCache artistStats;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stats_id")
+	private StatCache stats;
 
 	public Artist() {
-		this.artistStats = new ArtistStatCache();
+		this.stats = new StatCache();
 	}
 	
 	public Artist(String name, String biography) {
 		this.name = name;
 		this.biography = biography;
-		this.artistStats = new ArtistStatCache();
+		this.stats = new StatCache();
 	}
 	
 	public Artist(RequestedArtist requested) {
 		this.name = requested.getName();
 		this.biography = requested.getBiography();
-		this.artistStats = new ArtistStatCache();
+		this.stats = new StatCache();
 	}
 	
 	public int getId() {
@@ -145,12 +145,12 @@ public class Artist {
 		this.recentlyPlayed = recentlyPlayed;
 	}
 	
-	public ArtistStatCache getStats() {
-		return artistStats;
+	public StatCache getStats() {
+		return stats;
 	}
 	
-	public void setStats(ArtistStatCache stats) {
-		this.artistStats = stats;
+	public void setStats(StatCache stats) {
+		this.stats = stats;
 	}
 	
 	public String getName() {
