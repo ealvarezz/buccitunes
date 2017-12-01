@@ -4,7 +4,7 @@ export class Song{
     public name             : string = "Homecoming";
     public duration         : number = 280;
     public rating           : number;
-    public isExplicit       : boolean = false;
+    public explicit       : boolean = false;
     public owner            : Artist;
     public featuredArtists  : Artist[];
     public mimeType         : string;

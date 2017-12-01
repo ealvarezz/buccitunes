@@ -1,12 +1,12 @@
  <h1 md-dialog-title>Pending Song</h1>
  
 <md-grid-list cols="3" rowHeight="30px">
-    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Song Name</b></span></md-grid-tile>
-    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.data.name}}</span></md-grid-tile>
+    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.title}}</span></md-grid-tile>
     <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Artist</b></span></md-grid-tile>
-    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.data.artist_name}}</span></md-grid-tile>
-    <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Album</b></span></md-grid-tile>
-    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.data.album}}</span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.primaryArtist.name}}</span></md-grid-tile>
+    <!-- <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Album</b></span></md-grid-tile>
+    <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{data.data.album}}</span></md-grid-tile> -->
     <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>File Size</b></span></md-grid-tile>
     <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">4.5 MB</span></md-grid-tile>
     <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Song Duration</b></span></md-grid-tile>
@@ -14,6 +14,8 @@
     <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Flag As Explicit</b></span></md-grid-tile>
     <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"><md-slide-toggle color="warn"></md-slide-toggle></span></md-grid-tile>
 </md-grid-list>
+
+<music-table [data] = "data.songs" [isAlbum]="true"> </music-table>
 
 
 
@@ -41,7 +43,7 @@
 
 <div class="song-file">
     <i class="material-icons" style="float:left; font-size:36px;">attachment</i>
-    <p><a routerLink="/">{{data.data.name}}.mp3</a></p>
+    <p><a routerLink="/">{{data.name}}.mp3</a></p>
 </div>
 
 <button md-raised-button color="primary">Accept Request</button>
