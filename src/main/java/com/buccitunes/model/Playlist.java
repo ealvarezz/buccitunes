@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -26,6 +27,13 @@ public class Playlist extends MusicCollection {
 	private boolean isCollaborative;
 	
 	private boolean isPublic;
+	
+	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinTable(name = "playlist_song",
+		joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
+	@JsonIgnoreProperties(value = "owner")
+	private List<Song> songs;
 	
 	@ManyToOne
     @JoinColumn(name = "user_id", insertable = false, updatable = false)
@@ -45,12 +53,25 @@ public class Playlist extends MusicCollection {
 		super();
 	};
 	
+	public Playlist(List<Song> songs){
+		super();
+		this.songs = songs;
+	};
+	
 	public PlaylistStatCache getPlaylistStatCache() {
 		return playlistStatCache;
 	}
 
 	public void setPlaylistStatCache(PlaylistStatCache playlistStatCache) {
 		this.playlistStatCache = playlistStatCache;
+	}
+
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
 	}
 
 	public boolean isCollaborative() {

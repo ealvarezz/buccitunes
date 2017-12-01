@@ -33,12 +33,6 @@ public class MusicCollection {
 	
 	private String title;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "music_collection_song",
-		joinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
-	@JsonIgnoreProperties(value = "owner")
-	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date dateCreated;
@@ -53,12 +47,8 @@ public class MusicCollection {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private CurrentStats currentStats;
 	
-	public MusicCollection(){
-		this.dateCreated = new Date();
-	};
 	
-	public MusicCollection(List<Song> songs){
-		this.songs = songs;
+	public MusicCollection(){
 		this.dateCreated = new Date();
 	};
 	
@@ -83,14 +73,6 @@ public class MusicCollection {
 		this.title = title;
 	}
 	
-	public List<Song> getSongs() {
-		return songs;
-	}
-	
-	public void setSongs(List<Song> songs) {
-		this.songs = songs;
-	}
-	
 	public Date getDateCreated() {
 		return dateCreated;
 	}
@@ -99,13 +81,6 @@ public class MusicCollection {
 		this.dateCreated = dateCreated;
 	}
 	
-	public void addSong(Song song) {
-		this.songs.remove(song);
-	}
-	
-	public void removeSong(Song song) {
-		this.songs.add(song);
-	}
 
 	public String getArtwork() {
 		return artwork;

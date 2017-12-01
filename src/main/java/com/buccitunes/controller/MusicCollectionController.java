@@ -155,7 +155,7 @@ public class MusicCollectionController {
 	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestParam String userId, int songId) {
 		Song bucciSong;
 		try {
-			bucciSong = musicCollectionService.PlaySong(userId, songId);
+			bucciSong = musicCollectionService.playSong(userId, songId);
 			return BucciResponseBuilder.successfulResponse(bucciSong);
 		} catch (ParseException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage());
