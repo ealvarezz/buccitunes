@@ -113,7 +113,11 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="signup", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<User> updateUserName(@RequestBody SignupFormInfo signupInfo) {
+	public @ResponseBody BucciResponse<User> updateUserName(@RequestBody SignupFormInfo signupInfo, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		if(loggedUser != null) {
+			return BucciResponseBuilder.failedMessage("Already Logged In");
+		}
 		try{
 			User newUser = userService.signup(signupInfo);
 			BucciResponse<User> success = BucciResponseBuilder.successfulResponseMessage("Successful Signup", newUser);
@@ -126,9 +130,9 @@ public class UserController {
 	@RequestMapping(value="login", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> login(@RequestBody LoginInfo loginInfo, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
-		/*if(loggedUser != null) {
+		if(loggedUser != null) {
 			return BucciResponseBuilder.failedMessage("Already Logged In");
-		}*/
+		}
 		
 		User account = userService.findOne(loginInfo.email);
 		

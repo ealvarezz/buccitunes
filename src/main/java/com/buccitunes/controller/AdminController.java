@@ -98,4 +98,15 @@ public class AdminController {
 		List<RequestedAlbum> requested = adminService.getRequestedAlbums();
 		return BucciResponseBuilder.successfulResponse(requested);
 	}
+	
+	@RequestMapping(value="disapprove_request_song", method = RequestMethod.DELETE)
+	public BucciResponse<String> deleteRequestedSong(@RequestBody RequestedSong requestedSong) {		
+		try {
+			adminService.removeRequestedSong(requestedSong);
+			return BucciResponseBuilder.successMessage("Requested song deleted");
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
+	}
 }

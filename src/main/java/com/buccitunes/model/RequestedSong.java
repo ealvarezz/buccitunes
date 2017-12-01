@@ -31,9 +31,9 @@ public class RequestedSong{
 	
 	private int duration;
 	
-	@ManyToOne
+	@ManyToOne(fetch=FetchType.LAZY)
     @JoinColumn(name = "album_id")
-	private Album album;
+	private RequestedAlbum album;
 	
 	@OneToOne
     @JoinColumn(name = "owner_id")
@@ -215,12 +215,12 @@ public class RequestedSong{
 	}
 
 
-	public Album getAlbum() {
+	public RequestedAlbum getAlbum() {
 		return album;
 	}
 
 
-	public void setAlbum(Album album) {
+	public void setAlbum(RequestedAlbum album) {
 		this.album = album;
 	}
 

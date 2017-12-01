@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
@@ -58,10 +59,7 @@ public class RequestedAlbum {
 		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 	private List<Genre> genres;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-	@JoinTable(name = "Requested_Songs_For_Album",
-		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "album", cascade = CascadeType.ALL)
 	private List<RequestedSong> songs;
 	
 	private String comments;
