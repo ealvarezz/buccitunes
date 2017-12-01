@@ -1,12 +1,12 @@
 spring:
   jpa:
-   generate-ddl: false
+   generate-ddl: true
    hibernate:
-     ddl-auto: false
+     ddl-auto: create
      properties:
        dialect: org.hibernate.dialect.MySQL5Dialect
   datasource:
-    initialize: false
+    initialize: true
     url: jdbc:mysql://localhost/buccidb2?useSSL=false
     username: root
     password: bucci

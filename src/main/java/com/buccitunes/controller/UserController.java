@@ -277,4 +277,16 @@ public class UserController {
 		
 	}
 	*/
+	
+	@RequestMapping(value="recently_played", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Album>> getUserRecentlyPlayedAlbums(HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(BucciConstant.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Album> recentlyPlayedAlbums = userService.getRecentAlbumsPlayed(sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse(recentlyPlayedAlbums);	
+		}
+	}
 }

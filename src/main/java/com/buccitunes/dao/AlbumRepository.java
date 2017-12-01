@@ -35,6 +35,8 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 			+ "\n#pageable\n", nativeQuery = true)
 	public List<Album> getNewReleasesOfMonth(Pageable page);
 	
+	@Query(value="CALL get_recently_played(:email);", nativeQuery = true)
+	public List<Album> getRecentlyPlayed(@Param("email") String email);
 	
 	/*
 	 * 	@Query(value=""

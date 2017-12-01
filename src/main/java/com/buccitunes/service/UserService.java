@@ -232,4 +232,9 @@ public class UserService  {
 		return user.getSavedSongs();
 		
 	}
+	
+	public List<Album> getRecentAlbumsPlayed(String email){
+		
+		return albumRepository.getRecentlyPlayed(email);
+	}
 }

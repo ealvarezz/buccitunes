@@ -60,7 +60,7 @@
             <button (click)="removeSong(song)" md-icon-button style="float:right"><i class="material-icons">close</i></button>
           </div>
           <div>
-            <md-slide-toggle [(ngModel)]="song.isExplicit" [ngModelOptions]="{standalone: true}">Mark As Explicit</md-slide-toggle>
+            <md-slide-toggle [(ngModel)]="song.explicit" [ngModelOptions]="{standalone: true}">Mark As Explicit</md-slide-toggle>
           </div>
           <div>
             <md-form-field class="demo-chip-list">

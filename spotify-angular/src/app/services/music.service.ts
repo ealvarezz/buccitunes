@@ -41,9 +41,9 @@ export class MusicCollectionService {
             });
     }
 
-    addAlbum(album : RequestedAlbum){
+    addAlbumAdmin(album : RequestedAlbum){
         console.log(album);
-        return this.http.post<BucciResponse<Album>>(environment.ADD_ALBUM_ENDPOINT,
+        return this.http.post<BucciResponse<Album>>(environment.ADD_ALBUM_ENDPOINT_ADMIN,
          album, 
          { withCredentials: true }).
             map(bucci  => {
@@ -59,6 +59,27 @@ export class MusicCollectionService {
             });
 
     }
+
+    addAlbumArtist(album: RequestedAlbum){
+        console.log(album);
+        return this.http.post<BucciResponse<Album>>(environment.ADD_ALBUM_ENDPOINT_ARTIST,
+         album, 
+         { withCredentials: true }).
+            map(bucci  => {
+                if(bucci.successful){
+                    return bucci.response;
+                }
+                else{
+                    throw new Error(bucci.message);
+                }
+                
+            }).catch((error : any) =>{
+                return Observable.throw(new Error(error.message));
+            });
+
+    }
+
+
 
     addPlaylist(playlist : Playlist){
         return this.http.post<BucciResponse<Playlist>>(environment.ADD_PLAYLIST_ENDPOINT,

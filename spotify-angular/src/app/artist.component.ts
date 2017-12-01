@@ -2,6 +2,7 @@ import { Component, OnInit, Inject } from '@angular/core';
 import { environment } from '../environments/environment';
 import {Song} from './objs/Song';
 import {Album} from './objs/Album';
+import {User} from './objs/User';
 import {RequestedAlbum} from './objs/RequestedAlbum';
 import {Artist} from './objs/Artist';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
@@ -11,6 +12,7 @@ import {ArtistService} from './services/artist.service';
 import {MusicCollectionService} from './services/music.service';
 import { Observable } from 'rxjs/Rx';
 import {NotificationsService} from 'angular4-notifications';
+import {AuthenticationService} from './services/authentication.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 @Component({
@@ -21,17 +23,20 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class ArtistComponent implements OnInit {
 
   artist        : Artist;
+  currentUser      : User;
   songs         : Song[] =  [new Song(), new Song(), new Song(), new Song(), new Song(), new Song() , new Song() , new Song() , new Song() , new Song()];
   viewSongs     : Song[] = this.songs.slice(0,5);
   showAllSongs  : boolean = false;
   isEditModeBio : boolean = false;
 
-  constructor(public dialog: MdDialog, private artistService : ArtistService, private route: ActivatedRoute, private notificationService : NotificationsService){}
+  constructor(public dialog: MdDialog, private artistService : ArtistService, private route: ActivatedRoute, private notificationService : NotificationsService, private authenticationService : AuthenticationService){}
 
   ngOnInit(){
     this.route.params.subscribe(params => {
         this.getArtist(+params['id']);
     });
+
+    this.currentUser = this.authenticationService.getLoggedInUser();
   }
   getArtist(id : number ){
    this.artistService.getArtist(id)
@@ -45,7 +50,13 @@ export class ArtistComponent implements OnInit {
   }
 
   addAlbum(){
-    let dialogRef = this.dialog.open(AddAlbumDialog,{data: {artist: this.artist}});
+    let dialogRef = this.dialog.open(AddAlbumDialog, 
+      {
+        data: {
+          artist  : this.artist,
+          user    : this.currentUser
+        }
+      });
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
@@ -88,6 +99,7 @@ export class AddAlbumDialog {
   months            : string[] = ['January','Feburary','March','April','May','June','July','August','September','October','November','Decemeber']
   currentAlbum      : RequestedAlbum;
   artist            : Artist;
+  user              : User;
   albumArtworkPath  : string = '';
   releaseMonth      : string;
   releaseDay        : number;
@@ -108,8 +120,10 @@ export class AddAlbumDialog {
 
 
   ngOnInit() {
-    // this.currentAlbum.featuredArtist = ['R Kelly', 'Lil Jon', 'Lil B','Big Shaq'];
+
     this.artist = this.data.artist;
+    this.user = this.data.user;
+
     this.currentAlbum = new RequestedAlbum();
 
     this.infoFormGroup = this._formBuilder.group({
@@ -201,10 +215,35 @@ export class AddAlbumDialog {
     this.currentAlbum.releaseDate.setFullYear(this.releaseYear);
   }
 
+
   submitAlbum(){
     this.currentAlbum.primaryArtist = this.artist;
     this.currentAlbum.artwork = this.currentAlbum.artwork.split(",")[1];
-    this.musicService.addAlbum(this.currentAlbum)
+
+    if(this.user.role === environment.ARTIST_ROLE){
+      this.submitAlbumArtist();
+    }
+    else{
+      this.submitAlbumAdmin();
+    }
+
+  }
+
+  submitAlbumArtist(){
+    this.musicService.addAlbumArtist(this.currentAlbum)
+            .subscribe(
+                (data) => {
+                    console.log(data);
+                    this.dialogRef.close(true);
+                },
+                (err) => {
+                    console.log(err.message);
+                });
+
+  }
+
+  submitAlbumAdmin(){
+    this.musicService.addAlbumAdmin(this.currentAlbum)
             .subscribe(
                 (data) => {
                     console.log(data);
