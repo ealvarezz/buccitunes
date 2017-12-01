@@ -59,7 +59,8 @@ public class RequestedAlbum {
 		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 	private List<Genre> genres;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "album", cascade = CascadeType.ALL)
+	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name="album_id")
 	private List<RequestedSong> songs;
 	
 	private String comments;

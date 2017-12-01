@@ -146,6 +146,7 @@ private final RequestedSongRepository requestedSongRepository;
 		
 		if(audioSongs != null) {
 			requestedAlbum.getSongs().size();
+			
 			for (RequestedSong songWithAudio : audioSongs) {
 				if(songWithAudio.getAudio() != null) {
 					try {

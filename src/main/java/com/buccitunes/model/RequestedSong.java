@@ -31,8 +31,8 @@ public class RequestedSong{
 	
 	private int duration;
 	
-	@ManyToOne(fetch=FetchType.LAZY)
-    @JoinColumn(name = "album_id")
+	@ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+	@JoinColumn(name="album_id")
 	private RequestedAlbum album;
 	
 	@OneToOne
