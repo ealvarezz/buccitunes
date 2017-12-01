@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Album;
@@ -42,6 +44,16 @@ public class AdminController {
 	
 	@RequestMapping(value="approve_artist", method = RequestMethod.POST)
 	public BucciResponse<ArtistUser> approveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
+		/*
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage("You do not have permissions!");
+		}
+		*/
+		
 		try {
 			ArtistUser artist = adminService.adminApproveArtist(requested);
 			return BucciResponseBuilder.successfulResponseMessage("New Artist Added", artist);
@@ -52,6 +64,16 @@ public class AdminController {
 	
 	@RequestMapping(value="add_song", method = RequestMethod.POST)
 	public BucciResponse<Song> addSongToAlbum(@RequestBody Song song, HttpSession session) {
+		/*
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage("You do not have permissions!");
+		}
+		*/
+		
 		try {
 			Song newSong = adminService.addSongToAlbum(song);
 			return BucciResponseBuilder.successfulResponseMessage("New Album Added", newSong);
@@ -62,6 +84,14 @@ public class AdminController {
 	
 	@RequestMapping(value="add_album_admin", method = RequestMethod.POST)
 	public BucciResponse<Album> addAlbum(@RequestBody Album albumToAdd, HttpSession session) {
+		/*User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage("You do not have permissions!");
+		}
+		*/
 		try {
 			Album album = adminService.addAlbum(albumToAdd);
 			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);

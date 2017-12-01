@@ -161,18 +161,24 @@ private final RequestedSongRepository requestedSongRepository;
 		return requestedAlbum;
 	}
 	
-	public void requestSongToAlbum(RequestedSong requestedSong) throws BucciException{
+	public void requestSongToAlbum(RequestedSong requestedSong, ArtistUser user) throws BucciException{
 		
 		if(requestedSong.getAlbum() == null) {
 			throw new BucciException("No album specified");
 		}
 		RequestedAlbum album = requestedAlbumRepository.findOne(requestedSong.getAlbum().getId());
-		
 		if(album == null) {
 			throw new BucciException("Album does not exist");
 		}
 		
+		ArtistUser artistUser = artistUserRepository.findOne(user.getEmail());
+		if(artistUser.getArtist().getId() != album.getPrimaryArtist().getId()) {
+			throw new BucciException("You do not own the album in order to add a song");
+		}
+			
+		requestedSong.setArtist(album.getPrimaryArtist());
 		requestedSong.setAlbum(album);
+		requestedSong.setRequester(artistUser);
 		requestedSongRepository.save(requestedSong);
 	}
 	

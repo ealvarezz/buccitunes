@@ -16,7 +16,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
@@ -44,12 +43,11 @@ public class Song {
     @JoinColumn(name = "album_id")
 	private Album album;
 	
-	private boolean explicit; /* change to explicit, rob kelly doesn't like verbs in variables */
+	private boolean explicit;
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
 	@JsonIgnoreProperties(value = "recentlyPlayed")
-	//@JsonBackReference
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)

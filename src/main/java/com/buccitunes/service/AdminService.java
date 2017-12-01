@@ -96,12 +96,19 @@ public class AdminService {
 	}
 	
 	public Song addSongToAlbum(Song song) throws BucciException{
-		/*if(song.getAlbum() == null) {
+		if(song.getAlbum() == null) {
 			throw new BucciException("No album specified");
 		}
-		RequestedAlbum album = requestedAlbumRepository.findOne(requestedSong.getAlbum().getId());
-		*/
-		return null;
+		
+		Album album = albumRepository.findOne(song.getAlbum().getId());
+		if(album == null) {
+			throw new BucciException("Album does not exist");
+		}
+		
+		song.setAlbum(album);
+		songRepository.save(song);
+		
+		return song;
 	}
 	
 	public Album addAlbum(Album albumToAdd) throws BucciException {

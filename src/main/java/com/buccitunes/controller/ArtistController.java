@@ -111,18 +111,18 @@ public class ArtistController {
 		
 		if(BucciPrivilege.isArtist(loggedUser)) {
 			try {
-				artistService.requestSongToAlbum(requested);
+				artistService.requestSongToAlbum(requested, (ArtistUser) loggedUser);
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(e.getErrMessage());
 			}
-			return BucciResponseBuilder.successfulResponse("Song request was submitted");
+			return BucciResponseBuilder.successMessage("Song request was submitted");
 		} else {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
 		}
 	}
 	
 	@RequestMapping(value="delete_album", method = RequestMethod.DELETE)
-	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, HttpSession session) {
+	public BucciResponse<String> deleteAlbum(@RequestParam int albumId, HttpSession session) {
 		
 		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
@@ -134,7 +134,7 @@ public class ArtistController {
 			
 			artistService.deleteAlbum(albumId);
 			
-			return BucciResponseBuilder.successfulResponse("Song request was submitted");
+			return BucciResponseBuilder.successMessage("Album deleted");
 		} else {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
 		}
