@@ -34,7 +34,7 @@ public class User {
 	
 	String username;
 	
-	boolean verified;
+	boolean privateSongPlaysMode;
 	
 	@Transient
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -150,12 +150,12 @@ public class User {
 		this.username = username;
 	}
 	
-	public boolean isVerified() {
-		return verified;
+	public boolean isPrivateSongPlaysMode() {
+		return privateSongPlaysMode;
 	}
 	
-	public void setVerified(boolean verified) {
-		this.verified = verified;
+	public void setPrivateSongPlaysMode(boolean verified) {
+		this.privateSongPlaysMode = verified;
 	}
 	
 	public String getProfilePicturePath() {

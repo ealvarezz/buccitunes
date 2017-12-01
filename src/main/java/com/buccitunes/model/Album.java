@@ -89,7 +89,7 @@ public class Album extends MusicCollection {
 		this.songs = newSongs;
 	};
 	
-	public Album(RequestedAlbum requested) {
+	public Album(RequestedAlbum requested, boolean addSongs) {
 		
 		super(requested.getTitle());
 		this.primaryArtist = requested.getPrimaryArtist();
@@ -99,19 +99,22 @@ public class Album extends MusicCollection {
 		this.genres = requested.getGenres();
 		
 		List<Song> newSongs = new ArrayList<Song>();
-		List<RequestedSong> requestedSongs = requested.getSongs();
 		
-		for(RequestedSong requestedSong : requestedSongs) {
-			Song newSong = new Song(requestedSong);
+		if(addSongs) {
+			List<RequestedSong> requestedSongs = requested.getSongs();
 			
-			if(newSong.getOwner() == null) {
-				newSong.setOwner(requested.getPrimaryArtist());
+			for(RequestedSong requestedSong : requestedSongs) {
+				Song newSong = new Song(requestedSong);
+				
+				if(newSong.getOwner() == null) {
+					newSong.setOwner(requested.getPrimaryArtist());
+				}
+				
+				newSongs.add(newSong);
 			}
 			
-			newSongs.add(newSong);
+			this.setSongs(newSongs);
 		}
-		
-		this.setSongs(newSongs);
 	}
 
 	public List<Song> getSongs() {

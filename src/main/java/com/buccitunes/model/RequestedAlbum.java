@@ -54,6 +54,10 @@ public class RequestedAlbum {
 	
 	private Date dateCreated;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String adminComments;
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Genre_Requested_Album",
 		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
