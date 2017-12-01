@@ -18,6 +18,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="RequestedSong")
@@ -33,6 +34,7 @@ public class RequestedSong{
 	
 	@ManyToOne(fetch=FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE})
 	@JoinColumn(name="album_id")
+	@JsonIgnoreProperties(value = "songs")
 	private RequestedAlbum album;
 	
 	@OneToOne

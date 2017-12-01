@@ -52,6 +52,7 @@ public class Album extends MusicCollection {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "album_id")
+	@JsonIgnoreProperties(value = "album")
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")

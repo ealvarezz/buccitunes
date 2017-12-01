@@ -261,6 +261,18 @@ public class AdminService {
 		return total;
 	}
 	
+	public RequestedAlbum getRequestedAlbum(int id) throws BucciException {
+		RequestedAlbum album = requestedAlbumRepository.findOne(id);
+		if(album == null) {
+			throw new BucciException("Requested album not found");
+		}
+		
+		album.getSongs().size();
+		album.getPrimaryArtist();
+		album.getRequester();
+		
+		return album;
+	}
 	
 	public List<RequestedAlbum> getRequestedAlbums() {
 				

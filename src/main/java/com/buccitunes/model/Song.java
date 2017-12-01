@@ -41,6 +41,7 @@ public class Song {
 	
 	@ManyToOne(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     @JoinColumn(name = "album_id")
+	@JsonIgnoreProperties(value = "songs")
 	private Album album;
 	
 	private boolean explicit;

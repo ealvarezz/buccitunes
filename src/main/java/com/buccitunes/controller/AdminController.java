@@ -132,10 +132,20 @@ public class AdminController {
 		return BucciResponseBuilder.successfulResponse(new Double(totalPaid));
 	}
 	
-	@RequestMapping(value="requestedalbums", method = RequestMethod.GET)
+	@RequestMapping(value="requested_albums", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<RequestedAlbum>> getRequestedAlbums() {
 		List<RequestedAlbum> requested = adminService.getRequestedAlbums();
 		return BucciResponseBuilder.successfulResponse(requested);
+	}
+	
+	@RequestMapping(value="requested_album_info", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<RequestedAlbum> getRequestedAlbum(@RequestParam int id) {
+		try {
+			RequestedAlbum requested = adminService.getRequestedAlbum(id);
+			return BucciResponseBuilder.successfulResponse(requested);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
 	}
 	
 	@RequestMapping(value="disapprove_request_album", method = RequestMethod.DELETE)

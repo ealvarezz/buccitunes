@@ -17,6 +17,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 
 
@@ -61,6 +62,7 @@ public class RequestedAlbum {
 	
 	@OneToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
 	@JoinColumn(name="album_id")
+	@JsonIgnoreProperties(value = "album")
 	private List<RequestedSong> songs;
 	
 	private String comments;
