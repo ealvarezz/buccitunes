@@ -40,6 +40,10 @@ public class Song {
 	
 	private int rating;
 	
+	@ManyToOne(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
+    @JoinColumn(name = "album_id")
+	private Album album;
+	
 	private boolean explicit; /* change to explicit, rob kelly doesn't like verbs in variables */
 	
 	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
@@ -101,6 +105,15 @@ public class Song {
 		this.songStats = new SongStatCache();
 	}
 	
+	
+	public Album getAlbum() {
+		return album;
+	}
+
+	public void setAlbum(Album album) {
+		this.album = album;
+	}
+
 	public int getId() {
 		return id;
 	}

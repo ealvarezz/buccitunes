@@ -171,7 +171,7 @@ public class MusicCollectionService {
 			album.setDateCreated(new Date());
 	}
 	
-	public Song PlaySong(String userId, int songId) throws ParseException {
+	public Song playSong(String userId, int songId) throws ParseException {
 		
 		User user = userRepository.findOne(userId);
 		Song song = songRepository.findOne(songId);

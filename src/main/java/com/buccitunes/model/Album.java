@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Transient;
 import javax.persistence.SqlResultSetMapping;
@@ -49,6 +50,9 @@ public class Album extends MusicCollection {
 		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Artist> featuredArtists;
 	
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "album_id")
+	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date releaseDate;
@@ -81,7 +85,7 @@ public class Album extends MusicCollection {
 	}
 
 	public Album(List<Song> newSongs){
-		super(newSongs);
+		this.songs = newSongs;
 	};
 	
 	public Album(RequestedAlbum requested) {
@@ -106,7 +110,15 @@ public class Album extends MusicCollection {
 			newSongs.add(newSong);
 		}
 		
-		super.setSongs(newSongs);
+		this.setSongs(newSongs);
+	}
+
+	public List<Song> getSongs() {
+		return songs;
+	}
+
+	public void setSongs(List<Song> songs) {
+		this.songs = songs;
 	}
 
 	public Artist getPrimaryArtist() {
