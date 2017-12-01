@@ -22,7 +22,7 @@ import {MusicService} from './services/player.service';
 import {ArtistComponent} from './artist.component';
 import {MiniAlbumComponent} from './mini-album.component';
 import {AdminComponent} from './admin.component';
-import {RequestTableComponent} from './request-table.component';
+import {RequestedAlbumTableComponent} from './request-table.component';
 import {DetailDialog} from './admin.component';
 import {AddAlbumDialog} from './artist.component'
 import {AuthenticationService} from './services/authentication.service'
@@ -38,6 +38,7 @@ import {DomSanitizer} from '@angular/platform-browser';
 import { SimpleNotificationsModule } from 'angular4-notifications';
 import {SongLibrary} from './song-library.component'
 import {AlbumLibrary} from './saved-albums.component';
+import {AdminService} from './services/admin.service';
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, 
@@ -73,7 +74,7 @@ const appRoutes: Routes = [
     ArtistComponent,
     MiniAlbumComponent,
     AdminComponent,
-    RequestTableComponent,
+    RequestedAlbumTableComponent,
     DetailDialog,
     AddAlbumDialog,
     AddPlaylistDialog,
@@ -120,6 +121,7 @@ const appRoutes: Routes = [
     AuthenticationService,
     ArtistService,
     MusicCollectionService,
+    AdminService,
     AuthGuard,
     { provide: MD_DIALOG_DATA, useValue: {} },
     { provide: MdDialogRef, useValue: {} }

@@ -10,13 +10,17 @@ export const environment = {
   GET_ARTIST_ENDPOINT       : "http://localhost:8080" + "/artist",
   LOGIN_ENDPOINT            : "http://localhost:8080" + "/login",
   GET_ALBUM_ENDPOINT        : "http://localhost:8080" + "/album",
-  ADD_ALBUM_ENDPOINT        : "http://localhost:8080" + "/approveAlbum",
+  ADD_ALBUM_ENDPOINT_ADMIN  : "http://localhost:8080" + "/add_album_admin",
+  ADD_ALBUM_ENDPOINT_ARTIST : "http://localhost:8080" + "/request_album",
   ADD_PLAYLIST_ENDPOINT     : "http://localhost:8080" + "/newplaylist",
   SAVE_SONG_ENDPOINT        : "http://localhost:8080" + "/save_song",
   GET_SONG_LIBRARY_ENDPOINT : "http://localhost:8080" + "/saved_songs",
   SAVE_ALBUM_ENDPOINT       : "http://localhost:8080" + "/save_album",
   GET_SAVED_ALBUMS_ENDPOINT : "http://localhost:8080" + "/saved_albums",
+  GET_REQ_ALBUMS_ENDPOINT   : "http://localhost:8080" + "/requestedalbums",
 
+  ARTIST_ROLE               : "ARTIST",
+  ADMIN_ROLE                : "ADMIN",
 
   //LOGIN PAGE
   INVALID_EMAIL         : "Not a valid email address",

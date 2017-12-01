@@ -1,0 +1,14 @@
+<md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Album Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-table [requests] = "requests" (openDialog)="openDialog($event)"></request-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button color="primary">Accept Selected</button>
+                    <button md-raised-button color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>

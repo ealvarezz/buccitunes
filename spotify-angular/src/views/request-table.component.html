@@ -11,24 +11,24 @@
     </ng-container>
 
     <!-- Progress Column -->
-    <ng-container mdColumnDef="requested_content">
-      <md-header-cell *mdHeaderCellDef> Requested Content </md-header-cell>
-      <md-cell *mdCellDef="let row"> {{row.data.name}} </md-cell>
+    <ng-container mdColumnDef="requested_album">
+      <md-header-cell *mdHeaderCellDef> Requested Album </md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.title}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="artist">
       <md-header-cell *mdHeaderCellDef>Artist</md-header-cell>
-      <md-cell *mdCellDef="let row"> {{row.data.artist_name}}  </md-cell>
+      <md-cell *mdCellDef="let row"> <a [routerLink] ="['/artist', row.primaryArtist.id]">{{row.primaryArtist.name}}</a>  </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="created_by">
-      <md-header-cell *mdHeaderCellDef>Created By</md-header-cell>
-      <md-cell *mdCellDef="let row"> <div>{{row.created_by}}</div> </md-cell>
+      <md-header-cell *mdHeaderCellDef>Requested By</md-header-cell>
+      <md-cell *mdCellDef="let row"> <div>{{row.requester.name}}</div> </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="requested_date">
       <md-header-cell *mdHeaderCellDef> Requested Date</md-header-cell>
-      <md-cell *mdCellDef="let row"> <div>{{row.requested_date | date:'medium'}}</div> </md-cell>
+      <md-cell *mdCellDef="let row"> <div>{{row.dateCreated | date:'medium'}}</div> </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="details">

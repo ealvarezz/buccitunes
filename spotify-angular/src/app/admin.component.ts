@@ -1,22 +1,39 @@
-import { Component, Input,Inject } from '@angular/core';
-import {Request} from './objs/Request';
+import { Component, Input,Inject, OnInit } from '@angular/core';
+import {RequestedAlbum} from './objs/RequestedAlbum';
 import {Song} from './objs/Song';
 import {User} from './objs/User';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import {AdminService} from './services/admin.service';
 
 
 @Component({
-  selector: 'album-page',
+  selector: 'admin-page',
   templateUrl: '../views/admin.component.html',
   styleUrls: ["../views/styles/admin.component.css"]
 })
-export class AdminComponent{
-  constructor(public dialog: MdDialog){
+export class AdminComponent implements OnInit{
+
+  constructor(public dialog: MdDialog,
+              private adminService : AdminService){}
+
+  requests     : RequestedAlbum[];
+  users        : User[] = [];
+  selectedUser : User;
+
+  
+
+  ngOnInit(){
+
+    this.adminService.getRequestedAlbums().subscribe(
+      (data) =>{
+        this.requests = data
+      },
+      (err) =>{
+        console.log("ERROR!");
+      }
+    );
 
   }
-  requests : Request[] = [new Request(new Song()), new Request(new Song()), new Request(new Song()), new Request(new Song()), new Request(new Song())]
-  users : User[] = [new User(), new User(), new User(), new User()];
-  selectedUser : User = this.users[0];
 
   chooseSelectedUser(user){
     this.selectedUser = user;
