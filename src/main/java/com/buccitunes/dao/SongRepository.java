@@ -10,6 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import com.buccitunes.miscellaneous.BucciConstant;
 import com.buccitunes.miscellaneous.QueryHelper;
+import com.buccitunes.model.Album;
 import com.buccitunes.model.Song;
 
 public interface SongRepository extends CrudRepository<Song, Integer>{
@@ -60,5 +61,8 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 			"GROUP BY (S.id)) as SS, buccidb2.song SG WHERE SG.id = SS.id\n" + 
 			"ORDER BY(song_count) DESC\n" + 
 			"LIMIT 50", nativeQuery = true)
-	public List<Song> getCurrentTopSongs();	
+	public List<Song> getCurrentTopSongs();
+	
+	@Query(value="CALL search_song(:name);", nativeQuery = true)
+	public List<Song> searchSong(@Param("name") String name);
 }
