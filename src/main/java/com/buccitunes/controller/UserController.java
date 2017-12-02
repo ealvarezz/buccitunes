@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.buccitunes.jsonmodel.LoginInfo;
+import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.*;
@@ -289,6 +290,18 @@ public class UserController {
 		else {
 			List<Album> recentlyPlayedAlbums = userService.getRecentAlbumsPlayed(sessionUser.getEmail());
 			return BucciResponseBuilder.successfulResponse(recentlyPlayedAlbums);	
+		}
+	}
+	
+	@RequestMapping(value="search", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<SearchResults> search(HttpSession session, @RequestParam String searchString) {	
+		User sessionUser = (User) session.getAttribute(BucciConstant.SESSION);
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			SearchResults searchResults = userService.search(searchString);
+			return BucciResponseBuilder.successfulResponse(searchResults);	
 		}
 	}
 	

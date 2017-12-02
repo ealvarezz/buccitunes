@@ -8,11 +8,14 @@ import javax.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.AlbumRepository;
+import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.BillingInfoRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
+import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
+import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.BucciException;
@@ -33,13 +36,16 @@ public class UserService  {
 	private final UserRepository userRepository;
 	private final AlbumRepository albumRepository;
 	private final SongRepository songRepository;
+	private final ArtistRepository artistRepository;
 	private final PremiumUserRepository premiumUserRepository;
+	private final PlaylistRepository playlistRepository;
 	private final CreditCompanyRepository creditCompanyRepository;
 	private final BillingInfoRepository billingInfoRepository;
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
 			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository, 
-			AlbumRepository albumRepository, SongRepository songRepository) {
+			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
+			ArtistRepository artistRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -47,6 +53,8 @@ public class UserService  {
 		this.billingInfoRepository = billingInfoRepository;
 		this.albumRepository = albumRepository;
 		this.songRepository = songRepository;
+		this.playlistRepository = playlistRepository;
+		this.artistRepository = artistRepository;
 	}
 	
 	public List<User> findAll(){
@@ -237,6 +245,17 @@ public class UserService  {
 	public List<Album> getRecentAlbumsPlayed(String email){
 		
 		return albumRepository.getRecentlyPlayed(email);
+	}
+	
+	public SearchResults search(String keyword) {
+		
+		return new SearchResults(
+				songRepository.searchSong(keyword),
+				artistRepository.searchArtist(keyword),
+				albumRepository.searchAlbum(keyword),
+				playlistRepository.searchPlaylist(keyword)
+				
+		);
 	}
 	
 	public UserPageInfo getUserInfo(String id, User loggedUser) throws BucciException {

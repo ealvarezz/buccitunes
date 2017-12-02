@@ -40,17 +40,17 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `get_albums_by_tier_genre`(IN tier I
 BEGIN
 SELECT albums_by_latest_date.* FROM
 (
-	SELECT AU.* FROM buccidb2.artist_user AU
+	SELECT AU.* FROM artist_user AU
 	WHERE AU.tier = tier
 	ORDER BY RAND()
 	LIMIT _limit) AS selected_artists,
 (
 	SELECT AL2.*
-	FROM buccidb2.album AL2
+	FROM album AL2
 	INNER JOIN
 	(
 		SELECT AL.primary_artist_id, MAX(AL.release_date) AS latest_date
-		FROM buccidb2.album AL
+		FROM album AL
 		GROUP BY AL.primary_artist_id) late_album 
 	ON AL2.primary_artist_id = late_album.primary_artist_id
 	WHERE  AL2.release_date = late_album.latest_date) albums_by_latest_date, 
@@ -63,7 +63,7 @@ END ^;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `topGenresForCurrentUser`(IN email VARCHAR(100))
 BEGIN
 	SELECT COUNT(GS.genre_id) AS genre_count, GS.genre_id 
-	FROM buccidb2.genre_song GS, buccidb2.song_plays SP, buccidb2.user U
+	FROM genre_song GS, song_plays SP, user U
 	WHERE U.email = email AND U.email = SP.user_id AND  SP.song_id = GS.song_id
 	AND SP.date_played > DATE_SUB(NOW(), INTERVAL 1 WEEK)
 	GROUP BY GS.genre_id
@@ -75,17 +75,24 @@ BEGIN
 	SELECT DISTINCT M.artwork_path, M.date_created, M.title, A.* FROM
 	(
 		SELECT S.album_id, SP.date_played FROM 
-		buccidb2.song S
+		song S
 		JOIN 
-		buccidb2.song_plays SP
+		song_plays SP
 		ON S	.id = SP.song_id
 		WHERE SP.user_id = email
 		ORDER BY SP.date_played DESC
 		LIMIT 30			
-	) played_albums, buccidb2.album A, buccidb2.music_collection M
+	) played_albums, album A, music_collection M
 	WHERE A.id = played_albums.album_id AND A.id = M.id;
 END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_playlist`(IN playlist_name VARCHAR(100))
+BEGIN
+	SELECT P.*, M.artwork_path, M.date_created, M.title 
+	FROM playlist P, music_collection M
+	WHERE M.title LIKE CONCAT('%', playlist_name, '%') AND M.id = P.id
+	LIMIT 5;
+END ^;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isFollowing`(
 IN following VARCHAR(100),
 IN followed VARCHAR(100),
@@ -104,6 +111,25 @@ BEGIN
 	END IF;
 END
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_album`(IN album_name VARCHAR(100))
+BEGIN
+	SELECT A.*, M.artwork_path, M.date_created, M.title 
+	FROM album A, music_collection M
+	WHERE M.title LIKE CONCAT('%', album_name, '%') AND M.id = A.id
+	LIMIT 5;
+END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_artist`(IN artist_name VARCHAR(100))
+BEGIN
+	SELECT * FROM artist A
+	WHERE A.name LIKE CONCAT('%', artist_name, '%')
+	LIMIT 5;
+END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_song`(IN song_name VARCHAR(100))
+	BEGIN
+	SELECT * FROM song B
+	WHERE B.name LIKE CONCAT('%', song_name, '%')
+	LIMIT 5;
+END ^;
 

@@ -38,6 +38,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	@Query(value="CALL get_recently_played(:email);", nativeQuery = true)
 	public List<Album> getRecentlyPlayed(@Param("email") String email);
 	
+	@Query(value="CALL search_album(:name);", nativeQuery = true)
+	public List<Album> searchAlbum(@Param("name") String name);
+	
 	/*
 	 * 	@Query(value=""
 			+ "select a.*, m.*, " + QueryHelper.SELECT_PLAY_COUNTS

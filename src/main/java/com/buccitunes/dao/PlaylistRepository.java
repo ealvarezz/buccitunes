@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.buccitunes.miscellaneous.QueryHelper;
+import com.buccitunes.model.Artist;
 import com.buccitunes.model.Playlist;
 
 @Transactional
@@ -24,6 +25,8 @@ public interface PlaylistRepository extends BaseMusicCollectionRepository<Playli
 			+ "\n#pageable\n ", nativeQuery = true)
 	public List<Playlist> getTopPlaylistOfAllTime();
 	
+	@Query(value="CALL search_playlist(:name);", nativeQuery = true)
+	public List<Playlist> searchPlaylist(@Param("name") String name);
 	
 	/*
 	 * 	@Query(value=""
