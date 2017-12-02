@@ -14,6 +14,7 @@ import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.SignupFormInfo;
+import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.model.Album;
@@ -236,5 +237,26 @@ public class UserService  {
 	public List<Album> getRecentAlbumsPlayed(String email){
 		
 		return albumRepository.getRecentlyPlayed(email);
+	}
+	
+	public UserPageInfo getUserInfo(String id, User loggedUser) throws BucciException {
+		User user = userRepository.findOne(id);
+		
+		if(user == null) {
+			throw new BucciException("User not found");
+		}
+		
+		if(!user.isInPrivateMode()) {
+			user.getRecentlyPlayed().size();
+			user.getFollowers().size();
+			user.getFollowing().size();
+			user.getFollowingPlaylists().size();
+		}
+		boolean isAFollower = false;
+		if(userRepository.isFollowing(loggedUser.getEmail(), user.getEmail())) {
+			isAFollower = true;
+		}
+		
+		return new UserPageInfo(user, isAFollower);
 	}
 }

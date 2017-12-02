@@ -86,6 +86,24 @@ BEGIN
 	WHERE A.id = played_albums.album_id AND A.id = M.id;
 END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `isFollowing`(
+IN following VARCHAR(100),
+IN followed VARCHAR(100),
+OUT is_following bit(1))
+BEGIN
+	IF EXISTS(
+		select U.email, f.followed_id
+		from User U
+		Join following f on f.following_id = 'TismMan1@gmail.com' and f.followed_id = followed
+		where U.email = following
+		LIMIT 1
+	) THEN
+		SET is_following = 1;
+    ELSE
+		SET is_following = 0;
+	END IF;
+END
+
 
 
 

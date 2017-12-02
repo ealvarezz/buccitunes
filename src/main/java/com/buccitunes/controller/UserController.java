@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.buccitunes.jsonmodel.LoginInfo;
 import com.buccitunes.jsonmodel.SignupFormInfo;
+import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.*;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
@@ -260,7 +262,7 @@ public class UserController {
 		User sessionUser = (User) session.getAttribute(BucciConstant.SESSION);
 		
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
 		}
 		/*
 		try {
@@ -282,11 +284,28 @@ public class UserController {
 	public @ResponseBody BucciResponse<List<Album>> getUserRecentlyPlayedAlbums(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(BucciConstant.SESSION);
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
 		}
 		else {
 			List<Album> recentlyPlayedAlbums = userService.getRecentAlbumsPlayed(sessionUser.getEmail());
 			return BucciResponseBuilder.successfulResponse(recentlyPlayedAlbums);	
 		}
+	}
+	
+	@RequestMapping(value="user/{id}", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<UserPageInfo> getUserInfo(@PathVariable String id, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
+		}
+		
+		try {
+			UserPageInfo userPage = userService.getUserInfo(id, loggedUser);
+			return BucciResponseBuilder.successfulResponse(userPage);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
+		
 	}
 }
