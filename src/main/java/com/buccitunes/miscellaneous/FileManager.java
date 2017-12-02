@@ -251,11 +251,15 @@ public class FileManager {
 		if(Files.exists(path)) {
 			Files.delete(path);
 			song.setPicturePath(null);
+			song.setAudioPath(null);
 		}
 	}
 	
-	public static void removeFileByStringPath(String strPath) {
+	public static void removeFileByStringPath(String strPath) throws IOException {
 		Path path = getAbsolutePathFromResourceString(strPath);
+		if(Files.exists(path)) {
+			Files.delete(path);
+		}
 	}
 	
 	public static String getFilesPath() {

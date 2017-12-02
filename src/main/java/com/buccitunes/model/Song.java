@@ -104,6 +104,21 @@ public class Song {
 		this.stats = new StatCache();
 	}
 	
+	public Song(RequestedSong song, Album album, Artist artist) {
+		this.name = song.getName();
+		this.duration = song.getDuration();
+		this.featuredArtists = song.getFeatures();
+		this.explicit = song.getExplicit();
+		this.genres = song.getGenres();
+		this.mimeType = song.getMimeType();
+		this.picturePath = song.getPicturePath();
+		this.audioPath = song.getAudioPath();
+		this.lyrics = new Lyrics(song.getLyrics().getLyric());
+		this.songStats = new SongStatCache();
+		this.album = album;
+		this.owner = artist;
+	}
+	
 	
 	public Album getAlbum() {
 		return album;

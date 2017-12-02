@@ -75,6 +75,14 @@ public class RequestedSong{
 	
 	private Date dateCreated;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private boolean approved;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private String adminComments;
+	
 	@OneToOne
     @JoinColumn(name = "requested_artist_id")
 	private ArtistUser requester;
@@ -234,6 +242,16 @@ public class RequestedSong{
 
 	public void setAudio(String audio) {
 		this.audio = audio;
+	}
+
+
+	public boolean isApproved() {
+		return approved;
+	}
+
+
+	public void setApproved(boolean approved) {
+		this.approved = approved;
 	}
 	
 	
