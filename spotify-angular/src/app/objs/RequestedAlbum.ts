@@ -17,4 +17,5 @@ export class RequestedAlbum{
     dateCreated    : Date;
     comments       : string;
     requester      : User;
+    
 }

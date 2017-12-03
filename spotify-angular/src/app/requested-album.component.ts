@@ -22,7 +22,10 @@ export class RequestedAlbumComponent implements OnInit{
   requests     : RequestedAlbum[];
 
   ngOnInit(){
+    this.loadRequestedAlbums();
+  }
 
+  loadRequestedAlbums(){
     this.adminService.getRequestedAlbums().subscribe(
       (data) =>{
         this.requests = data
@@ -31,12 +34,12 @@ export class RequestedAlbumComponent implements OnInit{
         console.log("ERROR!");
       }
     );
-
   }
 
   approveAlbum(album : RequestedAlbum){
     this.adminService.approveAlbum(album).subscribe(
       (data) =>{
+        this.loadRequestedAlbums();
         this.notificationService.success("SUCCESS", "Album successfully added to the system.");
       },
       (err) =>{
@@ -53,7 +56,7 @@ export class RequestedAlbumComponent implements OnInit{
       (data) =>{
 
         dialogRef = this.dialog.open(DetailDialog, {
-          width: '500px',
+          width: '800px',
           data: data
         });
 
@@ -68,8 +71,5 @@ export class RequestedAlbumComponent implements OnInit{
         console.log("error");
       }
     );
-
-
-
   }
 }

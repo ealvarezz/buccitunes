@@ -1,5 +1,6 @@
 import { Component,Inject} from '@angular/core';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import {environment} from '../environments/environment';
 
 @Component({
   selector: 'detail-dialog',
@@ -8,10 +9,13 @@ import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 })
 export class DetailDialog{
 
+  artworkPath : String;
+
   constructor(
     public dialogRef: MdDialogRef<DetailDialog>,
     @Inject(MD_DIALOG_DATA) public data: any) {
       console.log(data)
+      this.artworkPath = environment.SERVER_PATH + data.artworkPath;
      }
 
   onNoClick(): void {
