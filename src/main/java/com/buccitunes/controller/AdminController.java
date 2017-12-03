@@ -23,6 +23,7 @@ import com.buccitunes.model.Artist;
 import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.User;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.RequestedSong;
@@ -167,5 +168,10 @@ public class AdminController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 		
+	}
+	
+	@RequestMapping(value="charge_this_month's_users", method = RequestMethod.GET)
+	public BucciResponse<List<PremiumUser>> chargeUsers() {
+		return null;
 	}
 }

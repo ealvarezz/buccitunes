@@ -28,11 +28,13 @@ public class Payment {
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date date;
 	
-	private double balanceRemaining;
-	
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="premiumUser")
 	private PremiumUser premiumUser;
+
+	public Payment(PremiumUser premiumUser) {
+		this.premiumUser = premiumUser;
+	}
 
 	public boolean isPaid() {
 		return isPaid;

@@ -333,4 +333,8 @@ public class AdminService {
 		
 		requestedSongRepository.delete(song);
 	}
+	
+	public List<PremiumUser> chargeUsers() {
+		return null;
+	}
 }
