@@ -144,20 +144,26 @@ public class AdminService {
 	}
 	
 	public Album adminApproveAlbum(RequestedAlbum requestedAlbum) throws BucciException {
-		List<RequestedSong> songsToApprove = requestedAlbum.getSongs();
+		
+		Album newAlbum;
 		
 		requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
 		if(requestedAlbum == null) {
 			throw new BucciException("Requested album does not exist");
 		}
-		
-		Album album = new Album(requestedAlbum, false);
-		album = albumRepository.save(album);
+			
+		List<RequestedSong> songsToApprove = requestedAlbum.getSongs();
+		if(songsToApprove == null) {
+			newAlbum = new Album(requestedAlbum, true);
+		} else {
+			newAlbum = new Album(requestedAlbum, false);
+		}
+		newAlbum = albumRepository.save(newAlbum);
 		
 		if(requestedAlbum.getArtworkPath() != null) {
 			try {				
-				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getArtworkPath(), album.getId());
-				album.setArtworkPath(artworkPath);
+				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getArtworkPath(), newAlbum.getId());
+				newAlbum.setArtworkPath(artworkPath);
 			} catch (IOException  | BucciException e) {}
 		}
 		
@@ -169,13 +175,13 @@ public class AdminService {
 				
 				if(requestedSong != null) {
 					requestedSong.setApproved(approvedSong.isApproved());
-					Song newSong = handleApprovedSongOfAlbum(requestedSong, album, album.getPrimaryArtist());
+					Song newSong = handleApprovedSongOfAlbum(requestedSong, newAlbum, newAlbum.getPrimaryArtist());
 					if(newSong != null) {
 						songsToAlbum.add(newSong);
 					}
 				}
 			}
-			album.setSongs(songsToAlbum);
+			newAlbum.setSongs(songsToAlbum);
 		}
 		
 		try {
@@ -184,7 +190,7 @@ public class AdminService {
 		
 		requestedAlbumRepository.delete(requestedAlbum);
 		
-		return album;
+		return newAlbum;
 	}
 	
 	private Song handleApprovedSongOfAlbum(RequestedSong requestedSong, Album album, Artist artist){

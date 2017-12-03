@@ -68,14 +68,6 @@ public class Payment {
 		this.date = date;
 	}
 
-	public double getBalanceRemaining() {
-		return balanceRemaining;
-	}
-
-	public void setBalanceRemaining(double balanceRemaining) {
-		this.balanceRemaining = balanceRemaining;
-	}
-
 	public User getPremiumUser() {
 		return premiumUser;
 	}
