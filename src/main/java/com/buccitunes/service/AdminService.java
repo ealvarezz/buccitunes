@@ -25,9 +25,7 @@ import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
-import com.mysql.jdbc.Constants;
 import com.buccitunes.model.SongPlays;
-
 
 
 
@@ -51,13 +49,14 @@ public class AdminService {
 	private final ArtistTransactionRepository artistTransactionRepository;
 	private final UserRepository userRepository;
 	private final SongPlaysRepository songPlaysRepository;
+	private final PremiumUserRepository premiumUserRepository;
 	
 	public AdminService(AdminUserRepository adminUserRepository, AlbumRepository albumRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, ConcertRepository concertRepository,
 			RequestedAlbumRepository requestedAlbumRepository, RequestedSongRepository requestedSongRepository,
 			RequestedArtistRepository requestedArtistRepository, RequestedConcertRepository requestedConcertRepository, 
 			ArtistUserRepository artistUserRepository, UserRepository userRepository, SongPlaysRepository songPlaysRepository,
-			ArtistTransactionRepository artistTransactionRepository) {
+			ArtistTransactionRepository artistTransactionRepository, PremiumUserRepository premiumUserRepository) {
 		this.adminUserRepository = adminUserRepository;
 		this.albumRepository = albumRepository;
 		this.songRepository = songRepository;
@@ -71,6 +70,7 @@ public class AdminService {
 		this.userRepository = userRepository;
 		this.songPlaysRepository = songPlaysRepository;
 		this.artistTransactionRepository = artistTransactionRepository;
+		this.premiumUserRepository = premiumUserRepository;
 	}
 	
 	public Artist addNewArtist(Artist artist) throws BucciException {
@@ -339,7 +339,11 @@ public class AdminService {
 		requestedSongRepository.delete(song);
 	}
 	
-	public List<PremiumUser> chargeUsers() {
-		return null;
+	public void chargeUsers() {
+		List<PremiumUser> pUsers = premiumUserRepository.getNeededUsersToPay();
+		
+		for(PremiumUser user : pUsers) {
+			user.makePayment(constants.getMonthlyPremiumPrice());
+		}
 	}
 }

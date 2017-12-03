@@ -25,3 +25,6 @@ constants:
   not_logged_in: Not Logged In 
   logged_in: Already Logged In
   session: user
+  
+  signup_premium_price: 5.00
+  monthly_premium_price: 5.00

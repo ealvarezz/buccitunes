@@ -34,7 +34,9 @@ INSERT INTO `buccidb2`.`mime_type` (`id`, `name`) VALUES ('8', 'jpg')^;
 
 
 
-
+/*********************
+* STORED PROCEDURES
+*********************/
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_albums_by_tier_genre`(IN tier INT, IN genre_id INT, IN _limit INT)
 BEGIN
@@ -93,6 +95,7 @@ BEGIN
 	WHERE M.title LIKE CONCAT('%', playlist_name, '%') AND M.id = P.id
 	LIMIT 5;
 END ^;
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `isFollowing`(
 IN following VARCHAR(100),
 IN followed VARCHAR(100),
@@ -131,5 +134,18 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `search_song`(IN song_name VARCHAR(1
 	SELECT * FROM song B
 	WHERE B.name LIKE CONCAT('%', song_name, '%')
 	LIMIT 5;
+END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_needed_users_to_pay`()
+BEGIN
+	select u.*, pu.*, last_payed.date
+	from user u
+	join premium_user pu on pu.email = u.email
+	join(
+		select p.premium_user_id, max(p.date) as date
+		from payment p
+		group by p.premium_user_id
+	) last_payed on last_payed.premium_user_id = u.email 
+	and last_payed.date <=  DATE_SUB(NOW(), INTERVAL 30 DAY);
 END ^;
 
