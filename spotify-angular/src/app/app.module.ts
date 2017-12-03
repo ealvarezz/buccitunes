@@ -42,6 +42,7 @@ import {AlbumLibrary} from './saved-albums.component';
 import {AdminService} from './services/admin.service';
 import {AccountSettingsComponent}  from './account-settings.component';
 import {ReceiptTableComponent} from './receipt-table';
+import {RequestedSongTable} from './requested-song-table';
 
 
 const appRoutes: Routes = [
@@ -91,7 +92,8 @@ const appRoutes: Routes = [
     RequestedAlbumComponent,
     UserTableComponent,
     AccountSettingsComponent,
-    ReceiptTableComponent
+    ReceiptTableComponent,
+    RequestedSongTable
   ],
   imports: [
     RouterModule.forRoot(

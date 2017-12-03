@@ -1,0 +1,42 @@
+<div class="example-container">
+
+  <md-table #table [dataSource]="dataSource">
+
+    <!-- ID Column -->
+     <ng-container mdColumnDef="accept">
+      <md-header-cell *mdHeaderCellDef>Accept</md-header-cell>
+      <md-cell *mdCellDef="let row"> <md-checkbox [(ngModel)]="row.approved"></md-checkbox></md-cell>
+    </ng-container>
+    
+    <ng-container mdColumnDef="num">
+      <md-header-cell *mdHeaderCellDef> # </md-header-cell>
+      <md-cell *mdCellDef="let row; let i=index"> 
+        <div *ngIf ="hoveredRow != i">{{i+1}}</div>
+        <div *ngIf ="hoveredRow == i"><button md-icon-button style="width:24px; float:left;"> <i class="material-icons" >play_circle_outline</i> </button></div>
+      </md-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container mdColumnDef="songName">
+      <md-header-cell *mdHeaderCellDef> Title </md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.name}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="explicit">
+      <md-header-cell *mdHeaderCellDef>Explicit</md-header-cell>
+      <md-cell *mdCellDef="let row"> <div *ngIf="row.explicit" >{{row.explicit}}</div> </md-cell>
+    </ng-container>
+    
+    <ng-container mdColumnDef="duration">
+      <md-header-cell *mdHeaderCellDef> <i class="material-icons" >access_time</i> </md-header-cell>
+      <md-cell *mdCellDef="let row"> 3:30 </md-cell>
+    </ng-container>
+
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; let i=index; columns: displayedColumns;" 
+    (mouseenter)="hover(i)" (mouseleave)="unHover()"></md-row>
+  </md-table>
+</div>
+
+

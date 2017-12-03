@@ -113,7 +113,9 @@ public class Song {
 		this.mimeType = song.getMimeType();
 		this.picturePath = song.getPicturePath();
 		this.audioPath = song.getAudioPath();
-		this.lyrics = new Lyrics(song.getLyrics().getLyric());
+		if(song.getLyrics() != null) {
+			this.lyrics = new Lyrics(song.getLyrics().getLyric());
+		}
 		this.stats = new StatCache();
 		this.album = album;
 		this.owner = artist;

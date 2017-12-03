@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject } from '@angular/core';
 import { environment } from '../environments/environment';
 import {Song} from './objs/Song';
+import {RequestedSong} from './objs/RequestedSong';
 import {Album} from './objs/Album';
 import {User} from './objs/User';
 import {RequestedAlbum} from './objs/RequestedAlbum';
@@ -61,7 +62,7 @@ export class ArtistComponent implements OnInit {
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         this.getArtist(this.artist.id)
-        this.notificationService.success("SUCCESS", "The album has been sucessfully added for the artist "+ this.artist.name);
+        this.notificationService.success("SUCCESS",result);
       }
     });
   }
@@ -144,11 +145,11 @@ export class AddAlbumDialog {
   }
 
   addNewSong(): void{
-    this.currentAlbum.songs.push(new Song());
+    this.currentAlbum.songs.push(new RequestedSong());
     this.currentAlbum.songs = this.currentAlbum.songs.slice();
   }
   
-  removeSong(song: Song): void{
+  removeSong(song: RequestedSong): void{
     let index = this.currentAlbum.songs.indexOf(song);
     if (index >= 0) {
       this.currentAlbum.songs.splice(index, 1);
@@ -234,7 +235,7 @@ export class AddAlbumDialog {
             .subscribe(
                 (data) => {
                     console.log(data);
-                    this.dialogRef.close(true);
+                    this.dialogRef.close("This album has been successfully been submitted for further approval. Please allow a 2-3 hours for admin approval. You will receive an email shortly notifiying you of the admin decision.");
                 },
                 (err) => {
                     console.log(err.message);
@@ -247,7 +248,7 @@ export class AddAlbumDialog {
             .subscribe(
                 (data) => {
                     console.log(data);
-                    this.dialogRef.close(true);
+                    this.dialogRef.close("The album has been sucessfully added for the artist "+ this.artist.name);
                 },
                 (err) => {
                     console.log(err.message);

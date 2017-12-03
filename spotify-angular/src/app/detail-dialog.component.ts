@@ -18,4 +18,9 @@ export class DetailDialog{
     this.dialogRef.close();
   }
 
+
+  acceptAlbum(){
+   this.dialogRef.close(this.data);
+  }
+
 }

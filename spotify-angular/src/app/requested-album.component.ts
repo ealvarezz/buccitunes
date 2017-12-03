@@ -5,6 +5,7 @@ import {User} from './objs/User';
 import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {AdminService} from './services/admin.service';
 import {DetailDialog} from './detail-dialog.component';
+import {NotificationsService} from 'angular4-notifications';
 
 
 @Component({
@@ -15,7 +16,8 @@ import {DetailDialog} from './detail-dialog.component';
 export class RequestedAlbumComponent implements OnInit{
 
   constructor(public dialog: MdDialog,
-              private adminService : AdminService){}
+              private adminService : AdminService,
+              private notificationService : NotificationsService){}
 
   requests     : RequestedAlbum[];
 
@@ -32,6 +34,17 @@ export class RequestedAlbumComponent implements OnInit{
 
   }
 
+  approveAlbum(album : RequestedAlbum){
+    this.adminService.approveAlbum(album).subscribe(
+      (data) =>{
+        this.notificationService.success("SUCCESS", "Album successfully added to the system.");
+      },
+      (err) =>{
+        this.notificationService.error("FAIL", err);
+      }
+    )
+  }
+
   openDialog(row){
 
     let dialogRef;
@@ -44,11 +57,19 @@ export class RequestedAlbumComponent implements OnInit{
           data: data
         });
 
+      dialogRef.afterClosed().subscribe(result => {
+        if(result){
+          this.approveAlbum(result);
+        }
+    });
+
       },
       (err) =>{
         console.log("error");
       }
     );
+
+
 
   }
 }
