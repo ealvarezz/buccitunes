@@ -1,5 +1,6 @@
 package com.buccitunes.model;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -11,10 +12,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity(name="PremiumUser")
 public class PremiumUser extends User {
+	
+	private Date createDate;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_id")
@@ -23,13 +27,18 @@ public class PremiumUser extends User {
 	@OneToMany(mappedBy="premiumUser")
 	private List<Payment> paymentHistory;
 	
-	public PremiumUser(){};
+	public PremiumUser(){
+		this.createDate = new Date();
+	};
 	
-	public PremiumUser(BillingInfo billingInfo){};
+	public PremiumUser(BillingInfo billingInfo){
+		this.createDate = new Date();
+	};
 	
 	public PremiumUser(User user, BillingInfo billingInfo) {
 		super(user.email, user.name, user.password, user.username);
 		this.billingInfo = billingInfo;
+		this.createDate = new Date();
 	}
 	
 	public BillingInfo getBillingInfo() {
@@ -43,5 +52,9 @@ public class PremiumUser extends User {
 	}
 	public void setPaymentHistory(List<Payment> paymentHistory) {
 		this.paymentHistory = paymentHistory;
+	}
+
+	public Date getCreateDate() {
+		return createDate;
 	}
 }
