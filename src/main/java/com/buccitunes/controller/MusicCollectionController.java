@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.servlet.http.HttpSession;
 
+import org.apache.tomcat.util.bcel.classfile.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
@@ -34,6 +35,9 @@ import com.buccitunes.service.UserService;
 
 @Controller
 public class MusicCollectionController {
+	
+	@Autowired
+	private BucciConstants constants;
 	
 	@Autowired
 	private Environment env;
@@ -80,7 +84,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
 		}
 		
 		playlist.setOwner(loggedUser);
@@ -155,7 +159,7 @@ public class MusicCollectionController {
 	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestBody Song song, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
 		}
 		
 		try {
