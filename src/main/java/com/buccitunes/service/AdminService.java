@@ -166,7 +166,6 @@ public class AdminService {
 			
 			for (RequestedSong approvedSong : songsToApprove) {
 				RequestedSong requestedSong = requestedSongRepository.findOne(approvedSong.getId());
-				requestedSong.setApproved(approvedSong.isApproved());
 				
 				if(requestedSong != null) {
 					requestedSong.setApproved(approvedSong.isApproved());

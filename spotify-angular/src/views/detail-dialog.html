@@ -1,4 +1,4 @@
- <h1 md-dialog-title>Pending Song</h1>
+ <h1 md-dialog-title>Pending Album</h1>
  
 <md-grid-list cols="3" rowHeight="30px">
     <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
@@ -15,7 +15,7 @@
     <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"><md-slide-toggle color="warn"></md-slide-toggle></span></md-grid-tile>
 </md-grid-list>
 
-<music-table [data] = "data.songs" [isAlbum]="true"> </music-table>
+<requested-song-table [data] = "data.songs"> </requested-song-table>
 
 
 
@@ -43,10 +43,10 @@
 
 <div class="song-file">
     <i class="material-icons" style="float:left; font-size:36px;">attachment</i>
-    <p><a routerLink="/">{{data.name}}.mp3</a></p>
+    <p><a routerLink="/">{{data.title}}.mp3</a></p>
 </div>
 
-<button md-raised-button color="primary">Accept Request</button>
+<button md-raised-button color="primary" (click)="acceptAlbum()">Accept Request</button>
 <button md-raised-button color="primary">Decline Request</button>
 <button md-raised-button color="primary" (click)="onNoClick()">Cancel</button>
 

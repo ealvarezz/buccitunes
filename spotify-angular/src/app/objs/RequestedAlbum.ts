@@ -1,6 +1,7 @@
 import {Artist} from './Artist';
 import {Song} from './Song';
 import {User} from './User';
+import {RequestedSong} from './RequestedSong';
 
 export class RequestedAlbum{
     id             : number;
@@ -12,7 +13,7 @@ export class RequestedAlbum{
     label          : string;
     artwork        : string;
     genres         : string[];
-    songs          : Song[] = [];
+    songs          : RequestedSong[] = [];
     dateCreated    : Date;
     comments       : string;
     requester      : User;

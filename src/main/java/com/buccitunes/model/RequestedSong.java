@@ -92,7 +92,7 @@ public class RequestedSong{
 	private RequestedLyrics lyrics;
 
 	public RequestedSong() {
-		this.dateCreated = new Date();
+		this.setDateCreated(new Date());
 	}
 
 
@@ -252,6 +252,16 @@ public class RequestedSong{
 
 	public void setApproved(boolean approved) {
 		this.approved = approved;
+	}
+
+
+	public Date getDateCreated() {
+		return dateCreated;
+	}
+
+
+	public void setDateCreated(Date dateCreated) {
+		this.dateCreated = dateCreated;
 	}
 	
 	

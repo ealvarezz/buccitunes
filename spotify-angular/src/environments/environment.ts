@@ -20,6 +20,7 @@ export const environment = {
   GET_REQ_ALBUMS_ENDPOINT   : "http://localhost:8080" + "/requested_albums",
   GET_REQ_ALBUM_ENDPOINT    : "http://localhost:8080" + "/requested_album_info",
   GET_REQ_SONGS_ENDPOINT    : "http://localhost:8080" + "/requested_album_info",
+  APPROVE_ALBUM_ENDPOINT    : "http://localhost:8080" + "/approve_album",
 
   ARTIST_ROLE               : "ARTIST",
   ADMIN_ROLE                : "ADMIN",
