@@ -23,7 +23,7 @@
 
     <ng-container mdColumnDef="created_by">
       <md-header-cell *mdHeaderCellDef>Requested By</md-header-cell>
-      <md-cell *mdCellDef="let row"> <div>{{row.requester.name}}</div> </md-cell>
+      <md-cell *mdCellDef="let row"> <div>{{row.requester.email}}</div> </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="requested_date">

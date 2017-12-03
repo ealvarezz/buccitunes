@@ -1,0 +1,260 @@
+<md-card style="margin-bottom:10%;">
+    <md-card-header>
+        <h1>ACCOUNT SETTINGS</h1>
+    </md-card-header>
+    <md-card-content>
+        <md-accordion class="example-headers-align">
+  <md-expansion-panel [expanded]="step === 0" (opened)="setStep(0)" hideToggle="true">
+    <md-expansion-panel-header>
+      <md-panel-title>
+        Personal Information
+      </md-panel-title>
+      <md-panel-description>
+        Edit Username, Email Address and other personal info
+        <md-icon>account_circle</md-icon>
+      </md-panel-description>
+    </md-expansion-panel-header>
+
+        <md-grid-list *ngIf="!editMode" cols="3" rowHeight="25px">
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">Kamal, Sajid</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Email</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">sajid.kamal@stonybrook.edu</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Gender</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">76% Male</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Date of Birth</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">10/10/1995</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Postal Code</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">11548</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Country</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">USA</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Mobile Phone Number</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">718-360-7428</span></md-grid-tile>
+        </md-grid-list>
+
+        <md-grid-list *ngIf="editMode" cols="3" rowHeight="35px">
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
+            <md-grid-tile colspan="2">
+              <span style="position:absolute; left:0px;">
+                <md-form-field>
+                  <input mdInput placeholder="Name" value="Sajid Kamal">
+                </md-form-field>
+              </span>
+          </md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Email</b></span></md-grid-tile>
+            <md-grid-tile colspan="2">
+              <span style="position:absolute; left:0px;">
+                <md-form-field>
+                  <input mdInput placeholder="Email" value="sajid.kamal@stonybrook.edu">
+                </md-form-field>
+              </span>
+            </md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Gender</b></span></md-grid-tile>
+            <md-grid-tile colspan="2">
+              <span style="position:absolute; left:0px;">
+                  <md-slider></md-slider>
+              </span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Date of Birth</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">10/10/1995</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Postal Code</b></span></md-grid-tile>
+            <md-grid-tile colspan="2">
+              <span style="position:absolute; left:0px;">
+                <md-form-field>
+                  <input mdInput placeholder="Postal Code" value="11548">
+                </md-form-field>
+              </span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Country</b></span></md-grid-tile>
+            <md-grid-tile colspan="2">
+              <span style="position:absolute; left:0px;">
+                <md-form-field>
+                  <input mdInput placeholder="Email" value="USA">
+                </md-form-field>
+              </span>
+            </md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Mobile Phone Number</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">
+              <span style="position:absolute; left:0px;">
+                <md-form-field>
+                  <input mdInput placeholder="Phone Number" value="718-360-7428">
+                </md-form-field>
+              </span></span></md-grid-tile>
+        </md-grid-list>
+
+    <!-- <div>
+        <md-form-field>
+        <input mdInput placeholder="First name">
+        </md-form-field>
+    </div>
+    
+    <md-form-field>
+      <input mdInput placeholder="Last Name">
+    </md-form-field>
+
+
+    <md-form-field>
+      <input mdInput placeholder="Email">
+    </md-form-field>
+
+    <md-form-field>
+      <input mdInput type="number" min="1" placeholder="Last Name">
+    </md-form-field> -->
+
+    <md-action-row>
+      <button *ngIf="!editMode" md-raised-button color="primary" (click)="toggleEditMode()">Edit</button>
+      <button *ngIf="editMode" md-raised-button color="primary" (click)="toggleEditMode()">Cancel</button>
+      <button *ngIf="editMode" md-raised-button color="primary" (click)="nextStep()">Submit</button>
+    </md-action-row>
+  </md-expansion-panel>
+
+  <md-expansion-panel [expanded]="step === 1" (opened)="setStep(1)" hideToggle="true">
+    <md-expansion-panel-header>
+      <md-panel-title>
+        Account Settings
+      </md-panel-title>
+      <md-panel-description>
+        Change password or deactivate account
+        <md-icon>security</md-icon>
+      </md-panel-description>
+    </md-expansion-panel-header>
+
+    <div>
+      <md-form-field>
+        <input mdInput placeholder="Current Password">
+      </md-form-field>
+    </div>
+
+    <div>
+      <md-form-field>
+        <input mdInput placeholder="New Password">
+      </md-form-field>
+    </div>
+
+    <div>
+      <md-form-field>
+        <input mdInput placeholder="Repeat New Password">
+      </md-form-field>
+    </div>
+
+    <button md-button color="warn">Update Password</button>
+
+    <div style="margin-top:5%"><h2>CHANGE EMAIL</h2></div>
+    <md-divider></md-divider>
+    <div><span>Changing your username can have unintended side effects.</span></div>
+    <div><button md-raised-button color="warn">Change Email</button></div>
+
+
+    <div style="margin-top:5%"><h2>DELETE ACCOUNT</h2></div>
+    <md-divider></md-divider>
+    <div><span>Once you delete your account, there is no going back. Please be certain.</span></div>
+    <div><button md-raised-button color="warn">Delete Account</button></div>
+
+    
+
+    <md-action-row>
+      <button md-button color="warn" (click)="prevStep()">Previous</button>
+      <button md-button color="primary" (click)="nextStep()">Next</button>
+    </md-action-row>
+  </md-expansion-panel>
+
+
+  <md-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+    <md-expansion-panel-header>
+      <md-panel-title>
+        Password
+      </md-panel-title>
+      <md-panel-description>
+        **************
+        <md-icon>lock</md-icon>
+      </md-panel-description>
+    </md-expansion-panel-header>
+    
+    <div>
+      <md-form-field>
+        <input mdInput placeholder="Current Password">
+      </md-form-field>
+    </div>
+
+    <div>
+      <md-form-field>
+        <input mdInput placeholder="New Password">
+      </md-form-field>
+    </div>
+
+    <div>
+      <md-form-field>
+        <input mdInput placeholder="Repeat New Password">
+      </md-form-field>
+    </div>
+    
+
+    <md-action-row>
+      <button md-button color="warn" (click)="prevStep()">Previous</button>
+      <button md-button color="primary" (click)="nextStep()">End</button>
+    </md-action-row>
+  </md-expansion-panel>
+
+  <md-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+    <md-expansion-panel-header>
+      <md-panel-title>
+        Subscription
+      </md-panel-title>
+      <md-panel-description>
+        View Billing Info and Current Plan
+        <md-icon>credit_card</md-icon>
+      </md-panel-description>
+    </md-expansion-panel-header>
+   <div class="payment_div">
+    <div>
+      <div><h2>BUCCI PREMIUM</h2></div>
+      <div style="max-width:42%"><p>Your plan will automatically renew on 12/16/17 and you'll be charged $4.99 + tax</p></div>
+      <div><button md-raised-button class="rounded-button">CHANGE OR CANCEL</button></div>
+    </div>
+    <div>
+        <div><h3>Payment Method</h3></div>
+        <div class="payment_box">
+          <div style="display:inline-block">
+            <img src="../assets/visa.png">
+          </div>
+          <div style="display:inline-block">
+            <div style="margin-bottom:1px;"><p style="margin-bottom:1px; font-size:16px;"><b>Visa **** 9969</b></p></div>
+            <div style="margin-top:0px;" ><p style="font-size:12px; margin-top:0px;">Expires: 09/2020</p></div>
+          </div>
+        </div>
+    </div>
+      <div><button md-raised-button class="rounded-button">UPDATE PAYMENT METHOD</button></div>
+    </div>
+
+
+
+    <md-action-row>
+      <button md-button color="warn" (click)="prevStep()">Previous</button>
+      <button md-button color="primary" (click)="nextStep()">End</button>
+    </md-action-row>
+  </md-expansion-panel>
+
+
+  <md-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+    <md-expansion-panel-header>
+      <md-panel-title>
+       View Reciepts
+      </md-panel-title>
+      <md-panel-description>
+        View your payment history 
+        <md-icon>history</md-icon>
+      </md-panel-description>
+    </md-expansion-panel-header>
+
+    <receipt-table [receipts]="receipts"></receipt-table>
+    <button md-raised-button class="rounded-button more_button" >View More</button>
+
+    <md-action-row>
+      <button md-button color="warn" (click)="prevStep()">Previous</button>
+      <button md-button color="primary" (click)="nextStep()">End</button>
+    </md-action-row>
+  </md-expansion-panel>
+
+
+</md-accordion>
+    </md-card-content>
+
+</md-card>

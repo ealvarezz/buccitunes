@@ -8,11 +8,11 @@ import {DetailDialog} from './detail-dialog.component';
 
 
 @Component({
-  selector: 'requested-album',
-  templateUrl: '../views/requested-albums.html',
+  selector: 'requested-songs',
+  templateUrl: '../views/requested-songs.html',
   styleUrls: ["../views/styles/admin.component.css"]
 })
-export class RequestedAlbumComponent implements OnInit{
+export class RequestedSongsComponent implements OnInit{
 
   constructor(public dialog: MdDialog,
               private adminService : AdminService){}

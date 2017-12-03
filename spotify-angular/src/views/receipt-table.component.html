@@ -1,0 +1,33 @@
+<div class="example-container">
+    
+  <md-table #table [dataSource]="dataSource">
+
+    <!-- ID Column -->
+    <ng-container mdColumnDef="date">
+      <md-header-cell *mdHeaderCellDef>DATE</md-header-cell>
+      <md-cell *mdCellDef="let row; "> 
+        <div>{{row.date | date}}</div>
+      </md-cell>
+    </ng-container>
+
+    <!-- Progress Column -->
+    <ng-container mdColumnDef="transaction_id">
+      <md-header-cell *mdHeaderCellDef>TRANSACTION ID</md-header-cell>
+      <md-cell *mdCellDef="let row"> {{row.transaction_id}} </md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="price">
+      <md-header-cell *mdHeaderCellDef>PRICE</md-header-cell>
+      <md-cell *mdCellDef="let row"> ${{row.price}}</md-cell>
+    </ng-container>
+
+    <ng-container mdColumnDef="view">
+      <md-header-cell *mdHeaderCellDef></md-header-cell>
+      <md-cell *mdCellDef="let row"> <div>VIEW</div> </md-cell>
+    </ng-container>
+
+    <md-header-row *mdHeaderRowDef="displayedColumns"></md-header-row>
+    <md-row *mdRowDef="let row; let i=index; columns: displayedColumns;" 
+    (mouseenter)="hover(i)" (mouseleave)="unHover()"></md-row>
+  </md-table>
+</div>

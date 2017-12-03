@@ -17,7 +17,9 @@ export const environment = {
   GET_SONG_LIBRARY_ENDPOINT : "http://localhost:8080" + "/saved_songs",
   SAVE_ALBUM_ENDPOINT       : "http://localhost:8080" + "/save_album",
   GET_SAVED_ALBUMS_ENDPOINT : "http://localhost:8080" + "/saved_albums",
-  GET_REQ_ALBUMS_ENDPOINT   : "http://localhost:8080" + "/requestedalbums",
+  GET_REQ_ALBUMS_ENDPOINT   : "http://localhost:8080" + "/requested_albums",
+  GET_REQ_ALBUM_ENDPOINT    : "http://localhost:8080" + "/requested_album_info",
+  GET_REQ_SONGS_ENDPOINT    : "http://localhost:8080" + "/requested_album_info",
 
   ARTIST_ROLE               : "ARTIST",
   ADMIN_ROLE                : "ADMIN",

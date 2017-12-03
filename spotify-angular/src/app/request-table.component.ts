@@ -2,6 +2,7 @@ import { Component, Input, Output, OnInit, OnChanges, SimpleChanges,EventEmitter
 import {RequestedAlbum} from './objs/RequestedAlbum';
 import {RequestDataSource} from './request-data-source';
 
+
 @Component({
   selector: 'request-table',
   templateUrl: '../views/request-table.component.html',

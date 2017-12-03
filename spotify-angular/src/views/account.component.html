@@ -1,0 +1,30 @@
+<md-card>
+
+    <md-card-header>
+        <h4>{{user.role}}</h4>
+        <h1>{{user.email}}</h1>
+        <button md-raised-button  class="rounded-button">Follow</button>
+        <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+    </md-card-header>
+    <md-card-content>
+        <md-tab-group>
+            <md-tab label="SETTINGS">
+                
+            </md-tab>
+            <md-tab label="OVERVIEW">
+                <!-- <md-grid-list cols="4" [rowHeight]="rowHeight">
+                    <md-grid-tile *ngFor = "let artist of previewArtists" colspan= "1" rowpan = "1" >
+                        <div>
+                            <div style="height: 220px; width: 220px;"><image [src]="getImageUrl(artist.artworkPath)" [route]="'/artist/'+artist.id"></image></div>
+                            <div class ="browse-item-template"><h4><b><a [routerLink]="['/artist', artist.id]">{{artist.name}}</a></b></h4></div>
+                        </div>
+                    </md-grid-tile>
+                </md-grid-list> -->
+            </md-tab>
+            <md-tab label="RECENTLY PLAYED ARTIST">Content 2</md-tab>
+            <md-tab label="PUBLIC PLAYLIST">Content 2</md-tab>
+            <md-tab label="FOLLOWERS">Content 2</md-tab>
+        </md-tab-group>
+    </md-card-content>
+
+</md-card>

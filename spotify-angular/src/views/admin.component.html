@@ -1,6 +1,25 @@
 <md-card>
     <md-card-header><h1>Admin Utilities</h1></md-card-header>
-<md-tab-group>
+    <nav mat-tab-nav-bar>
+    <a mat-tab-link
+        routerLink="requested_albums"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="true">
+        ALBUM REQUESTS
+    </a>
+    <a mat-tab-link
+        routerLink="requested_songs"
+        routerLinkActive #rla="routerLinkActive"
+        [active]="rla.isActive">
+        SONG REQUESTS
+    </a>
+    
+
+</nav>
+
+<router-outlet></router-outlet>
+
+<!-- <md-tab-group>
     <md-tab label="ARTIST REQUESTS">
         <md-card class=" card mat-elevation-z8">
             <md-card-header>
@@ -86,5 +105,5 @@
     </md-tab>
     <md-tab label="STATISTICS">
     </md-tab>
-</md-tab-group>
+</md-tab-group> -->
 </md-card>

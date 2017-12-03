@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule} from '@angular/material';
+import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule, MdExpansionModule} from '@angular/material';
 import {PlayerComponent} from './player.component'
 import {HomePageTabTemplate} from './homepage-tab.component'
 import { AppComponent } from './app.component';
@@ -23,7 +23,8 @@ import {ArtistComponent} from './artist.component';
 import {MiniAlbumComponent} from './mini-album.component';
 import {AdminComponent} from './admin.component';
 import {RequestedAlbumTableComponent} from './request-table.component';
-import {DetailDialog} from './admin.component';
+import {DetailDialog} from './detail-dialog.component';
+import {RequestedAlbumComponent } from './requested-album.component';
 import {AddAlbumDialog} from './artist.component'
 import {AuthenticationService} from './services/authentication.service'
 import { DatePipe } from '@angular/common';
@@ -39,6 +40,9 @@ import { SimpleNotificationsModule } from 'angular4-notifications';
 import {SongLibrary} from './song-library.component'
 import {AlbumLibrary} from './saved-albums.component';
 import {AdminService} from './services/admin.service';
+import {AccountSettingsComponent}  from './account-settings.component';
+import {ReceiptTableComponent} from './receipt-table';
+
 
 const appRoutes: Routes = [
   { path: '', component: MainComponent, 
@@ -47,9 +51,13 @@ const appRoutes: Routes = [
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist', component: PlaylistComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
-          {path: 'admin',component:AdminComponent, canActivate: [AuthGuard]},
+          {path: 'admin',component:AdminComponent, canActivate: [AuthGuard], 
+              children:[
+                {path: 'requested_albums', component: RequestedAlbumComponent, canActivate: [AuthGuard]}
+              ]},
           {path: 'library', component: SongLibrary, canActivate: [AuthGuard]},
-          {path: 'album-library', component: AlbumLibrary, canActivate: [AuthGuard]}
+          {path: 'album-library', component: AlbumLibrary, canActivate: [AuthGuard]},
+          {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
         ] 
   },
   {path: 'login', component: LoginComponent},
@@ -80,7 +88,10 @@ const appRoutes: Routes = [
     AddPlaylistDialog,
     SongLibrary,
     AlbumLibrary,
-    UserTableComponent
+    RequestedAlbumComponent,
+    UserTableComponent,
+    AccountSettingsComponent,
+    ReceiptTableComponent
   ],
   imports: [
     RouterModule.forRoot(
@@ -114,6 +125,7 @@ const appRoutes: Routes = [
     MdCheckboxModule,
     MdChipsModule,
     HttpClientModule,
+    MdExpansionModule,
     SimpleNotificationsModule.forRoot()
   ],
   providers: [

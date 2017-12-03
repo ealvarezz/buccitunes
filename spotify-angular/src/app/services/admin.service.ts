@@ -36,7 +36,8 @@ export class AdminService {
     }
 
     getRequestedAlbum(album : RequestedAlbum) {
-        return this.http.get<BucciResponse<RequestedAlbum>>(environment.GET_REQ_ALBUMS_ENDPOINT, { withCredentials: true })
+        return this.http.get<BucciResponse<RequestedAlbum>>(environment.GET_REQ_ALBUM_ENDPOINT, { 
+            params: new HttpParams().set('id', String(album.id)),  withCredentials: true })
         .map(bucci =>{
             if(bucci.successful){
                 return bucci.response;
@@ -49,5 +50,22 @@ export class AdminService {
             return Observable.throw(new Error(error.message));
         })
     }
+
+    getRequestedSongs(){
+        return this.http.get<BucciResponse<RequestedAlbum>>(environment.GET_REQ_ALBUM_ENDPOINT)   
+        .map(bucci =>{
+            if(bucci.successful){
+                return bucci.response;
+            }
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error : any)=>{
+            return Observable.throw(new Error(error.message));
+        })
+    }
+
+    
 
 }

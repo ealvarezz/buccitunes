@@ -160,6 +160,22 @@ export class MusicCollectionService {
         );
     }
 
+    getRecentlyPlayedAlbums(){
+        return this.http.get<BucciResponse<Album[]>>(environment.GET_SAVED_ALBUMS_ENDPOINT, {withCredentials: true})
+        .map(bucci =>{
+            if (bucci.successful){
+                return bucci.response;
+            } 
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error: any) =>{
+            return Observable.throw(new Error(error.message));
+        }
+        );
+    }
+
     private handleSuccessResponse(bucci : BucciResponse<any>){
         if (bucci.successful){
             return bucci.response;

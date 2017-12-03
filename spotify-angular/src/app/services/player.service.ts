@@ -16,6 +16,7 @@ export class MusicService {
     public currTimeChange   = new BehaviorSubject<number>(0);
     public currSongChange   = new BehaviorSubject<Song>(new Song());
     public volumeChange     = new BehaviorSubject<number>(100);
+    public secretChange     = new BehaviorSubject<boolean>(false);
 
 
     get audio()         : HTMLAudioElement { return this.audioChange.value;}
@@ -25,6 +26,7 @@ export class MusicService {
     get currTime()      : number {return this.currTimeChange.value }
     get currSong()      : Song { return this.currSongChange.value }
     get volume()        : number { return this.volumeChange.value }
+    get secretMode()    : boolean { return this.secretChange.value }
 
 
     constructor(){
@@ -36,6 +38,10 @@ export class MusicService {
     updateTime(){
         let time = (this.audio.currentTime / this.audio.duration)*100;
         this.currTimeChange.next(time)
+    }
+
+    toggleSecretMode(){
+        this.secretChange.next(!this.secretMode);
     }
 
     playSong(){

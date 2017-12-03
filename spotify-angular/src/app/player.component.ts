@@ -19,6 +19,9 @@ export class PlayerComponent {
     private volume : number
     private time : number
 
+
+    private secretMode : boolean;
+
     showBar : boolean = false;
 
     
@@ -41,11 +44,19 @@ export class PlayerComponent {
       this.musicService.pauseChange.subscribe(
           pause => this.isPaused = pause
       );
+    
+      this.musicService.secretChange.subscribe(
+          secret => this.secretMode = secret
+      );
       
     }
 
     mute(){
       this.musicService.changeVolume(0);
+    }
+
+    toggleSecret(){
+        this.musicService.toggleSecretMode();
     }
 
     changeVolume(){

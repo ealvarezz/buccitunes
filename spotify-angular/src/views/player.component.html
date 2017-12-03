@@ -33,6 +33,8 @@
 
     <div class="right-controls"> 
 
+        <button md-icon-button (click)="toggleSecret()" mdTooltip="Enable Secret Mode" mdTooltipPosition="above" *ngIf="secretMode == false" ><i class="material-icons">visibility</i></button>
+        <button md-icon-button (click)="toggleSecret()" mdTooltip="Disable Secret Mode" mdTooltipPosition="above" *ngIf="secretMode == true" ><i class="material-icons">visibility_off</i></button>
         <button md-icon-button ><i class="material-icons">queue_music</i></button>
 
         <!-- volume control section -->
