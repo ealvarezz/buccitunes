@@ -109,7 +109,7 @@ BEGIN
     ELSE
 		SET is_following = 0;
 	END IF;
-END
+END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `search_album`(IN album_name VARCHAR(100))
 BEGIN
