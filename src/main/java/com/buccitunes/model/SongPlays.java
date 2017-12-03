@@ -29,11 +29,19 @@ public class SongPlays {
 	
 	public SongPlays() {}
 	
+	public SongPlays(Song song) {
+		this.song = song;
+		this.datePlayed = new Date();
+	}
+	
 	public SongPlays(User user, Song song) {
 		
 		this.user = user;
 		this.song = song;
+		this.datePlayed = new Date();
 	}
+	
+
 
 	public User getUser() {
 		return user;

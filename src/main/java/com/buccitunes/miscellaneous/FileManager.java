@@ -54,6 +54,17 @@ public class FileManager {
 		}
 	}
 	
+	public static void createDirectory(Path parentPath, String id) throws IOException {
+		if(Files.notExists(parentPath)) {
+			setUpFileDirectory(parentPath);
+		}
+		
+		Path path = Paths.get(parentPath.toString() + "/" + id + "/");
+		if(Files.notExists(path)) {
+			Files.createDirectory(path);
+		}
+	}
+	
 	private static String getResourcePathString(String path) {
 		String folderPath = path.substring(FILESPATH.toString().length()+1);
 		return RESOURCEPATHALIAS + folderPath;
@@ -70,6 +81,18 @@ public class FileManager {
         
         if(Files.notExists(path)) {
         	createDirectory(ALBUMPATH, albumId);
+        }
+        
+        String strPath = saveImage(encodedStr, path);
+        return strPath; 
+	}
+	
+	public static String saveUserAvatar(String encodedStr, String userId) throws IOException {
+        Path path = Paths.get(USERPATH + "/" + userId +  "/" + AVATARIMAGE);
+        System.out.println(path);
+        
+        if(Files.notExists(path)) {
+        	createDirectory(USERPATH, userId);
         }
         
         String strPath = saveImage(encodedStr, path);

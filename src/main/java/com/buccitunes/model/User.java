@@ -253,4 +253,14 @@ public class User {
 	public void setAvatarPath(String avatarPath) {
 		this.avatarPath = avatarPath;
 	}
+	
+	public void updateUserInfo(User user) {
+		if(user.password != null) {
+			this.password = BucciPassword.encryptPassword(user.password);
+		}
+		if(user.avatarPath != null) {
+			this.avatarPath = user.avatarPath;
+		}
+		this.inPrivateMode = user.inPrivateMode;
+	}
 }

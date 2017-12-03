@@ -1,5 +1,6 @@
 package com.buccitunes.service;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,6 +21,7 @@ import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
+import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
@@ -277,5 +279,26 @@ public class UserService  {
 		}
 		
 		return new UserPageInfo(user, isAFollower);
+	}
+	
+	public User changeUserInfo(User loggedUser, User changedUser) throws BucciException {
+		
+		User user = userRepository.findOne(loggedUser.getEmail());
+		
+		if(user == null || !user.getEmail().equals(changedUser.getEmail())) {
+			throw new BucciException("Emails do not match");
+		}
+		
+		if(changedUser.getAvatar() != null) {
+			try {
+				String avatarPath = FileManager.saveUserAvatar(changedUser.getAvatar(), changedUser.getEmail());
+				changedUser.setAvatarPath(avatarPath);
+			} catch (IOException e) {
+				throw new BucciException("Unable to save avatar picture");
+			}
+		}
+		
+		user.updateUserInfo(changedUser);
+		return user;
 	}
 }
