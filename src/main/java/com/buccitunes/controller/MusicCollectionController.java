@@ -80,7 +80,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
 		}
 		
 		playlist.setOwner(loggedUser);
@@ -151,14 +151,18 @@ public class MusicCollectionController {
 		return BucciResponseBuilder.successfulResponse(album);
 	}
 	
-	@RequestMapping(value="play_song", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestParam String userId, int songId) {
-		Song bucciSong;
+	@RequestMapping(value="play_song", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestBody Song song, HttpSession session) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(BucciConstant.NOT_LOGGED_IN);
+		}
+		
 		try {
-			bucciSong = musicCollectionService.playSong(userId, songId);
+			Song bucciSong = musicCollectionService.playSong(loggedUser, song);
 			return BucciResponseBuilder.successfulResponse(bucciSong);
-		} catch (ParseException e) {
-			return BucciResponseBuilder.failedMessage(e.getMessage());
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
 	

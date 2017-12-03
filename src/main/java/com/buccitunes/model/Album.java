@@ -66,9 +66,9 @@ public class Album extends MusicCollection {
 		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false))
 	private List<Genre> genres;
 	
-	@OneToOne(mappedBy="album", cascade=CascadeType.ALL)
-	@JsonIgnoreProperties(value = "album")
-	private AlbumStatCache albumStats;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stats_id")
+	private StatCache stats;
 	
 	private boolean isPublic;
 	
@@ -77,19 +77,12 @@ public class Album extends MusicCollection {
 		super();
 	};
 	
-	public AlbumStatCache getAlbumStats() {
-		return albumStats;
-	}
-
-	public void setAlbumStats(AlbumStatCache albumStats) {
-		this.albumStats = albumStats;
-	}
 
 	public Album(List<Song> newSongs){
 		this.songs = newSongs;
 	};
 	
-	public Album(RequestedAlbum requested) {
+	public Album(RequestedAlbum requested, boolean addSongs) {
 		
 		super(requested.getTitle());
 		this.primaryArtist = requested.getPrimaryArtist();
@@ -99,19 +92,22 @@ public class Album extends MusicCollection {
 		this.genres = requested.getGenres();
 		
 		List<Song> newSongs = new ArrayList<Song>();
-		List<RequestedSong> requestedSongs = requested.getSongs();
 		
-		for(RequestedSong requestedSong : requestedSongs) {
-			Song newSong = new Song(requestedSong);
+		if(addSongs) {
+			List<RequestedSong> requestedSongs = requested.getSongs();
 			
-			if(newSong.getOwner() == null) {
-				newSong.setOwner(requested.getPrimaryArtist());
+			for(RequestedSong requestedSong : requestedSongs) {
+				Song newSong = new Song(requestedSong);
+				
+				if(newSong.getOwner() == null) {
+					newSong.setOwner(requested.getPrimaryArtist());
+				}
+				
+				newSongs.add(newSong);
 			}
 			
-			newSongs.add(newSong);
+			this.setSongs(newSongs);
 		}
-		
-		this.setSongs(newSongs);
 	}
 
 	public List<Song> getSongs() {

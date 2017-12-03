@@ -45,9 +45,9 @@ public class Playlist extends MusicCollection {
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "followingPlaylists")
 	private List<User> followers;
 	
-	@OneToOne(mappedBy="playlist", cascade=CascadeType.ALL)
-	@JsonIgnoreProperties(value = "playlist")
-	private PlaylistStatCache playlistStatCache; 
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "stats_id")
+	private StatCache stats;
 	
 	public Playlist(){
 		super();
@@ -58,13 +58,6 @@ public class Playlist extends MusicCollection {
 		this.songs = songs;
 	};
 	
-	public PlaylistStatCache getPlaylistStatCache() {
-		return playlistStatCache;
-	}
-
-	public void setPlaylistStatCache(PlaylistStatCache playlistStatCache) {
-		this.playlistStatCache = playlistStatCache;
-	}
 
 	public List<Song> getSongs() {
 		return songs;
@@ -120,6 +113,14 @@ public class Playlist extends MusicCollection {
 	
 	public void setFollowers(List<User> followers) {
 		this.followers = followers;
+	}
+
+	public StatCache getStats() {
+		return stats;
+	}
+
+	public void setStats(StatCache stats) {
+		this.stats = stats;
 	}
 	
 }

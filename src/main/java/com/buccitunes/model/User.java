@@ -34,7 +34,7 @@ public class User {
 	
 	String username;
 	
-	boolean verified;
+	boolean inPrivateMode;
 	
 	@Transient
 	@JsonInclude(JsonInclude.Include.NON_NULL)
@@ -150,12 +150,12 @@ public class User {
 		this.username = username;
 	}
 	
-	public boolean isVerified() {
-		return verified;
+	public boolean isInPrivateMode() {
+		return inPrivateMode;
 	}
 	
-	public void setVerified(boolean verified) {
-		this.verified = verified;
+	public void setInPrivateMode(boolean verified) {
+		this.inPrivateMode = verified;
 	}
 	
 	public String getProfilePicturePath() {
@@ -252,5 +252,15 @@ public class User {
 
 	public void setAvatarPath(String avatarPath) {
 		this.avatarPath = avatarPath;
+	}
+	
+	public void updateUserInfo(User user) {
+		if(user.password != null) {
+			this.password = BucciPassword.encryptPassword(user.password);
+		}
+		if(user.avatarPath != null) {
+			this.avatarPath = user.avatarPath;
+		}
+		this.inPrivateMode = user.inPrivateMode;
 	}
 }

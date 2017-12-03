@@ -49,7 +49,6 @@ import com.buccitunes.resultset.AlbumWithStats;
 @Transactional
 public class MusicCollectionService {
 	
-	boolean alter = true; // just for testing purposes, must be removed during production
 	private final AlbumRepository albumRepository;
 	private final PlaylistRepository playlistRepository;
 	private final SongRepository songRepository;
@@ -171,27 +170,21 @@ public class MusicCollectionService {
 			album.setDateCreated(new Date());
 	}
 	
-	public Song playSong(String userId, int songId) throws ParseException {
-		
-		User user = userRepository.findOne(userId);
-		Song song = songRepository.findOne(songId);
-		//song.getLyrics().getLyric().length();
-		
-		SongPlays songPlay = new SongPlays(user, song);
-		
-		if(alter) {
-			// This will be deleted, we should only store new Date() for the current date
-			// this is just for testing
-			SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd");
-			songPlay.setDatePlayed(format.parse("2017-01-13"));
-			alter = !alter;
-		}else {
-			
-			songPlay.setDatePlayed(new Date());
-			alter = !alter;
+	public Song playSong(User loggedUser, Song song) throws BucciException {
+		User user = userRepository.findOne(loggedUser.getEmail());
+		song = songRepository.findOne(song.getId());
+		if(song == null) {
+			throw new BucciException("Song does not exist");
 		}
 		
-		songPlaysRepository.save(songPlay);
+		SongPlays songPlayed;
+		if(user.isInPrivateMode()) {
+			songPlayed = new SongPlays(null, song);
+		} else {
+			songPlayed = new SongPlays(user, song);
+		}
+		
+		songPlaysRepository.save(songPlayed);
 		
 		return song;
 	}
