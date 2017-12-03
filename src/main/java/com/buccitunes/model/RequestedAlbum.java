@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonInclude;
 
 
 @Entity(name="RequestedAlbum")
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestedAlbum {
 	
 	@Id

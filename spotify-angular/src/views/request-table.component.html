@@ -6,7 +6,7 @@
     <ng-container mdColumnDef="checkBox">
       <md-header-cell *mdHeaderCellDef></md-header-cell>
       <md-cell *mdCellDef="let row; "> 
-        <div><md-checkbox></md-checkbox></div>
+        <div><md-checkbox [(ngModel)]="row.accept"></md-checkbox></div>
       </md-cell>
     </ng-container>
 

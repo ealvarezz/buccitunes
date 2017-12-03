@@ -40,12 +40,27 @@ export class RequestedAlbumComponent implements OnInit{
     this.adminService.approveAlbum(album).subscribe(
       (data) =>{
         this.loadRequestedAlbums();
-        this.notificationService.success("SUCCESS", "Album successfully added to the system.");
+        this.notificationService.success("SUCCESS", "Album ${album.title} successfully added to the system.");
       },
       (err) =>{
         this.notificationService.error("FAIL", err);
       }
     )
+  }
+
+  approveSelectedAlbums(){
+    let albums = this.getSelectedAlbums();
+    for(let album of albums){
+      this.approveAlbum(album);
+    }
+  }
+
+  getSelectedAlbums() : RequestedAlbum[]{
+    let albums = []
+    for(let album of this.requests){
+      if(album.accept) albums.push(album);
+    }
+    return albums;
   }
 
   openDialog(row){
