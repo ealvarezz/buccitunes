@@ -1,37 +1,27 @@
 constants:
-  PageRequest:
-    START: 0
+  start: 0
   
-  Album:
-    NEW_RELEASES_LIMIT: 10
-    TOP_ALBUMS_LIMIT: 10
+  new_releases_limit: 10
+  top_albums_limit: 10
+  top_songs_limit: 10
+  top_playlists_limit: 10
   
-  Artist:
-    TOP_SONGS_LIMIT: 10
-    
-  Admin:  
-    PLAYLISTS_LIMIT: 10
-    ROYALTY_PRICE: 0.03
-    MOONMAN_TIER_MONTHLY_PRICE: 30
-    TREX_TIER_MONTHLY_PRICE: 45
-    NITRODUBS_TIER_MONTHLY_PRICE: 100
-    MOONMAN_MAX: 4
-    TREX_MAX: 9
-    NITRODUBS_MAX: 17 
+  royalty_price: 0.03
+  moonman_tier_monthly_price: 30
+  trex_tier_monthly_price: 45
+  nitrodubs_tier_monthly_price: 100
   
-  Playlist:
-    TOP_PLAYLISTS_LIMIT: 10
+  moonman_max: 4
+  trex_max: 9
+  nitrodubs_max: 17 
     
-  TimeAgo:
-    WEEK_AGO: 7
-    TWO_WEEKS_AGO: 14
-    ALL_TIME: CURDATE()
+  weeks_ago: 7
+  two_weeks_ago: 14
+  all_time: CURDATE()
     
-  Stats:
-    SONG_COUNT: stats.song_count
-    PLAY_COUNT: numPlays
+  song_count: stats.song_count
+  play_count: numPlays
     
-  User:
-    NOT_LOGGED_IN: Not Logged In 
-    LOGGED_IN: Already Logged In
-    SESSION: user
+  not_logged_in: Not Logged In 
+  logged_in: Already Logged In
+  session: user

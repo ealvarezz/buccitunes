@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.buccitunes.miscellaneous.BucciConstant;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
@@ -39,6 +39,10 @@ public class ArtistController {
 	
 	@Autowired
 	private ArtistService artistService;
+	
+	@Autowired
+	private BucciConstants constants;
+	
 	
 	@RequestMapping(value="get_artist_by_name", method = RequestMethod.POST)
 	public BucciResponse<Artist> findArtistByName(@RequestBody String name) {
@@ -79,7 +83,7 @@ public class ArtistController {
 	@RequestMapping(value="request_album", method = RequestMethod.POST)
 	public BucciResponse<RequestedAlbum> requestAnAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
@@ -103,7 +107,7 @@ public class ArtistController {
 	@RequestMapping(value="request_song", method = RequestMethod.POST)
 	public BucciResponse<String> requestSongToAlbum(@RequestBody RequestedSong requested, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
@@ -124,7 +128,7 @@ public class ArtistController {
 	@RequestMapping(value="delete_album", method = RequestMethod.DELETE)
 	public BucciResponse<String> deleteAlbum(@RequestParam int albumId, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
@@ -143,7 +147,7 @@ public class ArtistController {
 	@RequestMapping(value="delete_song_album", method = RequestMethod.DELETE)
 	public BucciResponse<String> requestSongToAlbum(@RequestParam int albumId, @RequestParam int songId, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
@@ -162,7 +166,7 @@ public class ArtistController {
 	@RequestMapping(value="add_audio_to_song", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Song> addAudio(@RequestBody Song song, HttpSession session) {
 
-		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");

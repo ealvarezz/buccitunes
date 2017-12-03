@@ -12,6 +12,7 @@ import java.util.List;
 import javax.imageio.ImageIO;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
@@ -23,7 +24,7 @@ import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
 import com.buccitunes.dao.RequestedSongRepository;
 import com.buccitunes.dao.SongRepository;
-import com.buccitunes.miscellaneous.BucciConstant;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
@@ -39,12 +40,17 @@ import com.buccitunes.model.User;
 @Transactional
 public class ArtistService {
 	
-private final ArtistRepository artistRepository;
-private final AlbumRepository albumRepository;
-private final RequestedAlbumRepository requestedAlbumRepository;
-private final ArtistUserRepository artistUserRepository;
-private final SongRepository songRepository;
-private final RequestedSongRepository requestedSongRepository;
+	@Autowired
+	private BucciConstants constants;
+	
+	
+	
+	private final ArtistRepository artistRepository;
+	private final AlbumRepository albumRepository;
+	private final RequestedAlbumRepository requestedAlbumRepository;
+	private final ArtistUserRepository artistUserRepository;
+	private final SongRepository songRepository;
+	private final RequestedSongRepository requestedSongRepository;
 	
 	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
@@ -119,8 +125,8 @@ private final RequestedSongRepository requestedSongRepository;
 	}
 
 	public List<Song> getTopTenSongs(int artistId) {
-		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_SONGS_LIMIT,
-				Sort.Direction.DESC, BucciConstant.PLAY_COUNT);
+		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopSongsLimit(),
+				Sort.Direction.DESC, constants.getPlayCount());
 		//return songRepository.getTopSongsOfArtist(BucciConstants.TimeAgo.ALL_TIME, artistId, pageRequest);
 		return null;
 		

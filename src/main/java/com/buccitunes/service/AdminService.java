@@ -7,11 +7,12 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.PaymentType;
 import com.buccitunes.dao.*;
-import com.buccitunes.miscellaneous.BucciConstant;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
@@ -24,12 +25,19 @@ import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
+import com.mysql.jdbc.Constants;
 import com.buccitunes.model.SongPlays;
+
+
 
 
 @Service
 @Transactional
 public class AdminService {
+	
+	@Autowired
+	private BucciConstants constants;
+	
 	private final AdminUserRepository adminUserRepository;
 	private final AlbumRepository albumRepository;
 	private final SongRepository songRepository;
@@ -261,9 +269,9 @@ public class AdminService {
 			int songPlays = songPlaysRepository.getCurrentSongPlaysByArtist(artist.getArtist().getId()).size();
 			if(songPlays > 0) {
 				
-				total += songPlays * BucciConstant.ROYALTY_PRICE;
+				total += songPlays * constants.getRoyaltyPrice();
 				ArtistTransaction transaction  = new ArtistTransaction();
-				transaction.setAmount(songPlays * BucciConstant.ROYALTY_PRICE);
+				transaction.setAmount(songPlays * constants.getRoyaltyPrice());
 				transaction.setArtistUser(artist);
 				transaction.setDate(new Date());
 				transaction.setPaymentType(PaymentType.ROYALTY_PAYMENT); // Change this to transaction type instead later

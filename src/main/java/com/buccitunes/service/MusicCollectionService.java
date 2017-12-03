@@ -14,6 +14,7 @@ import java.util.List;
 import javax.persistence.Tuple;
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -30,7 +31,7 @@ import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
-import com.buccitunes.miscellaneous.BucciConstant;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
@@ -49,6 +50,10 @@ import com.buccitunes.resultset.AlbumWithStats;
 @Transactional
 public class MusicCollectionService {
 	
+	@Autowired
+	private BucciConstants constants;
+	
+	boolean alter = true; // just for testing purposes, must be removed during production
 	private final AlbumRepository albumRepository;
 	private final PlaylistRepository playlistRepository;
 	private final SongRepository songRepository;
@@ -72,20 +77,20 @@ public class MusicCollectionService {
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
-		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.NEW_RELASES_LIMIT);
+		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getNewReleasesLimit());
 		return albumRepository.getNewReleasesOfMonth(pageRequest);
 	}
 	
 	
 	public List<Album> getTopAlbumsByWeek() {
-		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_ALBUMS_LIMIT,
-				Sort.Direction.DESC, BucciConstant.PLAY_COUNT);
+		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopAlbumsLimit(),
+				Sort.Direction.DESC, constants.getPlayCount());
 		//return albumRepository.topAlbumsOfTheWeek(BucciConstants.TimeAgo.WEEK_AGO,pageRequest);
 		return null;
 	}
 	
 	public List<Playlist> getTopPlaylist() {
-		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_PLAYLISTS_LIMIT,
+		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopPlaylistsLimit(),
 				Sort.Direction.DESC, "stats.total_plays");
 		return playlistRepository.getTopPlaylistOfAllTime();
 	}
@@ -195,8 +200,8 @@ public class MusicCollectionService {
 	}
 	
 	public List<Album> getTopAlbumsByGenre(int genreId) {
-		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_ALBUMS_LIMIT,
-				Sort.Direction.DESC, BucciConstant.PLAY_COUNT);
+		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopAlbumsLimit(),
+				Sort.Direction.DESC, constants.getPlayCount());
 		//List<Album> albums = albumRepository.topAlbumsByGenre(genreId, BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
 		return null;
 		//return albumRepository.topAlbumsByGenre(genreId, BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
@@ -204,7 +209,7 @@ public class MusicCollectionService {
 	}
 	
 	public List<Playlist> getTopPlaylistByGenre(int genreId) {
-		PageRequest pageRequest = new PageRequest(BucciConstant.START, BucciConstant.TOP_PLAYLISTS_LIMIT,
+		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopPlaylistsLimit(),
 				Sort.Direction.DESC, "stats.monthly_plays");
 		//return playlistRepository.getTopPlaylistByWeeks(BucciConstants.TimeAgo.TWO_WEEKS_AGO, pageRequest);
 		return null;
@@ -248,9 +253,9 @@ public class MusicCollectionService {
 		
 		int populateAmount = 0;
 		switch(tier){
-			case MOONMAN_TIER: 		populateAmount = BucciConstant.MOONMAN_MAX; break;
-			case TREX_TIER: 			populateAmount = BucciConstant.TREX_MAX; break;
-			case NITRO_DUBS_TIER: 	populateAmount = BucciConstant.NITRODUBS_MAX; break;
+			case MOONMAN_TIER: 		populateAmount = constants.getMoonmanMax(); break;
+			case TREX_TIER: 			populateAmount = constants.getTrexMax(); break;
+			case NITRO_DUBS_TIER: 	populateAmount = constants.getNitrodubsMax(); break;
 			default: break;
 		}
 		populateAmount += rem;
