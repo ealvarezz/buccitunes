@@ -7,21 +7,16 @@
           <input mdInput placeholder="Album Name" formControlName="title" name="title" [(ngModel)]="currentAlbum.title" required>
         </md-form-field>
         <div>
-          <h4>Release Date</h4>
-          <md-select placeholder="Month" name="month" [(value)]="releaseMonth">
-            <md-option *ngFor="let month of months" [value]="month">
-              {{month}}
-            </md-option>
-          </md-select>
+
           <md-form-field>
-            <input mdInput type="number" placeholder="Day" formControlName="dayCtrl" name="day" [(ngModel)]="releaseDay" required>
+            <input mdInput [(ngModel)]="currentAlbum.releaseDate" formControlName="dateCtrl" name="datepicker" [mdDatepicker]="dp3" placeholder="Choose a date">
+            <md-datepicker-toggle mdSuffix [for]="dp3"></md-datepicker-toggle>
+            <md-datepicker #dp3 disabled="false"></md-datepicker>
           </md-form-field>
-          <md-form-field>
-            <input mdInput type="number" placeholder="Year" formControlName="yearCtrl" name="year" [(ngModel)]="releaseYear" required>
-          </md-form-field>
+        
         </div>
         <div>
-          <button md-button mdStepperNext (click)="setDate()">Next</button>
+          <button md-button mdStepperNext>Next</button>
         </div>
       </form>
     </md-step>
@@ -52,10 +47,10 @@
     <md-step [stepControl]="songsFormGroup">
       <form [formGroup]="songsFormGroup">
         <ng-template mdStepLabel>Upload Songs</ng-template>
-        <div style="margin-bottom:2%;" *ngFor="let song of currentAlbum.songs;">
+        <div style="margin-bottom:2%;" *ngFor="let song of currentAlbum.songs; let i=index">
           <div>
             <md-form-field>
-              <input mdInput placeholder="Song Title" name="song_title" [(ngModel)]="song.name" formControlName="song_title">
+              <input mdInput placeholder="Song Title" name="{{i}}" [(ngModel)]="song.name" [ngModelOptions]="{standalone: true}">
             </md-form-field>
             <button (click)="removeSong(song)" md-icon-button style="float:right"><i class="material-icons">close</i></button>
           </div>

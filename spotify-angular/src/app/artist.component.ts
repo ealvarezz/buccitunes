@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { environment } from '../environments/environment';
 import {Song} from './objs/Song';
 import {RequestedSong} from './objs/RequestedSong';
@@ -91,7 +91,7 @@ export class ArtistComponent implements OnInit {
 })
 export class AddAlbumDialog {
 
-  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>, @Inject(MD_DIALOG_DATA) public data: any,  private _formBuilder: FormBuilder, private musicService : MusicCollectionService) {
+  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>, @Inject(MD_DIALOG_DATA) public data: any,  private _formBuilder: FormBuilder, private musicService : MusicCollectionService, private _cdr: ChangeDetectorRef) {
      }
 
   infoFormGroup     : FormGroup;
@@ -105,6 +105,9 @@ export class AddAlbumDialog {
   releaseMonth      : string;
   releaseDay        : number;
   releaseYear       : number;
+
+  lastStep          : boolean;
+  testing           : RequestedSong[] = [];
 
 
   artworkError = {
@@ -129,12 +132,10 @@ export class AddAlbumDialog {
 
     this.infoFormGroup = this._formBuilder.group({
       title: ['', Validators.required],
-      dayCtrl: ['', [Validators.max(31), Validators.min(1)]],
-      yearCtrl:['',Validators.max((new Date()).getFullYear() + 1)]
+      dateCtrl: ['', Validators.required]
     });
 
     this.songsFormGroup= this._formBuilder.group({
-      song_title: ['']
     });
 
     this.artworkFormGroup = this._formBuilder.group({});
@@ -144,9 +145,14 @@ export class AddAlbumDialog {
     this.dialogRef.close(false);
   }
 
+  toggleLastStep(){
+    this.lastStep = !this.lastStep;
+  }
+
   addNewSong(): void{
-    this.currentAlbum.songs.push(new RequestedSong());
-    this.currentAlbum.songs = this.currentAlbum.songs.slice();
+   this.currentAlbum.songs.push(new RequestedSong());
+   this.currentAlbum.songs = this.currentAlbum.songs.slice();
+    // this._cdr.detectChanges();
   }
   
   removeSong(song: RequestedSong): void{
@@ -211,12 +217,13 @@ export class AddAlbumDialog {
   }
 
   setDate(){
-    this.currentAlbum.releaseDate.setMonth(this.months.indexOf(this.releaseMonth));
-    this.currentAlbum.releaseDate.setDate(this.releaseDay);
-    this.currentAlbum.releaseDate.setFullYear(this.releaseYear);
+    let month = this.months.indexOf(this.releaseMonth);
+    let date = new Date(this.releaseYear, month, this.releaseDay);
+    this.currentAlbum.releaseDate = date;
+    // this.currentAlbum.releaseDate.setMonth(this.months.indexOf(this.releaseMonth));
+    // this.currentAlbum.releaseDate.setDate(this.releaseDay);
+    // this.currentAlbum.releaseDate.setFullYear(this.releaseYear);
   }
-
-
   submitAlbum(){
     this.currentAlbum.primaryArtist = this.artist;
     this.currentAlbum.artwork = this.currentAlbum.artwork.split(",")[1];

@@ -146,13 +146,14 @@ public class AdminService {
 	public Album adminApproveAlbum(RequestedAlbum requestedAlbum) throws BucciException {
 		
 		Album newAlbum;
+		List<RequestedSong> songsToApprove = requestedAlbum.getSongs();
 		
 		requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
 		if(requestedAlbum == null) {
 			throw new BucciException("Requested album does not exist");
 		}
 			
-		List<RequestedSong> songsToApprove = requestedAlbum.getSongs();
+		
 		if(songsToApprove == null) {
 			newAlbum = new Album(requestedAlbum, true);
 		} else {
