@@ -41,6 +41,24 @@ export class MusicCollectionService {
             });
     }
 
+    getPlaylist(id : number){
+        return this.http.get<BucciResponse<Album>>(environment.GET_PLAYLIST_ENDPOINT,{
+           params: new HttpParams().set('id', String(id)), 
+           withCredentials: true
+        }).
+        map(bucci  => {
+                if(bucci.successful){
+                    return bucci.response;
+                }
+                else{
+                    throw new Error(bucci.message);
+                }
+                
+            }).catch((error : any) =>{
+                return Observable.throw(new Error(error.message));
+            });
+    }
+
     addAlbumAdmin(album : RequestedAlbum){
         console.log(album);
         return this.http.post<BucciResponse<Album>>(environment.ADD_ALBUM_ENDPOINT_ADMIN,
@@ -161,7 +179,7 @@ export class MusicCollectionService {
     }
 
     getRecentlyPlayedAlbums(){
-        return this.http.get<BucciResponse<Album[]>>(environment.GET_SAVED_ALBUMS_ENDPOINT, {withCredentials: true})
+        return this.http.get<BucciResponse<Album[]>>(environment.GET_RECENT_ALBUMS_ENDPOINT, {withCredentials: true})
         .map(bucci =>{
             if (bucci.successful){
                 return bucci.response;
@@ -175,6 +193,7 @@ export class MusicCollectionService {
         }
         );
     }
+
 
     private handleSuccessResponse(bucci : BucciResponse<any>){
         if (bucci.successful){

@@ -8,11 +8,12 @@ export const environment = {
 
   SERVER_PATH               : "http://localhost:8080",
   GET_ARTIST_ENDPOINT       : "http://localhost:8080" + "/artist",
+  GET_PLAYLIST_ENDPOINT     : "http://localhost:8080" + "/playlist",
   LOGIN_ENDPOINT            : "http://localhost:8080" + "/login",
   GET_ALBUM_ENDPOINT        : "http://localhost:8080" + "/album",
   ADD_ALBUM_ENDPOINT_ADMIN  : "http://localhost:8080" + "/add_album_admin",
   ADD_ALBUM_ENDPOINT_ARTIST : "http://localhost:8080" + "/request_album",
-  ADD_PLAYLIST_ENDPOINT     : "http://localhost:8080" + "/newplaylist",
+  ADD_PLAYLIST_ENDPOINT     : "http://localhost:8080" + "/new_playlist",
   SAVE_SONG_ENDPOINT        : "http://localhost:8080" + "/save_song",
   GET_SONG_LIBRARY_ENDPOINT : "http://localhost:8080" + "/saved_songs",
   SAVE_ALBUM_ENDPOINT       : "http://localhost:8080" + "/save_album",
@@ -21,6 +22,9 @@ export const environment = {
   GET_REQ_ALBUM_ENDPOINT    : "http://localhost:8080" + "/requested_album_info",
   GET_REQ_SONGS_ENDPOINT    : "http://localhost:8080" + "/requested_album_info",
   APPROVE_ALBUM_ENDPOINT    : "http://localhost:8080" + "/approve_album",
+  REJECT_ALBUM_ENDPOINT     : "http://localhost:8080" + "/disapprove_request_album",
+  GET_RECENT_ALBUMS_ENDPOINT: "http://localhost:8080" + "/recently_played",
+
 
   ARTIST_ROLE               : "ARTIST",
   ADMIN_ROLE                : "ADMIN",

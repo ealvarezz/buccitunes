@@ -82,6 +82,21 @@ export class AdminService {
         
     }
 
+    rejectAlbum(album: RequestedAlbum){
+        return this.http.post<BucciResponse<String>>(environment.REJECT_ALBUM_ENDPOINT, album)
+        .map(bucci =>{
+            if(bucci.successful){
+                return bucci.response;
+            }
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error : any)=>{
+            return Observable.throw(new Error(error.message));
+        })
+    }
+
     
 
 }

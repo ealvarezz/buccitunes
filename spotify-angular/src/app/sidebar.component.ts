@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from "@angular/router"; 
 import {MdDialog, MdDialogRef} from '@angular/material';
 import {AuthenticationService} from './services/authentication.service';
-
+import {MusicCollectionService} from './services/music.service';
+import {Album} from './objs/Album';
 import {AddPlaylistDialog} from './add-playlist.component';
 import {Playlist} from './objs/Playlist';
 
@@ -12,10 +13,16 @@ import {Playlist} from './objs/Playlist';
   templateUrl: '../views/sidebar.component.html',
   styleUrls: ['../views/styles/sidebar.component.css']
 })
-export class SideBarComponent {
+export class SideBarComponent implements OnInit {
     constructor(public dialog: MdDialog,
                 private router: Router,
-                private authService : AuthenticationService) {}
+                private authService : AuthenticationService,
+                private musicService : MusicCollectionService) {}
+    recentAlbums : Album[];
+
+    ngOnInit(){
+        this.getRecentlyPlayedAlbums();
+    }
 
     logout() {
         this.authService.logout().subscribe(
@@ -25,8 +32,16 @@ export class SideBarComponent {
             (err) =>{
                 console.log("error");
             }
-        )
-        
+        ) 
+    }
+    getRecentlyPlayedAlbums(){
+        this.musicService.getRecentlyPlayedAlbums().subscribe(
+        (data)=>{
+            this.recentAlbums = data;
+        },
+        (err)=>{
+            console.log("cannot find");
+        });
     }
 
     addPlaylist(){

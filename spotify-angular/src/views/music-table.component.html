@@ -49,9 +49,15 @@
           <button md-menu-item>
             <span>Save to Your Library</span>
           </button>
-          <button md-menu-item>
+          <button [mdMenuTriggerFor]="subMenu" md-menu-item>
             <span>Add to Playlist</span>
           </button>
+        </md-menu>
+
+        <md-menu #subMenu="mdMenu">
+          <button md-menu-item>Shut down</button>
+          <button md-menu-item>Restart</button>
+          <button md-menu-item>Hibernate</button>
         </md-menu>
       </md-cell>
     </ng-container>

@@ -260,6 +260,19 @@ public class UserService  {
 		);
 	}
 	
+	public List<Playlist> getUserPlaylists(User loggedInUser) throws BucciException{
+		User user  = userRepository.findOne(loggedInUser.getEmail());
+		
+		if (user == null) {
+			throw new BucciException("User not found");
+		}
+		List<Playlist> userPlaylists = user.getPlaylists();
+		userPlaylists.size();
+		
+		return userPlaylists;
+		
+	}
+	
 	public UserPageInfo getUserInfo(String id, User loggedUser) throws BucciException {
 		User user = userRepository.findOne(id);
 		

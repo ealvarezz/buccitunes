@@ -75,8 +75,9 @@ public class MusicCollectionController {
 	
 	
 	@RequestMapping(value="playlist", method = RequestMethod.GET)
-	public @ResponseBody Playlist getPlaylist(@RequestParam int id) {
-		return musicCollectionService.getPlaylist(id);
+	public @ResponseBody BucciResponse<Playlist> getPlaylist(@RequestParam int id) {
+		Playlist playlist = musicCollectionService.getPlaylist(id);
+		return BucciResponseBuilder.successfulResponse(playlist);
 	}
 	
 	@RequestMapping(value="new_playlist", method = RequestMethod.POST)

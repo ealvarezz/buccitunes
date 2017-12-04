@@ -50,7 +50,7 @@ const appRoutes: Routes = [
         children:[
           { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
-          {path: 'playlist', component: PlaylistComponent, canActivate: [AuthGuard]},
+          {path: 'playlist/:id', component: PlaylistComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
           {path: 'admin',component:AdminComponent, canActivate: [AuthGuard], 
               children:[
