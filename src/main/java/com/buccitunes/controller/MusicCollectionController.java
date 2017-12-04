@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.buccitunes.constants.Tier;
+import com.buccitunes.jsonmodel.PlaylistPage;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
@@ -83,7 +84,7 @@ public class MusicCollectionController {
 	@RequestMapping(value="new_playlist", method = RequestMethod.POST)
 	public @ResponseBody  BucciResponse<Playlist> getPlaylist(@RequestBody Playlist playlist, HttpSession session) {
 		
-		User loggedUser = (User) session.getAttribute("user");
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
 		}
@@ -98,9 +99,42 @@ public class MusicCollectionController {
 		} 
 	}
 	
+	@RequestMapping(value="change_playlist", method = RequestMethod.POST)
+	public @ResponseBody  BucciResponse<PlaylistPage> changePlaylist(@RequestBody PlaylistPage playlistPage, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+		}
+		
+		try {
+			playlistPage = musicCollectionService.changePlaylist(playlistPage, loggedUser);
+			return BucciResponseBuilder.successfulResponseMessage("Playlist has been updated", playlistPage);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		} 
+	}
+	
+	@RequestMapping(value="delete_playlist", method = RequestMethod.POST)
+	public @ResponseBody  BucciResponse<String> deletePlaylist(@RequestBody Playlist playlist, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+		}
+		
+		try {
+			musicCollectionService.deletePlaylist(playlist, loggedUser);
+			return BucciResponseBuilder.successMessage("Playlist has been delete");
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		} 
+	}
+	
+	
 	@RequestMapping(value="test", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> test(HttpSession session) {
-		User sessionUser = (User) session.getAttribute("user");
+		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}

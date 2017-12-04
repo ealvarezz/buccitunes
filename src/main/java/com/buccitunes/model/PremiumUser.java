@@ -1,5 +1,6 @@
 package com.buccitunes.model;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -12,33 +13,40 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 
-
+import com.buccitunes.constants.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name="PremiumUser")
 public class PremiumUser extends User {
 	
-	private Date createDate;
+	private Date joinDate;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "billing_id")
 	private BillingInfo billingInfo;
 	
-	@OneToMany(mappedBy="premiumUser")
+	@OneToMany(cascade = CascadeType.ALL)
+	@JoinColumn(name = "premium_user_id")
+	@JsonIgnoreProperties(value = "premiumUser")
 	private List<Payment> paymentHistory;
 	
 	public PremiumUser(){
-		this.createDate = new Date();
+		super();
+		this.joinDate = new Date();
 	};
 	
 	public PremiumUser(BillingInfo billingInfo){
-		this.createDate = new Date();
+		super();
+		this.joinDate = new Date();
+		super.setRole(UserRole.PREMIUM);
 	};
 	
 	public PremiumUser(User user, BillingInfo billingInfo) {
 		super(user.email, user.name, user.password, user.username);
 		this.billingInfo = billingInfo;
-		this.createDate = new Date();
+		this.joinDate = new Date();
+		super.setRole(UserRole.PREMIUM);
 	}
 	
 	public BillingInfo getBillingInfo() {
@@ -54,7 +62,18 @@ public class PremiumUser extends User {
 		this.paymentHistory = paymentHistory;
 	}
 
-	public Date getCreateDate() {
-		return createDate;
+	public Date getJoinDate() {
+		return joinDate;
+	}
+	
+	public boolean makePayment(Double amount) {
+		boolean paid = true;
+		if(paymentHistory == null) {
+			paymentHistory = new ArrayList<Payment>();
+		}
+		Payment payment = new Payment(amount, true, this);
+		
+		paymentHistory.add(payment);
+		return paid;
 	}
 }

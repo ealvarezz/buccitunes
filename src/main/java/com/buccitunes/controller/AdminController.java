@@ -170,8 +170,9 @@ public class AdminController {
 		
 	}
 	
-	@RequestMapping(value="charge_this_month's_users", method = RequestMethod.GET)
-	public BucciResponse<List<PremiumUser>> chargeUsers() {
-		return null;
+	@RequestMapping(value="charge_users", method = RequestMethod.GET)
+	public BucciResponse<String> chargeUsers() {
+		adminService.chargeUsers();
+		return BucciResponseBuilder.successMessage("Payments recieved from users");
 	}
 }

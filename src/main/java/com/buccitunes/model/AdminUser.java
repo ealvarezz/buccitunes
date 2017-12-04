@@ -3,12 +3,14 @@ package com.buccitunes.model;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
+import com.buccitunes.constants.UserRole;
+
 @Entity(name="AdminUser")
 public class AdminUser extends User {
 	
 	public AdminUser(String email, String name, String password, String username) {
 		super(email, name, password, username);
-		// TODO Auto-generated constructor stub
+		super.setRole(UserRole.ADMIN);
 	}
 
 	@Column(unique=true)

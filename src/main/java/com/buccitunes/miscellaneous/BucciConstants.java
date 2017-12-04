@@ -36,7 +36,8 @@ public class BucciConstants {
 	private String loggedIn;
 	private String session;
 	
-
+	private double signupPremiumPrice;
+	private double monthlyPremiumPrice;
 	
 	
 	public int getStart() {
@@ -119,6 +120,14 @@ public class BucciConstants {
 		return session;
 	}
 
+	public double getSignupPremiumPrice() {
+		return signupPremiumPrice;
+	}
+
+	public double getMonthlyPremiumPrice() {
+		return monthlyPremiumPrice;
+	}
+
 	public void setStart(int start) {
 		this.start = start;
 	}
@@ -199,8 +208,11 @@ public class BucciConstants {
 		this.session = session;
 	}
 
+	public void setSignupPremiumPrice(double signupPremiumPrice) {
+		this.signupPremiumPrice = signupPremiumPrice;
+	}
 
-
-	
-	
+	public void setMonthlyPremiumPrice(double monthlyPremiumPrice) {
+		this.monthlyPremiumPrice = monthlyPremiumPrice;
+	}
 }

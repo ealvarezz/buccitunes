@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.transaction.Transactional;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.dao.AlbumRepository;
@@ -19,6 +20,7 @@ import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.jsonmodel.UserPageInfo;
+import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
@@ -34,6 +36,9 @@ import com.buccitunes.model.User;
 @Service
 @Transactional
 public class UserService  {
+	
+	@Autowired
+	private BucciConstants constants;
 	
 	private final UserRepository userRepository;
 	private final AlbumRepository albumRepository;
@@ -153,17 +158,13 @@ public class UserService  {
 			if(!invalidBillingInfo.equals("")) {
 				throw new BucciException(invalidBillingInfo);
 			}
-		}
-		
-		if(signedForPremium) {
+			
 			PremiumUser pUser = new PremiumUser(user,signupInfo.billingInfo);
+			pUser.makePayment(constants.getSignupPremiumPrice());
 			PremiumUser newUser = premiumUserRepository.save(pUser);
-			newUser = (PremiumUser) BucciPrivilege.setRole(newUser);
 			return newUser;
-		}
-		else {
+		} else {
 			User newUser = userRepository.save(user);
-			newUser = BucciPrivilege.setRole(newUser);
 			return newUser;
 		}
 	}
@@ -192,10 +193,9 @@ public class UserService  {
 		
 		billingInfo.setCreditCardCompany(cardCompany);
 		billingInfo = billingInfoRepository.save(billingInfo);
+		
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
-		pUser = (PremiumUser) BucciPrivilege.setRole(pUser);
-
 		return pUser;
 	}
 	

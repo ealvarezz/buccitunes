@@ -92,13 +92,16 @@ public class User {
 	inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
 	private List<Playlist> collaboratingPlaylitst;
 
-	public User(){}
+	public User(){
+		this.role = UserRole.USER;
+	}
 	
 	public User(String email, String name, String password, String username) {
 		this.email = email;
 		this.name = name;
 		this.password = password;
 		this.username = username;
+		this.role = UserRole.USER;
 	}
 	
 	public String getEmail() {

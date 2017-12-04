@@ -31,8 +31,10 @@ import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
+import com.buccitunes.jsonmodel.PlaylistPage;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
+import com.buccitunes.miscellaneous.BucciFailure;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
@@ -140,10 +142,79 @@ public class MusicCollectionService {
 				String artworkPath = FileManager.savePlaylistArtwork(artwork, newPlaylist.getId());
 				newPlaylist.setArtworkPath(artworkPath);
 			} catch (IOException e) {
-				throw new BucciException("UNABLE TO SAVE ARTWORK");
+				throw new BucciException("Unable to save artwork");
 			}
 		}
 		return newPlaylist;
+	}
+	
+	public PlaylistPage changePlaylist(PlaylistPage playlistPage, User user) throws BucciException {
+		Playlist playlist = playlistRepository.findOne(playlistPage.getPlaylist().getId());
+		List<Song> songsToAdd = playlistPage.getSongsToAdd();
+		List<Song> songsToRemove = playlistPage.getSongsToRemove();
+		String artwork = playlistPage.getPlaylist().getArtwork();
+		
+		
+		if(playlist == null) {
+			throw new BucciException("Playlist does not exist");
+		}
+		
+		if(!playlist.getOwner().getEmail().equals(user.getEmail())) {
+			throw new BucciException("You do not have permissions to change this playlist!");
+		}
+		
+		if(songsToAdd != null) {
+			for(Song song : songsToAdd) {
+				Song addSong = songRepository.findOne(song.getId());
+				if(addSong == null) {
+					throw new BucciException(song.getName() + "does not exist");
+				}
+				playlist.addSong(addSong);
+			}
+		}
+		
+		if(songsToRemove != null) {
+			for(Song song : songsToRemove) {
+				Song removeSong = songRepository.findOne(song.getId());
+				if(removeSong == null) {
+					throw new BucciException(song.getName() + "does not exist");
+				}
+				playlist.removeSong(removeSong);
+			}
+		}
+		
+		playlist.updateInfo(playlistPage.getPlaylist());
+		
+		if(artwork != null)  {
+			try {
+				String artworkPath = FileManager.savePlaylistArtwork(artwork, playlist.getId());
+				playlist.setArtworkPath(artworkPath);
+			} catch (IOException e) {
+				throw new BucciException("Unable to save artwork");
+			}
+		}
+		
+		playlistPage.setPlaylist(playlist);
+		return playlistPage;
+	}
+	
+	public void deletePlaylist(Playlist playlist, User user) throws BucciException {
+		playlist = playlistRepository.findOne(playlist.getId());
+		
+		if(playlist == null) {
+			throw new BucciException("Playlist does not exist");
+		}
+		
+		if(!playlist.getOwner().getEmail().equals(user.getEmail()) ) {
+			throw new BucciException("You do not have permissions to delete this playlist!");
+		}
+		
+		try {
+			FileManager.removePlaylistResources(playlist);
+		} catch (IOException e) {
+			throw new BucciException("Failed to remove album resources, try again.");
+		}
+		playlistRepository.delete(playlist);
 	}
 
 	public void saveAlbum(Album album) throws BucciException{

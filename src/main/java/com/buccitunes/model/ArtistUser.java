@@ -11,6 +11,7 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.buccitunes.constants.Tier;
+import com.buccitunes.constants.UserRole;
 
 @Entity(name="ArtistUser")
 public class ArtistUser extends User {
@@ -32,17 +33,23 @@ public class ArtistUser extends User {
 	private Tier tier;
 	
 	public ArtistUser(){
+		super();
 		createDate = new Date();
+		super.setRole(UserRole.ARTIST);
 	}
 	
 	public ArtistUser(String email, String name, String password, String username) {
 		super(email, name, password, username);
 		createDate = new Date();
+		super.setRole(UserRole.ARTIST);
 	}
-
+	
+	/*
 	public ArtistUser(RequestedArtist requestedArtist) {
 		createDate = new Date(); 
+		super.setRole(UserRole.ARTIST);
 	}
+	*/
 
 	
 	public Artist getArtist() {
