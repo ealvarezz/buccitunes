@@ -8,6 +8,7 @@ import {RequestedAlbum} from '../objs/RequestedAlbum';
 import {Playlist} from '../objs/Playlist';
 import {User} from '../objs/User';
 import {Song} from '../objs/Song';
+import {PlaylistPage} from '../objs/PlaylistPage';
 
 import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse} from '@angular/common/http';
 
@@ -20,6 +21,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 export class MusicCollectionService {
 
     songLibrary : BehaviorSubject<Song[]> = new BehaviorSubject([]);
+    userPlaylists : BehaviorSubject<Playlist[]> = new BehaviorSubject([]);
 
     constructor(private http: HttpClient){}
 
@@ -105,6 +107,7 @@ export class MusicCollectionService {
         { withCredentials: true }).
         map(bucci  => {
                 if(bucci.successful){
+                    this.reloadPlaylists();
                     return bucci.response;
                 }
                 else{
@@ -192,6 +195,97 @@ export class MusicCollectionService {
             return Observable.throw(new Error(error.message));
         }
         );
+    }
+
+    getUserPlaylists(){
+        return this.http.get<BucciResponse<Playlist[]>>(environment.GET_PLAYLIST_ENDPOINTS , {withCredentials: true})
+        .map(bucci =>{
+            if (bucci.successful){
+                this.userPlaylists.next(bucci.response);
+                return bucci.response;
+            } 
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error: any) =>{
+            return Observable.throw(new Error(error.message));
+        }
+        );
+    }
+
+    addSongToPlaylists(playlist: Playlist, song : Song){
+        
+        let playlistInfo = this.constructPlaylistUpdate(playlist, song);
+        return this.http.post<BucciResponse<String>>(environment.UPDATE_PLAYLIST_ENDPOINT, playlistInfo, {withCredentials: true}).
+        map(bucci =>{
+            if (bucci.successful){
+                return bucci.response;
+            } 
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error: any) =>{
+            return Observable.throw(new Error(error.message));
+        }
+        );
+
+
+    }
+
+    followPlaylist(playlist: Playlist){
+        return this.http.post<BucciResponse<String>>(environment.FOLLOW_PLAYLIST_ENDPOINT, playlist, {withCredentials: true}).
+        map(bucci =>{
+            if (bucci.successful){
+                return bucci.response;
+            } 
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error: any) =>{
+            return Observable.throw(new Error(error.message));
+        }
+        );
+
+    }
+
+    deletePlaylist(playlist : Playlist){
+
+        let playlistId = playlist.id;
+        let requestUrl = environment.DELETE_PLAYLIST_ENDPOINT + "/" + playlistId;
+
+        return this.http.delete<BucciResponse<String>>(requestUrl,{
+           withCredentials: true
+        }).
+        map(bucci  => {
+                if(bucci.successful){
+                    this.reloadPlaylists();
+                    return bucci.response;
+                }
+                else{
+                    throw new Error(bucci.message);
+                }
+                
+            }).catch((error : any) =>{
+                return Observable.throw(new Error(error.message));
+            });
+
+    }
+
+    private reloadPlaylists(){
+        this.getUserPlaylists().subscribe(
+            (data) =>{console.log("updated playlists")}
+        )
+    }
+
+    private constructPlaylistUpdate(playlist : Playlist, song: Song) : PlaylistPage{
+        let songs = [song];
+        let playlistInfo = new PlaylistPage();
+        playlistInfo.playlist = playlist;
+        playlistInfo.songsToAdd = songs;
+        return playlistInfo;
     }
 
 

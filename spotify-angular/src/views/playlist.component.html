@@ -1,7 +1,8 @@
 <md-card *ngIf="playlist" class="bg-card">
     <md-card-header>
         <div class="albumPic">
-            <img src="../assets/channel_x.png">
+            <img *ngIf="!artworkUrl" src="../assets/channel_x.png">
+            <img *ngIf="artworkUrl" [src]="artworkUrl">
         </div>
         <div class="albumInfo">
             <div><h4>Playlist</h4></div>
@@ -9,8 +10,22 @@
             <div><h4>Where RnB comes to play with Hip-Hop and Pop!</h4></div>
             <div><h4>Created By Sajid Kamal - 50 Songs, 3 hr 1 min</h4></div>
             <button md-raised-button  class="rounded-button">Play</button>
-            <button md-raised-button  class="rounded-button">Save</button>
-            <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+            <button md-raised-button (click)="followPlaylist()"  class="rounded-button">Follow</button>
+            <button md-mini-fab  [mdMenuTriggerFor]="menu"  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+            <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
+                <button md-menu-item>
+                    <span>Edit Details</span>
+                </button>
+                <button (click)="deletePlaylist()" md-menu-item>
+                    <span>Delete</span>
+                </button>
+                <button md-menu-item>
+                    <span>Collaborative Playlist</span>
+                </button>
+                <button md-menu-item>
+                    <span>Make Secret</span>
+                </button>
+            </md-menu>
         </div>
     </md-card-header>
     <md-card-content>

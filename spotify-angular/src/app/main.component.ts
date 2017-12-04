@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {MusicService } from './services/player.service'
+import {MusicCollectionService } from './services/music.service'
 
 @Component({
   selector: 'main-page',
@@ -8,7 +8,21 @@ import {MusicService } from './services/player.service'
 export class MainComponent {
 
 
-  constructor(private musicService : MusicService){
+  constructor(private musicService : MusicCollectionService){
     }
+
+    ngOnInit(){
+      this.getPlaylists();
+    }
+
+    getPlaylists(){
+        this.musicService.getUserPlaylists().subscribe(
+            (data) =>{
+                console.log("updated playlist");
+            }
+        )
+    }
+
+
 
 }

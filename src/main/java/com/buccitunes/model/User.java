@@ -2,6 +2,7 @@ package com.buccitunes.model;
 
 import java.util.List;
 
+
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -15,6 +16,7 @@ import javax.persistence.Transient;
 
 import com.buccitunes.constants.UserRole;
 import com.buccitunes.miscellaneous.BucciPassword;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;

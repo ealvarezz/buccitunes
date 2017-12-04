@@ -3,6 +3,7 @@ import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Song} from './objs/Song';
+import {Playlist} from './objs/Playlist';
 import {MusicCollectionService } from './services/music.service';
 import 'rxjs/add/observable/of';
 
@@ -18,6 +19,8 @@ export class MusicTableComponent implements OnChanges {
     hoveredRow : number = -1;
     displayedColumns = ['num','add', 'songName','artist','album', 'more','duration'];
 
+    playlists : Playlist[];
+
     constructor(private musicService : MusicCollectionService){}
 
     ngOnChanges(change : SimpleChanges){
@@ -32,6 +35,15 @@ export class MusicTableComponent implements OnChanges {
           this.isAlbum = true;
         }
         this.dataSource = new MusicDataSource(this.data);
+
+        this.musicService.getUserPlaylists().subscribe(
+          (data)=>{
+            this.playlists = data;
+          }
+        )
+        // this.musicService.userPlaylists.subscribe(
+        //   playlists => this.playlists = playlists
+        // );
 
     }
 
@@ -53,9 +65,23 @@ export class MusicTableComponent implements OnChanges {
         }
       )
     }
+
+    addSongToPlaylist(song: Song, playlist : Playlist){
+      this.musicService.addSongToPlaylists(playlist, song).
+      subscribe(
+        (data) =>{
+          console.log("success")
+        },
+        (err)=>{
+          console.log("nope");
+        }
+      )
+    }
       
       
 }
+
+
 
 
 

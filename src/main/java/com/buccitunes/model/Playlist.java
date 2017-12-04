@@ -37,6 +37,7 @@ public class Playlist extends MusicCollection {
 	
 	@ManyToOne
     @JoinColumn(name = "user_id")
+	@JsonIgnoreProperties(value = "playlists")
 	private User owner;
 
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "collaboratingPlaylitst")

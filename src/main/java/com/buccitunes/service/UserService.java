@@ -228,6 +228,14 @@ public class UserService  {
 		
 	}
 	
+	public void followPlaylist(int playlistId, String email) {
+		
+		User user = userRepository.findOne(email);
+		Playlist playlist = playlistRepository.findOne(playlistId);
+		user.getFollowingPlaylists().size();
+		user.getFollowingPlaylists().add(playlist);
+	}
+	
 	public void saveSong(int songId, String email) {
 		
 		User user = userRepository.findOne(email);
@@ -266,10 +274,9 @@ public class UserService  {
 		if (user == null) {
 			throw new BucciException("User not found");
 		}
-		List<Playlist> userPlaylists = user.getPlaylists();
-		userPlaylists.size();
+		user.getPlaylists().size();
 		
-		return userPlaylists;
+		return user.getPlaylists();
 		
 	}
 	

@@ -42,10 +42,10 @@
        <md-divider></md-divider>
     <md-list-item>
         <h3 mdLine md-subheader>Your Playlist <button (click)="addPlaylist()" md-icon-button style="float:right; color:white; margin-top:-5%;"><i class="material-icons">add_circle</i></button></h3>
-        <div *ngFor="let playlist of savedPlaylists" mdLine >
-            <i md-list-icon *ngIf= "playlist.source == 'friend'" class="material-icons playlist-icons">people</i>
-            <i *ngIf= "playlist.source == 'public'" class="material-icons playlist-icons">public</i>
-            <h4 class ="side-list"> <a routerLink="/">{{playlist.name}}</a></h4>
+        <div *ngFor="let playlist of playlists" mdLine >
+            <!-- <i md-list-icon *ngIf= "playlist.source == 'friend'" class="material-icons playlist-icons">people</i>
+            <i *ngIf= "playlist.source == 'public'" class="material-icons playlist-icons">public</i> -->
+            <h4 class ="side-list"> <a [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></h4>
         </div>
     </md-list-item>
     <md-divider></md-divider>

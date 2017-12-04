@@ -198,8 +198,8 @@ public class MusicCollectionService {
 		return playlistPage;
 	}
 	
-	public void deletePlaylist(Playlist playlist, User user) throws BucciException {
-		playlist = playlistRepository.findOne(playlist.getId());
+	public void deletePlaylist(int playlistId, User user) throws BucciException {
+		Playlist playlist = playlistRepository.findOne(playlistId);
 		
 		if(playlist == null) {
 			throw new BucciException("Playlist does not exist");

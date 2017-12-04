@@ -24,10 +24,16 @@ export const environment = {
   APPROVE_ALBUM_ENDPOINT    : "http://localhost:8080" + "/approve_album",
   REJECT_ALBUM_ENDPOINT     : "http://localhost:8080" + "/disapprove_request_album",
   GET_RECENT_ALBUMS_ENDPOINT: "http://localhost:8080" + "/recently_played",
+  GET_PLAYLIST_ENDPOINTS    : "http://localhost:8080" + "/user_playlists",
+  UPDATE_PLAYLIST_ENDPOINT  : "http://localhost:8080" + "/change_playlist",
+  FOLLOW_PLAYLIST_ENDPOINT  : "http://localhost:8080" + "/follow_playlist",
+  DELETE_PLAYLIST_ENDPOINT  : "http://localhost:8080" + "/delete_playlist",
 
 
   ARTIST_ROLE               : "ARTIST",
   ADMIN_ROLE                : "ADMIN",
+
+  DEFAULT_ARTWORK           : "../assets/default-cover-art.png",
 
   //LOGIN PAGE
   INVALID_EMAIL         : "Not a valid email address",

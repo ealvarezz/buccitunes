@@ -19,9 +19,14 @@ export class SideBarComponent implements OnInit {
                 private authService : AuthenticationService,
                 private musicService : MusicCollectionService) {}
     recentAlbums : Album[];
+    playlists    : Playlist[];
 
     ngOnInit(){
         this.getRecentlyPlayedAlbums();
+        
+        this.musicService.userPlaylists.subscribe(
+          playlists => this.playlists = playlists
+        );
     }
 
     logout() {
@@ -44,8 +49,16 @@ export class SideBarComponent implements OnInit {
         });
     }
 
+    getPlaylists(){
+        this.musicService.getUserPlaylists().subscribe(
+            (data) =>{
+                this.playlists = data;
+            }
+        )
+    }
+
     addPlaylist(){
-        let dialogRef = this.dialog.open(AddPlaylistDialog);
+        let dialogRef = this.dialog.open(AddPlaylistDialog,{width:'700px'});
     }
 
     savedPlaylists : PlaylistTemp[] = [new PlaylistTemp("Sajid's Playlist","own"), new PlaylistTemp("DICS Playlist","public"), new PlaylistTemp("The Block Playlist","friend"), new PlaylistTemp("Justin's Playlist","friend"), new PlaylistTemp("Chris' Playlist","friend")] 

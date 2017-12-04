@@ -220,6 +220,18 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="follow_playlist", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> followPlaylist(@RequestBody Playlist playlist, HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+		}
+		else {
+			userService.followPlaylist(playlist.getId(), sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse("User is now following playlist");	
+		}
+	}
+	
 	@RequestMapping(value="save_song", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<String> userSaveSong(HttpSession session, @RequestBody Song song) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());

@@ -14,6 +14,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -115,8 +116,8 @@ public class MusicCollectionController {
 		} 
 	}
 	
-	@RequestMapping(value="delete_playlist", method = RequestMethod.POST)
-	public @ResponseBody  BucciResponse<String> deletePlaylist(@RequestBody Playlist playlist, HttpSession session) {
+	@RequestMapping(value="delete_playlist/{playlistId}", method = RequestMethod.DELETE)
+	public @ResponseBody  BucciResponse<String> deletePlaylist(@PathVariable int playlistId, HttpSession session) {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
@@ -124,7 +125,7 @@ public class MusicCollectionController {
 		}
 		
 		try {
-			musicCollectionService.deletePlaylist(playlist, loggedUser);
+			musicCollectionService.deletePlaylist(playlistId, loggedUser);
 			return BucciResponseBuilder.successMessage("Playlist has been delete");
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
@@ -143,11 +144,11 @@ public class MusicCollectionController {
 		}
 	}
 	
-	/*
-	@RequestMapping(value="addSongsToPlaylist", method = RequestMethod.POST)
-	public @ResponseBody Playlist getPlaylist(@RequestBody Playlist song) {
-		return musicCollectionService.getPlaylist(id);
-	}*/
+	
+//	@RequestMapping(value="addSongsToPlaylist", method = RequestMethod.POST)
+//	public @ResponseBody Playlist getPlaylist(@RequestBody Playlist song) {
+//		return musicCollectionService.getPlaylist(id);
+//	}
 	
 	@Cacheable(value="popularityCache")
 	@RequestMapping(value="top_albums_by_genre", method = RequestMethod.GET)

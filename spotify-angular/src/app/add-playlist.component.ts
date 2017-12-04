@@ -1,7 +1,10 @@
 import { Component } from '@angular/core';
 import {MdDialog, MdDialogRef} from '@angular/material';
 import {MusicCollectionService } from './services/music.service';
+import {MediaService } from './services/media.service';
+import {MediaFile} from './objs/MediaFile';
 import {Playlist} from './objs/Playlist';
+import {environment} from '../environments/environment';
 
 
 @Component({
@@ -11,10 +14,14 @@ import {Playlist} from './objs/Playlist';
 })
 export class AddPlaylistDialog {
 
-  constructor(public dialogRef: MdDialogRef<AddPlaylistDialog>, private musicService : MusicCollectionService) {
+  constructor(public dialogRef: MdDialogRef<AddPlaylistDialog>,
+              private musicService : MusicCollectionService,
+              public mediaService : MediaService ) {
      }
 
      playlistName : string;
+     playlistArtwork : string = environment.DEFAULT_ARTWORK;
+
 
      closeDialog(){
          this.dialogRef.close();
@@ -39,7 +46,17 @@ export class AddPlaylistDialog {
          playlist.title = this.playlistName;
          playlist.public = false;
          playlist.collaborative = false;
+         playlist.artwork = this.playlistArtwork.split(',')[1];
 
          return playlist;
      }
+
+     uploadImage(event){
+       this.mediaService.previewImage(event).subscribe(
+           (data : MediaFile)=>{
+                this.playlistArtwork = data.artwork;
+           });
+       
+     }
+
 }

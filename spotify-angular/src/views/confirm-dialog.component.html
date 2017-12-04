@@ -1,0 +1,7 @@
+<h2 md-dialog-title>Delete {{type}}</h2>
+<md-dialog-content>Are you sure you want to delete this {{type}}</md-dialog-content>
+<md-dialog-actions>
+  <button md-raised-button  md-dialog-close>No</button>
+  <!-- Can optionally provide a result for the closing dialog. -->
+  <button md-raised-button color="warn" [md-dialog-close]="true">Yes</button>
+</md-dialog-actions>

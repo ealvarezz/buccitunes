@@ -12,6 +12,6 @@ export class Playlist{
    collaboratives   : User[];
    followers        : User[];
    artwork          : string;
+   artworkPath      : string;
    stats            : any;
-
 }

@@ -43,6 +43,8 @@ import {AdminService} from './services/admin.service';
 import {AccountSettingsComponent}  from './account-settings.component';
 import {ReceiptTableComponent} from './receipt-table';
 import {RequestedSongTable} from './requested-song-table';
+import {ConfirmDialog} from './confirm-dialog.component';
+import {MediaService} from './services/media.service';
 
 
 const appRoutes: Routes = [
@@ -93,7 +95,8 @@ const appRoutes: Routes = [
     UserTableComponent,
     AccountSettingsComponent,
     ReceiptTableComponent,
-    RequestedSongTable
+    RequestedSongTable,
+    ConfirmDialog
   ],
   imports: [
     RouterModule.forRoot(
@@ -139,13 +142,15 @@ const appRoutes: Routes = [
     MusicCollectionService,
     AdminService,
     AuthGuard,
+    MediaService,
     { provide: MD_DIALOG_DATA, useValue: {} },
     { provide: MdDialogRef, useValue: {} }
   ],
   entryComponents: [
     DetailDialog,
     AddAlbumDialog,
-    AddPlaylistDialog
+    AddPlaylistDialog,
+    ConfirmDialog
   ],
   bootstrap: [AppComponent]
 })

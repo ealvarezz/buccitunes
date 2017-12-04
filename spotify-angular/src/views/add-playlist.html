@@ -1,16 +1,26 @@
-<md-card style="width:800px;">
-    <div>
-    <md-form-field>
-        <input name="name" [(ngModel)]= "name" mdInput placeholder="Playlist Name">
+<div>
+    <md-form-field style="width: 90%;">
+        <input name="name" [(ngModel)]= "playlistName" mdInput placeholder="Playlist Name">
     </md-form-field>
     </div>
-    <div style="width: 400px;">
-    <md-form-field style="width: 400px;">
-        <textarea mdInput placeholder="Give your playlist a catchy description" mdTextareaAutosize mdAutosizeMinRows="5"
-                mdAutosizeMaxRows="10"></textarea>
-    </md-form-field>
+    <div style="width: 40%; display: inline-block;">
+        <div>Image</div>
+        <div><img style ="max-height: 200px; max-width:100%;" [src]="playlistArtwork"></div>
+        <div><button md-raised-button class="rounded-button" (click)="imgFileInput.click()" >Choose Image</button></div>
+        <!-- <input [disabled]="true" placeholder="Upload Image...." mdInput [value]="albumArtworkPath" required> -->
+        <input hidden type="file" #imgFileInput (change)="uploadImage($event)" accept="image/x-png,image/gif,image/jpeg" />
 
-    <button md-raised-button (click)="closeDialog()" class="rounded-button"> Cancel</button>
-    <button md-raised-button (click)="addPlaylist()" class="rounded-button"> Add Playlist </button>
+
+
+
     </div>
-</md-card>
+    <div style="width: 50%; top:0; display: inline-block;">
+    <md-form-field style="width:100%">
+        <textarea mdInput placeholder="Give your playlist a catchy description" mdTextareaAutosize mdAutosizeMinRows="12"
+                mdAutosizeMaxRows="12"></textarea>
+    </md-form-field>
+    </div>
+    <div style="display: block; margin-left: auto; margin-right: auto; width: 40%;">
+        <button md-raised-button (click)="closeDialog()" class="rounded-button"> Cancel</button>
+        <button md-raised-button (click)="addPlaylist()" class="rounded-button"> Add Playlist </button>
+    </div>
