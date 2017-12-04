@@ -197,6 +197,25 @@ public class MusicCollectionService {
 		playlistPage.setPlaylist(playlist);
 		return playlistPage;
 	}
+	
+	public void deletePlaylist(Playlist playlist, User user) throws BucciException {
+		playlist = playlistRepository.findOne(playlist.getId());
+		
+		if(playlist == null) {
+			throw new BucciException("Playlist does not exist");
+		}
+		
+		if(!playlist.getOwner().getEmail().equals(user.getEmail()) ) {
+			throw new BucciException("You do not have permissions to delete this playlist!");
+		}
+		
+		try {
+			FileManager.removePlaylistResources(playlist);
+		} catch (IOException e) {
+			throw new BucciException("Failed to remove album resources, try again.");
+		}
+		playlistRepository.delete(playlist);
+	}
 
 	public void saveAlbum(Album album) throws BucciException{
 			String artworkString = album.getArtwork();

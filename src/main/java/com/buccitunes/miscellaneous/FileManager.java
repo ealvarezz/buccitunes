@@ -14,6 +14,7 @@ import java.util.Comparator;
 
 import javax.imageio.ImageIO;
 
+import com.buccitunes.model.Playlist;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedSong;
 
@@ -250,6 +251,15 @@ public class FileManager {
 	private static String moveFile(Path oldPath, Path newPath) throws IOException {
 		Files.move(oldPath, newPath, StandardCopyOption.REPLACE_EXISTING);
 		return getResourcePathString(newPath.toString());
+	}
+	
+	public static void removePlaylistResources(Playlist playlist) throws IOException {
+		int id = playlist.getId();
+		Path path = Paths.get(PLAYLISTPATH + "/" + id +  "/");
+		if(Files.exists(path)) {
+			Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+			playlist.setArtworkPath(null);
+		}
 	}
 	
 	public static void removeRequestedAlbumResources(RequestedAlbum album) throws IOException {

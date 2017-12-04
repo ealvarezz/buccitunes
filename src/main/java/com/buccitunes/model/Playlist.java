@@ -28,7 +28,7 @@ public class Playlist extends MusicCollection {
 	
 	private boolean isPublic;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "playlist_song",
 		joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))

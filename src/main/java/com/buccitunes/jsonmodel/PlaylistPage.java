@@ -10,6 +10,9 @@ public class PlaylistPage {
 	private List<Song> songsToAdd;
 	private List<Song> songsToRemove;
 	
+	public PlaylistPage() {
+		
+	}
 	
 	public PlaylistPage(Playlist playlist, List<Song> songsToAdd, List<Song> songsToRemove) {
 		super();

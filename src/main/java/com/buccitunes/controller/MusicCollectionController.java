@@ -114,6 +114,23 @@ public class MusicCollectionController {
 		} 
 	}
 	
+	@RequestMapping(value="delete_playlist", method = RequestMethod.POST)
+	public @ResponseBody  BucciResponse<String> deletePlaylist(@RequestBody Playlist playlist, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+		}
+		
+		try {
+			musicCollectionService.deletePlaylist(playlist, loggedUser);
+			return BucciResponseBuilder.successMessage("Playlist has been delete");
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		} 
+	}
+	
+	
 	@RequestMapping(value="test", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> test(HttpSession session) {
 		User sessionUser = (User) session.getAttribute(constants.getSession());
