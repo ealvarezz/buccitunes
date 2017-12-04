@@ -63,6 +63,12 @@ public class AdminController {
 		}		
 	}
 	
+	@RequestMapping(value="ban_user", method = RequestMethod.POST)
+	public BucciResponse<Boolean> banUser(@RequestBody Artist User, HttpSession session) throws BucciException {
+		//TODO
+		return null;
+	}
+	
 	@RequestMapping(value="add_song", method = RequestMethod.POST)
 	public BucciResponse<Song> addSongToAlbum(@RequestBody Song song, HttpSession session) {
 		/*
