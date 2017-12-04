@@ -91,6 +91,21 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="unfollow", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> unfollowUser(@RequestBody User followedUser, HttpSession session) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+		}	
+		try{
+			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
+			return BucciResponseBuilder.successMessage("Unfollowed user: " + user.getEmail()); 
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+	}
+	
+	
 	@RequestMapping(value="get_followers", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<User>> getAllFollowers(@RequestParam String email) {
 		List<User> users;
@@ -367,6 +382,7 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
+	
 	@RequestMapping(value="change_settings", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> changeUserInfo(@RequestBody User user, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
