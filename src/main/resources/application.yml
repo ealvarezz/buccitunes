@@ -1,20 +1,37 @@
 spring:
   jpa:
-   generate-ddl: true
+   generate-ddl: false
    hibernate:
-     ddl-auto: create
+     ddl-auto: false
      properties:
        dialect: org.hibernate.dialect.MySQL5Dialect
+
   datasource:
-    initialize: true
+    initialize: false
     url: jdbc:mysql://localhost/buccidb2?useSSL=false
     username: root
     password: hey
     driver: com.mysql.jdbc.Driver
     separator: ^;
+
   profiles:
     include: constants
     active: constants
+
+  mail:
+    host: smtp.gmail.com
+    port: 465
+    username: buccitunes.com
+    password: alrightrobby
+    properties:
+      mail:
+        smtp:
+          ssl:
+            enable: true
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+            fallback: false
 
 logging:
   level:
@@ -27,7 +44,7 @@ settings:
     popularityCache:
       delay_ms: 100000      
       
-      
+
       
       
       
