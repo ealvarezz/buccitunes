@@ -287,13 +287,11 @@ public class AdminService {
 	 */
 	
 	public double payRoyalties() {
-		
 		double total = 0;
 		for(ArtistUser artist: artistUserRepository.findAll()){
 			
 			int songPlays = songPlaysRepository.getCurrentSongPlaysByArtist(artist.getArtist().getId()).size();
 			if(songPlays > 0) {
-				
 				total += songPlays * constants.getRoyaltyPrice();
 				ArtistTransaction transaction  = new ArtistTransaction();
 				transaction.setAmount(songPlays * constants.getRoyaltyPrice());

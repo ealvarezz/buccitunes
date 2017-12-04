@@ -78,6 +78,16 @@ public class ArtistService {
 		return result;
 	}
 	
+	public ArtistUser getArtistUser(String email) throws BucciException {
+		ArtistUser artistUser = artistUserRepository.findOne(email);
+		
+		if(artistUser != null) {
+			return artistUser;
+		} else {
+			throw new BucciException("Artist User not found");
+		}
+	}
+	
 	public Artist getArtist(int id) throws BucciException {
 		Artist artist = artistRepository.findOne(id);
 		
