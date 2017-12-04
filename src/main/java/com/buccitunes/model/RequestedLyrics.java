@@ -12,7 +12,7 @@ public class RequestedLyrics {
 	@GeneratedValue(strategy=GenerationType.AUTO)
 	private int id;
 	
-	@Column(columnDefinition = "VARCHAR(7000)")
+	@Column(columnDefinition = "VARCHAR(8000)")
 	private String lyric;
 
 	public RequestedLyrics() {}
