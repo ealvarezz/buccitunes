@@ -2,6 +2,7 @@ package com.buccitunes.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,9 +23,11 @@ import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.*;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
+import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
@@ -36,6 +39,9 @@ public class UserController {
 	private BucciConstants constants;
 	
 	@Autowired
+	private MailManager mailManager;
+	
+	@Autowired
 	private UserService userService;
 	
 	@GetMapping("/")
@@ -45,8 +51,18 @@ public class UserController {
 	
 	@RequestMapping(value="get_all_users", method = RequestMethod.GET)
 	public @ResponseBody List<User> getAllUsers() {
-		System.out.println(constants.getMoonmanMax());
-		System.out.println(constants.getNitrodubsMax());
+		try {
+			ArtistUser ta = new ArtistUser();
+			ta.setEmail("edwin.alvarez@stonybrook.edu");
+			Album a = new Album();
+			a.setTitle("fake album");
+			RequestedAlbum b = new RequestedAlbum();
+			b.setTitle("fake album");
+			mailManager.sendApprovedAlbumRequest(ta,a);
+			mailManager.sendDeniedAlbumRequestToUser(ta,b);
+		} catch (MessagingException e) {
+			e.printStackTrace();
+		}
 		return null;
 		//return userService.findAll();
 	}

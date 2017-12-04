@@ -23,7 +23,6 @@ public class BucciConstants {
 	private int moonmanMax;
 	private int trexMax;
 	private int nitrodubsMax;
-
 	
 	private String weekAgo;
 	private String twoWeeksAgo;

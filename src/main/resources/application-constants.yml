@@ -1,4 +1,4 @@
-constants:
+constants:  
   start: 0
   
   new_releases_limit: 10
@@ -28,3 +28,19 @@ constants:
   
   signup_premium_price: 5.00
   monthly_premium_price: 5.00
+
+
+email:
+  ApprovedAlbumSubject: "BucciTunes Album Approval Confirmation."
+  ApprovedAlbumText: "Your album: %s has been approved and is now posted."
+  
+  ApprovedSongSubject: "BucciTunes Song Approval Confirmation."
+  ApprovedSongText: "Your song: %s has been denied."
+  
+  DeniedAlbumSubject: "BucciTunes Album Denied Confirmation."
+  DeniedAlbumText: "Your album: %s has been approved and is now posted."  
+    
+  DeniedSongSubject: "BucciTunes Album Denial Confirmation."
+  DeniedSongText: "Your Song: %s has been denied."    
+    
+    
