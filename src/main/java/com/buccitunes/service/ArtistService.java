@@ -83,6 +83,7 @@ public class ArtistService {
 		
 		if(artist != null) {
 			artist.getAlbums().size();
+			artist.getUpcomingConcerts();
 			for(Album album : artist.getAlbums()) {
 				album.getSongs().size();
 			}
@@ -196,7 +197,7 @@ public class ArtistService {
 	
 	public RequestedConcert requestNewConcert(RequestedConcert requested, ArtistUser artistUser) throws BucciException {
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
-		requested.setRequester(artistUser);//setArtistRequester(artistUser);
+		requested.setRequester(artistUser);
 		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
 			
 		return requestedConcert;

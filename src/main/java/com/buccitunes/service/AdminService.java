@@ -19,9 +19,11 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.Concert;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
@@ -222,6 +224,23 @@ public class AdminService {
 		}
 	}
 	
+	public Concert adminApproveConcert(RequestedConcert requested) throws BucciException{
+		Concert newConcert;
+		
+		requested = requestedConcertRepository.findOne(requested.getId());
+		if(requested == null) {
+			throw new BucciException("Requested Concert does not exist");
+		}else{
+			newConcert = new Concert(requested);
+		}
+		newConcert = concertRepository.save(newConcert);
+		requestedConcertRepository.delete(requested);
+		
+		return newConcert;
+	}
+	
+	
+	
 	public Song adminApproveSong(RequestedSong requestedSong) throws BucciException{
 		requestedSong = requestedSongRepository.findOne(requestedSong.getId());
 		if(requestedSong == null) {
@@ -347,4 +366,6 @@ public class AdminService {
 			user.makePayment(constants.getMonthlyPremiumPrice());
 		}
 	}
+
+
 }
