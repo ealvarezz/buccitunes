@@ -40,7 +40,21 @@ export class RequestedAlbumComponent implements OnInit{
     this.adminService.approveAlbum(album).subscribe(
       (data) =>{
         this.loadRequestedAlbums();
-        this.notificationService.success("SUCCESS", "Album ${album.title} successfully added to the system.");
+        let albumTitle = album.title;
+        this.notificationService.success("SUCCESS", "Album ${albumTitle} successfully added to the system.");
+      },
+      (err) =>{
+        this.notificationService.error("FAIL", err);
+      }
+    )
+  }
+
+  rejectAlbum(album : RequestedAlbum){
+    this.adminService.rejectAlbum(album).subscribe(
+      (data) =>{
+        this.loadRequestedAlbums();
+        let albumTitle = album.title;
+        this.notificationService.success("SUCCESS", "Album ${albumTitle} successfully added to the system.");
       },
       (err) =>{
         this.notificationService.error("FAIL", err);
@@ -52,6 +66,13 @@ export class RequestedAlbumComponent implements OnInit{
     let albums = this.getSelectedAlbums();
     for(let album of albums){
       this.approveAlbum(album);
+    }
+  }
+
+  rejectSelectedAlbums(){
+    let albums = this.getSelectedAlbums();
+    for(let album of albums){
+      this.rejectAlbum(album);
     }
   }
 

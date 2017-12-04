@@ -28,7 +28,7 @@ public class Playlist extends MusicCollection {
 	
 	private boolean isPublic;
 	
-	@ManyToMany(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "playlist_song",
 		joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
@@ -36,7 +36,7 @@ public class Playlist extends MusicCollection {
 	private List<Song> songs;
 	
 	@ManyToOne
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+    @JoinColumn(name = "user_id")
 	private User owner;
 
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "collaboratingPlaylitst")
@@ -51,11 +51,13 @@ public class Playlist extends MusicCollection {
 	
 	public Playlist(){
 		super();
+		this.stats = new StatCache();
 	};
 	
 	public Playlist(List<Song> songs){
 		super();
 		this.songs = songs;
+		this.stats = new StatCache();
 	};
 	
 
@@ -65,6 +67,14 @@ public class Playlist extends MusicCollection {
 
 	public void setSongs(List<Song> songs) {
 		this.songs = songs;
+	}
+	
+	public void addSong(Song song) {
+		this.songs.add(song);
+	}
+	
+	public void removeSong(Song song) {
+		this.songs.remove(song);
 	}
 
 	public boolean isCollaborative() {
@@ -121,6 +131,16 @@ public class Playlist extends MusicCollection {
 
 	public void setStats(StatCache stats) {
 		this.stats = stats;
+	}
+	
+	public void updateInfo(Playlist playlist) {
+		if(playlist.getTitle() != null || playlist.getTitle().isEmpty()) {
+			super.setTitle(playlist.getTitle());
+		}
+		
+		this.isPublic = playlist.isPublic();
+		
+		
 	}
 	
 }

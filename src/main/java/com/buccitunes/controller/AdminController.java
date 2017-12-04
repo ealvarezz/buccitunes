@@ -149,7 +149,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(value="disapprove_request_album", method = RequestMethod.DELETE)
+	@RequestMapping(value="disapprove_request_album", method = RequestMethod.POST)
 	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedAlbum requestedAlbum) {		
 		try {
 			adminService.removeRequestedAlbum(requestedAlbum);
@@ -159,7 +159,7 @@ public class AdminController {
 		}
 	}
 	
-	@RequestMapping(value="disapprove_request_song", method = RequestMethod.DELETE)
+	@RequestMapping(value="disapprove_request_song", method = RequestMethod.POST)
 	public BucciResponse<String> deleteRequestedSong(@RequestBody RequestedSong requestedSong) {		
 		try {
 			adminService.removeRequestedSong(requestedSong);

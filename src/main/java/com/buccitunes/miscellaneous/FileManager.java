@@ -2,6 +2,7 @@ package com.buccitunes.miscellaneous;
 
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
@@ -9,9 +10,11 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.Base64;
+import java.util.Comparator;
 
 import javax.imageio.ImageIO;
 
+import com.buccitunes.model.Playlist;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedSong;
 
@@ -250,11 +253,20 @@ public class FileManager {
 		return getResourcePathString(newPath.toString());
 	}
 	
+	public static void removePlaylistResources(Playlist playlist) throws IOException {
+		int id = playlist.getId();
+		Path path = Paths.get(PLAYLISTPATH + "/" + id +  "/");
+		if(Files.exists(path)) {
+			Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
+			playlist.setArtworkPath(null);
+		}
+	}
+	
 	public static void removeRequestedAlbumResources(RequestedAlbum album) throws IOException {
 		int id = album.getId();
 		Path path = Paths.get(REQUESTEDALBUMSPATH + "/" + id +  "/");
 		if(Files.exists(path)) {
-			Files.delete(path);
+			Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
 			album.setArtworkPath(null);
 		}
 		
@@ -262,8 +274,9 @@ public class FileManager {
 			id = song.getId();
 			path = Paths.get(REQUESTEDSONGSMPATH + "/" + id +  "/");
 			if(Files.exists(path)) {
-				Files.delete(path);
+				Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
 				song.setPicturePath(null);
+				song.setAudioPath(null);
 			}
 		}
 	}
@@ -272,7 +285,7 @@ public class FileManager {
 	 	int id = song.getId();
 		Path path = Paths.get(REQUESTEDSONGSMPATH + "/" + id +  "/");
 		if(Files.exists(path)) {
-			Files.delete(path);
+			Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
 			song.setPicturePath(null);
 			song.setAudioPath(null);
 		}

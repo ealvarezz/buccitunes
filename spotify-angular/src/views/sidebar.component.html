@@ -35,7 +35,7 @@
             <h4 class ="side-list"><a routerLink="/artist/14">Artists</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/playlist">Recommended</a></h4>
+            <h4 class ="side-list"><a routerLink="/playlist/153">Playlists</a></h4>
         </div>
 
     </md-list-item>
@@ -50,9 +50,9 @@
     </md-list-item>
     <md-divider></md-divider>
     <md-list-item>
-        <h3 mdLine md-subheader>Recent Playlists</h3>
-        <div *ngFor="let playlist of recentPlaylists" mdLine >
-            <h4 class ="side-list"> <a routerLink="/">{{playlist}}</a></h4>
+        <h3 mdLine md-subheader>Recent Albums</h3>
+        <div *ngFor="let album of recentAlbums" mdLine >
+            <h4 class ="side-list"> <a [routerLink]="['/album',album.id]">{{album.title}}</a></h4>
         </div>
     </md-list-item>
 

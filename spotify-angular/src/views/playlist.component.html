@@ -1,11 +1,11 @@
-<md-card class="bg-card">
+<md-card *ngIf="playlist" class="bg-card">
     <md-card-header>
         <div class="albumPic">
             <img src="../assets/channel_x.png">
         </div>
         <div class="albumInfo">
             <div><h4>Playlist</h4></div>
-            <div><h1>Channel X</h1></div>
+            <div><h1>{{playlist.title}}</h1></div>
             <div><h4>Where RnB comes to play with Hip-Hop and Pop!</h4></div>
             <div><h4>Created By Sajid Kamal - 50 Songs, 3 hr 1 min</h4></div>
             <button md-raised-button  class="rounded-button">Play</button>
@@ -15,7 +15,7 @@
     </md-card-header>
     <md-card-content>
         <div class="table">
-            <music-table [data] = "songs" [isAlbum]="false"> </music-table>
+            <music-table [data] = "playlist.songs" [isAlbum]="false"> </music-table>
         </div>
     </md-card-content>
 </md-card>

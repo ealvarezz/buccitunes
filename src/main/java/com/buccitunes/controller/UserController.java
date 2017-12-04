@@ -311,6 +311,24 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="user_playlists", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Playlist>> getUserPlaylists(HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+		}
+		else {
+			try {
+				List<Playlist> userPlaylists = userService.getUserPlaylists(sessionUser);
+				return BucciResponseBuilder.successfulResponse(userPlaylists);		
+			}
+			catch(BucciException e) {
+				return BucciResponseBuilder.failedMessage("There was an issue with your request");
+			}
+			
+		}
+	}
+	
 	@RequestMapping(value="search", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<SearchResults> search(HttpSession session, @RequestParam String searchString) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
