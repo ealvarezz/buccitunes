@@ -51,7 +51,7 @@ public class UserController {
 	
 	@RequestMapping(value="get_all_users", method = RequestMethod.GET)
 	public @ResponseBody List<User> getAllUsers() {
-		try {
+		/*try {
 			ArtistUser ta = new ArtistUser();
 			ta.setEmail("edwin.alvarez@stonybrook.edu");
 			Album a = new Album();
@@ -63,8 +63,8 @@ public class UserController {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		return null;
-		//return userService.findAll();
+		return null; */
+		return userService.findAll();
 	}
 	
 	@RequestMapping(value="add_user", method = RequestMethod.POST)

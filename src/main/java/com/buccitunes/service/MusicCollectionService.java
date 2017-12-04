@@ -375,4 +375,13 @@ public class MusicCollectionService {
 		
 		return song;
 	}
+	
+	public void addSongToPlaylist(int playlistId, int songId) {
+		
+		Song song = songRepository.findOne(songId);
+		Playlist playlist = playlistRepository.findOne(playlistId);
+		playlist.addSong(song);
+		
+	}
+	
 }
