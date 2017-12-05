@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix="constants")
 public class BucciConstants {
-
 	
 	private String artistNotFoundMsg;
 	private String concertNotFoundMsg;

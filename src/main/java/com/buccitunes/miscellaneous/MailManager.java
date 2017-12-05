@@ -161,5 +161,25 @@ public class MailManager {
 	public void setDeniedSongText(String deniedSongText) {
 		DeniedSongText = deniedSongText;
 	}
+
+	public void setJavaMailSender(JavaMailSender javaMailSender) {
+		this.javaMailSender = javaMailSender;
+	}
+
+	public void setApprovedConcertSubject(String approvedConcertSubject) {
+		ApprovedConcertSubject = approvedConcertSubject;
+	}
+
+	public void setApprovedConcertText(String approvedConcertText) {
+		ApprovedConcertText = approvedConcertText;
+	}
+
+	public void setDeniedConcertSubject(String deniedConcertSubject) {
+		DeniedConcertSubject = deniedConcertSubject;
+	}
+
+	public void setDeniedConcertText(String deniedConcertText) {
+		DeniedConcertText = deniedConcertText;
+	}
 	
 }
