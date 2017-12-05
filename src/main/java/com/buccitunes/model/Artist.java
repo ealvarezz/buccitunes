@@ -60,7 +60,8 @@ public class Artist {
 	@JsonIgnoreProperties(value = "featuredArtists")
 	private List<Concert> upcomingConcerts;
 	
-	@OneToMany(fetch=FetchType.LAZY, mappedBy = "mainStar")
+	@OneToMany(fetch=FetchType.LAZY)
+	@JoinColumn(name = "artist_id")
 	private List<Concert> organizedConcerts;
 	
 	@OneToOne(cascade = CascadeType.ALL)
