@@ -251,4 +251,5 @@ public class ArtistService {
 		List<Concert> concerts = concertRepository.getConcertsOfArtistId(artistId);
 		return concerts;
 	}
+	
 }

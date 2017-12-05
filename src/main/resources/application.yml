@@ -10,7 +10,7 @@ spring:
     initialize: false
     url: jdbc:mysql://localhost/buccidb2?useSSL=false
     username: root
-    password: hey
+    password: bucci
     driver: com.mysql.jdbc.Driver
     separator: ^;
 

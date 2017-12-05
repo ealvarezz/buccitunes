@@ -337,4 +337,9 @@ public class UserService  {
 		user.updateUserInfo(changedUser);
 		return user;
 	}
+	
+	public List<Artist> getRelatedArtists(int artistId){
+		
+		return artistRepository.getRelatedArtist(artistId);
+	}
 }
