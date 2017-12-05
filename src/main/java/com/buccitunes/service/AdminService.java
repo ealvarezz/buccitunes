@@ -16,6 +16,7 @@ import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.miscellaneous.MailManager;
+import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistTransaction;
@@ -325,5 +326,15 @@ public class AdminService {
 		for(PremiumUser user : pUsers) {
 			user.makePayment(constants.getMonthlyPremiumPrice());
 		}
+	}
+	
+	public AdminUser createAdminUser(AdminUser user) throws BucciException {
+		AdminUser existingAdmin = adminUserRepository.findOne(user.getEmail());
+		if(existingAdmin != null) {
+			throw new BucciException("Email already being used");
+		}
+		user.encryptPassword();
+		user = adminUserRepository.save(user);
+		return user;
 	}
 }

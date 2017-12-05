@@ -24,6 +24,7 @@ import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
@@ -339,7 +340,6 @@ public class UserService  {
 	}
 	
 	public List<Artist> getRelatedArtists(int artistId){
-		
 		return artistRepository.getRelatedArtist(artistId);
 	}
 }

@@ -8,6 +8,11 @@ import com.buccitunes.constants.UserRole;
 @Entity(name="AdminUser")
 public class AdminUser extends User {
 	
+	public AdminUser() {
+		super();
+		super.setRole(UserRole.ADMIN);
+	}
+	
 	public AdminUser(String email, String name, String password, String username) {
 		super(email, name, password, username);
 		super.setRole(UserRole.ADMIN);
@@ -23,6 +28,4 @@ public class AdminUser extends User {
 	public void setEmployeeId(int employeeId) {
 		this.employeeId = employeeId;
 	}
-	
-	
 }
