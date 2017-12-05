@@ -24,14 +24,14 @@
       <form [formGroup]="artworkFormGroup">
         <ng-template mdStepLabel>Upload Album Artwork</ng-template>
 
-        <div *ngIf="currentAlbum.artwork">
-          <img [src]="currentAlbum.artwork">
+        <div>
+          <img [src]="mediaService.getAlbumImageBase64(currentAlbum.artwork)">
         </div>
 
 
         <button type="button" style="background-color:#3f51b5; color:white; margin-bottom:1%" md-raised-button (click)="imgFileInput.click()"><i class="material-icons">file_upload</i>Upload Image</button>
         <input [disabled]="true" placeholder="Upload Image...." mdInput [value]="albumArtworkPath" required>
-        <input hidden type="file" #imgFileInput (change)="previewImage($event)" accept="image/x-png,image/gif,image/jpeg" />
+        <input hidden type="file" #imgFileInput (change)="uploadImage($event)" accept="image/x-png,image/gif,image/jpeg" />
 
 
         <div style="width:100%;" *ngIf="artworkError.status">
@@ -70,16 +70,15 @@
                 [mdChipInputAddOnBlur]="mdChipOptions.addOnBlur" (mdChipInputTokenEnd)="add($event)" />
             </md-form-field>
           </div>
-          <button md-raised-button style="background-color:#3f51b5; color:white; margin-bottom:1%"><i class="material-icons">file_upload</i>Upload Song File</button>
-          <md-form-field>
-            <input [disabled]="true" placeholder="Upload Song...." mdInput>
-          </md-form-field>
+          <button md-raised-button (click)="songFileInput.click()" style="background-color:#3f51b5; color:white; margin-bottom:1%"><i class="material-icons">file_upload</i>Upload Song File</button>
+          <input [disabled]="true" placeholder="Upload Song...." mdInput [value]="song.audioPath" required>
+          <input hidden type="file" #songFileInput (change)="uploadSong($event, song)" accept=".mp3" />
           <md-divider></md-divider>
         </div>
         <button md-raised-button color="primary" style="color:white; " (click)="addNewSong()">Add New Song</button>
         <div>
           <button md-button mdStepperPrevious>Back</button>
-          <button md-button mdStepperNext>Next</button>
+          <button [disabled]="disableNext" md-button mdStepperNext>Next</button>
         </div>
       </form>
     </md-step>
@@ -104,7 +103,7 @@
           </div>
 
           <div style="height: 50%">
-          <music-table [data] = "currentAlbum.songs" [isAlbum]="true"> </music-table>
+          <music-table [data] = "currentAlbum.songs" [isAlbum]="true" [isRequest]="true"> </music-table>
           </div>
         </div>
         <!-- <span style="position:absolute; left:0px;"><img [src]="currentAlbum.artwork"></span> -->

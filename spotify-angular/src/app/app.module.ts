@@ -2,6 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule, MdExpansionModule, MdDatepickerModule, MdNativeDateModule} from '@angular/material';
+import {MdProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {PlayerComponent} from './player.component'
 import {HomePageTabTemplate} from './homepage-tab.component'
 import { AppComponent } from './app.component';
@@ -47,6 +48,9 @@ import {RequestedSongTable} from './requested-song-table';
 import {ConfirmDialog} from './confirm-dialog.component';
 import {MediaService} from './services/media.service';
 import {UserService} from './services/user.service';
+import {BucciConstants} from '../environments/app.config';
+import {AdminGuard} from './services/AdminGuard';
+import {SpinnerService} from './services/spinner.service';
 
 
 const appRoutes: Routes = [
@@ -56,7 +60,7 @@ const appRoutes: Routes = [
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist/:id', component: PlaylistComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
-          {path: 'admin',component:AdminComponent, canActivate: [AuthGuard], 
+          {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard], 
               children:[
                 {path: 'requested_albums', component: RequestedAlbumComponent, canActivate: [AuthGuard]}
               ]},
@@ -137,6 +141,7 @@ const appRoutes: Routes = [
     MdExpansionModule,
     MdDatepickerModule,
     MdNativeDateModule,
+    MdProgressSpinnerModule,
     SimpleNotificationsModule.forRoot()
   ],
   providers: [
@@ -146,8 +151,10 @@ const appRoutes: Routes = [
     MusicCollectionService,
     AdminService,
     AuthGuard,
+    AdminGuard,
     MediaService,
     UserService,
+    SpinnerService,
     { provide: MD_DIALOG_DATA, useValue: {} },
     { provide: MdDialogRef, useValue: {} }
   ],

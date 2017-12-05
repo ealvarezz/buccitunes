@@ -11,6 +11,7 @@ export class Song{
     public genres           : string[];
     public picturePath      : string;
     public audioPath        : string;
+    public audio            : string;
     public lyrics           : string;
     public saved            : boolean;
     // public album_image      : string = "/assets/graduation.png";

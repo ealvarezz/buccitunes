@@ -3,8 +3,7 @@
 <md-card class="bg-card">
     <md-card-header>
         <div class="albumPic">
-              <!-- <img src="../assets/coloring_book.png">   -->
-              <img style="max-height:220px; max-width:220px;" [src]="artworkUrl">  
+              <img style="max-height:220px; max-width:220px;" [src]="mediaService.getAlbumImageUrl(this.album.artworkPath)">  
         </div>
         <div class="albumInfo">
             <div><h4>Album</h4></div>

@@ -5,6 +5,7 @@ import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {environment} from '../../environments/environment';
 
 @Injectable()
 export class MusicService {
@@ -14,7 +15,7 @@ export class MusicService {
     public pauseChange      = new BehaviorSubject<boolean>(false);
     public playingChange    = new BehaviorSubject<boolean>(false);
     public currTimeChange   = new BehaviorSubject<number>(0);
-    public currSongChange   = new BehaviorSubject<Song>(new Song());
+    public currSongChange   = new BehaviorSubject<any>(new Song());
     public volumeChange     = new BehaviorSubject<number>(100);
     public secretChange     = new BehaviorSubject<boolean>(false);
 
@@ -33,7 +34,9 @@ export class MusicService {
         this.audio.ontimeupdate = this.updateTime.bind(this);
     }
 
-    
+    setCurrentSong(song){
+        this.currSongChange.next(song);
+    }
 
     updateTime(){
         let time = (this.audio.currentTime / this.audio.duration)*100;
@@ -49,13 +52,27 @@ export class MusicService {
             this.audio.play();
         }
         else{
-            this.audio.src = this.currSong.audioPath;
+            this.audio.src = environment.SERVER_PATH+ this.currSong.audioPath;
             this.audio.load();
             this.audio.play();
         }
         this.togglePlaying(true);
         
     }
+
+    playSongEncoded(){
+        if(this.isPaused){
+            this.audio.play();
+        }
+        else{
+            this.audio.src = this.currSong.audio;
+            this.audio.load();
+            this.audio.play();
+        }
+        this.togglePlaying(true);
+        
+    }
+
 
 
     pauseSong(){

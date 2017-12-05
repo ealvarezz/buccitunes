@@ -5,6 +5,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Song} from './objs/Song';
 import {Playlist} from './objs/Playlist';
 import {MusicCollectionService } from './services/music.service';
+import {MusicService} from './services/player.service'
 import 'rxjs/add/observable/of';
 
 @Component({
@@ -15,6 +16,7 @@ import 'rxjs/add/observable/of';
 export class MusicTableComponent implements OnChanges {
     @Input() data : Song[];
     @Input() isAlbum;
+    @Input() isRequest : boolean = false;
     @Output() remove : EventEmitter<any> = new EventEmitter();
     dataSource : MusicDataSource;
     hoveredRow : number = -1;
@@ -22,7 +24,8 @@ export class MusicTableComponent implements OnChanges {
 
     playlists : Playlist[];
 
-    constructor(private musicService : MusicCollectionService){}
+    constructor(private musicService : MusicCollectionService,
+                private playerService : MusicService){}
 
     ngOnChanges(change : SimpleChanges){
       if(change['data'] && !change['data'].isFirstChange()){
@@ -41,11 +44,17 @@ export class MusicTableComponent implements OnChanges {
           (data)=>{
             this.playlists = data;
           }
-        )
-        // this.musicService.userPlaylists.subscribe(
-        //   playlists => this.playlists = playlists
-        // );
+        );
+    }
 
+    playSong(song : Song){
+      this.playerService.setCurrentSong(song);
+      if(this.isRequest){
+        this.playerService.playSongEncoded();
+      }
+      else{
+        this.playerService.playSong();
+      }
     }
 
     hover(i){

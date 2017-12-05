@@ -156,14 +156,15 @@ public class AdminService {
 			throw new BucciException("Requested album does not exist");
 		}
 			
-		
+		boolean approveAllSongs;
 		if(songsToApprove == null) {
-			newAlbum = new Album(requestedAlbum, true);
+			approveAllSongs = true;
 		} else {
-			newAlbum = new Album(requestedAlbum, false);
+			approveAllSongs = false;
 		}
+		
+		newAlbum = new Album(requestedAlbum, approveAllSongs);
 		newAlbum = albumRepository.save(newAlbum);
-
 		
 		if(requestedAlbum.getArtworkPath() != null) {
 			try {				

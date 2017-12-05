@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {MediaFile} from '../objs/MediaFile';
 import {environment} from '../../environments/environment';
+import {BucciConstants} from '../../environments/app.config';
 // import {User} from '../objs/User';
 // import {BucciResponse} from '../objs/BucciResponse';
 
@@ -34,7 +35,7 @@ export class MediaService {
                 observer.complete()
             }
             else{
-                observer.error(new Error(environment.EXCEED_FILE_LIMIT));
+                observer.error(new Error(BucciConstants.CoverArt.EXCEED_FILE_LIMIT));
             }   
             }
         });  
@@ -43,13 +44,52 @@ export class MediaService {
     
   }
 
+  uploadSong(event) : Observable<MediaFile>{
+
+    let fileList: FileList = event.target.files;
+    let file = fileList[0];
+
+    if(fileList.length > 0) {
+
+        let reader = new FileReader();
+        reader.readAsDataURL(file);
+
+        let fileObservable = Observable.create((observer: any) => {
+        reader.onload = (e: any) => {
+            if(this.validateMP3(file)){
+                observer.next(new MediaFile(e.target.result , file.name))
+                observer.complete()
+            }
+            else{
+                observer.error(new Error(BucciConstants.SongConstants.EXCEED_FILE_LIMIT));
+            }   
+            }
+        });  
+        return fileObservable;
+    }
+
+  }
+
   validateImage(image: File){
-      if(image.size > environment.IMAGE_SIZE_LIMIT){
+      if(image.size > BucciConstants.CoverArt.IMAGE_SIZE_LIMIT){
           return false;
       }
       else{
         return true;
       }
+  }
+
+  validateMP3(song :File){
+      if(song.size > BucciConstants.SongConstants.SONG_SIZE_LIMIT){
+          return false;
+      }
+      else{
+        return true;
+      }
+  }
+
+  trimImageBase64(encodedString : string){
+      return encodedString.split(",")[1];
   }
 
 
@@ -58,7 +98,7 @@ export class MediaService {
          return environment.SERVER_PATH + imagePath;
      }
     else{
-        return environment.LOCAL_RESOURCE + environment.DEFAULT_ALBUM_ARTWORK;
+        return environment.LOCAL_RESOURCE + BucciConstants.CoverArt.DEFAULT_ALBUM;
     }
   }
 
@@ -67,7 +107,7 @@ export class MediaService {
          return environment.SERVER_PATH + imagePath;
      }
     else{
-        return environment.LOCAL_RESOURCE + environment.DEFAULT_ARTWORK;
+        return environment.LOCAL_RESOURCE + BucciConstants.CoverArt.DEFAULT_PLAYLIST; 
     }
   }
 
@@ -76,8 +116,17 @@ export class MediaService {
           return environment.SERVER_PATH + imagePath;
       }
       else{
-          return environment.LOCAL_RESOURCE + environment.DEFAULT_USER_ARTWORK;
+          return environment.LOCAL_RESOURCE + BucciConstants.CoverArt.DEFAULT_USER;
       }
+  }
+
+  getAlbumImageBase64(imagePath: string){
+    if(imagePath){
+        return imagePath;
+    }
+    else{
+        return environment.LOCAL_RESOURCE + BucciConstants.CoverArt.DEFAULT_ALBUM;
+    }
   }
 
 }

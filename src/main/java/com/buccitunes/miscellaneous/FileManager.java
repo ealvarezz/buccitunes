@@ -128,7 +128,6 @@ public class FileManager {
 	
 	public static String saveRequestedAlbumArtwork(String encodedStr, int requestedId) throws IOException {
 		Path path = Paths.get(REQUESTEDALBUMSPATH + "/" + requestedId +  "/" + ARTWORKIMAGE);
-        System.out.println(path);
         
         if(Files.notExists(path)) {
         	createDirectory(REQUESTEDALBUMSPATH, requestedId);

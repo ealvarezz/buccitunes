@@ -9,7 +9,12 @@
        <side-bar></side-bar>
     </md-sidenav>
     <nav-comp></nav-comp>
-    <router-outlet></router-outlet>
+    <router-outlet>
+    </router-outlet>
 </md-sidenav-container>
 <music-player></music-player>
+<div class="spinner-div">
+        <md-spinner *ngIf="showSpinner" diameter="2000"></md-spinner>
 </div>
+</div>
+

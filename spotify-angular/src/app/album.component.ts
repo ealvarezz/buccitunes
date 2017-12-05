@@ -2,11 +2,9 @@ import { Component, Input } from '@angular/core';
 import {Song} from './objs/Song'
 import {Album} from './objs/Album'
 import {Location} from '@angular/common';
-// import {DomSanitizer} from '@angular/platform-browser';
-
 import {MusicCollectionService} from './services/music.service';
 import {NotificationsService} from 'angular4-notifications';
-
+import {MediaService} from './services/media.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
@@ -24,6 +22,7 @@ export class AlbumComponent{
 
     constructor(private route           : ActivatedRoute,
                 private musicService    : MusicCollectionService,
+                private mediaService    : MediaService, 
                 private _location       : Location,
                 private notifications   : NotificationsService){}
 
@@ -39,7 +38,6 @@ export class AlbumComponent{
                 .subscribe(
                     (data) => {
                         this.album = data;
-                        this.artworkUrl = this.file_path + this.album.artworkPath;
                     },
                     (err) => {
                         this._location.back();

@@ -116,11 +116,10 @@ public class ArtistController {
 			
 			try {
 				newRequestedAlbum = artistService.requestNewAlbum(requested, ((ArtistUser) loggedUser));
+				return BucciResponseBuilder.successfulResponseMessage("Album request was submitted", newRequestedAlbum);
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(e.getErrMessage());
 			}
-			
-			return BucciResponseBuilder.successfulResponseMessage("Album request was submitted", newRequestedAlbum);
 		} else {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
 		}

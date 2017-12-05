@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import {MusicCollectionService } from './services/music.service'
+import {SpinnerService} from './services/spinner.service';
 
 @Component({
   selector: 'main-page',
@@ -8,11 +9,18 @@ import {MusicCollectionService } from './services/music.service'
 export class MainComponent {
 
 
-  constructor(private musicService : MusicCollectionService){
+  constructor(private musicService : MusicCollectionService,
+              private spinnerService : SpinnerService){
     }
+
+    showSpinner : boolean = false;
 
     ngOnInit(){
       this.getPlaylists();
+
+        this.spinnerService.isLoading.subscribe(
+            loading => this.showSpinner = loading
+        );
     }
 
     getPlaylists(){
