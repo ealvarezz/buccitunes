@@ -6,6 +6,7 @@ import {MusicCollectionService} from './services/music.service';
 import {Album} from './objs/Album';
 import {AddPlaylistDialog} from './add-playlist.component';
 import {Playlist} from './objs/Playlist';
+import {User} from './objs/User';
 
 
 @Component({
@@ -20,9 +21,14 @@ export class SideBarComponent implements OnInit {
                 private musicService : MusicCollectionService) {}
     recentAlbums : Album[];
     playlists    : Playlist[];
+    currentUser  : User;
 
     ngOnInit(){
         this.getRecentlyPlayedAlbums();
+
+        this.authService.currentUserChange.subscribe(
+            user => this.currentUser = user
+        );
         
         this.musicService.userPlaylists.subscribe(
           playlists => this.playlists = playlists
@@ -41,7 +47,7 @@ export class SideBarComponent implements OnInit {
     }
 
     getUserPage(){
-        this.router.navigate(['/user',"1029@fake.com"])
+        this.router.navigate(['/user',this.currentUser.email])
     }
     getRecentlyPlayedAlbums(){
         this.musicService.getRecentlyPlayedAlbums().subscribe(

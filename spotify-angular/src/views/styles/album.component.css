@@ -2,8 +2,13 @@
    height:100%;
 }
 .albumPic{
-    width:20%;
+    width:220px;
+    height:220px;
+    max-width:220px;
+    max-height:220px;
     float:left;
+    margin-right: 1%;
+    margin-bottom: 1%;
 }
 .albumInfo{
     width:80%;

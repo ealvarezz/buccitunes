@@ -120,10 +120,10 @@ public class ArtistController {
 			RequestedAlbum newRequestedAlbum;
 			try {
 				newRequestedAlbum = artistService.requestNewAlbum(requested, ((ArtistUser) loggedUser));
+				return BucciResponseBuilder.successfulResponseMessage("Album request was submitted", newRequestedAlbum);
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(e.getErrMessage());
 			}
-			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulRequestMsg(), newRequestedAlbum);
 		} else {
 			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
 		}

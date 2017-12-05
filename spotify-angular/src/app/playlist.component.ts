@@ -5,6 +5,7 @@ import {MusicCollectionService} from './services/music.service';
 import { ActivatedRoute, ParamMap, Router} from '@angular/router';
 import {environment} from '../environments/environment';
 import {Location} from '@angular/common';
+import {MediaService} from './services/media.service';
 import {NotificationsService} from 'angular4-notifications';
 import {ConfirmDialog} from './confirm-dialog.component';
 import {MdDialog, MdDialogRef} from '@angular/material';
@@ -17,7 +18,8 @@ import {MdDialog, MdDialogRef} from '@angular/material';
 })
 export class PlaylistComponent{
 
-    constructor(private musicService : MusicCollectionService,
+    constructor(private musicService    : MusicCollectionService,
+                private mediaService    : MediaService,
                 private route           : ActivatedRoute,
                 private _location       : Location,
                 private router          : Router,
@@ -38,7 +40,7 @@ export class PlaylistComponent{
                 .subscribe(
                     (data) => {
                         this.playlist = data;
-                        this.artworkUrl = this.playlist.artworkPath ? environment.SERVER_PATH + this.playlist.artworkPath : null;
+                        // this.artworkUrl = this.playlist.artworkPath ? environment.SERVER_PATH + this.playlist.artworkPath : null;
                     },
                     (err) => {
                         this._location.back();

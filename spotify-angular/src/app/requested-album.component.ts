@@ -6,6 +6,7 @@ import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {AdminService} from './services/admin.service';
 import {DetailDialog} from './detail-dialog.component';
 import {NotificationsService} from 'angular4-notifications';
+import {SpinnerService} from './services/spinner.service';
 
 
 @Component({
@@ -17,7 +18,8 @@ export class RequestedAlbumComponent implements OnInit{
 
   constructor(public dialog: MdDialog,
               private adminService : AdminService,
-              private notificationService : NotificationsService){}
+              private notificationService : NotificationsService,
+              private spinnerService      : SpinnerService){}
 
   requests     : RequestedAlbum[];
 
@@ -41,7 +43,7 @@ export class RequestedAlbumComponent implements OnInit{
       (data) =>{
         this.loadRequestedAlbums();
         let albumTitle = album.title;
-        this.notificationService.success("SUCCESS", "Album ${albumTitle} successfully added to the system.");
+        this.notificationService.success("SUCCESS", "Album" +album.title+ "successfully added to the system.");
       },
       (err) =>{
         this.notificationService.error("FAIL", err);
@@ -54,12 +56,16 @@ export class RequestedAlbumComponent implements OnInit{
       (data) =>{
         this.loadRequestedAlbums();
         let albumTitle = album.title;
-        this.notificationService.success("SUCCESS", "Album ${albumTitle} successfully added to the system.");
+        this.notificationService.success("SUCCESS", "Album has been rejected.");
       },
       (err) =>{
         this.notificationService.error("FAIL", err);
       }
     )
+  }
+
+  spinner(){
+    this.spinnerService.openSpinner();
   }
 
   approveSelectedAlbums(){

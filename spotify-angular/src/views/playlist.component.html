@@ -1,8 +1,8 @@
 <md-card *ngIf="playlist" class="bg-card">
     <md-card-header>
         <div class="albumPic">
-            <img *ngIf="!artworkUrl" src="../assets/channel_x.png">
-            <img *ngIf="artworkUrl" [src]="artworkUrl">
+            <!-- <img *ngIf="!artworkUrl" src="../assets/channel_x.png"> -->
+            <img style="max-height:100%; max-width:100%;"[src]="mediaService.getPlaylistImageUrl(this.playlist.artworkPath)">
         </div>
         <div class="albumInfo">
             <div><h4>Playlist</h4></div>

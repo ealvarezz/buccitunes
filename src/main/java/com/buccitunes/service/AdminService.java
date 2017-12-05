@@ -140,12 +140,17 @@ public class AdminService {
 		if(requestedAlbum == null) {
 			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
+			
+		boolean approveAllSongs;
 		if(songsToApprove == null) {
-			newAlbum = new Album(requestedAlbum, true);
+			approveAllSongs = true;
 		} else {
-			newAlbum = new Album(requestedAlbum, false);
+			approveAllSongs = false;
 		}
+		
+		newAlbum = new Album(requestedAlbum, approveAllSongs);
 		newAlbum = albumRepository.save(newAlbum);
+		
 		if(requestedAlbum.getArtworkPath() != null) {
 			try {				
 				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getArtworkPath(), newAlbum.getId());

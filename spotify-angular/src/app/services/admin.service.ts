@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {environment} from '../../environments/environment';
-
+import {BucciConstants} from '../../environments/app.config';
 import {User} from '../objs/User';
 import {RequestedAlbum} from '../objs/RequestedAlbum';
 import {BucciResponse} from '../objs/BucciResponse';
@@ -20,81 +20,49 @@ export class AdminService {
     constructor(private http: HttpClient) { }
 
     getRequestedAlbums() {
-        return this.http.get<BucciResponse<RequestedAlbum[]>>(environment.GET_REQ_ALBUMS_ENDPOINT,{ withCredentials: true })
-        .map(bucci  => {
-            console.log(bucci);
-                if(bucci.successful){
-                    return bucci.response;
-                }
-                else{
-                    throw new Error(bucci.message);
-                } 
-            })
-            .catch((error : any) =>{
-                return Observable.throw(new Error(error.message));
-            });
+        
+        return this.http.get<BucciResponse<RequestedAlbum[]>>(BucciConstants.Endpoints.GET_REQ_ALBUMS,{ withCredentials: true })
+        .map(this.extractData)
+        .catch(this.handleError);
     }
 
     getRequestedAlbum(album : RequestedAlbum) {
-        return this.http.get<BucciResponse<RequestedAlbum>>(environment.GET_REQ_ALBUM_ENDPOINT, { 
+        return this.http.get<BucciResponse<RequestedAlbum>>(BucciConstants.Endpoints.GET_REQ_ALBUM, { 
             params: new HttpParams().set('id', String(album.id)),  withCredentials: true })
-        .map(bucci =>{
-            if(bucci.successful){
-                return bucci.response;
-            }
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error : any)=>{
-            return Observable.throw(new Error(error.message));
-        })
+        .map(this.extractData)
+        .catch(this.handleError)
     }
-
+    //change endpoint
     getRequestedSongs(){
         return this.http.get<BucciResponse<RequestedAlbum>>(environment.GET_REQ_ALBUM_ENDPOINT)   
-        .map(bucci =>{
-            if(bucci.successful){
-                return bucci.response;
-            }
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error : any)=>{
-            return Observable.throw(new Error(error.message));
-        })
+        .map(this.extractData)
+        .catch(this.handleError)
     }
 
     approveAlbum(album : RequestedAlbum){
-        return this.http.post<BucciResponse<String>>(environment.APPROVE_ALBUM_ENDPOINT, album)
-        .map(bucci =>{
-            if(bucci.successful){
-                return bucci.response;
-            }
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error : any)=>{
-            return Observable.throw(new Error(error.message));
-        })
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.APPROVE_ALBUM, album)
+        .map(this.extractData)
+        .catch(this.handleError)
         
     }
 
     rejectAlbum(album: RequestedAlbum){
-        return this.http.post<BucciResponse<String>>(environment.REJECT_ALBUM_ENDPOINT, album)
-        .map(bucci =>{
-            if(bucci.successful){
-                return bucci.response;
-            }
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error : any)=>{
-            return Observable.throw(new Error(error.message));
-        })
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.REJECT_ALBUM, album)
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    private extractData(bucci){
+        if(bucci.successful){
+            return bucci.response;
+        }
+        else{
+            throw new Error(bucci.message);
+        }
+    }
+
+    private handleError(error: any) {
+        return Observable.throw(new Error(error.message));
     }
 
     

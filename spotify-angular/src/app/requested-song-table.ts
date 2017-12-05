@@ -4,6 +4,7 @@ import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {RequestedSong} from './objs/RequestedSong';
 import {MusicCollectionService } from './services/music.service';
+import {MusicService} from './services/player.service';
 import 'rxjs/add/observable/of';
 
 @Component({
@@ -16,13 +17,19 @@ export class RequestedSongTable implements OnChanges {
     hoveredRow : number = -1;
     displayedColumns = ['accept','num','songName','explicit','duration'];
 
-    constructor(private musicService : MusicCollectionService){}
+    constructor(private musicService : MusicCollectionService,
+                private playerService : MusicService){}
 
     ngOnChanges(change : SimpleChanges){
       if(change['data'] && !change['data'].isFirstChange()){
         this.data = change['data'].currentValue;
         this.dataSource.songs.next(this.data);
       }
+    }
+
+    playSong(song : RequestedSong){
+      this.playerService.setCurrentSong(song);
+      this.playerService.playSong();
     }
 
     ngOnInit(){

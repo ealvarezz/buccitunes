@@ -35,6 +35,7 @@ export const environment = {
 
   ARTIST_ROLE               : "ARTIST",
   ADMIN_ROLE                : "ADMIN",
+  PREMIUM_ROLE              : "PREMIUM",
 
   DEFAULT_ARTWORK           : "/default-cover-art.png",
   DEFAULT_ALBUM_ARTWORK     : "/default-album-artwork.png",
@@ -47,11 +48,14 @@ export const environment = {
 
   //ADD ALBUM
   SUCCESS_TITLE : "Success",
-  ADD_ALBUM_SUCCESS_MESSAGE_ADMIN   : "Successfully added the album ",
+  ADD_ALBUM_SUCCESS_MESSAGE_ADMIN   : "Successfully added the album.",
   ADD_ALBUM_SUCCESS_MESSAGE_USER    : "Successfully submitted request to add album" +
                                       "Please allow at most one business day for an admin to review and approve.",
   // FILE CONSTANTS
   EXCEED_FILE_LIMIT   : "The uploaded image exceeds the file size limit of 10 MB.",
   IMAGE_SIZE_LIMIT    : 1000000, 
   acceptedMedia       : "image/x-png,image/gif,image/jpeg"
+
 };
+
+

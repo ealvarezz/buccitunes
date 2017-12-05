@@ -3,10 +3,14 @@
 
     
     <div mdLine class="profile-pic-btn">
-        <button md-button (click)="getUserPage()">
+        <button md-button [mdMenuTriggerFor]="userMenu">
             <img src="../assets/profile pic.png">     
         </button>
-        <p>Name</p>
+        <md-menu #userMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+            <button md-menu-item routerLink="/account-settings"> Settings </button>
+            <button md-menu-item (click)="logout()"> Logout </button>
+        </md-menu>
+        <a [routerLink]="['/user',currentUser.email]"><p>{{currentUser.email}}</p></a>
     </div>
     <md-list-item>
         <div mdLine>
@@ -32,7 +36,7 @@
             <h4 class ="side-list"><a routerLink="/album-library">Albums</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/artist/14">Artists</a> </h4>
+            <h4 class ="side-list"><a routerLink="/artist/36">Artists</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
             <h4 class ="side-list"><a routerLink="/playlist/153">Playlists</a></h4>

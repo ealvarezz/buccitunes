@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import {BucciResponse} from '../objs/BucciResponse';
 
 import {environment} from '../../environments/environment';
-
+import {BucciConstants} from '../../environments/app.config';
+import {IAppConfig} from '../../environments/app.config.interface';
 import {Album} from '../objs/Album';
 import {RequestedAlbum} from '../objs/RequestedAlbum';
 import {Playlist} from '../objs/Playlist';
@@ -26,83 +27,47 @@ export class MusicCollectionService {
     constructor(private http: HttpClient){}
 
     getAlbum(id: number){
-        return this.http.get<BucciResponse<Album>>(environment.GET_ALBUM_ENDPOINT,{
+        return this.http.get<BucciResponse<Album>>(BucciConstants.Endpoints.GET_ALBUM,{
            params: new HttpParams().set('id', String(id)), 
            withCredentials: true
-        }).
-        map(bucci  => {
-                if(bucci.successful){
-                    return bucci.response;
-                }
-                else{
-                    throw new Error(bucci.message);
-                }
-                
-            }).catch((error : any) =>{
-                return Observable.throw(new Error(error.message));
-            });
+        })
+        .map(this.extractData)
+        .catch(this.handleError);
     }
 
     getPlaylist(id : number){
-        return this.http.get<BucciResponse<Album>>(environment.GET_PLAYLIST_ENDPOINT,{
+        return this.http.get<BucciResponse<Album>>(BucciConstants.Endpoints.GET_PLAYLIST,{
            params: new HttpParams().set('id', String(id)), 
            withCredentials: true
-        }).
-        map(bucci  => {
-                if(bucci.successful){
-                    return bucci.response;
-                }
-                else{
-                    throw new Error(bucci.message);
-                }
-                
-            }).catch((error : any) =>{
-                return Observable.throw(new Error(error.message));
-            });
+        })
+        .map(this.extractData)
+        .catch(this.handleError);
     }
 
     addAlbumAdmin(album : RequestedAlbum){
         console.log(album);
-        return this.http.post<BucciResponse<Album>>(environment.ADD_ALBUM_ENDPOINT_ADMIN,
-         album, 
-         { withCredentials: true }).
-            map(bucci  => {
-                if(bucci.successful){
-                    return bucci.response;
-                }
-                else{
-                    throw new Error(bucci.message);
-                }
-                
-            }).catch((error : any) =>{
-                return Observable.throw(new Error(error.message));
-            });
+        return this.http.post<BucciResponse<Album>>(BucciConstants.Endpoints.ADD_ALBUM_ADMIN,
+        album, 
+        { withCredentials: true })
+        .map(this.extractData)
+        .catch(this.handleError);
 
     }
 
     addAlbumArtist(album: RequestedAlbum){
         console.log(album);
-        return this.http.post<BucciResponse<Album>>(environment.ADD_ALBUM_ENDPOINT_ARTIST,
+        return this.http.post<BucciResponse<Album>>(BucciConstants.Endpoints.ADD_ALBUM_ARTIST,
          album, 
          { withCredentials: true }).
-            map(bucci  => {
-                if(bucci.successful){
-                    return bucci.response;
-                }
-                else{
-                    throw new Error(bucci.message);
-                }
-                
-            }).catch((error : any) =>{
-                return Observable.throw(new Error(error.message));
-            });
+            map(this.extractData)
+            .catch(this.handleError);
 
     }
 
 
 
     addPlaylist(playlist : Playlist){
-        return this.http.post<BucciResponse<Playlist>>(environment.ADD_PLAYLIST_ENDPOINT,
+        return this.http.post<BucciResponse<Playlist>>(BucciConstants.Endpoints.ADD_PLAYLIST,
          playlist,
         { withCredentials: true }).
         map(bucci  => {
@@ -120,22 +85,13 @@ export class MusicCollectionService {
     }
 
     addSongToLibrary(song : Song) {
-        return this.http.post<BucciResponse<String>>(environment.SAVE_SONG_ENDPOINT, song, {withCredentials: true}).
-        map(bucci  => {
-                if(bucci.successful){
-                    return bucci.response;
-                }
-                else{
-                    throw new Error(bucci.message);
-                }
-                
-            }).catch((error : any) =>{
-                return Observable.throw(new Error(error.message));
-            });
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.SAVE_SONG, song, {withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
     }
 
     getSongLibrary(){
-        return this.http.get<BucciResponse<Song[]>>(environment.GET_SONG_LIBRARY_ENDPOINT,{withCredentials: true}).
+        return this.http.get<BucciResponse<Song[]>>(BucciConstants.Endpoints.GET_SONG_LIBRARY ,{withCredentials: true}).
         map(bucci =>{
             if(bucci.successful){
                 this.songLibrary.next(bucci.response);
@@ -150,55 +106,25 @@ export class MusicCollectionService {
     }
 
     saveAlbum(album : Album){
-        return this.http.post<BucciResponse<String>>(environment.SAVE_ALBUM_ENDPOINT, album, {withCredentials: true}).
-        map(bucci =>{
-            if (bucci.successful){
-                return bucci.response;
-            } 
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error: any) =>{
-            return Observable.throw(new Error(error.message));
-        }
-        );
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.SAVE_ALBUM, album, {withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
     }
 
     getAlbumLibrary(){
-        return this.http.get<BucciResponse<Album[]>>(environment.GET_SAVED_ALBUMS_ENDPOINT, {withCredentials: true})
-        .map(bucci =>{
-            if (bucci.successful){
-                return bucci.response;
-            } 
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error: any) =>{
-            return Observable.throw(new Error(error.message));
-        }
-        );
+        return this.http.get<BucciResponse<Album[]>>(BucciConstants.Endpoints.GET_SAVED_ALBUMS, {withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
     }
 
     getRecentlyPlayedAlbums(){
-        return this.http.get<BucciResponse<Album[]>>(environment.GET_RECENT_ALBUMS_ENDPOINT, {withCredentials: true})
-        .map(bucci =>{
-            if (bucci.successful){
-                return bucci.response;
-            } 
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error: any) =>{
-            return Observable.throw(new Error(error.message));
-        }
-        );
+        return this.http.get<BucciResponse<Album[]>>(BucciConstants.Endpoints.GET_RECENT_ALBUMS, {withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
     }
 
     getUserPlaylists(){
-        return this.http.get<BucciResponse<Playlist[]>>(environment.GET_PLAYLIST_ENDPOINTS , {withCredentials: true})
+        return this.http.get<BucciResponse<Playlist[]>>(BucciConstants.Endpoints.GET_USER_PLAYLISTS , {withCredentials: true})
         .map(bucci =>{
             if (bucci.successful){
                 this.userPlaylists.next(bucci.response);
@@ -218,19 +144,9 @@ export class MusicCollectionService {
         
         let playlistInfo = this.constructPlaylistUpdate(playlist, song,null);
         console.log(playlistInfo);
-        return this.http.post<BucciResponse<String>>(environment.UPDATE_PLAYLIST_ENDPOINT, playlistInfo, {withCredentials: true}).
-        map(bucci =>{
-            if (bucci.successful){
-                return bucci.response;
-            } 
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error: any) =>{
-            return Observable.throw(new Error(error.message));
-        }
-        );
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.UPDATE_PLAYLIST, playlistInfo, {withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
 
 
     }
@@ -239,44 +155,24 @@ export class MusicCollectionService {
         
         let playlistInfo = this.constructPlaylistUpdate(playlist, null,song);
         console.log(playlistInfo);
-        return this.http.post<BucciResponse<String>>(environment.UPDATE_PLAYLIST_ENDPOINT, playlistInfo, {withCredentials: true}).
-        map(bucci =>{
-            if (bucci.successful){
-                return bucci.response;
-            } 
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error: any) =>{
-            return Observable.throw(new Error(error.message));
-        }
-        );
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.UPDATE_PLAYLIST, playlistInfo, {withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
 
 
     }
 
     followPlaylist(playlist: Playlist){
-        return this.http.post<BucciResponse<String>>(environment.FOLLOW_PLAYLIST_ENDPOINT, playlist, {withCredentials: true}).
-        map(bucci =>{
-            if (bucci.successful){
-                return bucci.response;
-            } 
-            else{
-                throw new Error(bucci.message);
-            }
-        })
-        .catch((error: any) =>{
-            return Observable.throw(new Error(error.message));
-        }
-        );
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.FOLLOW_PLAYLIST, playlist, {withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
 
     }
 
     deletePlaylist(playlist : Playlist){
 
         let playlistId = playlist.id;
-        let requestUrl = environment.DELETE_PLAYLIST_ENDPOINT + "/" + playlistId;
+        let requestUrl = BucciConstants.Endpoints.DELETE_PLAYLIST + "/" + playlistId;
 
         return this.http.delete<BucciResponse<String>>(requestUrl,{
            withCredentials: true
@@ -315,8 +211,8 @@ export class MusicCollectionService {
     }
 
 
-    private handleSuccessResponse(bucci : BucciResponse<any>){
-        if (bucci.successful){
+    private extractData(bucci){
+        if(bucci.successful){
             return bucci.response;
         }
         else{
@@ -324,17 +220,8 @@ export class MusicCollectionService {
         }
     }
 
-    private handleError(operation: string) {
-        return (err: any) => {
-            let errMsg = `error in ${operation}() retrieving /artist`;
-            console.log(`${errMsg}:`, err)
-            if(err instanceof HttpErrorResponse) {
-                // you could extract more info about the error if you want, e.g.:
-                console.log(`status: ${err.status}, ${err.statusText}`);
-                // errMsg = ...
-            }
-            return Observable.throw(errMsg);
-        }
+    private handleError(error: any) {
+        return Observable.throw(new Error(error.message));
     }
 
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
 import { environment } from '../environments/environment';
 import {Song} from './objs/Song';
+import{MediaFile} from './objs/MediaFile';
 import {RequestedSong} from './objs/RequestedSong';
 import {Album} from './objs/Album';
 import {User} from './objs/User';
@@ -15,6 +16,8 @@ import { Observable } from 'rxjs/Rx';
 import {NotificationsService} from 'angular4-notifications';
 import {AuthenticationService} from './services/authentication.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import {MediaService} from './services/media.service';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'artist-page',
@@ -24,30 +27,40 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 export class ArtistComponent implements OnInit {
 
   artist        : Artist;
-  currentUser      : User;
+  currentUser   : User;
   songs         : Song[] =  [new Song(), new Song(), new Song(), new Song(), new Song(), new Song() , new Song() , new Song() , new Song() , new Song()];
   viewSongs     : Song[] = this.songs.slice(0,5);
   showAllSongs  : boolean = false;
   isEditModeBio : boolean = false;
 
-  constructor(public dialog: MdDialog, private artistService : ArtistService, private route: ActivatedRoute, private notificationService : NotificationsService, private authenticationService : AuthenticationService){}
+  constructor(public dialog                 : MdDialog,
+              private artistService         : ArtistService,
+              private route                 : ActivatedRoute,
+              private location              : Location,
+              private notificationService   : NotificationsService,
+              private authenticationService : AuthenticationService){}
 
   ngOnInit(){
     this.route.params.subscribe(params => {
         this.getArtist(+params['id']);
     });
 
-    this.currentUser = this.authenticationService.getLoggedInUser();
+    this.authenticationService.currentUserChange.subscribe(
+     user => this.currentUser = user
+    );
+    
   }
   getArtist(id : number ){
    this.artistService.getArtist(id)
       .subscribe(
           (data) => {
-                    this.artist = data;
-                  },  
+            this.artist = data;
+          },  
           (err) => {
-                    console.log(err.message);
-                });
+            this.notificationService.error("ERROR","There was an error loading this artist.");
+            this.location.back();
+            console.log(err.message);
+          });
   }
 
   addAlbum(){
@@ -91,7 +104,12 @@ export class ArtistComponent implements OnInit {
 })
 export class AddAlbumDialog {
 
-  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>, @Inject(MD_DIALOG_DATA) public data: any,  private _formBuilder: FormBuilder, private musicService : MusicCollectionService, private _cdr: ChangeDetectorRef) {
+  constructor(public dialogRef: MdDialogRef<AddAlbumDialog>,
+              @Inject(MD_DIALOG_DATA) public data: any,
+              private _formBuilder: FormBuilder,
+              private musicService : MusicCollectionService,
+              private mediaService: MediaService,
+              private authenticationService : AuthenticationService) {
      }
 
   infoFormGroup     : FormGroup;
@@ -102,12 +120,9 @@ export class AddAlbumDialog {
   artist            : Artist;
   user              : User;
   albumArtworkPath  : string = '';
-  releaseMonth      : string;
-  releaseDay        : number;
-  releaseYear       : number;
 
-  lastStep          : boolean;
-  testing           : RequestedSong[] = [];
+  disableNext : boolean = false;
+
 
 
   artworkError = {
@@ -145,14 +160,9 @@ export class AddAlbumDialog {
     this.dialogRef.close(false);
   }
 
-  toggleLastStep(){
-    this.lastStep = !this.lastStep;
-  }
-
   addNewSong(): void{
    this.currentAlbum.songs.push(new RequestedSong());
    this.currentAlbum.songs = this.currentAlbum.songs.slice();
-    // this._cdr.detectChanges();
   }
   
   removeSong(song: RequestedSong): void{
@@ -160,6 +170,7 @@ export class AddAlbumDialog {
     if (index >= 0) {
       this.currentAlbum.songs.splice(index, 1);
     }
+    this.currentAlbum.songs = this.currentAlbum.songs.slice();
   }
 
   add(event: MdChipInputEvent): void {
@@ -176,36 +187,32 @@ export class AddAlbumDialog {
     }
   }
 
-  previewImage(event){
-    let fileList: FileList = event.target.files;
-    let file = fileList[0];
-
-    if(fileList.length > 0) {
-
-        let reader = new FileReader();
-
-        reader.onload = (e: any) => {
-          if(this.validateImage(file)){
-            this.currentAlbum.artwork = e.target.result;
-            this.albumArtworkPath = file.name;
-          }
-          else{
-            this.artworkError.status = true;
-            this.artworkError.message = environment.EXCEED_FILE_LIMIT;
-          }   
-        }
-
-        reader.readAsDataURL(file);
-    }
+  uploadImage(event){
+    this.mediaService.previewImage(event).subscribe(
+           (data : MediaFile)=>{
+                this.currentAlbum.artwork = data.artwork;
+                this.albumArtworkPath = data.artworkPath;
+           },
+          (err) =>{
+              this.artworkError.status = true;
+              this.artworkError.message = err.message;
+            });
   }
 
-  validateImage(image: File){
-      if(image.size > environment.IMAGE_SIZE_LIMIT){
-          return false;
-      }
-      else{
-        return true;
-      }
+  uploadSong(event, song : Song){
+    this.disableNext = true;
+    this.mediaService.uploadSong(event).subscribe(
+           (data : MediaFile)=>{
+                song.audio = data.artwork;
+                song.audioPath = data.artworkPath;
+                this.disableNext = false;
+                // this.albumArtworkPath = data.artworkPath;
+           },
+          (err) =>{
+              this.artworkError.status = true;
+              this.artworkError.message = err.message;
+              this.disableNext = false;
+            });
   }
 
   remove(artist: any): void {
@@ -216,22 +223,15 @@ export class AddAlbumDialog {
     // }
   }
 
-  setDate(){
-    let month = this.months.indexOf(this.releaseMonth);
-    let date = new Date(this.releaseYear, month, this.releaseDay);
-    this.currentAlbum.releaseDate = date;
-    // this.currentAlbum.releaseDate.setMonth(this.months.indexOf(this.releaseMonth));
-    // this.currentAlbum.releaseDate.setDate(this.releaseDay);
-    // this.currentAlbum.releaseDate.setFullYear(this.releaseYear);
-  }
   submitAlbum(){
     this.currentAlbum.primaryArtist = this.artist;
-    this.currentAlbum.artwork = this.currentAlbum.artwork.split(",")[1];
+    this.currentAlbum.artwork = this.mediaService.trimImageBase64(this.currentAlbum.artwork);
+    this.sanitizeSongs(this.currentAlbum);
 
-    if(this.user.role === environment.ARTIST_ROLE){
+    if(this.authenticationService.isArtistUserRole()){
       this.submitAlbumArtist();
     }
-    else{
+    else if (this.authenticationService.isAdminUserRole()){
       this.submitAlbumAdmin();
     }
 
@@ -239,14 +239,14 @@ export class AddAlbumDialog {
 
   submitAlbumArtist(){
     this.musicService.addAlbumArtist(this.currentAlbum)
-            .subscribe(
-                (data) => {
-                    console.log(data);
-                    this.dialogRef.close("This album has been successfully been submitted for further approval. Please allow a 2-3 hours for admin approval. You will receive an email shortly notifiying you of the admin decision.");
-                },
-                (err) => {
-                    console.log(err.message);
-                });
+      .subscribe(
+        (data) => {
+          console.log(data);
+          this.dialogRef.close("This album has been successfully been submitted for further approval. Please allow a 2-3 hours for admin approval. You will receive an email shortly notifiying you of the admin decision.");
+        },
+        (err) => {
+            console.log(err.message);
+          });
 
   }
 
@@ -261,6 +261,13 @@ export class AddAlbumDialog {
                     console.log(err.message);
                 });
 
+  }
+
+
+  private sanitizeSongs(album : RequestedAlbum){
+    for(let song of album.songs){
+        song.audio = this.mediaService.trimImageBase64(song.audio);
+    }
   }
 
 

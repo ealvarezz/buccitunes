@@ -31,10 +31,10 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 
 @Entity(name="Album")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id",
-		  scope = Album.class)
+//@JsonIdentityInfo(
+//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+//		  property = "id",
+//		  scope = Album.class)
 public class Album extends MusicCollection {
 	
 	

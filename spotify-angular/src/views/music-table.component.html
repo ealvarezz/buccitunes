@@ -7,7 +7,7 @@
       <md-header-cell *mdHeaderCellDef> # </md-header-cell>
       <md-cell *mdCellDef="let row; let i=index"> 
         <div *ngIf ="hoveredRow != i">{{i+1}}</div>
-        <div *ngIf ="hoveredRow == i"><button md-icon-button style="width:24px; float:left;"> <i class="material-icons" >play_circle_outline</i> </button></div>
+        <div *ngIf ="hoveredRow == i"><button (click)="playSong(row)" md-icon-button style="width:24px; float:left;"> <i class="material-icons" >play_circle_outline</i> </button></div>
       </md-cell>
     </ng-container>
 
@@ -46,7 +46,7 @@
           <button md-menu-item>
             <span>Go to Artist</span>
           </button>
-          <button md-menu-item>
+          <button (click)="addSongToLibrary(row)"md-menu-item>
             <span>Save to Your Library</span>
           </button>
           <button [mdMenuTriggerFor]="subMenu" md-menu-item>
