@@ -46,7 +46,6 @@ public class ArtistController {
 	@Autowired
 	private BucciConstants constants;
 	
-	
 	@RequestMapping(value="get_artist_by_name", method = RequestMethod.POST)
 	public BucciResponse<Artist> findArtistByName(@RequestBody String name) {
 		try {
@@ -110,10 +109,8 @@ public class ArtistController {
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage("Not Logged In");
 		}
-		
 		if(BucciPrivilege.isArtist(loggedUser)) {
 			RequestedAlbum newRequestedAlbum;
-			
 			try {
 				newRequestedAlbum = artistService.requestNewAlbum(requested, ((ArtistUser) loggedUser));
 			} catch (BucciException e) {
@@ -202,7 +199,6 @@ public class ArtistController {
 		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			
 			artistService.deleteSongFromAlbum(songId, albumId);
-			
 			return BucciResponseBuilder.successfulResponse("Song request was submitted");
 		} else {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
