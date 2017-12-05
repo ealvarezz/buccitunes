@@ -20,6 +20,7 @@ import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.miscellaneous.MailManager;
+import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.SongPlays;
@@ -248,5 +249,17 @@ public class AdminController {
 	public BucciResponse<String> chargeUsers() {
 		adminService.chargeUsers();
 		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
+	}
+	
+	@RequestMapping(value="add_admin", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<AdminUser> addAdmin(@RequestBody AdminUser user, HttpSession session) {
+		
+		try {
+			AdminUser newUser = adminService.createAdminUser(user);
+			return BucciResponseBuilder.successfulResponseMessage("Successful Signup", newUser);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
 	}
 }
