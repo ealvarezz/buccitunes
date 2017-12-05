@@ -88,7 +88,7 @@ public class AdminService {
 		User requestedUser = userRepository.findOne(requestedArtist.getRequester().getEmail());
 		
 		if(requestedUser == null) {
-			throw new BucciException("Invalid User Requested");
+			throw new BucciException(constants.getArtistNotFoundMsg());
 		}
 		
 		Artist artist = new Artist(requestedArtist);
@@ -108,12 +108,12 @@ public class AdminService {
 	
 	public Song addSongToAlbum(Song song) throws BucciException{
 		if(song.getAlbum() == null) {
-			throw new BucciException("No album specified");
+			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
 		
 		Album album = albumRepository.findOne(song.getAlbum().getId());
 		if(album == null) {
-			throw new BucciException("Album does not exist");
+			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
 		
 		song.setAlbum(album);
@@ -128,7 +128,7 @@ public class AdminService {
 		if(artist == null) {
 			artist = artistRepository.findByName(albumToAdd.getPrimaryArtist().getName());
 			if(artist == null) {
-				throw new BucciException("Artist not enter");
+				throw new BucciException(constants.getArtistNotFoundMsg());
 			}
 		}
 		albumToAdd.setPrimaryArtist(artist);
@@ -140,7 +140,7 @@ public class AdminService {
 				String artworkPath = FileManager.saveAlbumArtwork(albumToAdd.getArtwork(), album.getId());
 				album.setArtworkPath(artworkPath);
 			} catch (IOException e) {
-				throw new BucciException("UNABLE TO SAVE ARTWORK");
+				throw new BucciException(constants.getStorageErrorMsg());
 			}
 		}
 		return album;
@@ -153,7 +153,7 @@ public class AdminService {
 		
 		requestedAlbum = requestedAlbumRepository.findOne(requestedAlbum.getId());
 		if(requestedAlbum == null) {
-			throw new BucciException("Requested album does not exist");
+			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
 			
 		
@@ -208,7 +208,7 @@ public class AdminService {
 					String audioPath = FileManager.moveRequestedAudio(requestedSong.getAudioPath(), newSong.getId());
 					newSong.setAudioPath(audioPath);
 				} catch (IOException | BucciException e) {
-					System.out.println("\n===========\n AUDIO: " + requestedSong.getAudioPath() + " could not save!!!==========\n");
+					System.out.println(constants.getStorageErrorMsg());
 				}
 			}
 			
@@ -219,7 +219,7 @@ public class AdminService {
 			try {
 				FileManager.removeRequestedSongResources(requestedSong);
 			} catch (IOException e ) {
-				System.out.println("\n========\n Could not remove requested '" + requestedSong.getName() + "' song==========\n");
+				System.out.println(constants.getStorageErrorMsg());
 			}
 			
 			return null;
@@ -232,7 +232,7 @@ public class AdminService {
 		
 				
 		if(requested == null) {
-			throw new BucciException("Requested Concert does not exist");
+			throw new BucciException(constants.getConcertNotFoundMsg());
 		}else{
 			Artist owner = artistRepository.findOne(requested.getRequester().getArtist().getId()); 
 			newConcert = new Concert(requested);
@@ -249,14 +249,14 @@ public class AdminService {
 	public Song adminApproveSong(RequestedSong requestedSong) throws BucciException{
 		requestedSong = requestedSongRepository.findOne(requestedSong.getId());
 		if(requestedSong == null) {
-			throw new BucciException("Requested album does not exist");
+			throw new BucciException(constants.getSongNotFoundMsg());
 		}
 		
 		Artist artist = artistRepository.findOne(requestedSong.getArtist().getId());
 		if(artist == null) {
 			artist = artistRepository.findByName(requestedSong.getArtist().getName());
 			if(artist == null) {
-				throw new BucciException("Artist not found");
+				throw new BucciException(constants.getArtistNotFoundMsg());
 			}
 		}
 		
@@ -267,14 +267,14 @@ public class AdminService {
 				String artworkPath = FileManager.moveRequestedArtworkToSong(requestedSong.getPicturePath(), song.getId());
 				song.setPicturePath(artworkPath);
 			} catch (IOException e) {
-				throw new BucciException("Unable to add artwork");
+				throw new BucciException(constants.getStorageErrorMsg());
 			}
 		}
 		
 		try {
 			FileManager.removeRequestedSongResources(requestedSong);
 		} catch (IOException e) {
-			throw new BucciException("Unable to remove artwork");
+			throw new BucciException(constants.getStorageErrorMsg());
 		}
 		
 		requestedSongRepository.delete(requestedSong);
@@ -314,7 +314,7 @@ public class AdminService {
 	public RequestedAlbum getRequestedAlbum(int id) throws BucciException {
 		RequestedAlbum album = requestedAlbumRepository.findOne(id);
 		if(album == null) {
-			throw new BucciException("Requested album not found");
+			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
 		
 		album.getSongs().size();
@@ -335,13 +335,13 @@ public class AdminService {
 	public void removeRequestedAlbum(RequestedAlbum album) throws BucciException {
 		album = requestedAlbumRepository.findOne(album.getId());
 		if(album == null) {
-			throw new BucciException("Album not found");
+			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
 		
 		try {
 			FileManager.removeRequestedAlbumResources(album);
 		} catch (IOException e) {
-			throw new BucciException("Failed to remove album resources, try again.");
+			throw new BucciException(constants.getStorageErrorMsg());
 		}
 		
 		requestedAlbumRepository.delete(album);
@@ -350,7 +350,7 @@ public class AdminService {
 	public void removeRequestedConcert(RequestedConcert concert) throws BucciException {
 		concert = requestedConcertRepository.findOne(concert.getId());
 		if(concert == null) {
-			throw new BucciException("Concert not found");
+			throw new BucciException(constants.getConcertNotFoundMsg());
 		}
 		
 		requestedConcertRepository.delete(concert);
@@ -359,13 +359,13 @@ public class AdminService {
 	public void removeRequestedSong(RequestedSong song) throws BucciException {
 		song = requestedSongRepository.findOne(song.getId());
 		if(song == null) {
-			throw new BucciException("Song not found");
+			throw new BucciException(constants.getSongNotFoundMsg());
 		}
 		
 		try {
 			FileManager.removeRequestedSongResources(song);
 		} catch (IOException e) {
-			throw new BucciException("Failed to remove song resources, try again.");
+			throw new BucciException(constants.getStorageErrorMsg());
 		}
 		
 		requestedSongRepository.delete(song);
