@@ -104,7 +104,7 @@ BEGIN
 	IF EXISTS(
 		select U.email, f.followed_id
 		from User U
-		Join following f on f.following_id = 'TismMan1@gmail.com' and f.followed_id = followed
+		Join following f on f.following_id = following and f.followed_id = followed
 		where U.email = following
 		LIMIT 1
 	) THEN

@@ -41,10 +41,12 @@ import {SongLibrary} from './song-library.component'
 import {AlbumLibrary} from './saved-albums.component';
 import {AdminService} from './services/admin.service';
 import {AccountSettingsComponent}  from './account-settings.component';
+import {AccountComponent} from './account.component';
 import {ReceiptTableComponent} from './receipt-table';
 import {RequestedSongTable} from './requested-song-table';
 import {ConfirmDialog} from './confirm-dialog.component';
 import {MediaService} from './services/media.service';
+import {UserService} from './services/user.service';
 
 
 const appRoutes: Routes = [
@@ -61,6 +63,7 @@ const appRoutes: Routes = [
           {path: 'library', component: SongLibrary, canActivate: [AuthGuard]},
           {path: 'album-library', component: AlbumLibrary, canActivate: [AuthGuard]},
           {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
+          {path: 'user/:id', component: AccountComponent, canActivate: [AuthGuard]},
         ] 
   },
   {path: 'login', component: LoginComponent},
@@ -96,7 +99,8 @@ const appRoutes: Routes = [
     AccountSettingsComponent,
     ReceiptTableComponent,
     RequestedSongTable,
-    ConfirmDialog
+    AccountComponent,
+    ConfirmDialog,
   ],
   imports: [
     RouterModule.forRoot(
@@ -143,6 +147,7 @@ const appRoutes: Routes = [
     AdminService,
     AuthGuard,
     MediaService,
+    UserService,
     { provide: MD_DIALOG_DATA, useValue: {} },
     { provide: MdDialogRef, useValue: {} }
   ],
@@ -150,7 +155,7 @@ const appRoutes: Routes = [
     DetailDialog,
     AddAlbumDialog,
     AddPlaylistDialog,
-    ConfirmDialog
+    ConfirmDialog,
   ],
   bootstrap: [AppComponent]
 })

@@ -39,6 +39,10 @@ export class SideBarComponent implements OnInit {
             }
         ) 
     }
+
+    getUserPage(){
+        this.router.navigate(['/user',"1029@fake.com"])
+    }
     getRecentlyPlayedAlbums(){
         this.musicService.getRecentlyPlayedAlbums().subscribe(
         (data)=>{

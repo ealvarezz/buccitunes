@@ -52,4 +52,9 @@ export class MediaService {
       }
   }
 
+
+ getImageUrl(imagePath : string){
+      return environment.SERVER_PATH + imagePath;
+  }
+
 }
