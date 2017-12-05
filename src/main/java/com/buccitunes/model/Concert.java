@@ -32,6 +32,10 @@ public class Concert {
 	private String name;
 	
 	@ManyToOne
+    @JoinColumn(name = "artist_id")
+	Artist mainStar;
+	
+	@ManyToOne
     @JoinColumn(name = "location_id")
 	private Location location;
 	
@@ -59,6 +63,7 @@ public class Concert {
 		this.featuredArtists = requested.getFeaturedArtists();
 		this.price = requested.getPrice();
 		this.purchaseLink = requested.getPurchaseLink();
+		this.mainStar = requested.getRequester().getArtist();
 	}
 	
 	public int getId() {
@@ -67,6 +72,15 @@ public class Concert {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public Artist getMainStar() {
+		return mainStar;
+	}
+
+	public void setMainStar(Artist mainStar) {
+		this.mainStar = mainStar;
+	}
+
 	public String getName() {
 		return name;
 	}

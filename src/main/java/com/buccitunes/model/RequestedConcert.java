@@ -17,10 +17,16 @@ import javax.persistence.OneToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity(name="RequestedConcert")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id",
+		  scope = RequestedConcert.class)
 public class RequestedConcert {
 	
 	@Id
@@ -29,7 +35,7 @@ public class RequestedConcert {
 	
 	private String name;
 	
-	@ManyToOne
+	@ManyToOne(cascade = CascadeType.PERSIST)
     @JoinColumn(name = "location_id")
 	private Location location;
 	
