@@ -51,7 +51,7 @@ public class UserController {
 	
 	@RequestMapping(value="get_all_users", method = RequestMethod.GET)
 	public @ResponseBody List<User> getAllUsers() {
-		try {
+		/*try {
 			ArtistUser ta = new ArtistUser();
 			ta.setEmail("edwin.alvarez@stonybrook.edu");
 			Album a = new Album();
@@ -63,8 +63,8 @@ public class UserController {
 		} catch (MessagingException e) {
 			e.printStackTrace();
 		}
-		return null;
-		//return userService.findAll();
+		return null; */
+		return userService.findAll();
 	}
 	
 	@RequestMapping(value="add_user", method = RequestMethod.POST)
@@ -90,6 +90,21 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
+	
+	@RequestMapping(value="unfollow", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> unfollowUser(@RequestBody User followedUser, HttpSession session) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+		}	
+		try{
+			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
+			return BucciResponseBuilder.successMessage("Unfollowed user: " + user.getEmail()); 
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+	}
+	
 	
 	@RequestMapping(value="get_followers", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<User>> getAllFollowers(@RequestParam String email) {
@@ -367,6 +382,7 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
+	
 	@RequestMapping(value="change_settings", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<User> changeUserInfo(@RequestBody User user, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());

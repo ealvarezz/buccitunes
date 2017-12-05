@@ -132,6 +132,13 @@ public class MusicCollectionController {
 		} 
 	}
 	
+	@RequestMapping(value="add_song_to_playlist", method = RequestMethod.PUT)
+	public @ResponseBody void addSongToPlaylist(@RequestParam int playlistId, @RequestParam int songId, HttpSession session) {
+		
+			musicCollectionService.addSongToPlaylist(playlistId, songId);
+			
+	}
+	
 	
 	@RequestMapping(value="test", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> test(HttpSession session) {

@@ -22,6 +22,7 @@ import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
+import com.buccitunes.dao.RequestedConcertRepository;
 import com.buccitunes.dao.RequestedSongRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.miscellaneous.BucciConstants;
@@ -32,6 +33,7 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.RequestedAlbum;
+import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
@@ -51,10 +53,12 @@ public class ArtistService {
 	private final ArtistUserRepository artistUserRepository;
 	private final SongRepository songRepository;
 	private final RequestedSongRepository requestedSongRepository;
+	private final RequestedConcertRepository requestedConcertRepository;
 	
 	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
-			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository) {
+			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository,
+			RequestedConcertRepository requestedConcertRepository) {
 		
 		this.albumRepository = albumRepository;
 		this.artistRepository = artistRepository;
@@ -62,6 +66,7 @@ public class ArtistService {
 		this.artistUserRepository = artistUserRepository;
 		this.songRepository = songRepository;
 		this.requestedSongRepository = requestedSongRepository;
+		this.requestedConcertRepository = requestedConcertRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -73,11 +78,22 @@ public class ArtistService {
 		return result;
 	}
 	
+	public ArtistUser getArtistUser(String email) throws BucciException {
+		ArtistUser artistUser = artistUserRepository.findOne(email);
+		
+		if(artistUser != null) {
+			return artistUser;
+		} else {
+			throw new BucciException("Artist User not found");
+		}
+	}
+	
 	public Artist getArtist(int id) throws BucciException {
 		Artist artist = artistRepository.findOne(id);
 		
 		if(artist != null) {
 			artist.getAlbums().size();
+			artist.getUpcomingConcerts();
 			for(Album album : artist.getAlbums()) {
 				album.getSongs().size();
 			}
@@ -187,6 +203,19 @@ public class ArtistService {
 		requestedSong.setRequester(artistUser);
 		requestedSongRepository.save(requestedSong);
 	}
+	
+	
+	public RequestedConcert requestNewConcert(RequestedConcert requested, ArtistUser artistUser) throws BucciException {
+		artistUser = artistUserRepository.findOne(artistUser.getEmail());
+		requested.setRequester(artistUser);
+		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
+			
+		return requestedConcert;
+	}
+	
+	
+	
+	
 	
 	public void deleteSongFromAlbum(int songId, int albumId) {
 		

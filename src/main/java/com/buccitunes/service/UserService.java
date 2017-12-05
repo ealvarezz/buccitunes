@@ -96,6 +96,18 @@ public class UserService  {
 		return followedUser;
 	}
 	
+	public void unfollow(String follower, String followed) throws BucciException {
+		
+		User followingUser = userRepository.findOne(follower);
+		User followedUser = userRepository.findOne(followed);
+		
+		if(followingUser == null || followedUser == null) {
+			throw new BucciException("User not found");
+		}
+		
+		followingUser.getFollowing().remove(followedUser);
+	}
+	
 	public User findOne(String email){
 		
 		return userRepository.findOne(email);

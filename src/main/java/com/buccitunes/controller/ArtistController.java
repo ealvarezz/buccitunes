@@ -22,10 +22,12 @@ import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.model.User;
@@ -73,6 +75,25 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
+
+	@RequestMapping(value="royalties", method = RequestMethod.GET)
+	public BucciResponse<List<ArtistTransaction>> getRoyalties(HttpSession session) {			
+		ArtistUser loggedUser = (ArtistUser) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		if(BucciPrivilege.isArtist(loggedUser)) {
+			try {
+				loggedUser = artistService.getArtistUser(loggedUser.getEmail());
+				return BucciResponseBuilder.successfulResponse(loggedUser.getPaymentHistory());
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage("Could not find artist.");
+			}
+		} else {
+			return BucciResponseBuilder.failedMessage("Must be an artist to see royalties.");
+		}
+	}
+	
 	
 	@RequestMapping(value="top_songs_of_artist", method = RequestMethod.GET)
 	public BucciResponse<List<Song>> getTopSongsOfArtist(@RequestParam int id) {
@@ -122,6 +143,30 @@ public class ArtistController {
 			return BucciResponseBuilder.successMessage("Song request was submitted");
 		} else {
 			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+		}
+	}
+	
+	@RequestMapping(value="request_concert", method = RequestMethod.POST)
+	public BucciResponse<RequestedConcert> requestConcert(@RequestBody RequestedConcert requested, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		
+		if(BucciPrivilege.isArtist(loggedUser)) {
+			RequestedConcert newRequestedConcert;
+			
+			try {
+				newRequestedConcert = artistService.requestNewConcert(requested, (ArtistUser) loggedUser); 
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage(e.getErrMessage());
+			}
+			
+			return BucciResponseBuilder.successfulResponseMessage("Concert request was submitted", newRequestedConcert);
+		} else {
+			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an concert");
 		}
 	}
 	
