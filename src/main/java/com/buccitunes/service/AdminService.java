@@ -226,12 +226,15 @@ public class AdminService {
 	
 	public Concert adminApproveConcert(RequestedConcert requested) throws BucciException{
 		Concert newConcert;
-		
 		requested = requestedConcertRepository.findOne(requested.getId());
+		
+				
 		if(requested == null) {
 			throw new BucciException("Requested Concert does not exist");
 		}else{
+			Artist owner = artistRepository.findOne(requested.getRequester().getArtist().getId()); 
 			newConcert = new Concert(requested);
+			newConcert.setMainStar(owner);
 		}
 		newConcert = concertRepository.save(newConcert);
 		requestedConcertRepository.delete(requested);

@@ -59,6 +59,9 @@ public class Artist {
 	@JsonIgnoreProperties(value = "featuredArtists")
 	private List<Concert> upcomingConcerts;
 	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "mainStar")
+	private List<Concert> organizedConcerts;
+	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "featured_album_id", insertable = false, updatable = false)
 	@JsonIgnoreProperties(value = "primaryArtist")

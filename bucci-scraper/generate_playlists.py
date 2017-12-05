@@ -3,7 +3,7 @@ import os
 import json
 from random import *
 import MySQLdb
-
+from random_words import RandomWords
 
 PATH = "./bucci/"
 PLAYLIST_ENDPOINT = "http://localhost:8080/new_playlist"
@@ -11,6 +11,7 @@ LOGIN_ENDPOINT = "http://localhost:8080/login"
 LOGOUT_ENDPOINT = "http://localhost:8080/logout"
 
 s = requests.Session()
+rw = RandomWords()
 
 # Open database connection
 db = MySQLdb.connect(host="127.0.0.1",  # Host of database 
@@ -78,7 +79,7 @@ def add_playlists():
             # User creates the playlist
             playlist = {}
             playlist['owner'] = { "email": user['email']}
-            playlist['title'] = user['name'] + ' fionest playlist'
+            playlist['title'] = rw.random_word()
             print(playlist)
             r = s.post(PLAYLIST_ENDPOINT, json=playlist)
             res = r.json()
