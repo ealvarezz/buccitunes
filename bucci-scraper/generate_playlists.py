@@ -4,28 +4,29 @@ import json
 from random import *
 import MySQLdb
 from random_words import RandomWords
-
+import sys
+ 
 PATH = "./bucci/"
 PLAYLIST_ENDPOINT = "http://localhost:8080/new_playlist"
 LOGIN_ENDPOINT = "http://localhost:8080/login"
 LOGOUT_ENDPOINT = "http://localhost:8080/logout"
-
+ 
 s = requests.Session()
 rw = RandomWords()
-
+ 
 # Open database connection
 db = MySQLdb.connect(host="127.0.0.1",  # Host of database 
                     user="root",        # User
-                    passwd="bucci",     # Password might want to change)
+                    passwd=sys.argv[1], # Password
                     port=3306,          # Port
                     db="buccidb2")      # db name
-
-
+ 
+ 
 # prepare a cursor object using cursor() method
 cursor = db.cursor()
-
+ 
 def insert_into_playlist_song_table(songId, playlistId):
-
+ 
     sql = "INSERT INTO buccidb2.playlist_song(playlist_id,song_id) \
             VALUES (" + str(playlistId) + "," + str(songId) + ")"
     try:
@@ -36,9 +37,8 @@ def insert_into_playlist_song_table(songId, playlistId):
     except:
         # Rollback in case there is any error
         db.rollback() 
-
+ 
 def add_random_songs(playlist):
-    
     random_songs_sql = 'SELECT * FROM buccidb2.song \
                         ORDER BY RAND() \
                         LIMIT 10;'
@@ -49,8 +49,8 @@ def add_random_songs(playlist):
     for row in results:
         songId = row[0]
         insert_into_playlist_song_table(songId, playlist['id'])
-
-
+ 
+ 
 def add_playlists():
     
     userPath = PATH+"users/"
@@ -62,36 +62,34 @@ def add_playlists():
             signUp = user
             emailSplit = signUp['userInfo']['email'].split('@');
             email = emailSplit[0] + str(i) + '@' + emailSplit[1]
-            print(email)
-            
+            print(email)    
             # User first logs in
             login = {}
             login['email'] = email
             login['password'] = 'tmp'
             print(login)
-            s = requests.session()
             r = s.post(LOGIN_ENDPOINT, json=login)
             res = r.json()
             print(res)
             user = res['response']
             
-
+ 
             # User creates the playlist
             playlist = {}
             playlist['owner'] = { "email": user['email']}
-            playlist['title'] = rw.random_word()
+            playlist['title'] = rw.random_word() + " " + rw.random_word()
             print(playlist)
             r = s.post(PLAYLIST_ENDPOINT, json=playlist)
             res = r.json()
             print(res)
             playlist = res['response']
             print(playlist)
-
+ 
             # We adds songs to the playlist
             add_random_songs(playlist)
-
+ 
             # Now the user logs out
             s.post(LOGOUT_ENDPOINT)
-
+ 
 add_playlists()
 db.close()
