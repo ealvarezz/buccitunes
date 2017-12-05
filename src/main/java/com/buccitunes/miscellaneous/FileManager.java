@@ -14,6 +14,8 @@ import java.util.Comparator;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedSong;
@@ -22,7 +24,7 @@ public class FileManager {
 	
 	private final static String RESOURCEPATHALIAS = "/resources/";
 	private final static String FILESDIR = "/BucciTunesFiles/";
-	private final static Path FILESPATH = Paths.get(System.getProperty("user.home").toString() + FILESDIR);
+	private final static Path FILESPATH = Paths.get(System.getProperty("${settings.location}").toString() + FILESDIR);
 	private final static Path USERPATH = Paths.get(FILESPATH.toString() + "/USERS/");
 	private final static Path ARTISTPATH = Paths.get(FILESPATH.toString() + "/ARTISTS/");
 	private final static Path ALBUMPATH = Paths.get(FILESPATH.toString() + "/ALBUMS/");

@@ -72,7 +72,6 @@ public class ArtistService {
 	}
 	
 	public List<Artist> findAll(){
-		
 		List<Artist> result = new ArrayList<>();
 		for(Artist artist: artistRepository.findAll()) result.add(artist);
 		return result;
@@ -80,7 +79,6 @@ public class ArtistService {
 	
 	public ArtistUser getArtistUser(String email) throws BucciException {
 		ArtistUser artistUser = artistUserRepository.findOne(email);
-		
 		if(artistUser != null) {
 			return artistUser;
 		} else {
@@ -90,7 +88,6 @@ public class ArtistService {
 	
 	public Artist getArtist(int id) throws BucciException {
 		Artist artist = artistRepository.findOne(id);
-		
 		if(artist != null) {
 			artist.getAlbums().size();
 			artist.getUpcomingConcerts();
@@ -105,7 +102,6 @@ public class ArtistService {
 	
 	public Artist getArtistByName(String name) throws BucciException {
 		Artist artist = artistRepository.findByName(name);
-		
 		if(artist != null) {
 			return artist;
 		} else {
@@ -144,18 +140,15 @@ public class ArtistService {
 		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopSongsLimit(),
 				Sort.Direction.DESC, constants.getPlayCount());
 		return null;
-		
 	}
 	
 	public RequestedAlbum requestNewAlbum(RequestedAlbum requested, ArtistUser artistUser) throws BucciException {
-		
 		String artwork = requested.getArtwork();
 		List<RequestedSong> audioSongs = requested.getSongs();
 		
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
 		requested.setArtistRequester(artistUser);
 		RequestedAlbum requestedAlbum = requestedAlbumRepository.save(requested);
-		
 		if(artwork != null) {
 			try {
 				String artworkPath = FileManager.saveRequestedAlbumArtwork(artwork, requestedAlbum.getId());
@@ -164,10 +157,8 @@ public class ArtistService {
 				throw new BucciException(constants.getStorageErrorMsg());
 			}
 		}
-		
 		if(audioSongs != null) {
 			requestedAlbum.getSongs().size();
-			
 			for (RequestedSong songWithAudio : audioSongs) {
 				if(songWithAudio.getAudio() != null) {
 					try {
@@ -183,7 +174,6 @@ public class ArtistService {
 	}
 	
 	public void requestSongToAlbum(RequestedSong requestedSong, ArtistUser user) throws BucciException{
-		
 		if(requestedSong.getAlbum() == null) {
 			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
@@ -201,11 +191,9 @@ public class ArtistService {
 		requestedSongRepository.save(requestedSong);
 	}
 	
-	
 	public RequestedConcert requestNewConcert(RequestedConcert requested, ArtistUser artistUser) throws BucciException {
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
 		requested.setRequester(artistUser);
-		
  		List<Artist> concertArtists = new ArrayList<Artist>(requested.getFeaturedArtists().size());
 		for(Artist artist : requested.getFeaturedArtists()) {
 			Artist featuredArtist = artistRepository.findOne(artist.getId());
@@ -215,14 +203,11 @@ public class ArtistService {
 			concertArtists.add(featuredArtist);
 		}
 		requested.setFeaturedArtists(concertArtists);
-		
 		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
 		return requestedConcert;
 	}
 	
-	
 	public void deleteSongFromAlbum(int songId, int albumId) {
-		
 		Album album = albumRepository.findOne(albumId);
 		Song song = songRepository.findOne(songId);
 		songRepository.delete(songId);
@@ -234,9 +219,7 @@ public class ArtistService {
 	}
 	
 	public Song saveAudioFile(Song audioSong, User user) throws BucciException {
-		
 		Song song = songRepository.findOne(audioSong.getId());
-		
 		if(song == null) {
 			throw new BucciException(constants.getResourceNotFoundMsg());
 		}
@@ -262,7 +245,6 @@ public class ArtistService {
 	
 	public List<Concert> getArtistConcerts(int artistId) throws BucciException {
 		Artist artist = artistRepository.findOne(artistId);
-		
 		if(artist == null) {
 			throw new BucciException(constants.getArtistNotFoundMsg());
 		}

@@ -161,5 +161,5 @@ BEGIN
 	from artist a
 	join concert c on c.artist_id = a.id and c.release_date >= curdate() 
 	where a.id = artist_id;
-END
+END ^;
 
