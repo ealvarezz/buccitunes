@@ -39,10 +39,12 @@ export class RequestedAlbumComponent implements OnInit{
   }
 
   approveAlbum(album : RequestedAlbum){
+    this.spinnerService.openSpinner();
     this.adminService.approveAlbum(album).subscribe(
       (data) =>{
         this.loadRequestedAlbums();
         let albumTitle = album.title;
+        this.spinnerService.stopSpinner();
         this.notificationService.success("SUCCESS", "Album" +album.title+ "successfully added to the system.");
       },
       (err) =>{
@@ -52,9 +54,11 @@ export class RequestedAlbumComponent implements OnInit{
   }
 
   rejectAlbum(album : RequestedAlbum){
+    this.spinnerService.openSpinner();
     this.adminService.rejectAlbum(album).subscribe(
       (data) =>{
         this.loadRequestedAlbums();
+        this.spinnerService.stopSpinner();
         let albumTitle = album.title;
         this.notificationService.success("SUCCESS", "Album has been rejected.");
       },
