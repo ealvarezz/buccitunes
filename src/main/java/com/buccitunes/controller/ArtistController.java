@@ -23,6 +23,7 @@ import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.Concert;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
@@ -208,5 +209,16 @@ public class ArtistController {
 		else {
 			return BucciResponseBuilder.failedMessage("You don't have the privileges to add audio"); 
 		}
+	}
+	
+	@RequestMapping(value="artist_concerts", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Concert>> getArtistConcerts(@RequestParam int id, HttpSession session) {
+		try {
+			List<Concert> concerts = artistService.getArtistConcerts(id);
+			return BucciResponseBuilder.successfulResponse(concerts);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage()); 
+		}
+		
 	}
 }

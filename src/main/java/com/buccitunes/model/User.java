@@ -25,6 +25,7 @@ import javax.persistence.JoinColumn;
 
 @Entity(name="USER")
 @Inheritance(strategy = InheritanceType.JOINED)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class User {
 
 	@Id
