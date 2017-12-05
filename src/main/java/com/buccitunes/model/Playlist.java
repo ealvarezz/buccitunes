@@ -28,6 +28,8 @@ public class Playlist extends MusicCollection {
 	
 	private boolean isPublic;
 	
+	private String description;
+	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "playlist_song",
 		joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
@@ -134,14 +136,19 @@ public class Playlist extends MusicCollection {
 		this.stats = stats;
 	}
 	
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
 	public void updateInfo(Playlist playlist) {
 		if(playlist.getTitle() != null || playlist.getTitle().isEmpty()) {
 			super.setTitle(playlist.getTitle());
 		}
 		
 		this.isPublic = playlist.isPublic();
-		
-		
 	}
-	
 }

@@ -21,6 +21,7 @@ import com.buccitunes.constants.Tier;
 import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
+import com.buccitunes.dao.ConcertRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
 import com.buccitunes.dao.RequestedConcertRepository;
 import com.buccitunes.dao.RequestedSongRepository;
@@ -32,6 +33,7 @@ import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.Concert;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
@@ -53,12 +55,13 @@ public class ArtistService {
 	private final ArtistUserRepository artistUserRepository;
 	private final SongRepository songRepository;
 	private final RequestedSongRepository requestedSongRepository;
+	private final ConcertRepository concertRepository;
 	private final RequestedConcertRepository requestedConcertRepository;
 	
 	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
 			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository,
-			RequestedConcertRepository requestedConcertRepository) {
+			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository) {
 		
 		this.albumRepository = albumRepository;
 		this.artistRepository = artistRepository;
@@ -67,6 +70,7 @@ public class ArtistService {
 		this.songRepository = songRepository;
 		this.requestedSongRepository = requestedSongRepository;
 		this.requestedConcertRepository = requestedConcertRepository;
+		this.concertRepository = concertRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -78,11 +82,22 @@ public class ArtistService {
 		return result;
 	}
 	
+	public ArtistUser getArtistUser(String email) throws BucciException {
+		ArtistUser artistUser = artistUserRepository.findOne(email);
+		
+		if(artistUser != null) {
+			return artistUser;
+		} else {
+			throw new BucciException("Artist User not found");
+		}
+	}
+	
 	public Artist getArtist(int id) throws BucciException {
 		Artist artist = artistRepository.findOne(id);
 		
 		if(artist != null) {
 			artist.getAlbums().size();
+			artist.getUpcomingConcerts();
 			for(Album album : artist.getAlbums()) {
 				album.getSongs().size();
 			}
@@ -196,9 +211,19 @@ public class ArtistService {
 	
 	public RequestedConcert requestNewConcert(RequestedConcert requested, ArtistUser artistUser) throws BucciException {
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
-		requested.setRequester(artistUser);//setArtistRequester(artistUser);
+		requested.setRequester(artistUser);
+		
+ 		List<Artist> concertArtists = new ArrayList<Artist>(requested.getFeaturedArtists().size());
+		for(Artist artist : requested.getFeaturedArtists()) {
+			Artist featuredArtist = artistRepository.findOne(artist.getId());
+			if(featuredArtist == null) {
+				throw new BucciException(artist.getName() + " does not exist");
+			}
+			concertArtists.add(featuredArtist);
+		}
+		requested.setFeaturedArtists(concertArtists);
+		
 		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
-			
 		return requestedConcert;
 	}
 	
@@ -219,7 +244,7 @@ public class ArtistService {
 		albumRepository.delete(albumId);
 	}
 	
-public Song saveAudioFile(Song audioSong, User user) throws BucciException {
+	public Song saveAudioFile(Song audioSong, User user) throws BucciException {
 		
 		Song song = songRepository.findOne(audioSong.getId());
 		
@@ -249,4 +274,15 @@ public Song saveAudioFile(Song audioSong, User user) throws BucciException {
 		return song;
 	}
 	
+	public List<Concert> getArtistConcerts(int artistId) throws BucciException {
+		Artist artist = artistRepository.findOne(artistId);
+		
+		if(artist == null) {
+			throw new BucciException("Artist does not exist");
+		}
+		
+		List<Concert> concerts = concertRepository.getConcertsOfArtistId(artistId);
+		
+		return concerts;
+	}
 }

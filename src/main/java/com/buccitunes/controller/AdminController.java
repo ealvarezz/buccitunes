@@ -23,9 +23,11 @@ import com.buccitunes.model.Artist;
 import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.User;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.Concert;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedArtist;
+import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
 import com.buccitunes.service.AdminService;
@@ -116,6 +118,17 @@ public class AdminController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
 	}
+	
+	@RequestMapping(value="approve_concert", method = RequestMethod.POST)
+	public BucciResponse<Concert> approveConcert(@RequestBody RequestedConcert requested, HttpSession session) {
+		try {
+			Concert concert = adminService.adminApproveConcert(requested);
+			return BucciResponseBuilder.successfulResponseMessage("New Concert Added", concert);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}		
+	}
+	
 	
 	@RequestMapping(value="approvesong", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<Song> approveSong(RequestedSong requested) {

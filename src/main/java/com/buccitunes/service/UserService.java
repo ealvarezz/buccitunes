@@ -28,6 +28,7 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.CreditCompany;
+import com.buccitunes.model.MusicCollection;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.Song;
@@ -300,7 +301,10 @@ public class UserService  {
 		}
 		
 		if(!user.isInPrivateMode()) {
-			user.getRecentlyPlayed().size();
+			List<Album> recentlyPlayedAlbum = albumRepository.getRecentlyPlayed(user.getEmail());
+			List<MusicCollection> recentlyPlayed = new ArrayList<MusicCollection>(recentlyPlayedAlbum);
+			user.setRecentlyPlayed(recentlyPlayed);
+			user.getPlaylists().size();
 			user.getFollowers().size();
 			user.getFollowing().size();
 			user.getFollowingPlaylists().size();

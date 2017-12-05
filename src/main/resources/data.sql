@@ -104,7 +104,7 @@ BEGIN
 	IF EXISTS(
 		select U.email, f.followed_id
 		from User U
-		Join following f on f.following_id = 'TismMan1@gmail.com' and f.followed_id = followed
+		Join following f on f.following_id = following and f.followed_id = followed
 		where U.email = following
 		LIMIT 1
 	) THEN
@@ -147,5 +147,14 @@ BEGIN
 		group by p.premium_user_id
 	) last_payed on last_payed.premium_user_id = u.email 
 	and last_payed.date <=  DATE_SUB(NOW(), INTERVAL 30 DAY);
+END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getConcertsOfArtistId`(IN artist_id int)
+BEGIN
+	select c.* 
+	from artist a
+	join artists_concerts ac on ac.artist_id = a.id
+	join concert c on c.id = ac.concert_id and c.release_date >= curdate()
+	where a.id = artist_id;
 END ^;
 

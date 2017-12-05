@@ -18,6 +18,7 @@ import javax.persistence.OneToOne;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity(name="RequestedConcert")
 public class RequestedConcert {
@@ -29,7 +30,7 @@ public class RequestedConcert {
 	private String name;
 	
 	@ManyToOne
-    @JoinColumn(name = "location_id", insertable = false, updatable = false)
+    @JoinColumn(name = "location_id")
 	private Location location;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
@@ -37,8 +38,8 @@ public class RequestedConcert {
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Artists_Concerts_Requested",
-		joinColumns = @JoinColumn(name = "requested_concert_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "requested_concert_id"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id"))
 	private List<Artist> featuredArtists;
 	
 	private double price;
@@ -48,7 +49,7 @@ public class RequestedConcert {
 	private String comments;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "requested_artist_id", insertable = false, updatable = false)
+    @JoinColumn(name = "requested_artist_id")
 	private ArtistUser requester;
 	
 	

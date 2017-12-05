@@ -368,8 +368,8 @@ public class UserController {
 		}
 	}
 	
-	@RequestMapping(value="user/{id}", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<UserPageInfo> getUserInfo(@PathVariable String id, HttpSession session) {
+	@RequestMapping(value="user", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<UserPageInfo> getUserInfo(@RequestBody String id, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());

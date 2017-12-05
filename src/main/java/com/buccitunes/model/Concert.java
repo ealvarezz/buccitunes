@@ -15,9 +15,15 @@ import javax.persistence.ManyToOne;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity(name="CONCERT")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Concert {
 	
 	@Id
@@ -26,7 +32,7 @@ public class Concert {
 	private String name;
 	
 	@ManyToOne
-    @JoinColumn(name = "location_id", insertable = false, updatable = false)
+    @JoinColumn(name = "location_id")
 	private Location location;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
@@ -34,17 +40,27 @@ public class Concert {
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "Artists_Concerts",
-		joinColumns = @JoinColumn(name = "concert_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "concert_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
+	@JsonIgnoreProperties(value = "upcomingConcerts")
 	private List<Artist> featuredArtists;
 	
 	private double price;
 	private String purchaseLink;
 	
-	
-	public Concert(RequestedConcert requested) {
+	public Concert() {
 		
 	}
+	
+	public Concert(RequestedConcert requested) {
+		this.name = requested.getName();
+		this.releaseDate = requested.getReleaseDate();
+		this.location = requested.getLocation();
+		this.featuredArtists = requested.getFeaturedArtists();
+		this.price = requested.getPrice();
+		this.purchaseLink = requested.getPurchaseLink();
+	}
+	
 	public int getId() {
 		return id;
 	}

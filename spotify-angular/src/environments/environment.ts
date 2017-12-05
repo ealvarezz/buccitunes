@@ -28,6 +28,8 @@ export const environment = {
   UPDATE_PLAYLIST_ENDPOINT  : "http://localhost:8080" + "/change_playlist",
   FOLLOW_PLAYLIST_ENDPOINT  : "http://localhost:8080" + "/follow_playlist",
   DELETE_PLAYLIST_ENDPOINT  : "http://localhost:8080" + "/delete_playlist",
+  GET_USER_ENDPOINT         : "http://localhost:8080" + "/user",
+  FOLLOW_USER_ENDPOINT      : "http://localhost:8080" + "/follow",
 
 
   ARTIST_ROLE               : "ARTIST",
