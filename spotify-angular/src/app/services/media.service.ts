@@ -53,8 +53,31 @@ export class MediaService {
   }
 
 
- getImageUrl(imagePath : string){
-      return environment.SERVER_PATH + imagePath;
+ getAlbumImageUrl(imagePath : string){
+     if(imagePath){
+         return environment.SERVER_PATH + imagePath;
+     }
+    else{
+        return environment.LOCAL_RESOURCE + environment.DEFAULT_ALBUM_ARTWORK;
+    }
+  }
+
+  getPlaylistImageUrl(imagePath : string){
+      if(imagePath){
+         return environment.SERVER_PATH + imagePath;
+     }
+    else{
+        return environment.LOCAL_RESOURCE + environment.DEFAULT_ARTWORK;
+    }
+  }
+
+  getUserImageUrl(imagePath: string){
+      if(imagePath){
+          return environment.SERVER_PATH + imagePath;
+      }
+      else{
+          return environment.LOCAL_RESOURCE + environment.DEFAULT_USER_ARTWORK;
+      }
   }
 
 }

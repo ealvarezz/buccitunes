@@ -98,8 +98,8 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
 		}	
 		try{
-			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
-			return BucciResponseBuilder.successMessage("Unfollowed user: " + user.getEmail()); 
+			userService.unfollow(loggedUser.getEmail(), followedUser.getEmail());
+			return BucciResponseBuilder.successMessage("Unfollowed user: " + followedUser.getEmail()); 
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}

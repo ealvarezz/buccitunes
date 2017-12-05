@@ -54,6 +54,22 @@ export class UserService {
             });
     }
 
+    unfollowUser(user : User){
+        let sanitizedUser = this.sanitzeUser(user);
+        return this.http.post<BucciResponse<String>>(environment.UNFOLLOW_USER_ENDPOINT, sanitizedUser, {withCredentials: true}).
+         map(bucci  => {
+                if(bucci.successful){
+                    return bucci.response;
+                }
+                else{
+                    throw new Error(bucci.message);
+                }
+                
+            }).catch((error : any) =>{
+                return Observable.throw(new Error(error.message));
+            });
+    }
+
     private sanitzeUser(user : User){
         let newUser = new User();
         newUser.email = user.email;
