@@ -2,6 +2,7 @@ package com.buccitunes.controller;
 
 import java.util.List;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +19,7 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
+import com.buccitunes.miscellaneous.MailManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.SongPlays;
@@ -38,6 +40,9 @@ public class AdminController {
 	
 	@Autowired
 	private AdminService adminService;
+	
+	@Autowired
+	private MailManager mailManager;
 	
 	@RequestMapping(value="add_artist", method = RequestMethod.POST)
 	public BucciResponse<Artist> addArtist(@RequestBody Artist artist, HttpSession session) throws BucciException {
@@ -113,9 +118,10 @@ public class AdminController {
 	public BucciResponse<Album> approveAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
 		try {
 			Album album = adminService.adminApproveAlbum(requested);
+			mailManager.mailApprovedAlbumRequest(requested.getRequester(), album);
 			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
-		} catch (BucciException e) {
-			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		} catch (BucciException | MessagingException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}		
 	}
 	
@@ -123,21 +129,23 @@ public class AdminController {
 	public BucciResponse<Concert> approveConcert(@RequestBody RequestedConcert requested, HttpSession session) {
 		try {
 			Concert concert = adminService.adminApproveConcert(requested);
+			mailManager.mailApprovedConcertRequest(requested.getRequester(), concert);
 			return BucciResponseBuilder.successfulResponseMessage("New Concert Added", concert);
-		} catch (BucciException e) {
-			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		} catch (BucciException | MessagingException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}		
 	}
 	
 	
-	@RequestMapping(value="approvesong", method = RequestMethod.GET)
+	@RequestMapping(value="approve_song", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<Song> approveSong(RequestedSong requested) {
 		try {
 			Song song = adminService.adminApproveSong(requested);
+			mailManager.mailApprovedSongRequest(requested.getRequester(), song);
 			return BucciResponseBuilder.successfulResponse(song);
-		} catch (BucciException e) {
-			return BucciResponseBuilder.failedMessage(e.getErrMessage());
-		}
+		} catch (BucciException | MessagingException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage());
+		}		
 	}
 	
 	@RequestMapping(value="get_playsongs_this_month", method = RequestMethod.GET)
@@ -172,9 +180,21 @@ public class AdminController {
 	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedAlbum requestedAlbum) {		
 		try {
 			adminService.removeRequestedAlbum(requestedAlbum);
+			mailManager.mailDeniedAlbumRequest(requestedAlbum.getRequester(), requestedAlbum);
 			return BucciResponseBuilder.successMessage("Requested album deleted");
-		} catch (BucciException e) {
-			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		} catch (BucciException | MessagingException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage());
+		}
+	}
+	
+	@RequestMapping(value="disapprove_request_concert", method = RequestMethod.POST)
+	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedConcert requestedConcert) {		
+		try {
+			adminService.removeRequestedConcert(requestedConcert);
+			mailManager.mailDeniedConcertRequest(requestedConcert.getRequester(), requestedConcert);
+			return BucciResponseBuilder.successMessage("Requested album deleted");
+		} catch (BucciException | MessagingException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}
 	}
 	
@@ -182,11 +202,11 @@ public class AdminController {
 	public BucciResponse<String> deleteRequestedSong(@RequestBody RequestedSong requestedSong) {		
 		try {
 			adminService.removeRequestedSong(requestedSong);
+			mailManager.mailDeniedSongRequest(requestedSong.getRequester(), requestedSong);
 			return BucciResponseBuilder.successMessage("Requested song deleted");
-		} catch (BucciException e) {
-			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		} catch (BucciException | MessagingException e) {
+			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}
-		
 	}
 	
 	@RequestMapping(value="charge_users", method = RequestMethod.GET)

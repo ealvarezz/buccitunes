@@ -149,3 +149,12 @@ BEGIN
 	and last_payed.date <=  DATE_SUB(NOW(), INTERVAL 30 DAY);
 END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getConcertsOfArtistId`(IN artist_id int)
+BEGIN
+	select c.* 
+	from artist a
+	join artists_concerts ac on ac.artist_id = a.id
+	join concert c on c.id = ac.concert_id and c.release_date >= curdate()
+	where a.id = artist_id;
+END ^;
+

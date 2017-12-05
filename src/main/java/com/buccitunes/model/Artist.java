@@ -56,6 +56,7 @@ public class Artist {
 	private List<Song> features;
 	
 	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists")
+	@JsonIgnoreProperties(value = "featuredArtists")
 	private List<Concert> upcomingConcerts;
 	
 	@OneToOne(cascade = CascadeType.ALL)

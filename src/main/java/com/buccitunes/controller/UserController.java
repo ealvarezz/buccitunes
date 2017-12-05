@@ -37,7 +37,7 @@ public class UserController {
 	
 	@Autowired
 	private BucciConstants constants;
-	
+
 	@Autowired
 	private MailManager mailManager;
 	
@@ -70,6 +70,11 @@ public class UserController {
 	@RequestMapping(value="add_user", method = RequestMethod.POST)
 	public @ResponseBody void addUser(@RequestBody User user) {
 		userService.save(user);
+		try {
+			mailManager.mailAccountConfirmation(user);
+		} catch (MessagingException e) {
+			
+		}
 	}
 	
 	@RequestMapping(value="delete_user", method = RequestMethod.GET)
