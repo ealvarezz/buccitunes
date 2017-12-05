@@ -15,6 +15,7 @@ import com.buccitunes.dao.*;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.miscellaneous.MailManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistTransaction;
@@ -162,6 +163,7 @@ public class AdminService {
 			newAlbum = new Album(requestedAlbum, false);
 		}
 		newAlbum = albumRepository.save(newAlbum);
+
 		
 		if(requestedAlbum.getArtworkPath() != null) {
 			try {				
@@ -345,6 +347,15 @@ public class AdminService {
 		requestedAlbumRepository.delete(album);
 	}
 	
+	public void removeRequestedConcert(RequestedConcert concert) throws BucciException {
+		concert = requestedConcertRepository.findOne(concert.getId());
+		if(concert == null) {
+			throw new BucciException("Concert not found");
+		}
+		
+		requestedConcertRepository.delete(concert);
+	}
+	
 	public void removeRequestedSong(RequestedSong song) throws BucciException {
 		song = requestedSongRepository.findOne(song.getId());
 		if(song == null) {
@@ -367,6 +378,8 @@ public class AdminService {
 			user.makePayment(constants.getMonthlyPremiumPrice());
 		}
 	}
+
+
 
 
 }

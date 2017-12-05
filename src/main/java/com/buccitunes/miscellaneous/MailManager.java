@@ -5,9 +5,12 @@ import java.util.Properties;
 
 import com.buccitunes.model.Album;
 import com.buccitunes.model.ArtistUser;
+import com.buccitunes.model.Concert;
 import com.buccitunes.model.RequestedAlbum;
+import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.User;
 
 import javax.mail.Message;
 import javax.mail.MessagingException;
@@ -41,11 +44,19 @@ public class MailManager {
 	private String DeniedAlbumText;  
 		    
 	private String DeniedSongSubject;
-	private String DeniedSongText;    
+	private String DeniedSongText;
 	
+	private String ApprovedConcertSubject;
+	private String ApprovedConcertText;
+		  
+	private String DeniedConcertSubject;
+	private String DeniedConcertText;
+	
+	private String AccountConfirmationSubject;
+	private String AccountConfirmationText;
 	 
 	
-	public void sendApprovedAlbumRequest(ArtistUser user, Album album) throws MessagingException{
+	public void mailApprovedAlbumRequest(ArtistUser user, Album album) throws MessagingException{
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
         helper.setTo(user.getEmail());
@@ -54,7 +65,7 @@ public class MailManager {
         javaMailSender.send(mail);
 	}
 	
-	public void sendDeniedAlbumRequestToUser(ArtistUser user, RequestedAlbum album) throws MessagingException {
+	public void mailDeniedAlbumRequest(ArtistUser user, RequestedAlbum album) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
         helper.setTo(user.getEmail());
@@ -64,7 +75,7 @@ public class MailManager {
 	}
 	
 	
-	public void sendApprovedSongRequest(ArtistUser user, Song song) throws MessagingException {
+	public void mailApprovedSongRequest(ArtistUser user, Song song) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
         helper.setTo(user.getEmail());
@@ -74,13 +85,49 @@ public class MailManager {
 	}
 
 	
-	public void sendDeniedSongRequest(ArtistUser user, RequestedSong song) throws MessagingException {
+	public void mailDeniedSongRequest(ArtistUser user, RequestedSong song) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
         helper.setTo(user.getEmail());
         helper.setSubject(DeniedSongSubject);
         helper.setText(String.format(DeniedSongText, song.getName()));
         javaMailSender.send(mail);
+	}
+
+	public void mailApprovedConcertRequest(ArtistUser user, Concert concert) throws MessagingException {
+		MimeMessage mail = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+        helper.setTo(user.getEmail());
+        helper.setSubject(ApprovedConcertSubject);
+        helper.setText(String.format(ApprovedConcertText, concert.getName()));
+        javaMailSender.send(mail);
+	}
+	
+	public void mailDeniedConcertRequest(ArtistUser user, RequestedConcert concert) throws MessagingException {
+		MimeMessage mail = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+        helper.setTo(user.getEmail());
+        helper.setSubject(DeniedConcertSubject);
+        helper.setText(String.format(DeniedConcertText, concert.getName()));
+        javaMailSender.send(mail);
+	}
+	
+	public void mailAccountConfirmation(User user) throws MessagingException {
+		MimeMessage mail = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+        helper.setTo(user.getEmail());
+        helper.setSubject(AccountConfirmationSubject);
+        helper.setText(String.format(AccountConfirmationText, user.getEmail()));
+        javaMailSender.send(mail);
+	}
+	
+	
+	public void setAccountConfirmationSubject(String accountConfirmationSubject) {
+		AccountConfirmationSubject = accountConfirmationSubject;
+	}
+
+	public void setAccountConfirmationText(String accountConfirmationText) {
+		AccountConfirmationText = accountConfirmationText;
 	}
 
 	public void setApprovedAlbumSubject(String approvedAlbumSubject) {

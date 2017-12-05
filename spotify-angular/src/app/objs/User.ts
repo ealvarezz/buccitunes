@@ -8,8 +8,10 @@ export class User{
     last_name       : string;
     email           : string;
     status          : string;
+    following       : User[];
     isfollowing     : boolean;
     join_date       : Date;
     role            : String;
+    avatarPath      : String;
     
 }
