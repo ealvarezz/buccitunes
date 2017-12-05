@@ -47,8 +47,6 @@ public class ArtistService {
 	@Autowired
 	private BucciConstants constants;
 	
-	
-	
 	private final ArtistRepository artistRepository;
 	private final AlbumRepository albumRepository;
 	private final RequestedAlbumRepository requestedAlbumRepository;
@@ -223,12 +221,10 @@ public class ArtistService {
 		}
 		requested.setFeaturedArtists(concertArtists);
 		
+		
 		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
 		return requestedConcert;
 	}
-	
-	
-	
 	
 	
 	public void deleteSongFromAlbum(int songId, int albumId) {

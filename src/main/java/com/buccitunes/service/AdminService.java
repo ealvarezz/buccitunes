@@ -364,6 +364,4 @@ public class AdminService {
 			user.makePayment(constants.getMonthlyPremiumPrice());
 		}
 	}
-
-
 }

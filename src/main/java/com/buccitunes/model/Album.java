@@ -33,14 +33,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity(name="Album")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope = Album.class)
 public class Album extends MusicCollection {
 	
 	
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
 	@JsonIgnoreProperties(value = "albums")
-	//@JsonBackReference
 	private Artist primaryArtist;
 	
 
