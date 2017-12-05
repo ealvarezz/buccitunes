@@ -66,8 +66,23 @@ export class PlaylistComponent{
             }
         });
     }
-    
 
+    deleteSongFromPlaylist(song : Song){
+        this.musicService.removeSongFromPlaylists(this.playlist, song).
+        subscribe(
+            (data) =>{
+            console.log("success")
+            this.reloadPlaylist();
+            },
+            (err)=>{
+            console.log("nope");
+            }
+        );
+        }
+    
+    reloadPlaylist(){
+        this.getPlaylist(this.playlist.id);
+    }
 
 
     private sendDeletePlaylist(){

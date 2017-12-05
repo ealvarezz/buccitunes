@@ -71,6 +71,12 @@
             <md-tab label="FOLLOWING">
                 <h1 style="margin-bottom:0%;">Following</h1>
                      <md-divider></md-divider>
+
+                     <!-- <md-list>
+                         <div *ngFor="user.following">
+                             <md-divider></md-divider>
+                        </div>
+                     </md-list> -->
                     <md-grid-list *ngIf="user.following" cols="4" rowHeight="300px">
                         <md-grid-tile *ngFor = "let followUser of user.following" colspan= "1" rowpan = "1" >
                             <div>

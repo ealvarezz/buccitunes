@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, OnChanges, SimpleChanges} from '@angular/core';
+import { Component, Input,Output, OnInit, OnChanges, SimpleChanges, EventEmitter} from '@angular/core';
 import {DataSource} from '@angular/cdk/collections';
 import {Observable} from 'rxjs/Observable';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
@@ -15,6 +15,7 @@ import 'rxjs/add/observable/of';
 export class MusicTableComponent implements OnChanges {
     @Input() data : Song[];
     @Input() isAlbum;
+    @Output() remove : EventEmitter<any> = new EventEmitter();
     dataSource : MusicDataSource;
     hoveredRow : number = -1;
     displayedColumns = ['num','add', 'songName','artist','album', 'more','duration'];
@@ -77,6 +78,11 @@ export class MusicTableComponent implements OnChanges {
         }
       )
     }
+
+    removeSongFromPlaylist(song : Song){
+      this.remove.emit(song);
+    }
+      
       
       
 }
