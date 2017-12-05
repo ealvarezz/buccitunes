@@ -8,8 +8,29 @@ import org.springframework.stereotype.Component;
 @ConfigurationProperties(prefix="constants")
 public class BucciConstants {
 
-	private int start;
 	
+	private String artistNotFoundMsg;
+	private String concertNotFoundMsg;
+	private String albumNotFoundMsg;
+	private String songNotFoundMsg; 
+	private String resourceNotFoundMsg;
+
+	private String adminAccessDeniedMsg; 
+	private String artistAccessDeniedMsg;	
+	
+	private String successfulRequestMsg;
+	private String successfulAdditionMsg;
+	private String successfulChargeMsg;
+	private String successfulDeletionMsg;
+	
+	private String notLoggedInMsg;
+	private String loggedInMsg;
+	
+	private String ownershipErrorMsg;
+	private String durationErrorMsg;
+	private String storageErrorMsg;
+	
+	private int start;
 	private int newReleasesLimit;	
 	private int topAlbumsLimit;
 	private int topSongsLimit;
@@ -31,8 +52,7 @@ public class BucciConstants {
 	private String songCount;
 	private String playCount;
 	
-	private String notLoggedIn;
-	private String loggedIn;
+
 	private String session;
 	
 	private double signupPremiumPrice;
@@ -107,12 +127,12 @@ public class BucciConstants {
 		return playCount;
 	}
 	
-	public String getNotLoggedIn() {
-		return notLoggedIn;
+	public String getNotLoggedInMsg() {
+		return notLoggedInMsg;
 	}
 	
-	public String getLoggedIn() {
-		return loggedIn;
+	public String getLoggedInMsg() {
+		return loggedInMsg;
 	}
 	
 	public String getSession() {
@@ -195,12 +215,12 @@ public class BucciConstants {
 		this.playCount = playCount;
 	}
 
-	public void setNotLoggedIn(String notLoggedIn) {
-		this.notLoggedIn = notLoggedIn;
+	public void setNotLoggedInMsg(String notLoggedIn) {
+		this.notLoggedInMsg = notLoggedIn;
 	}
 
-	public void setLoggedIn(String loggedIn) {
-		this.loggedIn = loggedIn;
+	public void setLoggedInMsg(String loggedIn) {
+		this.loggedInMsg = loggedIn;
 	}
 
 	public void setSession(String session) {
@@ -214,4 +234,122 @@ public class BucciConstants {
 	public void setMonthlyPremiumPrice(double monthlyPremiumPrice) {
 		this.monthlyPremiumPrice = monthlyPremiumPrice;
 	}
+
+	public String getArtistNotFoundMsg() {
+		return artistNotFoundMsg;
+	}
+
+	public String getConcertNotFoundMsg() {
+		return concertNotFoundMsg;
+	}
+
+	public String getAlbumNotFoundMsg() {
+		return albumNotFoundMsg;
+	}
+
+	public String getSongNotFoundMsg() {
+		return songNotFoundMsg;
+	}
+
+	public String getAdminAccessDeniedMsg() {
+		return adminAccessDeniedMsg;
+	}
+
+	public String getArtistAccessDeniedMsg() {
+		return artistAccessDeniedMsg;
+	}
+
+	public void setArtistNotFoundMsg(String artistNotFoundMsg) {
+		this.artistNotFoundMsg = artistNotFoundMsg;
+	}
+
+	public void setConcertNotFoundMsg(String concertNotFoundMsg) {
+		this.concertNotFoundMsg = concertNotFoundMsg;
+	}
+
+	public void setAlbumNotFoundMsg(String albumNotFoundMsg) {
+		this.albumNotFoundMsg = albumNotFoundMsg;
+	}
+
+	public void setSongNotFoundMsg(String songNotFoundMsg) {
+		this.songNotFoundMsg = songNotFoundMsg;
+	}
+
+	public void setAdminAccessDeniedMsg(String adminAccessDeniedMsg) {
+		this.adminAccessDeniedMsg = adminAccessDeniedMsg;
+	}
+
+	public void setArtistAccessDeniedMsg(String artistAccessDeniedMsg) {
+		this.artistAccessDeniedMsg = artistAccessDeniedMsg;
+	}
+
+	public String getSuccessfulRequestMsg() {
+		return successfulRequestMsg;
+	}
+
+	public String getSuccessfulDeletionMsg() {
+		return successfulDeletionMsg;
+	}
+
+	public void setSuccessfulRequestMsg(String successfulRequestMsg) {
+		this.successfulRequestMsg = successfulRequestMsg;
+	}
+
+	public void setSuccessfulDeletionMsg(String successfulDeletionMsg) {
+		this.successfulDeletionMsg = successfulDeletionMsg;
+	}
+
+	public String getResourceNotFoundMsg() {
+		return resourceNotFoundMsg;
+	}
+
+	public String getOwnershipErrorMsg() {
+		return ownershipErrorMsg;
+	}
+
+	public String getDurationErrorMsg() {
+		return durationErrorMsg;
+	}
+
+	public void setResourceNotFoundMsg(String resourceNotFoundMsg) {
+		this.resourceNotFoundMsg = resourceNotFoundMsg;
+	}
+
+	public void setOwnershipErrorMsg(String ownershipErrorMsg) {
+		this.ownershipErrorMsg = ownershipErrorMsg;
+	}
+
+	public void setDurationRrrorMsg(String durationRrrorMsg) {
+		this.durationErrorMsg = durationRrrorMsg;
+	}
+
+	public String getStorageErrorMsg() {
+		return storageErrorMsg;
+	}
+
+	public void setDurationErrorMsg(String durationErrorMsg) {
+		this.durationErrorMsg = durationErrorMsg;
+	}
+
+	public void setStorageErrorMsg(String storageErrorMsg) {
+		this.storageErrorMsg = storageErrorMsg;
+	}
+
+	public String getSuccessfulAdditionMsg() {
+		return successfulAdditionMsg;
+	}
+
+	public void setSuccessfulAdditionMsg(String successfulAdditionMsg) {
+		this.successfulAdditionMsg = successfulAdditionMsg;
+	}
+
+	public String getSuccessfulChargeMsg() {
+		return successfulChargeMsg;
+	}
+
+	public void setSuccessfulChargeMsg(String successfulChargeMsg) {
+		this.successfulChargeMsg = successfulChargeMsg;
+	}
+
+
 }

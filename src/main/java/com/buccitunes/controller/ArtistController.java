@@ -80,17 +80,17 @@ public class ArtistController {
 	public BucciResponse<List<ArtistTransaction>> getRoyalties(HttpSession session) {			
 		ArtistUser loggedUser = (ArtistUser) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		if(BucciPrivilege.isArtist(loggedUser)) {
 			try {
 				loggedUser = artistService.getArtistUser(loggedUser.getEmail());
 				return BucciResponseBuilder.successfulResponse(loggedUser.getPaymentHistory());
 			} catch (BucciException e) {
-				return BucciResponseBuilder.failedMessage("Could not find artist.");
+				return BucciResponseBuilder.failedMessage(constants.getArtistNotFoundMsg());
 			}
 		} else {
-			return BucciResponseBuilder.failedMessage("Must be an artist to see royalties.");
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
 		}
 	}
 	
@@ -107,7 +107,7 @@ public class ArtistController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		if(BucciPrivilege.isArtist(loggedUser)) {
 			RequestedAlbum newRequestedAlbum;
@@ -117,9 +117,9 @@ public class ArtistController {
 				return BucciResponseBuilder.failedMessage(e.getErrMessage());
 			}
 			
-			return BucciResponseBuilder.successfulResponseMessage("Album request was submitted", newRequestedAlbum);
+			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulRequestMsg(), newRequestedAlbum);
 		} else {
-			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
 		}
 	}
 	
@@ -129,7 +129,7 @@ public class ArtistController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		if(BucciPrivilege.isArtist(loggedUser)) {
@@ -138,9 +138,9 @@ public class ArtistController {
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(e.getErrMessage());
 			}
-			return BucciResponseBuilder.successMessage("Song request was submitted");
+			return BucciResponseBuilder.successMessage(constants.getSuccessfulRequestMsg());
 		} else {
-			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
 		}
 	}
 	
@@ -150,7 +150,7 @@ public class ArtistController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		if(BucciPrivilege.isArtist(loggedUser)) {
@@ -162,9 +162,9 @@ public class ArtistController {
 				return BucciResponseBuilder.failedMessage(e.getErrMessage());
 			}
 			
-			return BucciResponseBuilder.successfulResponseMessage("Concert request was submitted", newRequestedConcert);
+			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulRequestMsg(), newRequestedConcert);
 		} else {
-			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an concert");
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
 		}
 	}
 	
@@ -174,16 +174,16 @@ public class ArtistController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			
 			artistService.deleteAlbum(albumId);
 			
-			return BucciResponseBuilder.successMessage("Album deleted");
+			return BucciResponseBuilder.successMessage(constants.getSuccessfulDeletionMsg());
 		} else {
-			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
 		}
 	}
 	
@@ -193,15 +193,15 @@ public class ArtistController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			
 			artistService.deleteSongFromAlbum(songId, albumId);
-			return BucciResponseBuilder.successfulResponse("Song request was submitted");
+			return BucciResponseBuilder.successfulResponse(constants.getSuccessfulRequestMsg());
 		} else {
-			return BucciResponseBuilder.failedMessage("You must be an artist in order to request an album");
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
 		}
 	}
 	
@@ -211,19 +211,19 @@ public class ArtistController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		if(BucciPrivilege.isArtist(loggedUser) || BucciPrivilege.isAdmin(loggedUser)) {
 			try {
 				song = artistService.saveAudioFile(song, loggedUser);
-				return BucciResponseBuilder.successfulResponseMessage("The audio for the song has been saved", song);
+				return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulRequestMsg(), song);
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(e.getMessage()); 
 			}
 		}
 		else {
-			return BucciResponseBuilder.failedMessage("You don't have the privileges to add audio"); 
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg()); 
 		}
 	}
 	

@@ -87,7 +87,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		playlist.setOwner(loggedUser);
@@ -105,7 +105,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {
@@ -121,7 +121,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {
@@ -202,7 +202,7 @@ public class MusicCollectionController {
 	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestBody Song song, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {
