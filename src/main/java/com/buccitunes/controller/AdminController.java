@@ -134,8 +134,8 @@ public class AdminController {
 			Concert concert = adminService.adminApproveConcert(requested);
 			mailManager.mailApprovedConcertRequest(requested.getRequester(), concert);
 			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), concert);
-		} catch (BucciException | MessagingException e) {
-			return BucciResponseBuilder.failedMessage(e.getMessage());
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
 	}
 	
@@ -146,8 +146,8 @@ public class AdminController {
 			Song song = adminService.adminApproveSong(requested);
 			mailManager.mailApprovedSongRequest(requested.getRequester(), song);
 			return BucciResponseBuilder.successfulResponse(song);
-		} catch (BucciException | MessagingException e) {
-			return BucciResponseBuilder.failedMessage(e.getMessage());
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
 	}
 	

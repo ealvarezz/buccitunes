@@ -33,6 +33,7 @@ public class Concert {
 	
 	@ManyToOne
     @JoinColumn(name = "artist_id")
+	@JsonIgnoreProperties(value = "organizedConcerts")
 	Artist mainStar;
 	
 	@ManyToOne
@@ -50,6 +51,7 @@ public class Concert {
 	private List<Artist> featuredArtists;
 	
 	private double price;
+	
 	private String purchaseLink;
 	
 	public Concert() {

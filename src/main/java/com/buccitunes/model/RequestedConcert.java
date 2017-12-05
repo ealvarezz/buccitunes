@@ -54,7 +54,7 @@ public class RequestedConcert {
 	
 	private String comments;
 	
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne
     @JoinColumn(name = "requested_artist_id")
 	private ArtistUser requester;
 	
