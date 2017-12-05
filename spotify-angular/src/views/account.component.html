@@ -1,28 +1,73 @@
-<md-card>
+<md-card *ngIf="user" style="margin-bottom:10%;">
 
     <md-card-header>
-        <h4>{{user.role}}</h4>
-        <h1>{{user.email}}</h1>
-        <button md-raised-button  class="rounded-button">Follow</button>
-        <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+        <div>
+        <div><h4>{{user.role}}</h4></div>
+        <div><h1>{{user.email}}</h1></div>
+       <div> <button *ngIf="!user.isfollowing" md-raised-button  class="rounded-button" (click)="followUser()">Follow</button>
+             <button *ngIf="user.isfollowing" md-raised-button  class="rounded-button"  (click)="unfollowUser()">Following</button>
+        <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button></div>
+        </div>
     </md-card-header>
     <md-card-content>
-        <md-tab-group>
-            <md-tab label="SETTINGS">
-                
-            </md-tab>
+        <md-tab-group [(selectedIndex)]="selectedTab">
             <md-tab label="OVERVIEW">
-                <!-- <md-grid-list cols="4" [rowHeight]="rowHeight">
-                    <md-grid-tile *ngFor = "let artist of previewArtists" colspan= "1" rowpan = "1" >
-                        <div>
-                            <div style="height: 220px; width: 220px;"><image [src]="getImageUrl(artist.artworkPath)" [route]="'/artist/'+artist.id"></image></div>
-                            <div class ="browse-item-template"><h4><b><a [routerLink]="['/artist', artist.id]">{{artist.name}}</a></b></h4></div>
-                        </div>
-                    </md-grid-tile>
-                </md-grid-list> -->
+                <md-list>
+                    <div>
+                    <h4 style="margin-bottom:0%; float:right;"><a (click)="changeTab(RECENTLY_PLAYED_TAB)">SEE ALL</a></h4>
+                    <h1 style="margin-bottom:0%;">Recently Played Albums</h1>
+                     <md-divider></md-divider>
+                    <md-grid-list cols="4" rowHeight="300px">
+                        <md-grid-tile *ngFor = "let album of overviewRecentlyPlayed" colspan= "1" rowpan = "1" >
+                            <div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
+                                <div style="width:100%;" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
+                            </div>
+                        </md-grid-tile>
+                    </md-grid-list>  
+                    </div>
+
+
+                    <div>
+                    <h4 style="margin-bottom:0%; float:right;"><a (click)="changeTab(PUBLIC_PLAYLIST_TAB)">SEE ALL</a></h4>
+                    <h1 style="margin-bottom:0%;">Public Playlists</h1>
+                     <md-divider></md-divider>
+                    <md-grid-list *ngIf="user.playlists" cols="4" rowHeight="300px">
+                        <md-grid-tile *ngFor = "let playlist of user.playlists" colspan= "1" rowpan = "1" >
+                            <div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(playlist.artworkPath)" [route]="'/playlist/'+playlist.id"></image></div>
+                                <div class ="browse-item-template"><h4><b><a [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></b></h4></div>
+                            </div>
+                        </md-grid-tile>
+                    </md-grid-list>  
+                    </div>
+                </md-list>
             </md-tab>
-            <md-tab label="RECENTLY PLAYED ARTIST">Content 2</md-tab>
-            <md-tab label="PUBLIC PLAYLIST">Content 2</md-tab>
+            <md-tab label="RECENTLY PLAYED ALBUMS">
+                <h1 style="margin-bottom:0%;">Recently Played Albums</h1>
+                     <md-divider></md-divider>
+                    <md-grid-list cols="4" rowHeight="300px">
+                        <md-grid-tile *ngFor = "let album of user.recentlyPlayed" colspan= "1" rowpan = "1" >
+                            <div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
+                                <div class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
+                            </div>
+                        </md-grid-tile>
+                    </md-grid-list>  
+            </md-tab>
+            <md-tab label="PUBLIC PLAYLIST">
+                <h1 style="margin-bottom:0%;">Public Playlists</h1>
+                     <md-divider></md-divider>
+                    <md-grid-list *ngIf="user.playlists" cols="4" rowHeight="300px">
+                        <md-grid-tile *ngFor = "let playlist of user.playlists" colspan= "1" rowpan = "1" >
+                            <div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(playlist.artworkPath)" [route]="'/playlist/'+playlist.id"></image></div>
+                                <div class ="browse-item-template"><h4><b><a [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></b></h4></div>
+                            </div>
+                        </md-grid-tile>
+                    </md-grid-list>  
+            </md-tab>
+            
             <md-tab label="FOLLOWERS">Content 2</md-tab>
         </md-tab-group>
     </md-card-content>

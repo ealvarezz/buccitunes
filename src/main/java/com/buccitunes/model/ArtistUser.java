@@ -111,7 +111,6 @@ public class ArtistUser extends User {
 		this.tier = tier;
 	}
 	
-	
 	/*
 	public void displayAlbums() {
 		
