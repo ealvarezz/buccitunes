@@ -373,6 +373,18 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="get_related_artists", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Artist>> search(HttpSession session, @RequestParam int artistId) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Artist> artists = userService.getRelatedArtists(artistId);
+			return BucciResponseBuilder.successfulResponse(artists);	
+		}
+	}
+	
 	@RequestMapping(value="user", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<UserPageInfo> getUserInfo(@RequestBody String id, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
