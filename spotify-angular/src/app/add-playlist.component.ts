@@ -20,7 +20,7 @@ export class AddPlaylistDialog {
      }
 
      playlistName : string;
-     playlistArtwork : string = environment.DEFAULT_ARTWORK;
+     playlistArtwork : string = environment.LOCAL_RESOURCE + environment.DEFAULT_ARTWORK;
 
 
      closeDialog(){

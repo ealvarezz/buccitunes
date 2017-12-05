@@ -37,7 +37,7 @@ public class UserController {
 	
 	@Autowired
 	private BucciConstants constants;
-	
+
 	@Autowired
 	private MailManager mailManager;
 	
@@ -70,6 +70,11 @@ public class UserController {
 	@RequestMapping(value="add_user", method = RequestMethod.POST)
 	public @ResponseBody void addUser(@RequestBody User user) {
 		userService.save(user);
+		try {
+			mailManager.mailAccountConfirmation(user);
+		} catch (MessagingException e) {
+			
+		}
 	}
 	
 	@RequestMapping(value="delete_user", method = RequestMethod.GET)
@@ -98,8 +103,8 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
 		}	
 		try{
-			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
-			return BucciResponseBuilder.successMessage("Unfollowed user: " + user.getEmail()); 
+			userService.unfollow(loggedUser.getEmail(), followedUser.getEmail());
+			return BucciResponseBuilder.successMessage("Unfollowed user: " + followedUser.getEmail()); 
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}

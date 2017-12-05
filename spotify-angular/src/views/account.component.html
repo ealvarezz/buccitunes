@@ -20,7 +20,7 @@
                     <md-grid-list cols="4" rowHeight="300px">
                         <md-grid-tile *ngFor = "let album of overviewRecentlyPlayed" colspan= "1" rowpan = "1" >
                             <div>
-                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getAlbumImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
                                 <div style="width:100%;" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
                             </div>
                         </md-grid-tile>
@@ -35,7 +35,7 @@
                     <md-grid-list *ngIf="user.playlists" cols="4" rowHeight="300px">
                         <md-grid-tile *ngFor = "let playlist of user.playlists" colspan= "1" rowpan = "1" >
                             <div>
-                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(playlist.artworkPath)" [route]="'/playlist/'+playlist.id"></image></div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getPlaylistImageUrl(playlist.artworkPath)" [route]="'/playlist/'+playlist.id"></image></div>
                                 <div class ="browse-item-template"><h4><b><a [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></b></h4></div>
                             </div>
                         </md-grid-tile>
@@ -49,7 +49,7 @@
                     <md-grid-list cols="4" rowHeight="300px">
                         <md-grid-tile *ngFor = "let album of user.recentlyPlayed" colspan= "1" rowpan = "1" >
                             <div>
-                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getAlbumImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
                                 <div class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
                             </div>
                         </md-grid-tile>
@@ -61,14 +61,25 @@
                     <md-grid-list *ngIf="user.playlists" cols="4" rowHeight="300px">
                         <md-grid-tile *ngFor = "let playlist of user.playlists" colspan= "1" rowpan = "1" >
                             <div>
-                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getImageUrl(playlist.artworkPath)" [route]="'/playlist/'+playlist.id"></image></div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getPlaylistImageUrl(playlist.artworkPath)" [route]="'/playlist/'+playlist.id"></image></div>
                                 <div class ="browse-item-template"><h4><b><a [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></b></h4></div>
                             </div>
                         </md-grid-tile>
                     </md-grid-list>  
             </md-tab>
             
-            <md-tab label="FOLLOWERS">Content 2</md-tab>
+            <md-tab label="FOLLOWING">
+                <h1 style="margin-bottom:0%;">Following</h1>
+                     <md-divider></md-divider>
+                    <md-grid-list *ngIf="user.following" cols="4" rowHeight="300px">
+                        <md-grid-tile *ngFor = "let followUser of user.following" colspan= "1" rowpan = "1" >
+                            <div>
+                                <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getUserImageUrl(followUser.avatarPath)" [route]="'/user/'+followUser.email"></image></div>
+                                <div class ="browse-item-template"><h4><b><a [routerLink]="['/user', followUser.email]">{{followUser.email}}</a></b></h4></div>
+                            </div>
+                        </md-grid-tile>
+                    </md-grid-list>  
+            </md-tab>
         </md-tab-group>
     </md-card-content>
 

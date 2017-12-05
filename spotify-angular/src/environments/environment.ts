@@ -5,7 +5,7 @@
 
 export const environment = {
   production                : false,
-
+  LOCAL_RESOURCE            :"/assets",
   SERVER_PATH               : "http://localhost:8080",
   GET_ARTIST_ENDPOINT       : "http://localhost:8080" + "/artist",
   GET_PLAYLIST_ENDPOINT     : "http://localhost:8080" + "/playlist",
@@ -30,12 +30,15 @@ export const environment = {
   DELETE_PLAYLIST_ENDPOINT  : "http://localhost:8080" + "/delete_playlist",
   GET_USER_ENDPOINT         : "http://localhost:8080" + "/user",
   FOLLOW_USER_ENDPOINT      : "http://localhost:8080" + "/follow",
+  UNFOLLOW_USER_ENDPOINT    : "http://localhost:8080" + "/unfollow",
 
 
   ARTIST_ROLE               : "ARTIST",
   ADMIN_ROLE                : "ADMIN",
 
-  DEFAULT_ARTWORK           : "../assets/default-cover-art.png",
+  DEFAULT_ARTWORK           : "/default-cover-art.png",
+  DEFAULT_ALBUM_ARTWORK     : "/default-album-artwork.png",
+  DEFAULT_USER_ARTWORK      : "/default-user-artwork.png",
 
   //LOGIN PAGE
   INVALID_EMAIL         : "Not a valid email address",

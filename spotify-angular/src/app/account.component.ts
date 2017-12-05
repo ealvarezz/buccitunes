@@ -63,6 +63,17 @@ export class AccountComponent {
     )
   }
 
+  unfollowUser(){
+    this.userService.unfollowUser(this.user).subscribe(
+      (data)=>{
+        this.user.isfollowing = false;
+      },
+      (err) =>{
+        this.notificationService.error("ERROR",err);
+      }
+    );
+  }
+
   getOverviewItems(){
     if(this.user.recentlyPlayed && this.user.recentlyPlayed.length > 0){
       this.overviewRecentlyPlayed = this.user.recentlyPlayed.slice(0,6);

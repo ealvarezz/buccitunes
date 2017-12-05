@@ -31,16 +31,26 @@ constants:
 
 
 email:
-  ApprovedAlbumSubject: "BucciTunes Album Approval Confirmation."
+  ApprovedAlbumSubject: "BucciTunes Album Approval"
   ApprovedAlbumText: "Your album: %s has been approved and is now posted."
   
-  ApprovedSongSubject: "BucciTunes Song Approval Confirmation."
+  ApprovedSongSubject: "BucciTunes Song Approval"
   ApprovedSongText: "Your song: %s has been denied."
   
-  DeniedAlbumSubject: "BucciTunes Album Denied Confirmation."
+  DeniedAlbumSubject: "BucciTunes Album Denied"
   DeniedAlbumText: "Your album: %s has been approved and is now posted."  
     
-  DeniedSongSubject: "BucciTunes Album Denial Confirmation."
+  DeniedSongSubject: "BucciTunes Album Denial"
   DeniedSongText: "Your Song: %s has been denied."    
-    
+
+  ApprovedConcertSubject: "BucciTunes Concert Approved"
+  ApprovedConcertText: "Your concert: %s has been approved and is not posted."
+  
+  DeniedConcertSubject: "BucciTunes Concert Denied"
+  DeniedConcertText: "BucciTunes Concert Denied Confirmation."
+  
+  AccountConfirmationSubject: "BucciTunes Account Creation Confirmation"
+  AccountConfirmationText: "An account has been created for you at www.buccitunes.com/user/%s."
+  
+
     

@@ -15,6 +15,7 @@ import com.buccitunes.dao.*;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.miscellaneous.MailManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistTransaction;
@@ -162,6 +163,7 @@ public class AdminService {
 			newAlbum = new Album(requestedAlbum, false);
 		}
 		newAlbum = albumRepository.save(newAlbum);
+
 		
 		if(requestedAlbum.getArtworkPath() != null) {
 			try {				
@@ -226,12 +228,15 @@ public class AdminService {
 	
 	public Concert adminApproveConcert(RequestedConcert requested) throws BucciException{
 		Concert newConcert;
-		
 		requested = requestedConcertRepository.findOne(requested.getId());
+		
+				
 		if(requested == null) {
 			throw new BucciException("Requested Concert does not exist");
 		}else{
+			Artist owner = artistRepository.findOne(requested.getRequester().getArtist().getId()); 
 			newConcert = new Concert(requested);
+			newConcert.setMainStar(owner);
 		}
 		newConcert = concertRepository.save(newConcert);
 		requestedConcertRepository.delete(requested);
@@ -340,6 +345,15 @@ public class AdminService {
 		}
 		
 		requestedAlbumRepository.delete(album);
+	}
+	
+	public void removeRequestedConcert(RequestedConcert concert) throws BucciException {
+		concert = requestedConcertRepository.findOne(concert.getId());
+		if(concert == null) {
+			throw new BucciException("Concert not found");
+		}
+		
+		requestedConcertRepository.delete(concert);
 	}
 	
 	public void removeRequestedSong(RequestedSong song) throws BucciException {

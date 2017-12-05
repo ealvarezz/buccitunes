@@ -83,7 +83,7 @@ public class MusicCollectionController {
 	}
 	
 	@RequestMapping(value="new_playlist", method = RequestMethod.POST)
-	public @ResponseBody  BucciResponse<Playlist> getPlaylist(@RequestBody Playlist playlist, HttpSession session) {
+	public @ResponseBody  BucciResponse<Playlist> newPlaylist(@RequestBody Playlist playlist, HttpSession session) {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
