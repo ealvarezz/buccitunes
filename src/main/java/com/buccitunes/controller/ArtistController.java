@@ -76,6 +76,17 @@ public class ArtistController {
 		}
 	}
 
+	@RequestMapping(value="get_artist_concerts", method = RequestMethod.POST)
+	public BucciResponse<List<Concert>> getConcerts(@RequestBody Artist artist) {
+		try {
+			List<Concert> concerts = artistService.getArtistConcerts(artist.getId());
+			return BucciResponseBuilder.successfulResponse(concerts);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+	}
+	
+	
 	@RequestMapping(value="royalties", method = RequestMethod.GET)
 	public BucciResponse<List<ArtistTransaction>> getRoyalties(HttpSession session) {			
 		ArtistUser loggedUser = (ArtistUser) session.getAttribute(constants.getSession());
