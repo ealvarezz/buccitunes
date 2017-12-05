@@ -46,7 +46,7 @@ public class Song {
 	
 	private boolean explicit;
 	
-	@OneToOne(fetch=FetchType.LAZY, cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
 	@JsonIgnoreProperties(value = "recentlyPlayed")
 	private Artist owner;

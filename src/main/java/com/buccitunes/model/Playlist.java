@@ -19,9 +19,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity(name="PLAYLIST")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+//@JsonIdentityInfo(
+//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+//		  property = "id",
+//		  scope = Playlist.class)
 public class Playlist extends MusicCollection {
 	
 	private boolean isCollaborative;
@@ -34,7 +35,7 @@ public class Playlist extends MusicCollection {
 	@JoinTable(name = "playlist_song",
 		joinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"),
 		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
-	@JsonIgnoreProperties(value = "owner")
+//	@JsonIgnoreProperties(value = "owner")
 	private List<Song> songs;
 	
 	@ManyToOne

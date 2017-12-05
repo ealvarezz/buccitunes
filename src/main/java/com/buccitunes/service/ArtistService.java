@@ -215,12 +215,10 @@ public class ArtistService {
 			concertArtists.add(featuredArtist);
 		}
 		requested.setFeaturedArtists(concertArtists);
+		
 		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
 		return requestedConcert;
 	}
-	
-	
-	
 	
 	
 	public void deleteSongFromAlbum(int songId, int albumId) {

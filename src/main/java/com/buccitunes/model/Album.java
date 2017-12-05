@@ -33,14 +33,14 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 @Entity(name="Album")
 @JsonIdentityInfo(
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+		  property = "id",
+		  scope = Album.class)
 public class Album extends MusicCollection {
 	
 	
 	@ManyToOne
     @JoinColumn(name = "primary_artist_id")
 	@JsonIgnoreProperties(value = "albums")
-	//@JsonBackReference
 	private Artist primaryArtist;
 	
 
@@ -52,7 +52,7 @@ public class Album extends MusicCollection {
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "album_id")
-	@JsonIgnoreProperties(value = "album")
+	@JsonIgnoreProperties(value = {"album","owner"})
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")

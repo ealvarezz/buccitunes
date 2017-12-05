@@ -216,7 +216,29 @@ export class MusicCollectionService {
 
     addSongToPlaylists(playlist: Playlist, song : Song){
         
-        let playlistInfo = this.constructPlaylistUpdate(playlist, song);
+        let playlistInfo = this.constructPlaylistUpdate(playlist, song,null);
+        console.log(playlistInfo);
+        return this.http.post<BucciResponse<String>>(environment.UPDATE_PLAYLIST_ENDPOINT, playlistInfo, {withCredentials: true}).
+        map(bucci =>{
+            if (bucci.successful){
+                return bucci.response;
+            } 
+            else{
+                throw new Error(bucci.message);
+            }
+        })
+        .catch((error: any) =>{
+            return Observable.throw(new Error(error.message));
+        }
+        );
+
+
+    }
+
+    removeSongFromPlaylists(playlist: Playlist, song : Song){
+        
+        let playlistInfo = this.constructPlaylistUpdate(playlist, null,song);
+        console.log(playlistInfo);
         return this.http.post<BucciResponse<String>>(environment.UPDATE_PLAYLIST_ENDPOINT, playlistInfo, {withCredentials: true}).
         map(bucci =>{
             if (bucci.successful){
@@ -280,11 +302,15 @@ export class MusicCollectionService {
         )
     }
 
-    private constructPlaylistUpdate(playlist : Playlist, song: Song) : PlaylistPage{
-        let songs = [song];
+    private constructPlaylistUpdate(playlist : Playlist, acceptedSong: Song, removedSong) : PlaylistPage{
+        let add = acceptedSong ? [acceptedSong] : null;
+        let remove = removedSong ? [removedSong] : null;
         let playlistInfo = new PlaylistPage();
         playlistInfo.playlist = playlist;
-        playlistInfo.songsToAdd = songs;
+        playlistInfo.playlist.songs = null;
+        playlistInfo.playlist.owner = null;
+        playlistInfo.songsToAdd = add;
+        playlistInfo.songsToRemove= remove;
         return playlistInfo;
     }
 

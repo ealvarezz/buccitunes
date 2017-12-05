@@ -30,7 +30,7 @@
     </md-card-header>
     <md-card-content>
         <div class="table">
-            <music-table [data] = "playlist.songs" [isAlbum]="false"> </music-table>
+            <music-table [data] = "playlist.songs" [isAlbum]="false" (remove)="deleteSongFromPlaylist($event)"> </music-table>
         </div>
     </md-card-content>
 </md-card>
