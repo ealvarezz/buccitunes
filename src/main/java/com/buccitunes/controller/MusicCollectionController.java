@@ -1,7 +1,12 @@
 package com.buccitunes.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.text.ParseException;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpSession;
 
@@ -15,11 +20,13 @@ import org.springframework.core.env.Environment;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.buccitunes.constants.Tier;
 import com.buccitunes.jsonmodel.PlaylistPage;
@@ -87,7 +94,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		playlist.setOwner(loggedUser);
@@ -105,7 +112,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {
@@ -121,7 +128,7 @@ public class MusicCollectionController {
 		
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {
@@ -202,7 +209,7 @@ public class MusicCollectionController {
 	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestBody Song song, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {
@@ -259,7 +266,45 @@ public class MusicCollectionController {
 			return BucciResponseBuilder.failedMessage(e.getMessage()); 
 		}
 	}
+	/*
+	@PostMapping("/api/upload/multi")
+    public BucciResponse<String> uploadFileMulti(
+            @RequestParam("extraField") String extraField,
+            @RequestParam("files") MultipartFile[] uploadfiles) {
+
+
+        // Get file name
+        String uploadedFileName = Arrays.stream(uploadfiles).map(x -> x.getOriginalFilename())
+                .filter(x -> !StringUtils.isEmpty(x)).collect(Collectors.joining(" , "));
+
+        if (StringUtils.isEmpty(uploadedFileName)) {
+            return BucciResponseBuilder.failedMessage("Empty");
+        }
+
+        try {
+            saveUploadedFiles(Arrays.asList(uploadfiles));
+        } catch (IOException e) {
+            return BucciResponseBuilder.failedMessage("Empty");
+        }
+
+       return BucciResponseBuilder.successMessage("Success");
+
+    }
 	
+	private void saveUploadedFiles(List<MultipartFile> files) throws IOException {
+
+        for (MultipartFile file : files) {
+
+            if (file.isEmpty()) {
+                continue; //next pls
+            }
+
+            byte[] bytes = file.getBytes();
+            Path path = Paths.get(UPLOADED_FOLDER + file.getOriginalFilename());
+            Files.write(path, bytes);
+
+        }
+*/	
 	@Scheduled(fixedRate=60000)
 	@CacheEvict(allEntries=true, cacheNames={"${}"})
 	public void clearPopularCache(){}

@@ -1,4 +1,26 @@
 constants:  
+
+  artist_not_found_msg: "Could not find artist."
+  concert_not_found_msg: "Could not find concert."
+  album_not_found_msg: "Could not find album."
+  song_not_found_msg: "Could not find song."
+  resource_not_found_msg: "Could not find resource."
+
+  admin_access_denied_msg: "Access denied, need role of Admin for this resource."
+  artist_access_denied_msg: "Access denied, need role of Artist for this resource."
+
+  duration_error_msg: "Duration needed."
+  ownership_error_msg: "You do not own this resource."
+  storage_error_msg: "An error occured while storing this resource."
+
+  successful_addition_msg: "Adding the item was successful."  
+  successful_charge_msg: "Charging the user(s) was successful."
+  successful_request_msg: "Request creation was successful."
+  successful_deletion_msg: "Deletion was successful."
+
+  not_logged_in_msg: "Not Logged In" 
+  logged_in_msg: "Already Logged In"
+
   start: 0
   
   new_releases_limit: 10
@@ -22,8 +44,7 @@ constants:
   song_count: stats.song_count
   play_count: numPlays
     
-  not_logged_in: Not Logged In 
-  logged_in: Already Logged In
+
   session: user
   
   signup_premium_price: 5.00

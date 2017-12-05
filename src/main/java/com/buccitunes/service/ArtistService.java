@@ -46,7 +46,7 @@ public class ArtistService {
 	
 	@Autowired
 	private BucciConstants constants;
-	
+
 	private final ArtistRepository artistRepository;
 	private final AlbumRepository albumRepository;
 	private final RequestedAlbumRepository requestedAlbumRepository;
@@ -72,27 +72,22 @@ public class ArtistService {
 	}
 	
 	public List<Artist> findAll(){
-		
 		List<Artist> result = new ArrayList<>();
 		for(Artist artist: artistRepository.findAll()) result.add(artist);
-			
-
 		return result;
 	}
 	
 	public ArtistUser getArtistUser(String email) throws BucciException {
 		ArtistUser artistUser = artistUserRepository.findOne(email);
-		
 		if(artistUser != null) {
 			return artistUser;
 		} else {
-			throw new BucciException("Artist User not found");
+			throw new BucciException(constants.getArtistNotFoundMsg());
 		}
 	}
 	
 	public Artist getArtist(int id) throws BucciException {
 		Artist artist = artistRepository.findOne(id);
-		
 		if(artist != null) {
 			artist.getAlbums().size();
 			artist.getUpcomingConcerts();
@@ -101,17 +96,16 @@ public class ArtistService {
 			}
 			return artist;
 		} else {
-			throw new BucciException("Artist not found");
+			throw new BucciException(constants.getArtistNotFoundMsg());
 		}
 	}
 	
 	public Artist getArtistByName(String name) throws BucciException {
 		Artist artist = artistRepository.findByName(name);
-		
 		if(artist != null) {
 			return artist;
 		} else {
-			throw new BucciException("Artist not found");
+			throw new BucciException(constants.getArtistNotFoundMsg());
 		}
 	}
 	
@@ -134,7 +128,7 @@ public class ArtistService {
 			}
 			return savedArtist;
 		} catch (IOException e) {
-			throw new BucciException("UNABLE TO SAVE ARTWORK");
+			throw new BucciException(constants.getStorageErrorMsg());
 		}
 	}
 	
@@ -145,32 +139,26 @@ public class ArtistService {
 	public List<Song> getTopTenSongs(int artistId) {
 		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopSongsLimit(),
 				Sort.Direction.DESC, constants.getPlayCount());
-		//return songRepository.getTopSongsOfArtist(BucciConstants.TimeAgo.ALL_TIME, artistId, pageRequest);
 		return null;
-		
 	}
 	
 	public RequestedAlbum requestNewAlbum(RequestedAlbum requested, ArtistUser artistUser) throws BucciException {
-		
 		String artwork = requested.getArtwork();
 		List<RequestedSong> audioSongs = requested.getSongs();
 		
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
 		requested.setArtistRequester(artistUser);
 		RequestedAlbum requestedAlbum = requestedAlbumRepository.save(requested);
-		
 		if(artwork != null) {
 			try {
 				String artworkPath = FileManager.saveRequestedAlbumArtwork(artwork, requestedAlbum.getId());
 				requestedAlbum.setArtworkPath(artworkPath);
 			} catch (IOException e) {
-				throw new BucciException("Unable to save artwork");
+				throw new BucciException(constants.getStorageErrorMsg());
 			}
 		}
-		
 		if(audioSongs != null) {
 			requestedAlbum.getSongs().size();
-			
 			for (RequestedSong songWithAudio : audioSongs) {
 				if(songWithAudio.getAudio() != null) {
 					try {
@@ -186,53 +174,43 @@ public class ArtistService {
 	}
 	
 	public void requestSongToAlbum(RequestedSong requestedSong, ArtistUser user) throws BucciException{
-		
 		if(requestedSong.getAlbum() == null) {
-			throw new BucciException("No album specified");
+			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
 		RequestedAlbum album = requestedAlbumRepository.findOne(requestedSong.getAlbum().getId());
 		if(album == null) {
-			throw new BucciException("Album does not exist");
+			throw new BucciException(constants.getAlbumNotFoundMsg());
 		}
-		
 		ArtistUser artistUser = artistUserRepository.findOne(user.getEmail());
 		if(artistUser.getArtist().getId() != album.getPrimaryArtist().getId()) {
-			throw new BucciException("You do not own the album in order to add a song");
+			throw new BucciException(constants.getOwnershipErrorMsg());
 		}
-			
 		requestedSong.setArtist(album.getPrimaryArtist());
 		requestedSong.setAlbum(album);
 		requestedSong.setRequester(artistUser);
 		requestedSongRepository.save(requestedSong);
 	}
 	
-	
 	public RequestedConcert requestNewConcert(RequestedConcert requested, ArtistUser artistUser) throws BucciException {
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
 		requested.setRequester(artistUser);
-		
  		List<Artist> concertArtists = new ArrayList<Artist>(requested.getFeaturedArtists().size());
 		for(Artist artist : requested.getFeaturedArtists()) {
 			Artist featuredArtist = artistRepository.findOne(artist.getId());
 			if(featuredArtist == null) {
-				throw new BucciException(artist.getName() + " does not exist");
+				throw new BucciException(constants.getArtistNotFoundMsg());
 			}
 			concertArtists.add(featuredArtist);
 		}
 		requested.setFeaturedArtists(concertArtists);
-		
-		
 		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
 		return requestedConcert;
 	}
 	
-	
 	public void deleteSongFromAlbum(int songId, int albumId) {
-		
 		Album album = albumRepository.findOne(albumId);
 		Song song = songRepository.findOne(songId);
 		songRepository.delete(songId);
-		
 		album.getSongs().remove(song);
 	}
 	
@@ -241,44 +219,37 @@ public class ArtistService {
 	}
 	
 	public Song saveAudioFile(Song audioSong, User user) throws BucciException {
-		
 		Song song = songRepository.findOne(audioSong.getId());
-		
 		if(song == null) {
-			throw new BucciException("Song not found");
+			throw new BucciException(constants.getResourceNotFoundMsg());
 		}
-		
 		if(BucciPrivilege.isArtist(user)) {
 			Artist artist = ((ArtistUser) user).getArtist();
 			
 			if(artist.getId() != song.getOwner().getId()) {
-				throw new BucciException("You do not own this song!");
+				throw new BucciException(constants.getOwnershipErrorMsg());
 			}
 		}
-		
 		int durantion = audioSong.getDuration();
 		if(durantion == 0) {
-			throw new BucciException("Durantion of song is needed");
+			throw new BucciException(constants.getDurationErrorMsg());
 		}
 		try {
 			String audioPath = FileManager.saveSong(audioSong.getAudio(), song.getId());
 			song.setAudioPath(audioPath);
 		} catch (IOException e) {
-			throw new BucciException("Unable to save song");
+			throw new BucciException(constants.getStorageErrorMsg());
 		}
-		
 		return song;
 	}
 	
 	public List<Concert> getArtistConcerts(int artistId) throws BucciException {
 		Artist artist = artistRepository.findOne(artistId);
-		
 		if(artist == null) {
-			throw new BucciException("Artist does not exist");
+			throw new BucciException(constants.getArtistNotFoundMsg());
 		}
-		
 		List<Concert> concerts = concertRepository.getConcertsOfArtistId(artistId);
-		
 		return concerts;
 	}
+	
 }

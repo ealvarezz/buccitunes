@@ -86,7 +86,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<String> followUser(@RequestBody User followedUser, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}	
 		try{
 			User user = userService.follow(loggedUser.getEmail(), followedUser.getEmail());
@@ -100,7 +100,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<String> unfollowUser(@RequestBody User followedUser, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}	
 		try{
 			userService.unfollow(loggedUser.getEmail(), followedUser.getEmail());
@@ -191,7 +191,7 @@ public class UserController {
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		} 
 		session.removeAttribute(constants.getSession());
 		return BucciResponseBuilder.successMessage("LoggedOut");
@@ -224,7 +224,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<List<Artist>> getUserFollowedArtist(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			List<Artist> followedArtists = userService.getFollowedArtist(sessionUser.getEmail());
@@ -236,7 +236,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<List<Playlist>> getUserFollowedPlaylists(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			List<Playlist> followedPlaylist = userService.getFollowedPlaylist(sessionUser.getEmail());
@@ -248,7 +248,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<String> userSaveAlbum(HttpSession session, @RequestBody Album album) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			userService.saveAlbum(album.getId(), sessionUser.getEmail());
@@ -260,7 +260,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<String> followPlaylist(@RequestBody Playlist playlist, HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			userService.followPlaylist(playlist.getId(), sessionUser.getEmail());
@@ -272,7 +272,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<String> userSaveSong(HttpSession session, @RequestBody Song song) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			userService.saveSong(song.getId(), sessionUser.getEmail());
@@ -284,7 +284,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<List<Song>> getUserSavedSongs(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			List<Song> savedSongs = userService.getSavedSongs(sessionUser.getEmail());
@@ -297,7 +297,7 @@ public class UserController {
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		try {
 			PremiumUser user = userService.upgradeToPremium(sessionUser, billingInfo);
@@ -314,7 +314,7 @@ public class UserController {
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		/*
 		try {
@@ -335,7 +335,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<List<Album>> getUserRecentlyPlayedAlbums(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			List<Album> recentlyPlayedAlbums = userService.getRecentAlbumsPlayed(sessionUser.getEmail());
@@ -347,7 +347,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<List<Playlist>> getUserPlaylists(HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		if(sessionUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		else {
 			try {
@@ -373,11 +373,23 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="get_related_artists", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Artist>> search(HttpSession session, @RequestParam int artistId) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Artist> artists = userService.getRelatedArtists(artistId);
+			return BucciResponseBuilder.successfulResponse(artists);	
+		}
+	}
+	
 	@RequestMapping(value="user", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<UserPageInfo> getUserInfo(@RequestBody String id, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {
@@ -392,7 +404,7 @@ public class UserController {
 	public @ResponseBody BucciResponse<User> changeUserInfo(@RequestBody User user, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage(constants.getNotLoggedIn());
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try {

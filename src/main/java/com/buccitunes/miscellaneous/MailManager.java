@@ -75,13 +75,17 @@ public class MailManager {
 	}
 	
 	
-	public void mailApprovedSongRequest(ArtistUser user, Song song) throws MessagingException {
-		MimeMessage mail = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-        helper.setTo(user.getEmail());
-        helper.setSubject(ApprovedSongSubject);
-        helper.setText(String.format(ApprovedSongText, song.getName()));
-        javaMailSender.send(mail);
+	public void mailApprovedSongRequest(ArtistUser user, Song song) throws BucciException {
+		try {
+			MimeMessage mail = javaMailSender.createMimeMessage();
+	        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+	        helper.setTo(user.getEmail());
+	        helper.setSubject(ApprovedSongSubject);
+	        helper.setText(String.format(ApprovedSongText, song.getName()));
+	        javaMailSender.send(mail);
+		} catch (MessagingException e) {
+			throw new BucciException(e.getMessage());
+		}
 	}
 
 	
@@ -94,13 +98,17 @@ public class MailManager {
         javaMailSender.send(mail);
 	}
 
-	public void mailApprovedConcertRequest(ArtistUser user, Concert concert) throws MessagingException {
-		MimeMessage mail = javaMailSender.createMimeMessage();
-        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
-        helper.setTo(user.getEmail());
-        helper.setSubject(ApprovedConcertSubject);
-        helper.setText(String.format(ApprovedConcertText, concert.getName()));
-        javaMailSender.send(mail);
+	public void mailApprovedConcertRequest(ArtistUser user, Concert concert) throws BucciException {
+		try {
+			MimeMessage mail = javaMailSender.createMimeMessage();
+	        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+	        helper.setTo(user.getEmail());
+	        helper.setSubject(ApprovedConcertSubject);
+	        helper.setText(String.format(ApprovedConcertText, concert.getName()));
+	        javaMailSender.send(mail);
+		} catch (MessagingException e) {
+			throw new BucciException(e.getMessage());
+		}
 	}
 	
 	public void mailDeniedConcertRequest(ArtistUser user, RequestedConcert concert) throws MessagingException {
@@ -160,6 +168,26 @@ public class MailManager {
 
 	public void setDeniedSongText(String deniedSongText) {
 		DeniedSongText = deniedSongText;
+	}
+
+	public void setJavaMailSender(JavaMailSender javaMailSender) {
+		this.javaMailSender = javaMailSender;
+	}
+
+	public void setApprovedConcertSubject(String approvedConcertSubject) {
+		ApprovedConcertSubject = approvedConcertSubject;
+	}
+
+	public void setApprovedConcertText(String approvedConcertText) {
+		ApprovedConcertText = approvedConcertText;
+	}
+
+	public void setDeniedConcertSubject(String deniedConcertSubject) {
+		DeniedConcertSubject = deniedConcertSubject;
+	}
+
+	public void setDeniedConcertText(String deniedConcertText) {
+		DeniedConcertText = deniedConcertText;
 	}
 	
 }

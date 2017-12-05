@@ -14,6 +14,8 @@ import java.util.Comparator;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedSong;

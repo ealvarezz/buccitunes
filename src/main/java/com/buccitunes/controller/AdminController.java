@@ -39,6 +39,9 @@ import com.buccitunes.service.AdminService;
 public class AdminController {
 	
 	@Autowired
+	private BucciConstants constants;
+	
+	@Autowired
 	private AdminService adminService;
 	
 	@Autowired
@@ -47,24 +50,20 @@ public class AdminController {
 	@RequestMapping(value="add_artist", method = RequestMethod.POST)
 	public BucciResponse<Artist> addArtist(@RequestBody Artist artist, HttpSession session) throws BucciException {
 		Artist newArtist = adminService.addNewArtist(artist);
-		return BucciResponseBuilder.successfulResponseMessage("New Artist Added", newArtist);
+		return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), newArtist);
 	}
 	
 	@RequestMapping(value="approve_artist", method = RequestMethod.POST)
 	public BucciResponse<ArtistUser> approveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
-		/*
-		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
-		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		} else if(BucciPrivilege.isAdmin(loggedUser)) {
-			return BucciResponseBuilder.failedMessage("You do not have permissions!");
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
-		*/
-		
 		try {
 			ArtistUser artist = adminService.adminApproveArtist(requested);
-			return BucciResponseBuilder.successfulResponseMessage("New Artist Added", artist);
+			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), artist);
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
@@ -78,19 +77,15 @@ public class AdminController {
 	
 	@RequestMapping(value="add_song", method = RequestMethod.POST)
 	public BucciResponse<Song> addSongToAlbum(@RequestBody Song song, HttpSession session) {
-		/*
-		User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
-		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		} else if(BucciPrivilege.isAdmin(loggedUser)) {
-			return BucciResponseBuilder.failedMessage("You do not have permissions!");
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
-		*/
-		
 		try {
 			Song newSong = adminService.addSongToAlbum(song);
-			return BucciResponseBuilder.successfulResponseMessage("New Album Added", newSong);
+			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), newSong);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
@@ -98,17 +93,15 @@ public class AdminController {
 	
 	@RequestMapping(value="add_album_admin", method = RequestMethod.POST)
 	public BucciResponse<Album> addAlbum(@RequestBody Album albumToAdd, HttpSession session) {
-		/*User loggedUser = (User) session.getAttribute(BucciConstant.SESSION);
-		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
-			return BucciResponseBuilder.failedMessage("Not Logged In");
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		} else if(BucciPrivilege.isAdmin(loggedUser)) {
-			return BucciResponseBuilder.failedMessage("You do not have permissions!");
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
-		*/
 		try {
 			Album album = adminService.addAlbum(albumToAdd);
-			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
+			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), album);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
@@ -116,10 +109,16 @@ public class AdminController {
 	
 	@RequestMapping(value="approve_album", method = RequestMethod.POST)
 	public BucciResponse<Album> approveAlbum(@RequestBody RequestedAlbum requested, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
 		try {
 			Album album = adminService.adminApproveAlbum(requested);
 			mailManager.mailApprovedAlbumRequest(requested.getRequester(), album);
-			return BucciResponseBuilder.successfulResponseMessage("New Album Added", album);
+			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), album);
 		} catch (BucciException | MessagingException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}		
@@ -127,24 +126,36 @@ public class AdminController {
 	
 	@RequestMapping(value="approve_concert", method = RequestMethod.POST)
 	public BucciResponse<Concert> approveConcert(@RequestBody RequestedConcert requested, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
 		try {
 			Concert concert = adminService.adminApproveConcert(requested);
 			mailManager.mailApprovedConcertRequest(requested.getRequester(), concert);
-			return BucciResponseBuilder.successfulResponseMessage("New Concert Added", concert);
-		} catch (BucciException | MessagingException e) {
-			return BucciResponseBuilder.failedMessage(e.getMessage());
+			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), concert);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
 	}
 	
 	
 	@RequestMapping(value="approve_song", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<Song> approveSong(RequestedSong requested) {
+	public @ResponseBody BucciResponse<Song> approveSong(RequestedSong requested, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
 		try {
 			Song song = adminService.adminApproveSong(requested);
 			mailManager.mailApprovedSongRequest(requested.getRequester(), song);
 			return BucciResponseBuilder.successfulResponse(song);
-		} catch (BucciException | MessagingException e) {
-			return BucciResponseBuilder.failedMessage(e.getMessage());
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}		
 	}
 	
@@ -167,7 +178,13 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="requested_album_info", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<RequestedAlbum> getRequestedAlbum(@RequestParam int id) {
+	public @ResponseBody BucciResponse<RequestedAlbum> getRequestedAlbum(@RequestParam int id, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
 		try {
 			RequestedAlbum requested = adminService.getRequestedAlbum(id);
 			return BucciResponseBuilder.successfulResponse(requested);
@@ -177,33 +194,51 @@ public class AdminController {
 	}
 	
 	@RequestMapping(value="disapprove_request_album", method = RequestMethod.POST)
-	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedAlbum requestedAlbum) {		
+	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedAlbum requestedAlbum, HttpSession session) {		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
 		try {
 			adminService.removeRequestedAlbum(requestedAlbum);
 			mailManager.mailDeniedAlbumRequest(requestedAlbum.getRequester(), requestedAlbum);
-			return BucciResponseBuilder.successMessage("Requested album deleted");
+			return BucciResponseBuilder.successMessage(constants.getSuccessfulDeletionMsg());
 		} catch (BucciException | MessagingException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}
 	}
 	
 	@RequestMapping(value="disapprove_request_concert", method = RequestMethod.POST)
-	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedConcert requestedConcert) {		
+	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedConcert requestedConcert, HttpSession session) {		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
 		try {
 			adminService.removeRequestedConcert(requestedConcert);
 			mailManager.mailDeniedConcertRequest(requestedConcert.getRequester(), requestedConcert);
-			return BucciResponseBuilder.successMessage("Requested album deleted");
+			return BucciResponseBuilder.successMessage(constants.getSuccessfulDeletionMsg());
 		} catch (BucciException | MessagingException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}
 	}
 	
 	@RequestMapping(value="disapprove_request_song", method = RequestMethod.POST)
-	public BucciResponse<String> deleteRequestedSong(@RequestBody RequestedSong requestedSong) {		
+	public BucciResponse<String> deleteRequestedSong(@RequestBody RequestedSong requestedSong, HttpSession session) {		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
 		try {
 			adminService.removeRequestedSong(requestedSong);
 			mailManager.mailDeniedSongRequest(requestedSong.getRequester(), requestedSong);
-			return BucciResponseBuilder.successMessage("Requested song deleted");
+			return BucciResponseBuilder.successMessage(constants.getSuccessfulDeletionMsg());
 		} catch (BucciException | MessagingException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage());
 		}
@@ -212,6 +247,6 @@ public class AdminController {
 	@RequestMapping(value="charge_users", method = RequestMethod.GET)
 	public BucciResponse<String> chargeUsers() {
 		adminService.chargeUsers();
-		return BucciResponseBuilder.successMessage("Payments recieved from users");
+		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
 	}
 }
