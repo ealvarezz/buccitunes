@@ -16,8 +16,8 @@ import {SpinnerService} from './services/spinner.service';
 })
 export class RequestedAlbumComponent implements OnInit{
 
-  constructor(public dialog: MdDialog,
-              private adminService : AdminService,
+  constructor(public dialog               : MdDialog,
+              private adminService        : AdminService,
               private notificationService : NotificationsService,
               private spinnerService      : SpinnerService){}
 

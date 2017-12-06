@@ -19,6 +19,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import {MediaService} from './services/media.service';
 import {Location} from '@angular/common';
 
+
 @Component({
   selector: 'artist-page',
   templateUrl: '../views/artist.component.html',

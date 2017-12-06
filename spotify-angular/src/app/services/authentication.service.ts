@@ -11,6 +11,7 @@ import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/of';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 
@@ -51,6 +52,24 @@ export class AuthenticationService {
         
     }
 
+    resetPasswordRequest(email : String){
+        // return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PW_REQUEST, JSON.stringify(email), {withCredentials: true})
+        // .map(this.extractData)
+        // .catch(this.handleError);
+        return Observable.of(true);
+    }
+
+    getResetPassword(email : String, hashString : String){
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.GET_RESET_PW, {email: email, password: hashString}, {withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+    changePassword(email : String, password : String){
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.GET_RESET_PW, {email: email, password: password}, {withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+
     getLoggedInUser() : Observable<User>{
         return this.http.get<BucciResponse<User>>(BucciConstants.Endpoints.LOGGED_IN_USER,{withCredentials: true})
         .map(this.extractData.bind(this))
@@ -69,6 +88,7 @@ export class AuthenticationService {
     isPremiumUserRole() : boolean{
         return this.currentUser.role === BucciConstants.Roles.PREMIUM;
     }
+
 
 
     private extractData(bucci){

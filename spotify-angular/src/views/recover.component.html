@@ -1,0 +1,35 @@
+<div class="main loginScreen">
+  <div class="loginContainer">
+
+  <md-card id="loginCard">
+    <div *ngIf="!confirmed">
+    <h1 class="logo-text">RESET PASSWORD</h1>
+    <form class="login-form">
+      <md-form-field class="login-full-width">
+        <input type="password" name="password" [(ngModel)]= "password" mdInput placeholder="New Password" [formControl]="passwordFormControl" required>
+        <md-error *ngIf="passwordFormControl.invalid">{{getErrorMessage(passwordFormControl)}}</md-error>
+      </md-form-field>
+
+      <md-form-field class="login-full-width">
+        <input type="password" name="confirmPassword" [(ngModel)]= "confirmPassword" mdInput placeholder="Confirm New Password" [formControl]="confirmPasswordFormControl" required>
+        <md-error *ngIf="confirmPasswordFormControl.invalid">{{getErrorMessage(confirmPasswordFormControl)}}</md-error>
+      </md-form-field>
+
+      <div>
+        <button md-raised-button (click)="resetPassword()" id="loginBtn">RESET PASSWORD</button>
+      </div>
+    </form>
+    </div>
+    <div *ngIf="confirmed">
+        <h1 class="logo-text">Password Reset</h1>
+        <md-card-content>
+            <div><p>Your password has been successfully reset. </p></div>
+            <div><p>Click <a routerLink="/login">here</a> to login.<p></div>
+
+        </md-card-content>
+    </div>
+  </md-card>
+
+  </div>
+
+</div>
