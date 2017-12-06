@@ -163,3 +163,151 @@ BEGIN
 	where a.id = artist_id;
 END ^;
 
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `runStatBatch`(IN in_revenue DECIMAL(10,5), IN  currDate date)
+BEGIN
+DECLARE currMonth INT;
+DECLARE currYear INT;
+
+SET currMonth = MONTH(currDate);
+SET currYear = YEAR(currDate);
+
+
+START TRANSACTION;
+
+
+-- UPDATE SONG MONTHLY STATS
+INSERT INTO song_monthly_stat
+select DATE_FORMAT(currDate ,'%Y-%m-01') AS month, @curRow := @curRow + 1 AS rank , (in_revenue*p.total_plays) as revenue, p.total_plays,  p.song_id   from
+(
+select song_id, COUNT(*) as total_plays FROM song_plays
+ WHERE MONTH(date_played) = currMonth
+ AND YEAR(date_played) = currYear
+ GROUP BY song_id
+ ORDER BY total_plays DESC
+ )p
+ JOIN    (SELECT @curRow := 0) r;
+ 
+ 
+ INSERT INTO album_monthly_stat
+select DATE_FORMAT(currDate ,'%Y-%m-01') as month,  @curRow := @curRow + 1 AS rank, p.revenue, p.total_plays,  album_id
+ FROM 
+(
+	SELECT album_id, sum(total_plays) as total_plays, sum(revenue) as revenue
+    FROM
+    (
+		select  album_id,  s.total_plays as total_plays, s.revenue as revenue
+		 from song_monthly_stat s
+		 LEFT JOIN song
+		ON s.song_id = song.id
+        WHERE MONTH(s.month) = currMonth
+        AND YEAR(s.month) = currYear
+	) c
+	GROUP BY album_id
+    ORDER BY total_plays DESC
+)p
+ JOIN    (SELECT @curRow := 0) r;
+ 
+ 
+ -- UPDATE ARTIST MONTHLY STATS
+INSERT INTO artist_monthly_stat
+SELECT DATE_FORMAT(NOW() ,'%Y-%m-01') as month, @curRow := @curRow + 1 AS rank, p.revenue as revenue,   p.total_plays as total_plays, artist_id
+FROM
+(
+	SELECT artist_id, sum(total_plays) as total_plays, sum(revenue) as revenue FROM
+	(
+		SELECT ms.*, a.primary_artist_id as artist_id FROM album_monthly_stat ms
+		RIGHT JOIN album a
+		ON ms.album_id = a.id
+        WHERE MONTH(ms.month) = currMonth
+        AND YEAR(ms.month) = currYear
+	) k
+	GROUP BY artist_id
+    ORDER BY total_plays DESC
+)p
+ JOIN    (SELECT @curRow := 0) r;
+ 
+ 
+UPDATE stat_cache
+        INNER JOIN
+    (SELECT 
+        stats_id,
+            monthly_plays,
+            monthly_revenue,
+            total_plays,
+            total_revenue,
+            @curRow:=@curRow + 1 AS rank
+    FROM
+        (SELECT 
+        stats_id,
+            monthly_plays,
+            monthly_revenue,
+            total_plays,
+            total_revenue,
+            rank
+    FROM
+        artist art
+    LEFT JOIN (SELECT 
+        artist_id,
+            AVG(total_plays) AS monthly_plays,
+            AVG(revenue) AS monthly_revenue,
+            0 AS rank,
+            SUM(total_plays) AS total_plays,
+            SUM(revenue) AS total_revenue
+    FROM
+        artist_monthly_stat
+    GROUP BY artist_id) p ON art.id = p.artist_id
+    ORDER BY total_plays DESC) y
+    JOIN (SELECT @curRow:=0) r) k ON stat_cache.id = k.stats_id 
+SET 
+    stat_cache.monthly_plays = k.monthly_plays,
+    stat_cache.monthly_revenue = k.monthly_revenue,
+    stat_cache.rank = k.rank,
+    stat_cache.total_plays = k.total_plays,
+    stat_cache.total_revenue = k.total_revenue;
+
+
+UPDATE stat_cache
+        INNER JOIN
+    (SELECT 
+        stats_id,
+            monthly_plays,
+            monthly_revenue,
+            total_plays,
+            total_revenue,
+            @curRow:=@curRow + 1 AS rank
+    FROM
+        (SELECT 
+        stats_id,
+            monthly_plays,
+            monthly_revenue,
+            total_plays,
+            total_revenue,
+            rank
+    FROM
+        album alb
+    LEFT JOIN (SELECT 
+        album_id,
+            AVG(total_plays) AS monthly_plays,
+            AVG(revenue) AS monthly_revenue,
+            0 AS rank,
+            SUM(total_plays) AS total_plays,
+            SUM(revenue) AS total_revenue
+    FROM
+        album_monthly_stat
+    GROUP BY album_id) p ON alb.id = p.album_id
+    ORDER BY total_plays DESC) y
+    JOIN (SELECT @curRow:=0) r) k ON stat_cache.id = k.stats_id 
+SET 
+    stat_cache.monthly_plays = k.monthly_plays,
+    stat_cache.monthly_revenue = k.monthly_revenue,
+    stat_cache.rank = k.rank,
+    stat_cache.total_plays = k.total_plays,
+    stat_cache.total_revenue = k.total_revenue;
+
+ 
+
+ 
+ COMMIT;
+END^;
+
