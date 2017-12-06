@@ -34,20 +34,20 @@ export class AdminService {
     }
     //change endpoint
     getRequestedSongs(){
-        return this.http.get<BucciResponse<RequestedAlbum>>(environment.GET_REQ_ALBUM_ENDPOINT)   
+        return this.http.get<BucciResponse<RequestedAlbum>>(environment.GET_REQ_ALBUM_ENDPOINT, {withCredentials: true})   
         .map(this.extractData)
         .catch(this.handleError)
     }
 
     approveAlbum(album : RequestedAlbum){
-        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.APPROVE_ALBUM, album)
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.APPROVE_ALBUM, album, {withCredentials: true})
         .map(this.extractData)
         .catch(this.handleError)
         
     }
 
     rejectAlbum(album: RequestedAlbum){
-        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.REJECT_ALBUM, album)
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.REJECT_ALBUM, album, {withCredentials: true})
         .map(this.extractData)
         .catch(this.handleError)
     }

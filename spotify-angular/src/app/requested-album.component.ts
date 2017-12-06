@@ -48,6 +48,7 @@ export class RequestedAlbumComponent implements OnInit{
         this.notificationService.success("SUCCESS", "Album" +album.title+ "successfully added to the system.");
       },
       (err) =>{
+        this.spinnerService.stopSpinner();
         this.notificationService.error("FAIL", err);
       }
     )
@@ -63,6 +64,7 @@ export class RequestedAlbumComponent implements OnInit{
         this.notificationService.success("SUCCESS", "Album has been rejected.");
       },
       (err) =>{
+        this.spinnerService.stopSpinner();
         this.notificationService.error("FAIL", err);
       }
     )

@@ -9,7 +9,7 @@ if(!installed){
   library(dplyr)
 }
 
-mydb = dbConnect(MySQL(), user='root', password='bucci', dbname='buccidb2', host='localhost')
+mydb = dbConnect(MySQL(), user='root', password='trees10', dbname='buccidb2', host='localhost')
 
 rs = dbSendQuery(mydb, "select * from song")
 songs = fetch(rs, n=-1)
