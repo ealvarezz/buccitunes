@@ -88,7 +88,9 @@ public class Song {
     @JoinColumn(name = "lyric_id")
 	private Lyrics lyrics;
 	
-	public Song(){}
+	public Song(){
+		this.stats = new StatCache();
+	}
 	
 	public Song(RequestedSong song) {
 		this.name = song.getName();
