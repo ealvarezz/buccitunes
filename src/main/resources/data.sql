@@ -211,7 +211,7 @@ select DATE_FORMAT(currDate ,'%Y-%m-01') as month,  @curRow := @curRow + 1 AS ra
  
  -- UPDATE ARTIST MONTHLY STATS
 INSERT INTO artist_monthly_stat
-SELECT DATE_FORMAT(NOW() ,'%Y-%m-01') as month, @curRow := @curRow + 1 AS rank, p.revenue as revenue,   p.total_plays as total_plays, artist_id
+SELECT DATE_FORMAT(currDate ,'%Y-%m-01') as month, @curRow := @curRow + 1 AS rank, p.revenue as revenue,   p.total_plays as total_plays, artist_id
 FROM
 (
 	SELECT artist_id, sum(total_plays) as total_plays, sum(revenue) as revenue FROM
@@ -226,6 +226,53 @@ FROM
     ORDER BY total_plays DESC
 )p
  JOIN    (SELECT @curRow := 0) r;
+ 
+ 
+ UPDATE stat_cache
+        INNER JOIN
+    (SELECT 
+			stats_id,
+            monthly_plays,
+            monthly_revenue,
+            total_plays,
+            total_revenue,
+            @curRow:=@curRow + 1 AS rank
+    FROM
+        (SELECT 
+			stats_id,
+            IFNULL(monthly_plays,0) as monthly_plays,
+            IFNULL(monthly_revenue,0) as monthly_revenue,
+            IFNULL(total_plays,0) as total_plays,
+            IFNULL(total_revenue,0) as total_revenue,
+            rank
+    FROM
+        song son
+    LEFT JOIN (SELECT 
+			song_id,
+            AVG(total_plays) AS monthly_plays,
+            AVG(revenue) AS monthly_revenue,
+            0 AS rank,
+            SUM(total_plays) AS total_plays,
+            SUM(revenue) AS total_revenue
+    FROM
+        song_monthly_stat
+    GROUP BY song_id) p ON son.id = p.song_id
+    ORDER BY total_plays DESC) y
+    JOIN (SELECT @curRow:=0) r) k ON stat_cache.id = k.stats_id 
+SET 
+    stat_cache.monthly_plays = k.monthly_plays,
+    stat_cache.monthly_revenue = k.monthly_revenue,
+    stat_cache.rank = k.rank,
+    stat_cache.total_plays = k.total_plays,
+    stat_cache.total_revenue = k.total_revenue;
+
+
+ 
+ 
+ 
+ 
+ 
+ 
  
  
 UPDATE stat_cache
@@ -248,7 +295,7 @@ UPDATE stat_cache
     FROM
         artist art
     LEFT JOIN (SELECT 
-        artist_id,
+			artist_id,
             AVG(total_plays) AS monthly_plays,
             AVG(revenue) AS monthly_revenue,
             0 AS rank,
@@ -265,6 +312,8 @@ SET
     stat_cache.rank = k.rank,
     stat_cache.total_plays = k.total_plays,
     stat_cache.total_revenue = k.total_revenue;
+    
+    
 
 
 UPDATE stat_cache
@@ -310,4 +359,3 @@ SET
  
  COMMIT;
 END^;
-
