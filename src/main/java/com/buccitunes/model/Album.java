@@ -75,11 +75,13 @@ public class Album extends MusicCollection {
 	
 	public Album(){
 		super();
+		this.stats = new StatCache();
 	};
 	
 
 	public Album(List<Song> newSongs){
 		this.songs = newSongs;
+		this.stats = new StatCache();
 	};
 	
 	public Album(RequestedAlbum requested, boolean addSongs) {
@@ -90,7 +92,7 @@ public class Album extends MusicCollection {
 		this.releaseDate = requested.getReleaseDate();
 		this.label = requested.getLabel();
 		this.genres = requested.getGenres();
-		
+		this.stats = new StatCache();
 		if(addSongs) {
 			List<Song> newSongs = new ArrayList<Song>();
 			List<RequestedSong> requestedSongs = requested.getSongs();

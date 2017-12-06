@@ -37,4 +37,22 @@ public class BucciPrivilege {
 		}
 		return user;
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+//	public static boolean isAdmin(User user) {
+//		return true;
+//	}
 }

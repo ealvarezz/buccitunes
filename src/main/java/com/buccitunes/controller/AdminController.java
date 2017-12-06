@@ -59,7 +59,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -81,7 +81,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -97,7 +97,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -113,7 +113,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -130,7 +130,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -148,7 +148,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -183,7 +183,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -199,7 +199,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -216,7 +216,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
@@ -233,7 +233,7 @@ public class AdminController {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
-		} else if(BucciPrivilege.isAdmin(loggedUser)) {
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
 			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
 		}
 		try {
