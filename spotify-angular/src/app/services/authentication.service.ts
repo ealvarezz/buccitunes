@@ -5,7 +5,7 @@ import {User} from '../objs/User';
 import {BucciResponse} from '../objs/BucciResponse';
 import {BucciConstants} from '../../environments/app.config';
 
-import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
@@ -53,10 +53,11 @@ export class AuthenticationService {
     }
 
     resetPasswordRequest(email : String){
-        // return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PW_REQUEST, JSON.stringify(email), {withCredentials: true})
-        // .map(this.extractData)
-        // .catch(this.handleError);
-        return Observable.of(true);
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PW_REQUEST, JSON.stringify(email), 
+        {headers: new HttpHeaders().set('Content-Type', 'application/json'), 
+        withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
     }
 
     getResetPassword(email : String, hashString : String){
@@ -65,7 +66,7 @@ export class AuthenticationService {
         .catch(this.handleError);
     }
     changePassword(email : String, password : String){
-        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.GET_RESET_PW, {email: email, password: password}, {withCredentials: true})
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PASSWORD, {email: email, password: password}, {withCredentials: true})
         .map(this.extractData)
         .catch(this.handleError);
     }
@@ -93,7 +94,9 @@ export class AuthenticationService {
 
     private extractData(bucci){
         if(bucci.successful){
-            this.currentUserChange.next(bucci.response);
+            if(this.currentUser){
+                this.currentUserChange.next(bucci.response);
+            }
             return bucci.response;
         }
         else{

@@ -56,6 +56,7 @@ resetPassword(){
 })
 export class RecoverComponent implements OnInit{
   private email : string;
+  private hash : string;
   private password : string;
   private confirmPassword: string;
   confirmed : boolean = false;
@@ -66,6 +67,22 @@ constructor(private route: ActivatedRoute,
             private notifications : NotificationsService) {}
 
   ngOnInit(){
+    this.route.params.subscribe(params => {
+        this.email = params['email'];
+        this.hash = params['hash'];
+        this.validateURL();
+    });
+  }
+
+  validateURL(){
+    this.authenticationService.getResetPassword(this.email, this.hash).subscribe(
+      (data)=>{
+        
+      },
+      (err)=>{
+        this.router.navigate(["/login"]);
+      }
+    )
   }
 
 
@@ -81,6 +98,18 @@ getErrorMessage(form : FormControl) {
     return form.hasError('required') ? 'You must enter a value' : '';
   }
 
+
+  changePassword(){
+    this.authenticationService.changePassword(this.email, this.password).subscribe(
+      (data)=>{
+        this.confirmed = true;
+      },
+      (err) =>{
+        this.confirmed = false;
+        this.notifications.error("ERROR",err);
+      }
+    )
+  }
 
 // resetPassword(){
 //     this.authenticationService.resetPasswordRequest(this.email).subscribe(

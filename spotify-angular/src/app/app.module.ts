@@ -73,7 +73,7 @@ const appRoutes: Routes = [
         ] 
   },
   {path: 'login', component: LoginComponent},
-  {path: 'recover', component: RecoverComponent},
+  {path: 'recover/:email/:hash', component: RecoverComponent},
   {path: 'forgot', component: ForgotComponent},
   {path: 'sign-up', component: SignUpComponent}
 ];
