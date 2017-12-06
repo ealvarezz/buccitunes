@@ -447,6 +447,13 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage("Must have the correct url to reset password.");
 		}
 		user.setPasswordAndEncrypt(info.password);
+		if(info.sendMail){
+			try {
+				mailManager.sendResetConfirmation(info.password);
+			} catch (MessagingException e) {
+				return BucciResponseBuilder.failedMessage("The email server is down, wait some time and try again.");
+			}
+		}
 		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
 	}
 	
