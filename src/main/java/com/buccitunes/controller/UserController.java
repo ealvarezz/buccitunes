@@ -449,6 +449,13 @@ public class UserController {
 		}
 		user.setPasswordAndEncrypt(info.password);
 		userService.save(user);
+		if(info.sendMail){
+			try {
+				mailManager.sendResetConfirmation(info.password);
+			} catch (MessagingException e) {
+				return BucciResponseBuilder.failedMessage("The email server is down, wait some time and try again.");
+			}
+		}
 		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
 	}
 	

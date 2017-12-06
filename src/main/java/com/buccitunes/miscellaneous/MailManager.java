@@ -143,6 +143,15 @@ public class MailManager {
         javaMailSender.send(mail);
 	}	
 	
+	public void sendResetConfirmation(String email) throws MessagingException {
+		MimeMessage mail = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+        helper.setTo(email);
+        helper.setSubject("BucciTunes Password Change Confirmation");
+        helper.setText(String.format("Your password has been changed, if this wasn't you please email buccitunes@gmail.com"));
+        javaMailSender.send(mail);
+	}	
+	
 	
 	
 	public void setAccountConfirmationSubject(String accountConfirmationSubject) {
