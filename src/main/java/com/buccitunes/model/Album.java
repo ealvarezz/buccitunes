@@ -80,6 +80,7 @@ public class Album extends MusicCollection {
 	
 
 	public Album(List<Song> newSongs){
+		super();
 		this.songs = newSongs;
 		this.stats = new StatCache();
 	};

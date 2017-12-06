@@ -51,6 +51,8 @@ import {UserService} from './services/user.service';
 import {BucciConstants} from '../environments/app.config';
 import {AdminGuard} from './services/AdminGuard';
 import {SpinnerService} from './services/spinner.service';
+import {ForgotComponent} from './forgot-password.component';
+import {RecoverComponent} from './forgot-password.component';
 
 
 const appRoutes: Routes = [
@@ -71,6 +73,8 @@ const appRoutes: Routes = [
         ] 
   },
   {path: 'login', component: LoginComponent},
+  {path: 'recover/:email/:hash', component: RecoverComponent},
+  {path: 'forgot', component: ForgotComponent},
   {path: 'sign-up', component: SignUpComponent}
 ];
 
@@ -105,6 +109,8 @@ const appRoutes: Routes = [
     RequestedSongTable,
     AccountComponent,
     ConfirmDialog,
+    RecoverComponent,
+    ForgotComponent
   ],
   imports: [
     RouterModule.forRoot(

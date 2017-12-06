@@ -5,12 +5,13 @@ import {User} from '../objs/User';
 import {BucciResponse} from '../objs/BucciResponse';
 import {BucciConstants} from '../../environments/app.config';
 
-import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse} from '@angular/common/http';
+import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/observable/throw';
 import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/of';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 
@@ -51,6 +52,25 @@ export class AuthenticationService {
         
     }
 
+    resetPasswordRequest(email : String){
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PW_REQUEST, JSON.stringify(email), 
+        {headers: new HttpHeaders().set('Content-Type', 'application/json'), 
+        withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+
+    getResetPassword(email : String, hashString : String){
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.GET_RESET_PW, {email: email, password: hashString}, {withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+    changePassword(email : String, password : String){
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PASSWORD, {email: email, password: password}, {withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+
     getLoggedInUser() : Observable<User>{
         return this.http.get<BucciResponse<User>>(BucciConstants.Endpoints.LOGGED_IN_USER,{withCredentials: true})
         .map(this.extractData.bind(this))
@@ -71,9 +91,12 @@ export class AuthenticationService {
     }
 
 
+
     private extractData(bucci){
         if(bucci.successful){
-            this.currentUserChange.next(bucci.response);
+            if(this.currentUser){
+                this.currentUserChange.next(bucci.response);
+            }
             return bucci.response;
         }
         else{

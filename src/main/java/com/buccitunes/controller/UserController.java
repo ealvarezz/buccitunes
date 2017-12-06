@@ -434,7 +434,8 @@ public class UserController {
 	@RequestMapping(value="check_reset_password_link", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Boolean> checkResetPasswordLink(@RequestBody LoginInfo info) {
 		User user = userService.findOne(info.email);
-		if(user == null || user.getPassword() != info.password) {
+	
+		if(user == null || !user.getPassword().equals(info.password)) {
 			return BucciResponseBuilder.failedMessage("Must have the correct url to reset password.");
 		}
 		return BucciResponseBuilder.successfulResponseMessage("Reset your password.",new Boolean(true));
@@ -443,10 +444,11 @@ public class UserController {
 	@RequestMapping(value="reset_password", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Boolean> resetPassword(@RequestBody LoginInfo info) {
 		User user = userService.findOne(info.email);
-		if(user == null || info.password != null) {
+		if(user == null || info.password == null) {
 			return BucciResponseBuilder.failedMessage("Must have the correct url to reset password.");
 		}
 		user.setPasswordAndEncrypt(info.password);
+		userService.save(user);
 		if(info.sendMail){
 			try {
 				mailManager.sendResetConfirmation(info.password);

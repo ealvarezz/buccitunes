@@ -48,7 +48,6 @@ export class PlayerComponent {
       this.musicService.secretChange.subscribe(
           secret => this.secretMode = secret
       );
-      
     }
 
     mute(){

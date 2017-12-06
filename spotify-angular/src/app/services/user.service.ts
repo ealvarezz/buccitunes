@@ -42,7 +42,6 @@ export class UserService {
          map(this.extractData)
          .catch(this.handleError);
     }
-
     private sanitzeUser(user : User){
         let newUser = new User();
         newUser.email = user.email;

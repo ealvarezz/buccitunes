@@ -31,6 +31,9 @@ export const BucciConstants =  {
       GET_USER            : environment.SERVER_PATH + "/user",
       FOLLOW_USER         : environment.SERVER_PATH + "/follow",
       UNFOLLOW_USER       : environment.SERVER_PATH + "/unfollow",
+      RESET_PW_REQUEST    : environment.SERVER_PATH + "/reset_password_send_email",
+      GET_RESET_PW        : environment.SERVER_PATH + "/check_reset_password_link",
+      RESET_PASSWORD      : environment.SERVER_PATH + "/reset_password",
 
   },
 
