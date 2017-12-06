@@ -416,4 +416,39 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
+	
+	@RequestMapping(value="reset_password_send_email", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Boolean> resetPasswordSendEmail(@RequestBody String email) {
+		User user = userService.findOne(email);
+		if(user == null) {
+			return BucciResponseBuilder.failedMessage("No account for this email.");
+		}
+		try {
+			mailManager.sendPasswordReset(email, user.getPassword());
+			return BucciResponseBuilder.successfulResponseMessage("An email to reset your password has been sent to this email.",new Boolean(true));
+		} catch (MessagingException e) {
+			return BucciResponseBuilder.failedMessage("The email server is down, wait some time and try again.");
+		}
+	}
+	
+	@RequestMapping(value="check_reset_password_link", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Boolean> checkResetPasswordLink(@RequestBody LoginInfo info) {
+		User user = userService.findOne(info.email);
+		if(user == null || user.getPassword() != info.password) {
+			return BucciResponseBuilder.failedMessage("Must have the correct url to reset password.");
+		}
+		return BucciResponseBuilder.successfulResponseMessage("Reset your password.",new Boolean(true));
+	}
+	
+	@RequestMapping(value="reset_password", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Boolean> resetPassword(@RequestBody LoginInfo info) {
+		User user = userService.findOne(info.email);
+		if(user == null || info.password != null) {
+			return BucciResponseBuilder.failedMessage("Must have the correct url to reset password.");
+		}
+		user.setPasswordAndEncrypt(info.password);
+		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
+	}
+	
+	
 }

@@ -52,6 +52,13 @@ constants:
 
 
 email:
+
+  siteURL: "http://localhost:4200"
+
+
+  resetEmailSubject: "BucciTunes reset email confirmation"
+  resetEmailText: "Follow the link to reset your email: %s"
+
   ApprovedAlbumSubject: "BucciTunes Album Approval"
   ApprovedAlbumText: "Your album: %s has been approved and is now posted."
   

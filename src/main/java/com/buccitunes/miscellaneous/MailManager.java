@@ -6,6 +6,7 @@ import java.util.Properties;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
+import com.buccitunes.model.Password;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
@@ -33,6 +34,7 @@ public class MailManager {
 	@Autowired
     public JavaMailSender javaMailSender;
 
+	private String siteURL;
 	
 	private String ApprovedAlbumSubject;
 	private String ApprovedAlbumText;
@@ -55,6 +57,9 @@ public class MailManager {
 	private String AccountConfirmationSubject;
 	private String AccountConfirmationText;
 	 
+	private String resetEmailSubject;
+	private String resetEmailText;
+	
 	
 	public void mailApprovedAlbumRequest(ArtistUser user, Album album) throws MessagingException{
 		MimeMessage mail = javaMailSender.createMimeMessage();
@@ -129,6 +134,16 @@ public class MailManager {
         javaMailSender.send(mail);
 	}
 	
+	public void sendPasswordReset(String email, String hashedURL) throws MessagingException {
+		MimeMessage mail = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+        helper.setTo(email);
+        helper.setSubject(resetEmailSubject);
+        helper.setText(String.format(resetEmailText, siteURL+"/recover/"+email+"/"+hashedURL ));
+        javaMailSender.send(mail);
+	}	
+	
+	
 	
 	public void setAccountConfirmationSubject(String accountConfirmationSubject) {
 		AccountConfirmationSubject = accountConfirmationSubject;
@@ -188,6 +203,18 @@ public class MailManager {
 
 	public void setDeniedConcertText(String deniedConcertText) {
 		DeniedConcertText = deniedConcertText;
+	}
+
+	public void setResetEmailSubject(String resetEmailSubject) {
+		this.resetEmailSubject = resetEmailSubject;
+	}
+
+	public void setResetEmailText(String resetEmailText) {
+		this.resetEmailText = resetEmailText;
+	}
+
+	public void setSiteURL(String siteURL) {
+		this.siteURL = siteURL;
 	}
 	
 }
