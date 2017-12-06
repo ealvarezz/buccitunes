@@ -384,4 +384,12 @@ public class MusicCollectionService {
 		
 	}
 	
+	public Song getSong(int songId) {
+		
+		Song song = songRepository.findOne(songId);
+		
+		return song;
+		
+	}
+	
 }

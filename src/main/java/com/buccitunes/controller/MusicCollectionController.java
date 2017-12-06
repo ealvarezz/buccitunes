@@ -146,6 +146,17 @@ public class MusicCollectionController {
 			
 	}
 	
+	@RequestMapping(value="getSong", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<Song> getSongDetails(@PathVariable int songId, HttpSession session) {
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			Song song = musicCollectionService.getSong(songId);
+			return BucciResponseBuilder.successfulResponse(song);
+		}
+	}
 	
 	@RequestMapping(value="test", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> test(HttpSession session) {
