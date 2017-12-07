@@ -12,12 +12,11 @@ import com.buccitunes.model.ArtistUser;
 @Transactional
 public interface ArtistUserRepository extends BaseUserRepository<ArtistUser>, CrudRepository<ArtistUser, String> {
 	
-	/*@Modifying
+	@Modifying
 	@Query(value="INSERT INTO buccidb2.artist_user(email,artist_id,create_date) VALUES (:newEmail,:newArtist,NOW())", nativeQuery = true)
-	public void upgradeToArtist(@Param("newEmail") String newEmail, @Param("newArtist")int newArtist);
-	*/
-	
+	public void upgradeToArtist(@Param("newEmail")String newEmail, @Param("newArtist")int newArtist);
+	/*
 	@Query(value="call upgradeToArtist(:newEmail,:newArtist,:newTier,:newRole);", nativeQuery = true) 
 	public ArtistUser upgradeToArtist(@Param("newEmail") String newEmail, @Param("newArtist")int newArtist, @Param("newTier")int newTier,@Param("newRole")int newRole);
-	
+	*/
 }

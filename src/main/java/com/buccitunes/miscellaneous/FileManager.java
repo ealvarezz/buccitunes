@@ -76,8 +76,21 @@ public class FileManager {
 	}
 	
 	private static Path getAbsolutePathFromResourceString(String path) {
-		String folderPath = path.toString().substring(RESOURCEPATHALIAS.length()-1);
-		return Paths.get(FILESPATH.toString() + folderPath);	
+		if(path != null) {
+			String folderPath = path.toString().substring(RESOURCEPATHALIAS.length()-1);
+			return Paths.get(FILESPATH.toString() + folderPath);	
+		} else {
+			return null;
+		}
+	}
+	
+	private static Path getParentAbsolutePathFromResourceString(String path) {
+		if(path != null) {
+			String folderPath = path.toString().substring(RESOURCEPATHALIAS.length()-1);
+			return Paths.get(FILESPATH.toString() + folderPath).getParent();	
+		} else {
+			return null;
+		}
 	}
 	
 	public static String saveAlbumArtwork(String encodedStr, int albumId) throws IOException {
@@ -198,7 +211,7 @@ public class FileManager {
 	public static String moveRequestedArtworkToAlbum(String requestedPath, int albumId) throws BucciException, IOException {
 		Path oldPath = getAbsolutePathFromResourceString(requestedPath);
 		
-		if(Files.notExists(oldPath)) {
+		if(oldPath == null ||  Files.notExists(oldPath)) {
         	throw new BucciException("'"+ oldPath + "' does not exist");
         }
 		
@@ -216,7 +229,7 @@ public class FileManager {
 	public static String moveRequestedArtworkToSong(String requestedPath, int songId) throws BucciException, IOException {
 		Path oldPath = getAbsolutePathFromResourceString(requestedPath);
 		
-		if(Files.notExists(oldPath)) {
+		if(oldPath == null ||  Files.notExists(oldPath)) {
         	throw new BucciException("'"+ oldPath + "' does not exist");
         }
 		
@@ -234,7 +247,7 @@ public class FileManager {
 	public static String moveRequestedAudio(String requestedPath, int songId) throws BucciException, IOException {
 		Path oldPath = getAbsolutePathFromResourceString(requestedPath);
 		
-		if(Files.notExists(oldPath)) {
+		if(oldPath == null ||  Files.notExists(oldPath)) {
         	throw new BucciException("'"+ oldPath + "' does not exist");
         }
 		
@@ -255,40 +268,40 @@ public class FileManager {
 	}
 	
 	public static void removePlaylistResources(Playlist playlist) throws IOException {
-		int id = playlist.getId();
-		Path path = Paths.get(PLAYLISTPATH + "/" + id +  "/");
-		if(Files.exists(path)) {
-			Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
-			playlist.setArtworkPath(null);
+		Path pathParent = getParentAbsolutePathFromResourceString(playlist.getArtworkPath());
+		if(pathParent != null && Files.exists(pathParent)) {
+			removeDirectory(pathParent);
 		}
 	}
 	
 	public static void removeRequestedAlbumResources(RequestedAlbum album) throws IOException {
-		int id = album.getId();
-		Path path = Paths.get(REQUESTEDALBUMSPATH + "/" + id +  "/");
-		if(Files.exists(path)) {
-			Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
-			album.setArtworkPath(null);
+		Path pathParent = getParentAbsolutePathFromResourceString(album.getArtworkPath());
+		if(pathParent != null && Files.exists(pathParent)) {
+			removeDirectory(pathParent);
 		}
 		
 		for(RequestedSong song : album.getSongs()) {
-			id = song.getId();
-			path = Paths.get(REQUESTEDSONGSMPATH + "/" + id +  "/");
-			if(Files.exists(path)) {
-				Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
-				song.setPicturePath(null);
-				song.setAudioPath(null);
+			Path audioPathParent = getParentAbsolutePathFromResourceString(song.getAudioPath());
+			Path artworkPathParent = getParentAbsolutePathFromResourceString(song.getPicturePath());
+			if(audioPathParent != null && Files.exists(audioPathParent)) {
+				removeDirectory(audioPathParent);
+			}
+			else if(artworkPathParent != null && Files.exists(artworkPathParent)) {
+				removeDirectory(artworkPathParent);
 			}
 		}
 	}
 	
 	public static void removeRequestedSongResources(RequestedSong song) throws IOException {
-	 	int id = song.getId();
-		Path path = Paths.get(REQUESTEDSONGSMPATH + "/" + id +  "/");
-		if(Files.exists(path)) {
-			Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
-			song.setPicturePath(null);
-			song.setAudioPath(null);
+	 	Path pathParent = getParentAbsolutePathFromResourceString(song.getAudioPath());
+		if(pathParent != null && Files.exists(pathParent)) {
+			removeDirectory(pathParent);
+		}
+		else {
+			pathParent = getParentAbsolutePathFromResourceString(song.getPicturePath());
+			if(pathParent != null && Files.exists(pathParent)) {
+				removeDirectory(pathParent);
+			}
 		}
 	}
 	
@@ -297,6 +310,10 @@ public class FileManager {
 		if(Files.exists(path)) {
 			Files.delete(path);
 		}
+	}
+	
+	private static void removeDirectory(Path path) throws IOException {
+		Files.walk(path).sorted(Comparator.reverseOrder()).map(Path::toFile).forEach(File::delete);
 	}
 	
 	public static String getFilesPath() {

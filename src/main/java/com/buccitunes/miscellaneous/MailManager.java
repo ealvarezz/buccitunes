@@ -8,6 +8,7 @@ import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
 import com.buccitunes.model.Password;
 import com.buccitunes.model.RequestedAlbum;
+import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
@@ -62,6 +63,9 @@ public class MailManager {
 	
 	private String ApprovedArtistSubject;
 	private String ApprovedArtistText;
+	
+	private String DeniedArtistSubject;
+	private String DeniedArtistText;
 	
 	
 	public void mailApprovedAlbumRequest(ArtistUser user, Album album) throws MessagingException{
@@ -126,6 +130,19 @@ public class MailManager {
 	        helper.setTo(user.getEmail());
 	        helper.setSubject(ApprovedArtistSubject);
 	        helper.setText(String.format(ApprovedArtistText, user.getArtist().getId()));
+	        javaMailSender.send(mail);
+		} catch (MessagingException e) {
+			throw new BucciException(e.getMessage());
+		}
+	}
+	
+	public void mailDeniedArtistRequest(RequestedArtist requested) throws BucciException {
+		try {
+			MimeMessage mail = javaMailSender.createMimeMessage();
+	        MimeMessageHelper helper = new MimeMessageHelper(mail, true);
+	        helper.setTo(requested.getRequester().getEmail());
+	        helper.setSubject(DeniedArtistSubject);
+	        helper.setText(String.format(DeniedArtistText, requested.getName()));
 	        javaMailSender.send(mail);
 		} catch (MessagingException e) {
 			throw new BucciException(e.getMessage());
@@ -248,5 +265,13 @@ public class MailManager {
 
 	public void setApprovedArtistText(String approvedArtistText) {
 		ApprovedArtistText = approvedArtistText;
+	}
+
+	public void setDeniedArtistSubject(String deniedArtistSubject) {
+		DeniedArtistSubject = deniedArtistSubject;
+	}
+
+	public void setDeniedArtistText(String deniedArtistText) {
+		DeniedArtistText = deniedArtistText;
 	}
 }

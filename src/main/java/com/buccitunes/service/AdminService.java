@@ -97,12 +97,15 @@ public class AdminService {
 		Artist artist = new Artist(requestedArtist);
 		artist = artistRepository.save(artist);
 		
-		ArtistUser artUser = artistUserRepository.upgradeToArtist(requestedUser.getEmail(), artist.getId(), Tier.NO_TIER.getCode() ,UserRole.ARTIST.getCode());		
-		ArtistUser artUser2 = artistUserRepository.findOne(requestedUser.getEmail());
-		
+		requestedUser.setRole(UserRole.ARTIST);
+		artistUserRepository.upgradeToArtist(requestedUser.getEmail(), artist.getId());
 		requestedArtistRepository.delete(requestedArtist);
+		
+		ArtistUser artUser = new ArtistUser(requestedUser, artist);
 		return artUser;
 	}
+	
+
 	
 	public Song addSongToAlbum(Song song) throws BucciException{
 		if(song.getAlbum() == null) {
@@ -301,6 +304,15 @@ public class AdminService {
 		List<RequestedAlbum> result = new ArrayList<>();
 		for(RequestedAlbum requested: requestedAlbumRepository.findAll()) result.add(requested);
 		return result;
+	}
+	
+	public void removeRequestedArtist(RequestedArtist requested) throws BucciException {
+		requested = requestedArtistRepository.findOne(requested.getId());
+		if(requested == null) {
+			throw new BucciException(constants.getArtistNotFoundMsg());
+		}
+		
+		requestedArtistRepository.delete(requested);
 	}
 	
 	public void removeRequestedAlbum(RequestedAlbum album) throws BucciException {
