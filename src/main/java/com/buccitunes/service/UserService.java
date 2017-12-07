@@ -248,6 +248,16 @@ public class UserService  {
 		user.getFollowingPlaylists().add(playlist);
 	}
 	
+	public void unfollowPlaylist(int playlistId, String email) {
+		
+		User user = userRepository.findOne(email);
+		Playlist playlist = playlistRepository.findOne(playlistId);
+		user.getFollowingPlaylists().size();
+		user.getFollowingPlaylists().remove(playlist);
+		
+		playlistRepository.delete(playlistId);
+	}
+	
 	public void saveSong(int songId, String email) {
 		
 		User user = userRepository.findOne(email);
@@ -339,5 +349,25 @@ public class UserService  {
 	
 	public List<Artist> getRelatedArtists(int artistId){
 		return artistRepository.getRelatedArtist(artistId);
+	}
+	
+	public List<Artist> followArtist(int artistId, String email){
+		
+		User user = userRepository.findOne(email);
+		Artist artist = artistRepository.findOne(artistId);
+		user.getFollowingArtists().size();
+		user.getFollowingArtists().add(artist);
+		return user.getFollowingArtists();
+		
+	}
+	
+	public List<Artist> unfollowArtist(int artistId, String email){
+		
+		User user = userRepository.findOne(email);
+		Artist artist = artistRepository.findOne(artistId);
+		user.getFollowingArtists().size();
+		user.getFollowingArtists().remove(artist);
+		return user.getFollowingArtists();
+		
 	}
 }

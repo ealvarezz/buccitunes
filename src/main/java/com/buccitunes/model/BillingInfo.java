@@ -1,5 +1,7 @@
 package com.buccitunes.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +24,8 @@ public class BillingInfo {
 	
 	private String billingAddress;
 	
+	private Date nextBillingDate;
+	
 	@ManyToOne
     @JoinColumn(name = "credit_company_id")
 	private CreditCompany creditCardCompany;
@@ -35,6 +39,14 @@ public class BillingInfo {
 	public void setId(int id) {
 		this.id = id;
 	}
+	
+	public Date getNextBillingDate() {
+		return nextBillingDate;
+	}
+	public void setNextBillingDate(Date nextBillingDate) {
+		this.nextBillingDate = nextBillingDate;
+	}
+	
 	public String getCardHolderName() {
 		return cardHolderName;
 	}
