@@ -1,15 +1,16 @@
 <div class = "music-player-class">
 <md-toolbar color="primary" class="music-bar">
 
-    <img class="album_img" [src] ="song.album_image">
+     <img *ngIf="song.album" class="album_img" [src] ="mediaService.getAlbumImageUrl(song.album.artworkPath)"> 
     <div class="row" style="padding-left:10px;">
         <div >
-            <a class="song_name">{{song.song_name}}</a>
+            <a class="song_name">{{song.name}}</a>
         </div>
         <div style="line-height:0px;">
-            <a class="artist_name">{{song.artist_name}}</a>
+            <a *ngIf="song.owner" class="artist_name">{{song.owner.name}}</a>
         </div>
     </div>
+
 
 
 
@@ -20,7 +21,8 @@
             <button md-icon-button *ngIf ="!isPlaying" (click)="play()"><i class="material-icons md-48">play_circle_outline</i></button>
             <button md-icon-button *ngIf ="isPlaying" (click)="pause()"><i class="material-icons md-48">pause_circle_outline</i></button>
             <button md-icon-button><i class="material-icons">skip_next</i></button>
-            <button md-icon-button><i class="material-icons">loop</i></button>
+            <button (click) ="toggleLoop()" *ngIf="!loop" md-icon-button><i class="material-icons">loop</i></button>
+            <button (click) ="toggleLoop()" *ngIf="loop" color="accent" md-icon-button><i class="material-icons">loop</i></button>
         </div>
         <div class="song_progress">
               <md-progress-bar

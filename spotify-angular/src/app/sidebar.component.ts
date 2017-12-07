@@ -7,6 +7,7 @@ import {Album} from './objs/Album';
 import {AddPlaylistDialog} from './add-playlist.component';
 import {Playlist} from './objs/Playlist';
 import {User} from './objs/User';
+import {MusicService} from './services/player.service';
 
 
 @Component({
@@ -18,7 +19,8 @@ export class SideBarComponent implements OnInit {
     constructor(public dialog: MdDialog,
                 private router: Router,
                 private authService : AuthenticationService,
-                private musicService : MusicCollectionService) {}
+                private musicService : MusicCollectionService,
+                private playerService : MusicService) {}
     recentAlbums : Album[];
     playlists    : Playlist[];
     currentUser  : User;
@@ -36,6 +38,7 @@ export class SideBarComponent implements OnInit {
     }
 
     logout() {
+        this.playerService.pauseSong();
         this.authService.logout().subscribe(
             (data) =>{
                 this.router.navigate(["/login"]);

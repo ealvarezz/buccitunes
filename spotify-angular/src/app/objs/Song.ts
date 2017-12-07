@@ -1,4 +1,5 @@
 import {Artist} from './Artist';
+import {Album} from './Album';
 
 export class Song{
     public name             : string = "Homecoming";
@@ -14,6 +15,7 @@ export class Song{
     public audio            : string;
     public lyrics           : string;
     public saved            : boolean;
+    public album            : Album;
     // public album_image      : string = "/assets/graduation.png";
     // public song_file        : string = "/assets/rockstar.mp3";
     //public album            : String = "Graduation"

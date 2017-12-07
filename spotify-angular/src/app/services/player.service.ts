@@ -1,11 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Song } from './../objs/Song';
+import {BucciConstants} from '../../environments/app.config';
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/map';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {environment} from '../../environments/environment';
+import {QueueService} from './queue.service';
 
 @Injectable()
 export class MusicService {
@@ -18,6 +20,7 @@ export class MusicService {
     public currSongChange   = new BehaviorSubject<any>(new Song());
     public volumeChange     = new BehaviorSubject<number>(100);
     public secretChange     = new BehaviorSubject<boolean>(false);
+    public loopChange       = new BehaviorSubject<boolean>(false);
 
 
     get audio()         : HTMLAudioElement { return this.audioChange.value;}
@@ -28,9 +31,10 @@ export class MusicService {
     get currSong()      : Song { return this.currSongChange.value }
     get volume()        : number { return this.volumeChange.value }
     get secretMode()    : boolean { return this.secretChange.value }
+    get loop()          : boolean {return this.loopChange.value};
 
 
-    constructor(){
+    constructor(private queue : QueueService){
         this.audio.ontimeupdate = this.updateTime.bind(this);
     }
 
@@ -43,8 +47,19 @@ export class MusicService {
         this.currTimeChange.next(time)
     }
 
+    // endHandler(){
+    //     if(this.loop){
+    //         this.audio.loo
+    //     }
+    // }
+
     toggleSecretMode(){
         this.secretChange.next(!this.secretMode);
+    }
+
+    toggleLoop(){
+        this.audio.loop = !this.loop;
+        this.loopChange.next(!this.loop);
     }
 
     playSong(){
@@ -77,8 +92,7 @@ export class MusicService {
 
     pauseSong(){
         this.audio.pause();
-        this.togglePlaying(false);
-        
+        this.togglePlaying(false); 
     }
 
     changeVolume(vol){

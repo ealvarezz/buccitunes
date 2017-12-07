@@ -53,6 +53,10 @@ import {AdminGuard} from './services/AdminGuard';
 import {SpinnerService} from './services/spinner.service';
 import {ForgotComponent} from './forgot-password.component';
 import {RecoverComponent} from './forgot-password.component';
+import {UserDashboard} from './user-dashboard.component';
+import {QueueService} from './services/queue.service';
+import {RecentlyPlayed} from './recently-played';
+import {FollowedPlaylists} from './followed-playlist';
 
 
 const appRoutes: Routes = [
@@ -64,10 +68,13 @@ const appRoutes: Routes = [
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
           {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard], 
               children:[
-                {path: 'requested_albums', component: RequestedAlbumComponent, canActivate: [AuthGuard]}
+                {path: 'requested_albums', component: RequestedAlbumComponent, canActivate: [AuthGuard]},
+                {path: 'user_dashboard', component: UserDashboard, canActivate: [AuthGuard]}
               ]},
           {path: 'library', component: SongLibrary, canActivate: [AuthGuard]},
           {path: 'album-library', component: AlbumLibrary, canActivate: [AuthGuard]},
+          {path: 'recently-played', component: RecentlyPlayed, canActivate: [AuthGuard]},
+          {path: 'followed-playlists', component: FollowedPlaylists, canActivate: [AuthGuard]},
           {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
           {path: 'user/:id', component: AccountComponent, canActivate: [AuthGuard]},
         ] 
@@ -110,7 +117,10 @@ const appRoutes: Routes = [
     AccountComponent,
     ConfirmDialog,
     RecoverComponent,
-    ForgotComponent
+    ForgotComponent,
+    UserDashboard,
+    RecentlyPlayed,
+    FollowedPlaylists,
   ],
   imports: [
     RouterModule.forRoot(
@@ -161,6 +171,7 @@ const appRoutes: Routes = [
     MediaService,
     UserService,
     SpinnerService,
+    QueueService,
     { provide: MD_DIALOG_DATA, useValue: {} },
     { provide: MdDialogRef, useValue: {} }
   ],

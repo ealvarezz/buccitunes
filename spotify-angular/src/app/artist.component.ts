@@ -56,6 +56,7 @@ export class ArtistComponent implements OnInit {
       .subscribe(
           (data) => {
             this.artist = data;
+            this.assignAlbums(this.artist.albums);
           },  
           (err) => {
             this.notificationService.error("ERROR","There was an error loading this artist.");
@@ -79,6 +80,17 @@ export class ArtistComponent implements OnInit {
         this.notificationService.success("SUCCESS",result);
       }
     });
+  }
+
+
+  assignAlbums(albums : Album[]) : Observable<boolean>{
+    for( let album of albums){
+      for(let song of album.songs){
+        song.album = album;
+        song.owner = this.artist;
+      }
+    }
+    return Observable.of(true);
   }
 
   toggleShow(showAllSongs){
