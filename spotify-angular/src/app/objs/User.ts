@@ -1,9 +1,11 @@
 
 import {Album} from './Album';
+import {Playlist} from './Playlist';
 import {BillingInfo} from './BillingInfo';
 export class User{
     
     recentlyPlayed  : Album[];
+    followingPlaylists : Playlist[];
     username        : string;
     name            : string;
     first_name      : string;

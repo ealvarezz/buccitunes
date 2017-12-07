@@ -53,7 +53,7 @@ export class PlaylistComponent{
        this.musicService.followPlaylist(this.playlist)
        .subscribe(
            (data)=>{
-               this.notifications.error("Success", "Successfully following playlist");
+               this.notifications.success("Success", "Successfully following playlist");
            },
            (err)=>{
                 console.log("error");

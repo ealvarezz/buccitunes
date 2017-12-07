@@ -29,6 +29,14 @@ export class UserService {
         .catch(this.handleError);
     }
 
+    getAllUser(){
+        return this.http.get<BucciResponse<User[]>>(BucciConstants.Endpoints.GET_ALL_USERS,{
+           withCredentials: true
+        }).
+        map(this.extractData)
+        .catch(this.handleError);
+    }
+
     followUser(user : User){
         let sanitizedUser = this.sanitzeUser(user);
         return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.FOLLOW_USER, sanitizedUser, {withCredentials: true}).

@@ -63,18 +63,18 @@ export class AuthenticationService {
         return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PW_REQUEST, JSON.stringify(email), 
         {headers: new HttpHeaders().set('Content-Type', 'application/json'), 
         withCredentials: true})
-        .map(this.extractData)
+        .map(this.extractDataBUCCI)
         .catch(this.handleError);
     }
 
     getResetPassword(email : String, hashString : String){
         return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.GET_RESET_PW, {email: email, password: hashString}, {withCredentials: true})
-        .map(this.extractData)
+        .map(this.extractDataBUCCI)
         .catch(this.handleError);
     }
     changePassword(email : String, password : String){
         return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PASSWORD, {email: email, password: password}, {withCredentials: true})
-        .map(this.extractData)
+        .map(this.extractDataBUCCI)
         .catch(this.handleError);
     }
 
@@ -97,11 +97,18 @@ export class AuthenticationService {
         return this.currentUser.role === BucciConstants.Roles.PREMIUM;
     }
 
-
+    private extractDataBUCCI(bucci){
+        if(bucci.successful){
+            return bucci.response;
+        }
+        else{
+            throw new Error(bucci.message);
+        }
+    }
 
     private extractData(bucci){
         if(bucci.successful){
-            if(this.currentUser){
+            if(this.currentUserChange){
                 this.currentUserChange.next(bucci.response);
             }
             return bucci.response;

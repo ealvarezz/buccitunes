@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core';
 import {MusicService } from './services/player.service';
+import {MediaService} from './services/media.service';
 import { Observable } from 'rxjs/Observable';
 import { Song } from './objs/Song';
 
@@ -18,6 +19,7 @@ export class PlayerComponent {
     private song : Song 
     private volume : number
     private time : number
+    private loop : boolean;
 
 
     private secretMode : boolean;
@@ -25,7 +27,8 @@ export class PlayerComponent {
     showBar : boolean = false;
 
     
-    constructor(private musicService : MusicService){
+    constructor(private musicService : MusicService,
+                private mediaService : MediaService){
     }
 
     ngOnInit(){
@@ -48,6 +51,9 @@ export class PlayerComponent {
       this.musicService.secretChange.subscribe(
           secret => this.secretMode = secret
       );
+      this.musicService.loopChange.subscribe(
+          loop => this.loop = loop
+      )
     }
 
     mute(){
@@ -76,6 +82,9 @@ export class PlayerComponent {
         this.showBar = false;
     }
 
+    toggleLoop(){
+        this.musicService.toggleLoop();
+    }
     
 
 

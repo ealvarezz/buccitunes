@@ -154,6 +154,12 @@ mat-toolbar-row{
 .artist_name{
     font-size:12px;
 }
+.album_img{
+    height:55px;
+    width: 55px;
+    max-height:55px;
+    max-width:55px;
+}
 .browse-item-template h4 {
    margin-top:0px;
    margin-bottom: 5px;

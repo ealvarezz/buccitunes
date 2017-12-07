@@ -38,6 +38,9 @@ export class AlbumComponent{
                 .subscribe(
                     (data) => {
                         this.album = data;
+                        for(let song of this.album.songs){
+                            song.album = this.album;
+                        }
                     },
                     (err) => {
                         this._location.back();

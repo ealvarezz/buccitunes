@@ -1,0 +1,30 @@
+<div>
+             <div class="user_info">
+                <md-card style="min-height:500px;"  *ngIf="selectedUser" > 
+                    <md-grid-list cols="3" rowHeight="30px">
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Username</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.username}}</span></md-grid-tile>
+                          <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Email</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.email}}</span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Account Type</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.role}}</span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Account Status</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.status}}</span></md-grid-tile>
+                          <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Join Date</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.join_date | date }}</span></md-grid-tile>
+                          <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
+                         <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{selectedUser.last_name}}, {{selectedUser.first_name}}</span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Billing Info</b></span></md-grid-tile>
+                         <md-grid-tile colspan="1"><span style="position:absolute; left:0px;">..............</span></md-grid-tile>
+                    </md-grid-list>
+
+                    <button md-raised-button color="primary" class="rounded-button">Ban Account</button>
+                    <button md-raised-button color="warn" class="rounded-button">Delete Account</button>
+
+
+                </md-card>
+            </div>
+            <div class="user_table">
+                <user-table (selectedRow)= "chooseSelectedUser($event)" [users]="users"></user-table>
+            </div>
+        </div>
