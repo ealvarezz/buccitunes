@@ -32,7 +32,7 @@ INSERT INTO `buccidb2`.`mime_type` (`id`, `name`) VALUES ('6', 'jpeg')^;
 INSERT INTO `buccidb2`.`mime_type` (`id`, `name`) VALUES ('7', 'png')^;
 INSERT INTO `buccidb2`.`mime_type` (`id`, `name`) VALUES ('8', 'jpg')^;
 
-
+INSERT INTO `buccidb2`.`location` (`address`, `city`, `state`, `zip`) VALUES ('450 Circle Road', 'Grrrrrah', 'NY', 11790)^;
 
 /*********************
 * STORED PROCEDURES
@@ -264,16 +264,7 @@ SET
     stat_cache.monthly_revenue = k.monthly_revenue,
     stat_cache.rank = k.rank,
     stat_cache.total_plays = k.total_plays,
-    stat_cache.total_revenue = k.total_revenue;
-
-
- 
- 
- 
- 
- 
- 
- 
+    stat_cache.total_revenue = k.total_revenue; 
  
 UPDATE stat_cache
         INNER JOIN
@@ -359,3 +350,26 @@ SET
  
  COMMIT;
 END^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upgradeToArtist`(IN newEmail VARCHAR(255), IN newArtist INT, IN newTier INT, IN newRole INT)
+BEGIN
+	Start transaction;
+		UPDATE user u
+		SET u.role = newRole
+		where u.email = newEmail;
+		
+		INSERT INTO buccidb2.artist_user(email,artist_id,create_date, tier)
+		VALUES (newEmail, newArtist, NOW(), tier);
+		
+		select * from user u
+		join artist_user au on au.email = u.email
+		join artist a on a.id = au.artist_id
+		where u.email = newEmail;
+    Commit;
+END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_artist_last_month_stats`()
+BEGIN
+	SELECT MS.* FROM buccidb2.artist_monthly_stat MS
+	WHERE MONTH(MS.month) = MONTH(NOW()) - 1 AND YEAR(MS.month) = YEAR(NOW());
+END ^;

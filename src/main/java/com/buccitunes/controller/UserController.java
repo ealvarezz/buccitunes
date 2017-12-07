@@ -269,6 +269,18 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="unfollow_playlist", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> unfollowPlaylist(@RequestBody Playlist playlist, HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else {
+			userService.unfollowPlaylist(playlist.getId(), sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse("Playlist unfollowed");	
+		}
+	}
+	
 	@RequestMapping(value="save_song", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<String> userSaveSong(HttpSession session, @RequestBody Song song) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
@@ -459,5 +471,34 @@ public class UserController {
 		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
 	}
 	
+	@RequestMapping(value="go_private", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<UserPageInfo> becomePrivate(@RequestBody String id, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		return BucciResponseBuilder.failedMessage("NOT YET IMPLEMENTED");
+	}
+	@RequestMapping(value="follow_artist", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Artist>> followArtist(@RequestParam int artistId, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		List<Artist> artist = userService.followArtist(artistId, loggedUser.getEmail());
+		return BucciResponseBuilder.successfulResponse(artist);
+	}
 	
+	@RequestMapping(value="unfollow_artist", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Artist>> unfollowArtist(@RequestParam int artistId, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		List<Artist> artist = userService.unfollowArtist(artistId, loggedUser.getEmail());
+		return BucciResponseBuilder.successfulResponse(artist);
+	}
 }

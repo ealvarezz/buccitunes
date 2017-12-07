@@ -9,6 +9,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.buccitunes.constants.UserRole;
 import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.BillingInfoRepository;
@@ -149,23 +150,19 @@ public class UserService  {
 	}
 	
 	public User signup(SignupFormInfo signupInfo) throws BucciException {
-		
-		boolean signedForPremium = false;
-		if(signupInfo.billingInfo != null) {
-			signedForPremium = true;
-		}
-		
+				
 		User user = userRepository.findOne(signupInfo.userInfo.getEmail());
-		
 		if(user != null) {
 			throw new BucciException("Email already being used");
 		}
-		
 		user = signupInfo.userInfo;
 		
 		user.setPasswordAndEncrypt(signupInfo.userInfo.getPassword());
 		
-		if(signedForPremium) {
+		if(signupInfo.artistInfo != null) {
+			throw new BucciException("NOT IMPLEMENTED");
+		}
+		else if(signupInfo.billingInfo != null) {
 			String invalidBillingInfo = signupInfo.billingInfo.checkInvalidInfo(); 
 			
 			//If the billingInfo entered is invalid
@@ -208,6 +205,7 @@ public class UserService  {
 		billingInfo.setCreditCardCompany(cardCompany);
 		billingInfo = billingInfoRepository.save(billingInfo);
 		
+		user.setRole(UserRole.PREMIUM);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
 		return pUser;
@@ -248,6 +246,16 @@ public class UserService  {
 		Playlist playlist = playlistRepository.findOne(playlistId);
 		user.getFollowingPlaylists().size();
 		user.getFollowingPlaylists().add(playlist);
+	}
+	
+	public void unfollowPlaylist(int playlistId, String email) {
+		
+		User user = userRepository.findOne(email);
+		Playlist playlist = playlistRepository.findOne(playlistId);
+		user.getFollowingPlaylists().size();
+		user.getFollowingPlaylists().remove(playlist);
+		
+		playlistRepository.delete(playlistId);
 	}
 	
 	public void saveSong(int songId, String email) {
@@ -341,5 +349,25 @@ public class UserService  {
 	
 	public List<Artist> getRelatedArtists(int artistId){
 		return artistRepository.getRelatedArtist(artistId);
+	}
+	
+	public List<Artist> followArtist(int artistId, String email){
+		
+		User user = userRepository.findOne(email);
+		Artist artist = artistRepository.findOne(artistId);
+		user.getFollowingArtists().size();
+		user.getFollowingArtists().add(artist);
+		return user.getFollowingArtists();
+		
+	}
+	
+	public List<Artist> unfollowArtist(int artistId, String email){
+		
+		User user = userRepository.findOne(email);
+		Artist artist = artistRepository.findOne(artistId);
+		user.getFollowingArtists().size();
+		user.getFollowingArtists().remove(artist);
+		return user.getFollowingArtists();
+		
 	}
 }

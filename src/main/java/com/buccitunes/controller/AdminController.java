@@ -64,6 +64,7 @@ public class AdminController {
 		}
 		try {
 			ArtistUser artist = adminService.adminApproveArtist(requested);
+			mailManager.mailApprovedArtistRequest(artist);
 			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), artist);
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
@@ -167,11 +168,6 @@ public class AdminController {
 		return BucciResponseBuilder.successfulResponse(plays);
 	}
 	
-	@RequestMapping(value="pay_royalties", method = RequestMethod.GET)
-	public BucciResponse<Double> payRoyaltiesToArtists() {
-		double totalPaid = adminService.payRoyalties();
-		return BucciResponseBuilder.successfulResponse(new Double(totalPaid));
-	}
 	
 	@RequestMapping(value="requested_albums", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<RequestedAlbum>> getRequestedAlbums() {
@@ -193,6 +189,24 @@ public class AdminController {
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
+	}
+	
+	@RequestMapping(value="disapprove_artist", method = RequestMethod.POST)
+	public BucciResponse<String> disapproveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
+		
+		try {
+			adminService.removeRequestedArtist(requested);
+			mailManager.mailDeniedArtistRequest(requested);
+			return BucciResponseBuilder.successMessage(constants.getSuccessfulDeletionMsg());
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}	
 	}
 	
 	@RequestMapping(value="disapprove_request_album", method = RequestMethod.POST)
@@ -249,6 +263,12 @@ public class AdminController {
 	@RequestMapping(value="charge_users", method = RequestMethod.GET)
 	public BucciResponse<String> chargeUsers() {
 		adminService.chargeUsers();
+		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
+	}
+	
+	@RequestMapping(value="pay_royalties", method = RequestMethod.PUT)
+	public BucciResponse<String> payArtistRoyalties() {
+		adminService.payRoyaltiesByCaching();
 		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
 	}
 	

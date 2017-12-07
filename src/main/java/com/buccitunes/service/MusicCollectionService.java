@@ -28,6 +28,7 @@ import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.GenreRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
+import com.buccitunes.dao.SongMonthlyStatRepository;
 import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.UserRepository;
@@ -44,6 +45,7 @@ import com.buccitunes.model.Genre;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SongMonthlyStat;
 import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.User;
 import com.buccitunes.resultset.AlbumWithStats;
@@ -64,10 +66,13 @@ public class MusicCollectionService {
 	private final UserRepository userRepository;
 	private final GenreRepository genreRepository;
 	private final ArtistUserRepository artistUserRepository;
+	private final SongMonthlyStatRepository songMonthlyStatRepository;
 	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, SongPlaysRepository songPlaysRepository,
-			UserRepository userRepository, ArtistUserRepository artistUserRepository, GenreRepository genreRepository) {
+			UserRepository userRepository, ArtistUserRepository artistUserRepository, GenreRepository genreRepository,
+			SongMonthlyStatRepository songMonthlyStatRepository
+			) {
 		this.albumRepository = albumRepository;
 		this.playlistRepository = playlistRepository;
 		this.songRepository = songRepository;
@@ -76,6 +81,7 @@ public class MusicCollectionService {
 		this.userRepository = userRepository;
 		this.artistUserRepository = artistUserRepository;
 		this.genreRepository = genreRepository;
+		this.songMonthlyStatRepository = songMonthlyStatRepository;
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
@@ -391,5 +397,6 @@ public class MusicCollectionService {
 		return song;
 		
 	}
+
 	
 }

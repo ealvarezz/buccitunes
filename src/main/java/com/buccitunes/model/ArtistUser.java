@@ -27,20 +27,25 @@ public class ArtistUser extends User {
     @JoinColumn(name = "billing_id")
 	private BillingInfo billingInfo;
 	
-	@OneToMany(mappedBy="artistUser")
-	private List<ArtistTransaction> paymentHistory;
 
 	private Tier tier;
 	
 	public ArtistUser(){
 		super();
-		createDate = new Date();
+		this.createDate = new Date();
 		super.setRole(UserRole.ARTIST);
 	}
 	
 	public ArtistUser(String email, String name, String password, String username) {
 		super(email, name, password, username);
-		createDate = new Date();
+		this.createDate = new Date();
+		super.setRole(UserRole.ARTIST);
+	}
+	
+	public ArtistUser(User user, Artist artist) {
+		super(user.getEmail(), user.getName(), user.getPassword(), user.getUsername());
+		this.createDate = new Date();
+		this.artist = artist;
 		super.setRole(UserRole.ARTIST);
 	}
 	
@@ -94,15 +99,7 @@ public class ArtistUser extends User {
 	public void setBillingInfo(BillingInfo billingInfo) {
 		this.billingInfo = billingInfo;
 	}
-
-	public List<ArtistTransaction> getPaymentHistory() {
-		return paymentHistory;
-	}
-
-	public void setPaymentHistory(List<ArtistTransaction> paymentHistory) {
-		this.paymentHistory = paymentHistory;
-	}
-
+	
 	public Tier getTier() {
 		return tier;
 	}

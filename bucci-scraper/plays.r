@@ -1,3 +1,6 @@
+args <- commandArgs(TRUE)
+xx <- args[1]
+
 installed <- require("RMySQL")
 if(!installed){
   install.packages("RMySQL",repos = "https://cran.rstudio.com")
@@ -9,7 +12,7 @@ if(!installed){
   library(dplyr)
 }
 
-mydb = dbConnect(MySQL(), user='root', password='trees10', dbname='buccidb2', host='localhost')
+mydb = dbConnect(MySQL(), user='root', password=xx, dbname='buccidb2', host='localhost')
 
 rs = dbSendQuery(mydb, "select * from song")
 songs = fetch(rs, n=-1)
