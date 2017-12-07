@@ -128,6 +128,7 @@ public class AdminController {
 	@RequestMapping(value="approve_concert", method = RequestMethod.POST)
 	public BucciResponse<Concert> approveConcert(@RequestBody RequestedConcert requested, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
+		requested = adminService.getRequestedConcert(requested.getId());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		} else if(!BucciPrivilege.isAdmin(loggedUser)) {

@@ -22,6 +22,7 @@ import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.ConcertRepository;
+import com.buccitunes.dao.LocationRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
 import com.buccitunes.dao.RequestedConcertRepository;
 import com.buccitunes.dao.RequestedSongRepository;
@@ -34,6 +35,7 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
+import com.buccitunes.model.Location;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
@@ -55,11 +57,13 @@ public class ArtistService {
 	private final RequestedSongRepository requestedSongRepository;
 	private final ConcertRepository concertRepository;
 	private final RequestedConcertRepository requestedConcertRepository;
+	private final LocationRepository locationRepository;
 	
 	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
 			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository,
-			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository) {
+			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository,
+			LocationRepository locationRepository) {
 		
 		this.albumRepository = albumRepository;
 		this.artistRepository = artistRepository;
@@ -69,6 +73,7 @@ public class ArtistService {
 		this.requestedSongRepository = requestedSongRepository;
 		this.requestedConcertRepository = requestedConcertRepository;
 		this.concertRepository = concertRepository;
+		this.locationRepository = locationRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -193,16 +198,23 @@ public class ArtistService {
 	
 	public RequestedConcert requestNewConcert(RequestedConcert requested, ArtistUser artistUser) throws BucciException {
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
+		Location location = locationRepository.findOne(requested.getLocation().getId());
+		List<Artist> concertArtists;
+		requested.setLocation(location);
 		requested.setRequester(artistUser);
- 		List<Artist> concertArtists = new ArrayList<Artist>(requested.getFeaturedArtists().size());
-		for(Artist artist : requested.getFeaturedArtists()) {
-			Artist featuredArtist = artistRepository.findOne(artist.getId());
-			if(featuredArtist == null) {
-				throw new BucciException(constants.getArtistNotFoundMsg());
+		if(requested.getFeaturedArtists() != null) {
+			requested.getFeaturedArtists().size();
+			concertArtists = new ArrayList<Artist>(requested.getFeaturedArtists());
+		
+			for(Artist artist : requested.getFeaturedArtists()) {
+				Artist featuredArtist = artistRepository.findOne(artist.getId());
+				if(featuredArtist == null) {
+					throw new BucciException(constants.getArtistNotFoundMsg());
+				}
+				concertArtists.add(featuredArtist);
 			}
-			concertArtists.add(featuredArtist);
+			requested.setFeaturedArtists(concertArtists);
 		}
-		requested.setFeaturedArtists(concertArtists);
 		RequestedConcert requestedConcert = requestedConcertRepository.save(requested);	
 		return requestedConcert;
 	}

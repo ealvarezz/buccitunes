@@ -337,4 +337,9 @@ public class AdminService {
 		user = adminUserRepository.save(user);
 		return user;
 	}
+	
+	public RequestedConcert getRequestedConcert(int id) {
+		
+		return requestedConcertRepository.findOne(id);
+	}
 }
