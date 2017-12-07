@@ -2,8 +2,10 @@
   <div class="loginContainer">
 
   <md-card id="loginCard">
-    <h1 class="logo-text">🅱️ ucci Tunes</h1>
-    <form class="login-form">
+    <h1 style="text-align: center;"class="logo-text">🅱️ ucciTunes</h1>
+    <img style="vertical-align:top; display:inline-block; max-height:50%; max-width:20%" src="/assets/Kangaroo.png">
+    <div style=" text-align: center; display:inline-block; width: 40%; min-height:100%;margin-left: 10%;">
+    <form  class="login-form">
       <md-form-field class="login-full-width">
         <input type="email" name="email" [(ngModel)]= "userName" mdInput placeholder="Email" [formControl]="emailFormControl" required>
         <md-error *ngIf="emailFormControl.invalid">{{getErrorMessage()}}</md-error>
@@ -18,16 +20,18 @@
         <button md-raised-button (click)="loginUser()" id="loginBtn">LOGIN</button>
       </div>
     </form>
-
     <div class="extraBtnsContainer">
-      <div class="extraLoginBtn">
+      <div style="text-align: center;" class="extraLoginBtn">
         <button md-button (click)="goSignUp()">SIGN UP</button>
       </div>
 
-      <div class="extraLoginBtn">
+      <div style="text-align: center;" class="extraLoginBtn">
         <button md-button routerLink="/forgot">FORGOT USERNAME OR PASSWORD?</button>
       </div>
     </div>
+    </div>
+
+  
 
 
   </md-card>

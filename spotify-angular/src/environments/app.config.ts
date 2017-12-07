@@ -9,6 +9,7 @@ export const BucciConstants =  {
       GET_PLAYLIST        : environment.SERVER_PATH + "/playlist",
       LOGIN               : environment.SERVER_PATH + "/login",
       LOGOUT              : environment.SERVER_PATH + "/logout",
+      SIGN_UP             : environment.SERVER_PATH + "/signup",
       LOGGED_IN_USER      : environment.SERVER_PATH + "/logged_in",
       GET_ALBUM           : environment.SERVER_PATH + "/album",
       ADD_ALBUM_ADMIN     : environment.SERVER_PATH + "/add_album_admin",
@@ -34,6 +35,7 @@ export const BucciConstants =  {
       RESET_PW_REQUEST    : environment.SERVER_PATH + "/reset_password_send_email",
       GET_RESET_PW        : environment.SERVER_PATH + "/check_reset_password_link",
       RESET_PASSWORD      : environment.SERVER_PATH + "/reset_password",
+
 
   },
 
