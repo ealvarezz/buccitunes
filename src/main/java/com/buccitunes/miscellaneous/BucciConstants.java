@@ -24,6 +24,7 @@ public class BucciConstants {
 	
 	private String notLoggedInMsg;
 	private String loggedInMsg;
+	private String alreadyArtist;
 	
 	private String ownershipErrorMsg;
 	private String durationErrorMsg;
@@ -50,7 +51,6 @@ public class BucciConstants {
 	
 	private String songCount;
 	private String playCount;
-	
 
 	private String session;
 	
@@ -134,6 +134,14 @@ public class BucciConstants {
 		return loggedInMsg;
 	}
 	
+	public String getAlreadyArtist() {
+		return alreadyArtist;
+	}
+
+	public void setAlreadyArtist(String alreadyArtist) {
+		this.alreadyArtist = alreadyArtist;
+	}
+
 	public String getSession() {
 		return session;
 	}
