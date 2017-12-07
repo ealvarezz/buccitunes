@@ -93,10 +93,11 @@ public class AdminService {
 		Artist artist = new Artist(requestedArtist);
 		artist = artistRepository.save(artist);
 		
-		ArtistUser artUser = artistUserRepository.upgradeToArtist(requestedUser.getEmail(), artist.getId(), Tier.NO_TIER.getCode() ,UserRole.ARTIST.getCode());		
-		ArtistUser artUser2 = artistUserRepository.findOne(requestedUser.getEmail());
-		
+		requestedUser.setRole(UserRole.ARTIST);
+		artistUserRepository.upgradeToArtist(requestedUser.getEmail(), artist.getId());
 		requestedArtistRepository.delete(requestedArtist);
+		
+		ArtistUser artUser = new ArtistUser(requestedUser, artist);
 		return artUser;
 	}
 	

@@ -34,13 +34,20 @@ public class ArtistUser extends User {
 	
 	public ArtistUser(){
 		super();
-		createDate = new Date();
+		this.createDate = new Date();
 		super.setRole(UserRole.ARTIST);
 	}
 	
 	public ArtistUser(String email, String name, String password, String username) {
 		super(email, name, password, username);
-		createDate = new Date();
+		this.createDate = new Date();
+		super.setRole(UserRole.ARTIST);
+	}
+	
+	public ArtistUser(User user, Artist artist) {
+		super(user.getEmail(), user.getName(), user.getPassword(), user.getUsername());
+		this.createDate = new Date();
+		this.artist = artist;
 		super.setRole(UserRole.ARTIST);
 	}
 	
