@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
@@ -108,6 +109,21 @@ public class ArtistController {
 	public BucciResponse<List<Song>> getTopSongsOfArtist(@RequestParam int id) {
 		 List<Song> songs = artistService.getTopTenSongs(id);
 		 return BucciResponseBuilder.successfulResponse(songs);
+	}
+	
+	@RequestMapping(value="request_artist", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<RequestedArtist> becomeArtist(@RequestBody RequestedArtist requested, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		try {
+			requested = artistService.requestToBecomeArtist(requested, loggedUser);
+			return BucciResponseBuilder.successfulResponseMessage("Artist request was sent", requested);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
 	}
 	
 	@RequestMapping(value="request_album", method = RequestMethod.POST)
@@ -220,6 +236,5 @@ public class ArtistController {
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getMessage()); 
 		}
-		
 	}
 }

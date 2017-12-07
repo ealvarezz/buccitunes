@@ -24,9 +24,11 @@ import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.ConcertRepository;
 import com.buccitunes.dao.LocationRepository;
 import com.buccitunes.dao.RequestedAlbumRepository;
+import com.buccitunes.dao.RequestedArtistRepository;
 import com.buccitunes.dao.RequestedConcertRepository;
 import com.buccitunes.dao.RequestedSongRepository;
 import com.buccitunes.dao.SongRepository;
+import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
@@ -37,6 +39,7 @@ import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
 import com.buccitunes.model.Location;
 import com.buccitunes.model.RequestedAlbum;
+import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
@@ -49,9 +52,11 @@ public class ArtistService {
 	@Autowired
 	private BucciConstants constants;
 
+	private final RequestedArtistRepository requestedArtistRepository;
 	private final ArtistRepository artistRepository;
 	private final AlbumRepository albumRepository;
 	private final RequestedAlbumRepository requestedAlbumRepository;
+	private final UserRepository userRepository;
 	private final ArtistUserRepository artistUserRepository;
 	private final SongRepository songRepository;
 	private final RequestedSongRepository requestedSongRepository;
@@ -59,21 +64,25 @@ public class ArtistService {
 	private final RequestedConcertRepository requestedConcertRepository;
 	private final LocationRepository locationRepository;
 	
-	public ArtistService(ArtistRepository artistRepository, RequestedAlbumRepository requestedAlbumRepository,
+	public ArtistService(RequestedArtistRepository requestedArtistRepository, ArtistRepository artistRepository, 
+			RequestedAlbumRepository requestedAlbumRepository, UserRepository userRepository, 
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
-			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository,
-			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository,
+			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository, 
+			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository, 
 			LocationRepository locationRepository) {
 		
+		this.requestedArtistRepository = requestedArtistRepository;
 		this.albumRepository = albumRepository;
 		this.artistRepository = artistRepository;
 		this.requestedAlbumRepository = requestedAlbumRepository;
+		this.userRepository = userRepository;
 		this.artistUserRepository = artistUserRepository;
 		this.songRepository = songRepository;
 		this.requestedSongRepository = requestedSongRepository;
 		this.requestedConcertRepository = requestedConcertRepository;
 		this.concertRepository = concertRepository;
 		this.locationRepository = locationRepository;
+		
 	}
 	
 	public List<Artist> findAll(){
@@ -145,6 +154,20 @@ public class ArtistService {
 		PageRequest pageRequest = new PageRequest(constants.getStart(), constants.getTopSongsLimit(),
 				Sort.Direction.DESC, constants.getPlayCount());
 		return null;
+	}
+	
+	public RequestedArtist requestToBecomeArtist(RequestedArtist requestedArtist, User user) throws BucciException {
+		ArtistUser existingArtistUser = artistUserRepository.findOne(user.getEmail());
+		if(existingArtistUser != null) {
+			throw new BucciException(constants.getAlreadyArtist());
+		}
+		
+		User requester = userRepository.findOne(user.getEmail());
+		requestedArtist.setRequester(requester);
+		
+		RequestedArtist requested =  requestedArtistRepository.save(requestedArtist);
+		return requested;
+		
 	}
 	
 	public RequestedAlbum requestNewAlbum(RequestedAlbum requested, ArtistUser artistUser) throws BucciException {

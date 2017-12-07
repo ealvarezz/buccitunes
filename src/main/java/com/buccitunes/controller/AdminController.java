@@ -64,6 +64,7 @@ public class AdminController {
 		}
 		try {
 			ArtistUser artist = adminService.adminApproveArtist(requested);
+			mailManager.mailApprovedArtistRequest(artist);
 			return BucciResponseBuilder.successfulResponseMessage(constants.getSuccessfulAdditionMsg(), artist);
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());

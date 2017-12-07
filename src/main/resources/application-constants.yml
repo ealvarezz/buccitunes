@@ -20,6 +20,7 @@ constants:
 
   not_logged_in_msg: "Not Logged In" 
   logged_in_msg: "Already Logged In"
+  already_artist: "You are already an artist"
 
   start: 0
   
@@ -58,7 +59,10 @@ email:
 
   resetEmailSubject: "BucciTunes reset email confirmation"
   resetEmailText: "Follow the link to reset your email: %s"
-
+    
+  ApprovedArtistSubject: "You are now a BucciTunes Artist!"
+  ApprovedArtistText: "Congratulations, you are now an artist. You can now visit www.buccitunes.com/artist/%s to see your artist page. Make sure you edit your billing information to receive payments."
+    
   ApprovedAlbumSubject: "BucciTunes Album Approval"
   ApprovedAlbumText: "Your album: %s has been approved and is now posted."
   

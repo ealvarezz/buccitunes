@@ -22,10 +22,13 @@ public class RequestedArtist {
 	
 	private String comments;
 	
-	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "user_id", insertable = false, updatable = false)
+	@OneToOne
+    @JoinColumn(name = "user_id")
 	private User requester;
-
+	
+	public RequestedArtist() {
+		
+	}
 
 	public int getId() {
 		return id;

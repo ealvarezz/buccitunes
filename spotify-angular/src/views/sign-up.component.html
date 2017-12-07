@@ -1,31 +1,49 @@
 
 <div class="main signupScreen">
-<div class="signupContainer">
+<div *ngIf="!type" class="firstSignupContainer">
 
 <md-card class="signupCard">
-  <md-card-title> <div class = "title"> <h3> Sign Up</h3></div>
+  <md-card-title> <div class = "title"> <h2 class="logo-text">🅱️ucciTunes</h2></div>
   </md-card-title>
+<md-divider></md-divider>
+<img style=" display:inline-block; vertical-align:top; max-height:100%; max-width:20%;" src="/assets/Kangaroo.png">
+<div style="display: inline-block;">
+  <div style="width: 50%; margin: 0 auto;">
+      <button md-raised-button (click)="setUserType('premium')"  class="rounded-button" style="margin-bottom:1%">Sign Up For Bucci Premium</button>
+  </div>
+  <div style="width: 50%; margin: 0 auto;">
+      <button md-raised-button (click)="setUserType('basic')"   class="rounded-button" style="margin-bottom:1%">Sign Up As A Free User</button>
+  </div>
+</div>
+
+
+</md-card>
+</div>
+
+
+<div *ngIf="type" class="signupContainer">
+
+<md-card>
+<md-card-header>
+  <div style="width: 50%; margin: 0 auto;">
+  <h1> Sign Up for Bucci Premium</h1>
+  </div>
+</md-card-header>
 <md-horizontal-stepper [linear]="isLinear">
-  <md-step [stepControl]="firstFormGroup">
-    <form [formGroup]="firstFormGroup">
-      <ng-template mdStepLabel>Account Type</ng-template>
-        <div>
-        <button md-raised-button (click)="setUserType('artist')"   mdStepperNext style="background-color:#3f51b5; color:white; margin-bottom:1%">Sign Up As Artist<i class="material-icons">arrow_forward</i></button>
-      </div>
-      <div>
-        <button md-raised-button (click)="setUserType('premium')" mdStepperNext style="background-color:#3f51b5; color:white; margin-bottom:1%">Sign Up As Premium User<i class="material-icons">arrow_forward</i> </button>
-      </div>
-      <div>
-        <button md-raised-button (click)="setUserType('basic')"  mdStepperNext style="background-color:#3f51b5; color:white; margin-bottom:1%">Sign Up As Basic User<i class="material-icons">arrow_forward</i> </button>
-      </div>
-    </form>
-  </md-step>
   <md-step [stepControl]="secondFormGroup">
     <form [formGroup]="secondFormGroup">
       <ng-template mdStepLabel>User Information</ng-template>
+      <div>
+          <md-form-field> 
+            <input mdInput placeholder="First Name" [(ngModel)]="firstName" formControlName="secondCtrl" required>
+          </md-form-field> 
+          <md-form-field> 
+            <input mdInput placeholder="Last Name" [(ngModel)]="lastName" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
         <div>
           <md-form-field> 
-            <input mdInput placeholder="Email" formControlName="secondCtrl" required>
+            <input mdInput placeholder="Email" [(ngModel)]="newUser.email" formControlName="secondCtrl" required>
           </md-form-field> 
         </div>
         <div>
@@ -35,44 +53,42 @@
         </div>
         <div>
           <md-form-field> 
-            <input mdInput  type="password" placeholder="Password" formControlName="secondCtrl" required>
+            <input mdInput  [(ngModel)]="newUser.password" type="password" placeholder="Password" formControlName="secondCtrl" required>
           </md-form-field> 
         </div>
         <div>
           <md-form-field> 
-            <input mdInput placeholder="Username" formControlName="secondCtrl" required>
-          </md-form-field>
-        </div>
-        <div>
-          <md-select placeholder="Month" name="month">
-              <md-option *ngFor="let month of months" [value]="month">
-              {{month}}
-              </md-option>
-          </md-select>
-          <md-form-field> 
-            <input mdInput type="number" placeholder="Day" formControlName="secondCtrl" required>
-          </md-form-field>
-          <md-form-field> 
-            <input mdInput type="number" placeholder="Year" formControlName="secondCtrl" required>
+            <input mdInput [(ngModel)]="newUser.username" placeholder="Username" formControlName="secondCtrl" required>
           </md-form-field>
         </div>
       <div>
-        <!-- <button md-button mdStepperPrevious>Back</button> -->
-        <button md-button mdStepperNext>Next</button>
+        <button md-button (click)="type = null">Back</button>
+        <button *ngIf="type == 'premium'" md-button mdStepperNext>Next</button>
+        <button *ngIf="type == 'basic'" (click)="signUp()" md-button mdStepperNext>Next</button>
       </div>
     </form>
   </md-step>
-  <md-step [stepControl]="thirdFormGroup">
+  <md-step *ngIf="type == 'premium'" [stepControl]="thirdFormGroup">
     <form [formGroup]="thirdFormGroup">
-      <ng-template mdStepLabel>Payment Information</ng-template>
+      <ng-template  mdStepLabel>Payment Information</ng-template>
         <div>
           <md-form-field> 
-            <input mdInput placeholder="Name (As it appears on the card)" formControlName="secondCtrl" required>
+            <input mdInput [(ngModel)]="billingInfo.cardHolderName" placeholder="Name (As it appears on the card)" formControlName="secondCtrl" required>
           </md-form-field>
+        </div>
+        <div style="margin-bottom: 1%;">
+          <md-select placeholder="Credit Card Company" name="company" [(ngModel)]="billingInfo.creditCardCompany" [ngModelOptions]="{standalone: true}">
+              <md-option *ngFor="let company of companies" [value]="company">
+              <div style="display:inline-block">
+                <img style="max-height:30px; max-width:35px;" [src]="company.artwork">
+              </div>
+              <div style="display:inline-block">{{company.name}}</div>
+              </md-option>
+          </md-select>
         </div>
         <div> 
           <md-form-field> 
-            <input mdInput placeholder="Card Number" formControlName="secondCtrl" required>
+            <input mdInput [(ngModel)]="billingInfo.creditCardNo" placeholder="Card Number" formControlName="secondCtrl" required>
           </md-form-field>
         </div>
         <div>
@@ -86,20 +102,21 @@
         </md-form-field>
         </div>
       <div>
-        <!-- <button md-button mdStepperPrevious>Back</button> -->
-        <button md-button mdStepperNext>Next</button>
+        <button md-button mdStepperNext (click)="signUp()">Next</button>
       </div>
     </form>
   </md-step>
   <md-step>
     <ng-template mdStepLabel>Done</ng-template>
     <h2>Registration Complete</h2>
-    <h4> A verification email has been sent. If you do not receive it within 5 minutes, please do nothing. </h4>
-    <p>Click <a routerLink="/login"><u>here</u></a> to login</p>
+      <img style=" display:inline-block; vertical-align:top; max-height:100%; max-width:20%;" src="/assets/Kangaroo.png">
+    <div style="display:inline-block;">
+      <h4> A verification email has been sent. If you do not receive it within 5 minutes, please do nothing. </h4>
+      <p>Click <a routerLink="/login"><u>here</u></a> to login</p>
+    </div>
   </md-step>
 </md-horizontal-stepper>
 
 </md-card>
-
 </div>
 </div>

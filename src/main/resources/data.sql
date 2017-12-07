@@ -350,3 +350,20 @@ SET
  
  COMMIT;
 END^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `upgradeToArtist`(IN newEmail VARCHAR(255), IN newArtist INT, IN newTier INT, IN newRole INT)
+BEGIN
+	Start transaction;
+		UPDATE user u
+		SET u.role = newRole
+		where u.email = newEmail;
+		
+		INSERT INTO buccidb2.artist_user(email,artist_id,create_date, tier)
+		VALUES (newEmail, newArtist, NOW(), tier);
+		
+		select * from user u
+		join artist_user au on au.email = u.email
+		join artist a on a.id = au.artist_id
+		where u.email = newEmail;
+    Commit;
+END ^;

@@ -11,6 +11,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.PaymentType;
+import com.buccitunes.constants.Tier;
+import com.buccitunes.constants.UserRole;
 import com.buccitunes.dao.*;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
@@ -83,19 +85,18 @@ public class AdminService {
 	}
 	
 	public ArtistUser adminApproveArtist(RequestedArtist requestedArtist) throws BucciException {
-		
-		//Used to make sure the requestedAlbum information is up to date
 		requestedArtist = requestedArtistRepository.findOne(requestedArtist.getId());
 		User requestedUser = userRepository.findOne(requestedArtist.getRequester().getEmail());
 		if(requestedUser == null) {
 			throw new BucciException(constants.getArtistNotFoundMsg());
 		}
 		Artist artist = new Artist(requestedArtist);
-		
 		artist = artistRepository.save(artist);
-		artistUserRepository.upgradeToArtist(requestedUser.getEmail(), artist.getId());		
-		ArtistUser artUser = artistUserRepository.findOne(requestedUser.getEmail());
 		
+		ArtistUser artUser = artistUserRepository.upgradeToArtist(requestedUser.getEmail(), artist.getId(), Tier.NO_TIER.getCode() ,UserRole.ARTIST.getCode());		
+		ArtistUser artUser2 = artistUserRepository.findOne(requestedUser.getEmail());
+		
+		requestedArtistRepository.delete(requestedArtist);
 		return artUser;
 	}
 	

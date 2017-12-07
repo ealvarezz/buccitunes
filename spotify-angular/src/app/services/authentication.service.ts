@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
-
+import {SignupInfo} from '../objs/SignupInfo';
 import {User} from '../objs/User';
 import {BucciResponse} from '../objs/BucciResponse';
 import {BucciConstants} from '../../environments/app.config';
@@ -26,6 +26,13 @@ export class AuthenticationService {
 
 
     get currentUser() : User {return this.currentUserChange.value}
+
+
+    signUp(user : SignupInfo){
+        return this.http.post<BucciResponse<User>>(BucciConstants.Endpoints.SIGN_UP, user, {withCredentials: true})
+        .map(this.extractData.bind(this))
+        .catch(this.handleError);
+    }
 
     login(username : string, password: string){
         return this.http.post<BucciResponse<User>>(BucciConstants.Endpoints.LOGIN, { email: username, password: password }, {withCredentials: true})
