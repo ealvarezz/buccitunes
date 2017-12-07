@@ -1,4 +1,4 @@
-<md-card style="margin-bottom:10%;">
+<md-card *ngIf="user" style="margin-bottom:10%;">
     <md-card-header>
         <h1>ACCOUNT SETTINGS</h1>
     </md-card-header>
@@ -17,19 +17,19 @@
 
         <md-grid-list *ngIf="!editMode" cols="3" rowHeight="25px">
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">Kamal, Sajid</span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{user.name}}</span></md-grid-tile>
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Email</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">sajid.kamal@stonybrook.edu</span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{user.email}}</span></md-grid-tile>
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Gender</b></span></md-grid-tile>
             <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">76% Male</span></md-grid-tile>
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Date of Birth</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">10/10/1995</span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Postal Code</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">11548</span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Country</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">USA</span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Mobile Phone Number</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">718-360-7428</span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
         </md-grid-list>
 
         <md-grid-list *ngIf="editMode" cols="3" rowHeight="35px">
@@ -37,7 +37,7 @@
             <md-grid-tile colspan="2">
               <span style="position:absolute; left:0px;">
                 <md-form-field>
-                  <input mdInput placeholder="Name" value="Sajid Kamal">
+                  <input mdInput placeholder="Name" [value]="user.name">
                 </md-form-field>
               </span>
           </md-grid-tile>
@@ -45,7 +45,7 @@
             <md-grid-tile colspan="2">
               <span style="position:absolute; left:0px;">
                 <md-form-field>
-                  <input mdInput placeholder="Email" value="sajid.kamal@stonybrook.edu">
+                  <input mdInput placeholder="Email" [value]="user.email">
                 </md-form-field>
               </span>
             </md-grid-tile>
@@ -60,14 +60,14 @@
             <md-grid-tile colspan="2">
               <span style="position:absolute; left:0px;">
                 <md-form-field>
-                  <input mdInput placeholder="Postal Code" value="11548">
+                  <input mdInput placeholder="Postal Code" value="">
                 </md-form-field>
               </span></md-grid-tile>
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Country</b></span></md-grid-tile>
             <md-grid-tile colspan="2">
               <span style="position:absolute; left:0px;">
                 <md-form-field>
-                  <input mdInput placeholder="Email" value="USA">
+                  <input mdInput placeholder="Email" value="">
                 </md-form-field>
               </span>
             </md-grid-tile>
@@ -75,7 +75,7 @@
             <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">
               <span style="position:absolute; left:0px;">
                 <md-form-field>
-                  <input mdInput placeholder="Phone Number" value="718-360-7428">
+                  <input mdInput placeholder="Phone Number" value="">
                 </md-form-field>
               </span></span></md-grid-tile>
         </md-grid-list>
@@ -151,8 +151,6 @@
     
 
     <md-action-row>
-      <button md-button color="warn" (click)="prevStep()">Previous</button>
-      <button md-button color="primary" (click)="nextStep()">Next</button>
     </md-action-row>
   </md-expansion-panel>
 
@@ -188,8 +186,6 @@
     
 
     <md-action-row>
-      <button md-button color="warn" (click)="prevStep()">Previous</button>
-      <button md-button color="primary" (click)="nextStep()">End</button>
     </md-action-row>
   </md-expansion-panel>
 
@@ -203,20 +199,30 @@
         <md-icon>credit_card</md-icon>
       </md-panel-description>
     </md-expansion-panel-header>
-   <div class="payment_div">
+
+  <div *ngIf="user.role != 'PREMIUM'" class="payment_div">
+    <div>
+      <div><h2>BUCCI BASIC</h2></div>
+      <div><p>You're currently a Bucci Basic user</p></div>
+      <div><p>With Bucci Basic, you'll see ads and you won't be able to listen offline.</p></div>
+      <div><button md-raised-button class="rounded-button">UPGRADE TO BUCCI PREMIUM</button></div>
+    </div>  
+  </div>
+
+   <div *ngIf="user.role === 'PREMIUM'" class="payment_div">
     <div>
       <div><h2>BUCCI PREMIUM</h2></div>
-      <div style="max-width:42%"><p>Your plan will automatically renew on 12/16/17 and you'll be charged $4.99 + tax</p></div>
+      <div style="max-width:42%"><p>Your plan will automatically renew on {{renewDate | date: 'shortDate'}} and you'll be charged $4.99 + tax</p></div>
       <div><button md-raised-button class="rounded-button">CHANGE OR CANCEL</button></div>
     </div>
     <div>
         <div><h3>Payment Method</h3></div>
         <div class="payment_box">
           <div style="display:inline-block">
-            <img src="../assets/visa.png">
+            <img style="max-height:30px; max-width:35px;" [src]="this.user.billingInfo.creditCardCompany.artwork">
           </div>
           <div style="display:inline-block">
-            <div style="margin-bottom:1px;"><p style="margin-bottom:1px; font-size:16px;"><b>Visa **** 9969</b></p></div>
+            <div style="margin-bottom:1px;"><p style="margin-bottom:1px; font-size:16px;"><b>{{this.user.billingInfo.creditCardCompany.name}} ********{{previewCC}}</b></p></div>
             <div style="margin-top:0px;" ><p style="font-size:12px; margin-top:0px;">Expires: 09/2020</p></div>
           </div>
         </div>
@@ -227,8 +233,6 @@
 
 
     <md-action-row>
-      <button md-button color="warn" (click)="prevStep()">Previous</button>
-      <button md-button color="primary" (click)="nextStep()">End</button>
     </md-action-row>
   </md-expansion-panel>
 
@@ -248,8 +252,6 @@
     <button md-raised-button class="rounded-button more_button" >View More</button>
 
     <md-action-row>
-      <button md-button color="warn" (click)="prevStep()">Previous</button>
-      <button md-button color="primary" (click)="nextStep()">End</button>
     </md-action-row>
   </md-expansion-panel>
 

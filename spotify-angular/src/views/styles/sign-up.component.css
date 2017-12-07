@@ -17,6 +17,13 @@
   }
 }
 
+.firstSignupContainer{
+    width: 40%;
+    height: 60%;
+    margin:0 auto;
+    padding-top:5%;
+}
+
 .signupContainer {
     width: 75%;
     height: 60%;
