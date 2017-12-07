@@ -27,8 +27,6 @@ public class ArtistUser extends User {
     @JoinColumn(name = "billing_id")
 	private BillingInfo billingInfo;
 	
-	@OneToMany(mappedBy="artistUser")
-	private List<ArtistTransaction> paymentHistory;
 
 	private Tier tier;
 	
@@ -94,15 +92,7 @@ public class ArtistUser extends User {
 	public void setBillingInfo(BillingInfo billingInfo) {
 		this.billingInfo = billingInfo;
 	}
-
-	public List<ArtistTransaction> getPaymentHistory() {
-		return paymentHistory;
-	}
-
-	public void setPaymentHistory(List<ArtistTransaction> paymentHistory) {
-		this.paymentHistory = paymentHistory;
-	}
-
+	
 	public Tier getTier() {
 		return tier;
 	}

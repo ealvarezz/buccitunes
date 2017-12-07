@@ -59,37 +59,38 @@ def add_playlists():
     for i in range(1,12):
         users = json.loads(open(userPath + usersFile, 'r').read())
         for user in users:
-            signUp = user
-            emailSplit = signUp['userInfo']['email'].split('@');
-            email = emailSplit[0] + str(i) + '@' + emailSplit[1]
-            print(email)    
-            # User first logs in
-            login = {}
-            login['email'] = email
-            login['password'] = 'tmp'
-            print(login)
-            r = s.post(LOGIN_ENDPOINT, json=login)
-            res = r.json()
-            print(res)
-            user = res['response']
+            if 'userInfo' in user:
+                signUp = user
+                emailSplit = signUp['userInfo']['email'].split('@');
+                email = emailSplit[0] + str(i) + '@' + emailSplit[1]
+                print(email)    
+                # User first logs in
+                login = {}
+                login['email'] = email
+                login['password'] = 'tmp'
+                print(login)
+                r = s.post(LOGIN_ENDPOINT, json=login)
+                res = r.json()
+                print(res)
+                user = res['response']
             
  
-            # User creates the playlist
-            playlist = {}
-            playlist['owner'] = { "email": user['email']}
-            playlist['title'] = rw.random_word() + " " + rw.random_word()
-            print(playlist)
-            r = s.post(PLAYLIST_ENDPOINT, json=playlist)
-            res = r.json()
-            print(res)
-            playlist = res['response']
-            print(playlist)
+                # User creates the playlist
+                playlist = {}
+                playlist['owner'] = { "email": user['email']}
+                playlist['title'] = rw.random_word() + " " + rw.random_word()
+                print(playlist)
+                r = s.post(PLAYLIST_ENDPOINT, json=playlist)
+                res = r.json()
+                print(res)
+                playlist = res['response']
+                print(playlist)
  
-            # We adds songs to the playlist
-            add_random_songs(playlist)
+                # We adds songs to the playlist
+                add_random_songs(playlist)
  
-            # Now the user logs out
-            s.post(LOGOUT_ENDPOINT)
+                # Now the user logs out
+                s.post(LOGOUT_ENDPOINT)
  
 add_playlists()
 db.close()

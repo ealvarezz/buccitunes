@@ -367,3 +367,9 @@ BEGIN
 		where u.email = newEmail;
     Commit;
 END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_artist_last_month_stats`()
+BEGIN
+	SELECT MS.* FROM buccidb2.artist_monthly_stat MS
+	WHERE MONTH(MS.month) = MONTH(NOW()) - 1 AND YEAR(MS.month) = YEAR(NOW());
+END ^;

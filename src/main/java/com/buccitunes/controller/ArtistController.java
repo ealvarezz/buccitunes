@@ -96,7 +96,7 @@ public class ArtistController {
 		if(BucciPrivilege.isArtist(loggedUser)) {
 			try {
 				loggedUser = artistService.getArtistUser(loggedUser.getEmail());
-				return BucciResponseBuilder.successfulResponse(loggedUser.getPaymentHistory());
+				return BucciResponseBuilder.successfulResponse(artistService.getArtistPaymentHistory(loggedUser.getArtist().getId()));
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(constants.getArtistNotFoundMsg());
 			}

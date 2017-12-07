@@ -21,6 +21,7 @@ import com.buccitunes.miscellaneous.MailManager;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistMonthlyStat;
 import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
@@ -56,13 +57,15 @@ public class AdminService {
 	private final UserRepository userRepository;
 	private final SongPlaysRepository songPlaysRepository;
 	private final PremiumUserRepository premiumUserRepository;
+	private final ArtistMonthlyStatRepository artistMonthlyStatRepository;
 	
 	public AdminService(AdminUserRepository adminUserRepository, AlbumRepository albumRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, ConcertRepository concertRepository,
 			RequestedAlbumRepository requestedAlbumRepository, RequestedSongRepository requestedSongRepository,
 			RequestedArtistRepository requestedArtistRepository, RequestedConcertRepository requestedConcertRepository, 
 			ArtistUserRepository artistUserRepository, UserRepository userRepository, SongPlaysRepository songPlaysRepository,
-			ArtistTransactionRepository artistTransactionRepository, PremiumUserRepository premiumUserRepository) {
+			ArtistTransactionRepository artistTransactionRepository, PremiumUserRepository premiumUserRepository,
+			ArtistMonthlyStatRepository artistMonthlyStatRepository) {
 		this.adminUserRepository = adminUserRepository;
 		this.albumRepository = albumRepository;
 		this.songRepository = songRepository;
@@ -77,6 +80,7 @@ public class AdminService {
 		this.songPlaysRepository = songPlaysRepository;
 		this.artistTransactionRepository = artistTransactionRepository;
 		this.premiumUserRepository = premiumUserRepository;
+		this.artistMonthlyStatRepository = artistMonthlyStatRepository;
 	}
 	
 	public Artist addNewArtist(Artist artist) throws BucciException {
@@ -259,13 +263,26 @@ public class AdminService {
 				total += songPlays * constants.getRoyaltyPrice();
 				ArtistTransaction transaction  = new ArtistTransaction();
 				transaction.setAmount(songPlays * constants.getRoyaltyPrice());
-				transaction.setArtistUser(artist);
+				transaction.setArtist(artist.getArtist());
 				transaction.setDate(new Date());
 				transaction.setPaymentType(PaymentType.ROYALTY_PAYMENT); // Change this to transaction type instead later
 				artistTransactionRepository.save(transaction);
 			}
 		}
 		return total;
+	}
+	
+	public void payRoyaltiesByCaching() {
+		
+		List<ArtistMonthlyStat> monthlyStats = artistMonthlyStatRepository.getLastMonthStats();
+		for(ArtistMonthlyStat stat: monthlyStats) {
+			ArtistTransaction transaction  = new ArtistTransaction();
+			transaction.setAmount(stat.getRevenue());
+			transaction.setArtist(stat.getId().getArtist());
+			transaction.setDate(new Date());
+			transaction.setPaymentType(PaymentType.ROYALTY_PAYMENT); 
+			artistTransactionRepository.save(transaction);
+		}
 	}
 	
 	public RequestedAlbum getRequestedAlbum(int id) throws BucciException {
@@ -343,4 +360,5 @@ public class AdminService {
 		
 		return requestedConcertRepository.findOne(id);
 	}
+	
 }

@@ -29,8 +29,8 @@ public class ArtistTransaction {
 	private PaymentType paymentType;
 	
 	@ManyToOne(fetch=FetchType.LAZY)
-	@JoinColumn(name="artistUser")
-	private ArtistUser artistUser;
+	@JoinColumn(name="artist_id")
+	private Artist artist;
 	
 	public ArtistTransaction(){}
 
@@ -58,13 +58,15 @@ public class ArtistTransaction {
 		this.paymentType = paymentType;
 	}
 
-	public ArtistUser getArtistUser() {
-		return artistUser;
+	public Artist getArtist() {
+		return artist;
 	}
 
-	public void setArtistUser(ArtistUser artistUser) {
-		this.artistUser = artistUser;
+	public void setArtist(Artist artist) {
+		artist = artist;
 	}
+
+	
 	
 	
 }

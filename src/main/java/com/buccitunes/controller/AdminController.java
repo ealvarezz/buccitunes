@@ -168,11 +168,6 @@ public class AdminController {
 		return BucciResponseBuilder.successfulResponse(plays);
 	}
 	
-	@RequestMapping(value="pay_royalties", method = RequestMethod.GET)
-	public BucciResponse<Double> payRoyaltiesToArtists() {
-		double totalPaid = adminService.payRoyalties();
-		return BucciResponseBuilder.successfulResponse(new Double(totalPaid));
-	}
 	
 	@RequestMapping(value="requested_albums", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<RequestedAlbum>> getRequestedAlbums() {
@@ -250,6 +245,12 @@ public class AdminController {
 	@RequestMapping(value="charge_users", method = RequestMethod.GET)
 	public BucciResponse<String> chargeUsers() {
 		adminService.chargeUsers();
+		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
+	}
+	
+	@RequestMapping(value="pay_royalties", method = RequestMethod.PUT)
+	public BucciResponse<String> payArtistRoyalties() {
+		adminService.payRoyaltiesByCaching();
 		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
 	}
 	

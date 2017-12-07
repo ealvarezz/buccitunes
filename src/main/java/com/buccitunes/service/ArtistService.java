@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import com.buccitunes.constants.Tier;
 import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
+import com.buccitunes.dao.ArtistTransactionRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.ConcertRepository;
 import com.buccitunes.dao.LocationRepository;
@@ -35,6 +36,7 @@ import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
 import com.buccitunes.model.Location;
@@ -63,13 +65,14 @@ public class ArtistService {
 	private final ConcertRepository concertRepository;
 	private final RequestedConcertRepository requestedConcertRepository;
 	private final LocationRepository locationRepository;
+	private final ArtistTransactionRepository artistTransactionRepository;
 	
 	public ArtistService(RequestedArtistRepository requestedArtistRepository, ArtistRepository artistRepository, 
 			RequestedAlbumRepository requestedAlbumRepository, UserRepository userRepository, 
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
 			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository, 
 			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository, 
-			LocationRepository locationRepository) {
+			LocationRepository locationRepository, ArtistTransactionRepository artistTransactionRepository) {
 		
 		this.requestedArtistRepository = requestedArtistRepository;
 		this.albumRepository = albumRepository;
@@ -82,7 +85,7 @@ public class ArtistService {
 		this.requestedConcertRepository = requestedConcertRepository;
 		this.concertRepository = concertRepository;
 		this.locationRepository = locationRepository;
-		
+		this.artistTransactionRepository = artistTransactionRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -98,6 +101,11 @@ public class ArtistService {
 		} else {
 			throw new BucciException(constants.getArtistNotFoundMsg());
 		}
+	}
+	
+	public List<ArtistTransaction> getArtistPaymentHistory(int artistId){
+		
+		return artistTransactionRepository.findByArtist_Id(artistId);
 	}
 	
 	public Artist getArtist(int id) throws BucciException {
