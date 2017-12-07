@@ -237,4 +237,24 @@ public class ArtistController {
 			return BucciResponseBuilder.failedMessage(e.getMessage()); 
 		}
 	}
+	
+	@RequestMapping(value="edit_artist_info", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<ArtistUser> editArtist(@RequestBody Artist artist, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		if(BucciPrivilege.isArtist(loggedUser) ) {
+			try {
+				 ArtistUser artistUser = artistService.editArtist((ArtistUser)loggedUser, artist);
+				
+				session.setAttribute(constants.getSession(), artistUser);
+				return BucciResponseBuilder.successfulResponseMessage("Changed", artistUser);
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage(e.getMessage()); 
+			}
+		} else {
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg()); 
+		}
+	}
 }

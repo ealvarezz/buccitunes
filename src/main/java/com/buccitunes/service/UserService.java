@@ -370,4 +370,10 @@ public class UserService  {
 		return user.getFollowingArtists();
 		
 	}
+	
+	public User goPrivate(User user, boolean secret) {
+		 user = userRepository.findOne(user.getEmail());
+		 user.setInPrivateMode(secret);
+		 return user;
+	}
 }

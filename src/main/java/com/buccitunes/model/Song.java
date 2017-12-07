@@ -100,8 +100,8 @@ public class Song {
 		this.explicit = song.getExplicit();
 		this.genres = song.getGenres();
 		this.mimeType = song.getMimeType();
-		this.picturePath = song.getPicturePath();
-		this.audioPath = song.getAudioPath();
+		this.picturePath = null;
+		this.audioPath = null;
 		if(song.getLyrics() !=null) {
 			this.lyrics = new Lyrics(song.getLyrics().getLyric());
 		}

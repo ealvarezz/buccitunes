@@ -295,4 +295,29 @@ public class ArtistService {
 		return concerts;
 	}
 	
+	public ArtistUser editArtist(ArtistUser user, Artist artist) throws BucciException {
+		ArtistUser artistUser = artistUserRepository.findOne(user.getEmail());
+		Artist changedArtist = artistRepository.findOne(user.getArtist().getId());
+		if(changedArtist == null || artist.getId() != changedArtist.getId()) {
+			throw new BucciException(constants.getArtistNotFoundMsg());
+		}
+		
+		if(artist.getBiography() != null) {
+			changedArtist.setBiography(artist.getBiography());
+		}
+		
+		if(artist.getAvatar() != null)  {
+			String avatarPath;
+			try {
+				avatarPath = FileManager.saveArtistAvatar(artist.getAvatar(), artist.getId());
+				changedArtist.setAvatarPath(avatarPath);
+			} catch (IOException e) {
+				//throw new BucciException(constants.getArtistNotFoundMsg());
+			}
+		}
+		
+		artistUser.setArtist(changedArtist);
+		
+		return artistUser;
+	}
 }
