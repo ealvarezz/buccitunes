@@ -101,6 +101,8 @@ public class AdminService {
 		return artUser;
 	}
 	
+
+	
 	public Song addSongToAlbum(Song song) throws BucciException{
 		if(song.getAlbum() == null) {
 			throw new BucciException(constants.getAlbumNotFoundMsg());
@@ -285,6 +287,15 @@ public class AdminService {
 		List<RequestedAlbum> result = new ArrayList<>();
 		for(RequestedAlbum requested: requestedAlbumRepository.findAll()) result.add(requested);
 		return result;
+	}
+	
+	public void removeRequestedArtist(RequestedArtist requested) throws BucciException {
+		requested = requestedArtistRepository.findOne(requested.getId());
+		if(requested == null) {
+			throw new BucciException(constants.getArtistNotFoundMsg());
+		}
+		
+		requestedArtistRepository.delete(requested);
 	}
 	
 	public void removeRequestedAlbum(RequestedAlbum album) throws BucciException {

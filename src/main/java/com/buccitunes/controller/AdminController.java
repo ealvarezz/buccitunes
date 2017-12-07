@@ -196,6 +196,24 @@ public class AdminController {
 		}
 	}
 	
+	@RequestMapping(value="disapprove_artist", method = RequestMethod.POST)
+	public BucciResponse<String> disapproveArtist(@RequestBody RequestedArtist requested, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
+		
+		try {
+			adminService.removeRequestedArtist(requested);
+			mailManager.mailDeniedArtistRequest(requested);
+			return BucciResponseBuilder.successMessage(constants.getSuccessfulDeletionMsg());
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}	
+	}
+	
 	@RequestMapping(value="disapprove_request_album", method = RequestMethod.POST)
 	public BucciResponse<String> deleteRequestAlbum(@RequestBody RequestedAlbum requestedAlbum, HttpSession session) {		
 		User loggedUser = (User) session.getAttribute(constants.getSession());

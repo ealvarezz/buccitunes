@@ -62,6 +62,9 @@ email:
     
   ApprovedArtistSubject: "You are now a BucciTunes Artist!"
   ApprovedArtistText: "Congratulations, you are now an artist. You can now visit www.buccitunes.com/artist/%s to see your artist page. Make sure you edit your billing information to receive payments."
+  
+  DeniedArtistSubject: "About Your Artist Request"
+  DeniedArtistText: "Sorry %s, your request to become an artist was denied"
     
   ApprovedAlbumSubject: "BucciTunes Album Approval"
   ApprovedAlbumText: "Your album: %s has been approved and is now posted."
