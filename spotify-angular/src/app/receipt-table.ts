@@ -2,30 +2,31 @@ import { Component, Input, Output, OnInit, OnChanges, SimpleChanges,EventEmitter
 import {RequestDataSource} from './request-data-source';
 import {Payment} from './objs/Payment';
 @Component({
-  selector: 'receipt-table',
-  templateUrl: '../views/receipt-table.component.html'
+  selector: "receipt-table",
+  templateUrl: "../views/receipt-table.component.html"
 })
-export class ReceiptTableComponent{
-    @Input() receipts : Payment[];
-    displayedColumns = ['date','transaction_id', 'price','view'];
-    dataSource : RequestDataSource;
-    hoveredRow : number = -1;
+export class ReceiptTableComponent {
+  @Input() receipts: Payment[];
+  displayedColumns = ["date", "transaction_id", "price", "view"];
+  //displayedColumns = ["date", "id", "amount", "view"];
+  dataSource: RequestDataSource;
+  hoveredRow: number = -1;
 
-    ngOnInit(){
-        this.dataSource = new RequestDataSource(this.receipts);
-    }
-    
-    ngOnChanges(change : SimpleChanges){
-      if(change['receipts'] && !change['receipts'].isFirstChange()){
-        this.receipts = change['receipts'].currentValue;
-        this.dataSource.requests.next(this.receipts);
-      }
-    }
+  ngOnInit() {
+    this.dataSource = new RequestDataSource(this.receipts);
+  }
 
-    hover(i){
-      this.hoveredRow = i;
+  ngOnChanges(change: SimpleChanges) {
+    if (change["receipts"] && !change["receipts"].isFirstChange()) {
+      this.receipts = change["receipts"].currentValue;
+      this.dataSource.requests.next(this.receipts);
     }
-    unHover(){
-      this.hoveredRow = -1;
-    }
+  }
+
+  hover(i) {
+    this.hoveredRow = i;
+  }
+  unHover() {
+    this.hoveredRow = -1;
+  }
 }

@@ -35,7 +35,9 @@ export const BucciConstants =  {
       RESET_PW_REQUEST    : environment.SERVER_PATH + "/reset_password_send_email",
       GET_RESET_PW        : environment.SERVER_PATH + "/check_reset_password_link",
       RESET_PASSWORD      : environment.SERVER_PATH + "/reset_password",
-      GET_ALL_USERS       : environment.SERVER_PATH + "/get_all_users"
+      GET_ALL_USERS       : environment.SERVER_PATH + "/get_all_users",
+      CHANGE_USER_INFO    : environment.SERVER_PATH + "/change_settings",
+      GET_PAYMENT_HISTORY : environment.SERVER_PATH + "/payment_info"
 
 
   },

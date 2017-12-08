@@ -21,7 +21,7 @@ export class AddPlaylistDialog {
 
      playlistName : string;
      playlistArtwork : string = environment.LOCAL_RESOURCE + environment.DEFAULT_ARTWORK;
-
+     playlistDescription : string;
 
      closeDialog(){
          this.dialogRef.close();
@@ -47,7 +47,7 @@ export class AddPlaylistDialog {
          playlist.public = false;
          playlist.collaborative = false;
          playlist.artwork = this.playlistArtwork.split(',')[1];
-
+         playlist.description = this.playlistDescription;
          return playlist;
      }
 

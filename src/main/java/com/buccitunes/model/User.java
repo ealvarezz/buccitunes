@@ -261,12 +261,23 @@ public class User {
 	}
 	
 	public void updateUserInfo(User user) {
-		if(user.password != null) {
+		/*if(user.password != null || !(this.password.equals(user.password)) ) {
 			this.password = BucciPassword.encryptPassword(user.password);
-		}
+		}*/
 		if(user.avatarPath != null) {
 			this.avatarPath = user.avatarPath;
 		}
+		
+		if(user.name != null) {
+			this.name = user.name;
+		}
+		
+		if(user.username != null) {
+			this.username = user.username;
+		}
+		
 		this.inPrivateMode = user.inPrivateMode;
+		
+		
 	}
 }

@@ -26,6 +26,7 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.BillingInfo;
+import com.buccitunes.model.Payment;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
@@ -509,5 +510,19 @@ public class UserController {
 		
 		List<Artist> artist = userService.unfollowArtist(artistId, loggedUser.getEmail());
 		return BucciResponseBuilder.successfulResponse(artist);
+	}
+	
+	@RequestMapping(value="payment_info", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Payment>> getPaymentInfo(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else if(!BucciPrivilege.isPremium(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
+		}
+		
+		List<Payment> payments = userService.getPayments((PremiumUser) loggedUser);
+		return BucciResponseBuilder.successfulResponse(payments);
 	}
 }

@@ -9,14 +9,10 @@
         <div><button md-raised-button class="rounded-button" (click)="imgFileInput.click()" >Choose Image</button></div>
         <!-- <input [disabled]="true" placeholder="Upload Image...." mdInput [value]="albumArtworkPath" required> -->
         <input hidden type="file" #imgFileInput (change)="uploadImage($event)" accept="image/x-png,image/gif,image/jpeg" />
-
-
-
-
     </div>
     <div style="width: 50%; top:0; display: inline-block;">
     <md-form-field style="width:100%">
-        <textarea mdInput placeholder="Give your playlist a catchy description" mdTextareaAutosize mdAutosizeMinRows="12"
+        <textarea [(ngModel)]= "playlistDescription" mdInput placeholder="Give your playlist a catchy description" mdTextareaAutosize mdAutosizeMinRows="12"
                 mdAutosizeMaxRows="12"></textarea>
     </md-form-field>
     </div>

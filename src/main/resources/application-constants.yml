@@ -6,6 +6,7 @@ constants:
   song_not_found_msg: "Could not find song."
   resource_not_found_msg: "Could not find resource."
 
+  general_access_denied_msg: "Access denied"
   admin_access_denied_msg: "Access denied, need role of Admin for this resource."
   artist_access_denied_msg: "Access denied, need role of Artist for this resource."
 
@@ -48,8 +49,8 @@ constants:
 
   session: user
   
-  signup_premium_price: 5.00
-  monthly_premium_price: 5.00
+  signup_premium_price: 4.99
+  monthly_premium_price: 4.99
 
 
 email:

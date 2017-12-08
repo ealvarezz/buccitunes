@@ -10,7 +10,7 @@
         Personal Information
       </md-panel-title>
       <md-panel-description>
-        Edit Username, Email Address and other personal info
+        Edit name, Username and other personal info
         <md-icon>account_circle</md-icon>
       </md-panel-description>
     </md-expansion-panel-header>
@@ -18,67 +18,53 @@
         <md-grid-list *ngIf="!editMode" cols="3" rowHeight="25px">
             <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
             <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{user.name}}</span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Email</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{user.email}}</span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Gender</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">76% Male</span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Date of Birth</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Postal Code</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Country</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Mobile Phone Number</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"></span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Username</b></span></md-grid-tile>
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">{{user.username}}</span></md-grid-tile>
+            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Change Avatar Picture</b></span></md-grid-tile>
         </md-grid-list>
 
-        <md-grid-list *ngIf="editMode" cols="3" rowHeight="35px">
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
-            <md-grid-tile colspan="2">
+        <div *ngIf="editMode">
+        <md-grid-list cols="6" rowHeight="55px">
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"><b>Name</b></span></md-grid-tile>
+            <md-grid-tile colspan="4">
               <span style="position:absolute; left:0px;">
                 <md-form-field>
-                  <input mdInput placeholder="Name" [value]="user.name">
+                  <input mdInput placeholder="Name" [value]="user.name" [(ngModel)]= "nameForUser">
                 </md-form-field>
               </span>
           </md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Email</b></span></md-grid-tile>
-            <md-grid-tile colspan="2">
+            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"><b>Username</b></span></md-grid-tile>
+            <md-grid-tile colspan="4">
               <span style="position:absolute; left:0px;">
                 <md-form-field>
-                  <input mdInput placeholder="Email" [value]="user.email">
+                  <input mdInput placeholder="Username" [value]="user.username" [(ngModel)]= "usernameForUser">
                 </md-form-field>
               </span>
             </md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Gender</b></span></md-grid-tile>
+           <md-grid-tile colspan="2"><span style="position:absolute; left:0px;"><b>Change Avatar Picture</b></span></md-grid-tile>
             <md-grid-tile colspan="2">
               <span style="position:absolute; left:0px;">
-                  <md-slider></md-slider>
-              </span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Date of Birth</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">10/10/1995</span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Postal Code</b></span></md-grid-tile>
-            <md-grid-tile colspan="2">
-              <span style="position:absolute; left:0px;">
-                <md-form-field>
-                  <input mdInput placeholder="Postal Code" value="">
-                </md-form-field>
-              </span></md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Country</b></span></md-grid-tile>
-            <md-grid-tile colspan="2">
-              <span style="position:absolute; left:0px;">
-                <md-form-field>
-                  <input mdInput placeholder="Email" value="">
-                </md-form-field>
+                  <div style="width: 100%; display: inline-block;">
+                    <div>
+                      <button md-raised-button class="rounded-button" (click)="imgFileInput.click()">Choose Image</button>
+                    </div>
+                    <input hidden type="file" #imgFileInput (change)="uploadImage($event)" accept="image/x-png,image/gif,image/jpeg" />
+                  </div>
               </span>
             </md-grid-tile>
-            <md-grid-tile colspan="1"><span style="position:absolute; left:0px;"><b>Mobile Phone Number</b></span></md-grid-tile>
-            <md-grid-tile colspan="2"><span style="position:absolute; left:0px;">
-              <span style="position:absolute; left:0px;">
-                <md-form-field>
-                  <input mdInput placeholder="Phone Number" value="">
-                </md-form-field>
-              </span></span></md-grid-tile>
         </md-grid-list>
+            <div style="display: inline-block; margin: 0 auto">
+              <div style="border: 1px black dashed; padding:3px">
+                <img *ngIf=!avatarArtwork style="max-height: 200px; max-width:100%;" [src]="mediaService.getUserImageUrl(this.user.avatarPath)">
+                <img *ngIf=avatarArtwork style="max-height: 200px; max-width:100%;" [src]="avatarArtwork" >
+              </div>
+            </div>
+        </div>
+
+<!-- style="display:inline-block; vertical-align:top;"
+        -->
+        
+        
 
     <!-- <div>
         <md-form-field>
@@ -101,8 +87,8 @@
 
     <md-action-row>
       <button *ngIf="!editMode" md-raised-button color="primary" (click)="toggleEditMode()">Edit</button>
+      <button *ngIf="editMode" md-raised-button color="primary" (click)="submitUserChange()">Submit</button>
       <button *ngIf="editMode" md-raised-button color="primary" (click)="toggleEditMode()">Cancel</button>
-      <button *ngIf="editMode" md-raised-button color="primary" (click)="nextStep()">Submit</button>
     </md-action-row>
   </md-expansion-panel>
 
@@ -236,7 +222,7 @@
     </md-action-row>
   </md-expansion-panel>
 
-
+  <div *ngIf="user.billingInfo">
   <md-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
     <md-expansion-panel-header>
       <md-panel-title>
@@ -254,6 +240,7 @@
     <md-action-row>
     </md-action-row>
   </md-expansion-panel>
+  </div>
 
 
 </md-accordion>
