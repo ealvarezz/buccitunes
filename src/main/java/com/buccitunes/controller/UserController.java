@@ -471,14 +471,23 @@ public class UserController {
 		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
 	}
 	
-	@RequestMapping(value="go_private", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<UserPageInfo> becomePrivate(@RequestBody String id, HttpSession session) {
+	@RequestMapping(value="go_private", method = RequestMethod.PUT)
+	public @ResponseBody BucciResponse<User> becomePrivate(@RequestParam boolean secret, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
-		return BucciResponseBuilder.failedMessage("NOT YET IMPLEMENTED");
+		User user = userService.goPrivate(loggedUser, secret);
+		session.setAttribute(constants.getSession(), user);
+		String message;
+		if(secret) {
+			message = "You are now private";
+		} else {
+			message = "You are now public";
+		}
+		
+		return BucciResponseBuilder.successfulResponseMessage(message, user);
 	}
 	@RequestMapping(value="follow_artist", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Artist>> followArtist(@RequestParam int artistId, HttpSession session) {
