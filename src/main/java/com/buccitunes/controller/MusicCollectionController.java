@@ -217,7 +217,7 @@ public class MusicCollectionController {
 	}
 	
 	@RequestMapping(value="play_song", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<Song> playCurrentSong(@RequestBody Song song, HttpSession session) {
+	public @ResponseBody BucciResponse<Boolean> playCurrentSong(@RequestBody Song song, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
@@ -225,7 +225,7 @@ public class MusicCollectionController {
 		
 		try {
 			Song bucciSong = musicCollectionService.playSong(loggedUser, song);
-			return BucciResponseBuilder.successfulResponse(bucciSong);
+			return BucciResponseBuilder.successfulResponse(true);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
