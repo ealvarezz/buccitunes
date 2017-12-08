@@ -6,6 +6,7 @@ import {Song} from './objs/Song';
 import {Playlist} from './objs/Playlist';
 import {MusicCollectionService } from './services/music.service';
 import {MusicService} from './services/player.service'
+import {QueueService} from './services/queue.service';
 import 'rxjs/add/observable/of';
 
 @Component({
@@ -25,7 +26,8 @@ export class MusicTableComponent implements OnChanges {
     playlists : Playlist[];
 
     constructor(private musicService : MusicCollectionService,
-                private playerService : MusicService){}
+                private playerService : MusicService,
+                private queueService : QueueService){}
 
     ngOnChanges(change : SimpleChanges){
       if(change['data'] && !change['data'].isFirstChange()){
@@ -48,13 +50,19 @@ export class MusicTableComponent implements OnChanges {
     }
 
     playSong(song : Song){
-      this.playerService.setCurrentSong(song);
       if(this.isRequest){
-        this.playerService.playSongEncoded();
+
       }
       else{
+        let index = this.data.indexOf(song);
+        this.queueService.playMusicCollection(this.data, index);
         this.playerService.playSong();
       }
+    }
+
+    addSongToQueue(song : Song){
+      this.queueService.addSongToQueue(song);
+      console.log(this.queueService.queue);
     }
 
     hover(i){
@@ -65,6 +73,7 @@ export class MusicTableComponent implements OnChanges {
     }
 
     addSongToLibrary(song : Song){
+      song.album = null;
       this.musicService.addSongToLibrary(song).
       subscribe(
         (data) => {

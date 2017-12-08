@@ -57,6 +57,7 @@ import {UserDashboard} from './user-dashboard.component';
 import {QueueService} from './services/queue.service';
 import {RecentlyPlayed} from './recently-played';
 import {FollowedPlaylists} from './followed-playlist';
+import {QueueComponent} from './queue.component';
 
 
 const appRoutes: Routes = [
@@ -76,11 +77,12 @@ const appRoutes: Routes = [
           {path: 'recently-played', component: RecentlyPlayed, canActivate: [AuthGuard]},
           {path: 'followed-playlists', component: FollowedPlaylists, canActivate: [AuthGuard]},
           {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
+          {path: 'queue', component: QueueComponent, canActivate: [AuthGuard]},
           {path: 'user/:id', component: AccountComponent, canActivate: [AuthGuard]},
         ] 
   },
   {path: 'login', component: LoginComponent},
-  {path: 'recover/:email/:hash', component: RecoverComponent},
+  {path: 'recover/:email/*:hash', component: RecoverComponent},
   {path: 'forgot', component: ForgotComponent},
   {path: 'sign-up', component: SignUpComponent}
 ];
@@ -121,6 +123,7 @@ const appRoutes: Routes = [
     UserDashboard,
     RecentlyPlayed,
     FollowedPlaylists,
+    QueueComponent
   ],
   imports: [
     RouterModule.forRoot(

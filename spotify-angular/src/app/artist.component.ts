@@ -47,7 +47,7 @@ export class ArtistComponent implements OnInit {
     });
 
     this.authenticationService.currentUserChange.subscribe(
-     user => this.currentUser = user
+      user => this.currentUser = user
     );
     
   }
@@ -56,7 +56,6 @@ export class ArtistComponent implements OnInit {
       .subscribe(
           (data) => {
             this.artist = data;
-            this.assignAlbums(this.artist.albums);
           },  
           (err) => {
             this.notificationService.error("ERROR","There was an error loading this artist.");

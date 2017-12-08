@@ -8,6 +8,7 @@ import 'rxjs/add/operator/distinctUntilChanged';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {environment} from '../../environments/environment';
 import {QueueService} from './queue.service';
+import {MusicCollectionService} from './music.service';
 
 @Injectable()
 export class MusicService {
@@ -21,7 +22,13 @@ export class MusicService {
     public volumeChange     = new BehaviorSubject<number>(100);
     public secretChange     = new BehaviorSubject<boolean>(false);
     public loopChange       = new BehaviorSubject<boolean>(false);
+    public shuffleChange    = new BehaviorSubject<boolean>(false);
 
+
+    set currTime(time: number) {
+        this.audio.currentTime = (time* this.audio.duration)/100;
+        this.currTimeChange.next(time);
+    }
 
     get audio()         : HTMLAudioElement { return this.audioChange.value;}
     get muted()         : boolean { return this.muteChange.value; }
@@ -31,13 +38,36 @@ export class MusicService {
     get currSong()      : Song { return this.currSongChange.value }
     get volume()        : number { return this.volumeChange.value }
     get secretMode()    : boolean { return this.secretChange.value }
-    get loop()          : boolean {return this.loopChange.value};
+    get loop()          : boolean {return this.loopChange.value}
+    get shuffle()       : boolean {return this.shuffleChange.value}
+
+    
 
 
-    constructor(private queue : QueueService){
+
+    constructor(private queueService : QueueService, private musicCollectionService : MusicCollectionService){
         this.audio.ontimeupdate = this.updateTime.bind(this);
+        this.audio.onended = this.onEndHandler.bind(this);
+        
+        this.queueService.musicQueueChange.subscribe(
+            queue => this.currSongChange.next(queue[0])
+        )
     }
 
+    onEndHandler(){
+        if(!this.loop){
+            if(!this.shuffle){
+                if(this.queueService.popFromQueue()){
+                    this.playSong();
+                }
+            }
+            else{
+                this.playRandomSong();
+            }
+
+        }
+        
+    }
     setCurrentSong(song){
         this.currSongChange.next(song);
     }
@@ -46,12 +76,6 @@ export class MusicService {
         let time = (this.audio.currentTime / this.audio.duration)*100;
         this.currTimeChange.next(time)
     }
-
-    // endHandler(){
-    //     if(this.loop){
-    //         this.audio.loo
-    //     }
-    // }
 
     toggleSecretMode(){
         this.secretChange.next(!this.secretMode);
@@ -62,7 +86,17 @@ export class MusicService {
         this.loopChange.next(!this.loop);
     }
 
+    toggleShuffle(){
+        this.shuffleChange.next(!this.shuffle);
+    }
+
     playSong(){
+            if(this.queueService.queue.length > 0){
+                this.play();
+            }
+    }
+
+    play(){
         if(this.isPaused){
             this.audio.play();
         }
@@ -70,6 +104,8 @@ export class MusicService {
             this.audio.src = environment.SERVER_PATH+ this.currSong.audioPath;
             this.audio.load();
             this.audio.play();
+            this.musicCollectionService.recordSong(this.currSong)
+            .subscribe(data => console.log("song recorded"));
         }
         this.togglePlaying(true);
         
@@ -88,6 +124,29 @@ export class MusicService {
         
     }
 
+
+    skipNext(){
+        if(this.shuffle){
+            this.playRandomSong();
+        }
+        else if(this.queueService.popFromQueue()){
+             this.playSong();
+        }
+    }
+
+    skipPrevious(){
+        if(!this.shuffle){
+            if(this.queueService.getPreviousSong()){
+                this.playSong();
+            }
+        }
+    }
+
+    playRandomSong(){
+        let song = this.queueService.getRandomSong();
+        this.currSongChange.next(song);
+        this.playSong();
+    }
 
 
     pauseSong(){

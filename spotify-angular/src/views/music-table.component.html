@@ -40,7 +40,7 @@
       <md-cell *mdCellDef="let row"> 
         <button md-icon-button [mdMenuTriggerFor]="menu" mdTooltip="More"  mdTooltipShowDelay="800"> <i class="material-icons" >more_horiz</i> </button> 
         <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
-          <button md-menu-item>
+          <button md-menu-item (click)="addSongToQueue(row)">
             <span>Add to Queue</span>
           </button>
           <button md-menu-item>
