@@ -191,6 +191,12 @@ export class MusicCollectionService {
             });
 
     }
+    
+    recordSong(song : Song){
+        return this.http.post<BucciResponse<Boolean>>(BucciConstants.Endpoints.PLAY_SONG, song, {withCredentials:true})
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
 
     private reloadPlaylists(){
         this.getUserPlaylists().subscribe(

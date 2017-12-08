@@ -247,7 +247,7 @@ public class ArtistController {
 		}
 		if(BucciPrivilege.isArtist(loggedUser) ) {
 			try {
-				 ArtistUser artistUser = artistService.editArtist((ArtistUser)loggedUser, artist);
+				ArtistUser artistUser = artistService.editArtist((ArtistUser)loggedUser, artist);
 				
 				session.setAttribute(constants.getSession(), artistUser);
 				return BucciResponseBuilder.successfulResponseMessage("Changed", artistUser);

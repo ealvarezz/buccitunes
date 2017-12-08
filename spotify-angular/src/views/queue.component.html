@@ -1,0 +1,30 @@
+<md-card style="height:100%">
+    <md-card-header>
+        <h1>MUSIC QUEUE</h1>
+    </md-card-header>
+    <md-tab-group>
+        <md-tab label="QUEUE">
+            <div>
+                <h3>Now Playing</h3>
+            </div>
+            <div style="margin-bottom:5%;">
+                <music-table [data]="nowPlaying" [isAlbum] = "false"></music-table>
+            </div>
+            <h3>Next Up</h3>
+            <div>
+            <music-table [data]="queue" [isAlbum]= "false"></music-table>
+            </div>
+        </md-tab>
+        <md-tab label="HISTORY">
+            <div>
+                <h3>History</h3>
+            </div>
+            <div style="margin-bottom:5%;">
+                <music-table [data]="history" [isAlbum] = "false"></music-table>
+            </div>
+        </md-tab>
+    </md-tab-group>
+
+
+
+<md-card>

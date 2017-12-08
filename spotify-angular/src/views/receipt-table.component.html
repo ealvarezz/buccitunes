@@ -13,12 +13,12 @@
     <!-- Progress Column -->
     <ng-container mdColumnDef="transaction_id">
       <md-header-cell *mdHeaderCellDef>TRANSACTION ID</md-header-cell>
-      <md-cell *mdCellDef="let row"> {{row.transaction_id}} </md-cell>
+      <md-cell *mdCellDef="let row"> {{row.id}} </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="price">
       <md-header-cell *mdHeaderCellDef>PRICE</md-header-cell>
-      <md-cell *mdCellDef="let row"> ${{row.price}}</md-cell>
+      <md-cell *mdCellDef="let row"> ${{row.amount}}</md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="view">

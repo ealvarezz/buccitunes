@@ -13,7 +13,8 @@ public class BucciConstants {
 	private String albumNotFoundMsg;
 	private String songNotFoundMsg; 
 	private String resourceNotFoundMsg;
-
+	
+	private String generalAccessDeniedMsg;
 	private String adminAccessDeniedMsg; 
 	private String artistAccessDeniedMsg;	
 	
@@ -257,6 +258,10 @@ public class BucciConstants {
 	public String getSongNotFoundMsg() {
 		return songNotFoundMsg;
 	}
+	
+	public String getGeneralAccessDeniedMsg() {
+		return generalAccessDeniedMsg;
+	}
 
 	public String getAdminAccessDeniedMsg() {
 		return adminAccessDeniedMsg;
@@ -280,6 +285,10 @@ public class BucciConstants {
 
 	public void setSongNotFoundMsg(String songNotFoundMsg) {
 		this.songNotFoundMsg = songNotFoundMsg;
+	}
+
+	public void setGeneralAccessDeniedMsg(String generalAccessDeniedMsg) {
+		this.generalAccessDeniedMsg = generalAccessDeniedMsg;
 	}
 
 	public void setAdminAccessDeniedMsg(String adminAccessDeniedMsg) {
@@ -357,6 +366,4 @@ public class BucciConstants {
 	public void setSuccessfulChargeMsg(String successfulChargeMsg) {
 		this.successfulChargeMsg = successfulChargeMsg;
 	}
-
-
 }

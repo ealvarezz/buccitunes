@@ -137,11 +137,14 @@ mat-toolbar-row{
 }
 
  .controls{
-     margin-bottom:20px;
+     /* margin-bottom:20px; */
  }
 .song_progress{
     width: 500px;
     margin-left:-140px;
+}
+.song_progress md-slider{
+    width:100%;
 }
  .song-controls{
     height:100%;

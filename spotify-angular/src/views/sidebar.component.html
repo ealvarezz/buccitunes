@@ -4,7 +4,7 @@
     
     <div mdLine class="profile-pic-btn">
         <button md-button [mdMenuTriggerFor]="userMenu">
-            <img src="../assets/profile pic.png">     
+            <img [src]="mediaService.getUserImageUrl(this.currentUser.avatarPath)" style="max-height: 48px; max-width: 48px;">     
         </button>
         <md-menu #userMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
             <button md-menu-item routerLink="/account-settings"> Settings </button>

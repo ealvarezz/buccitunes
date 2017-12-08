@@ -48,6 +48,14 @@ public class Payment {
 		this.date = new Date();
 	}
 
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public boolean isPaid() {
 		return isPaid;
 	}
