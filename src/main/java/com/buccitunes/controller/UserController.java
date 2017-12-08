@@ -30,6 +30,7 @@ import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
 
@@ -510,4 +511,17 @@ public class UserController {
 		List<Artist> artist = userService.unfollowArtist(artistId, loggedUser.getEmail());
 		return BucciResponseBuilder.successfulResponse(artist);
 	}
+	
+	@RequestMapping(value="submit_ticket", method = RequestMethod.POST)
+	public @ResponseBody void submitTicket(@RequestBody SupportTicket supportTicket, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return;
+		}
+		
+		userService.saveTicket(supportTicket, loggedUser.getEmail());
+	}
+	
+	
+	
 }

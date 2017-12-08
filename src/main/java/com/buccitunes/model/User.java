@@ -95,6 +95,12 @@ public class User {
 	inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
 	private List<Playlist> collaboratingPlaylitst;
 
+	
+	@OneToMany(mappedBy = "ticketHolder", cascade = CascadeType.ALL)
+	@JsonIgnoreProperties(value = {"ticketHolder"})
+	private List<SupportTicket> supportTickets;
+	
+	
 	public User(){
 		this.role = UserRole.USER;
 	}
@@ -268,5 +274,13 @@ public class User {
 			this.avatarPath = user.avatarPath;
 		}
 		this.inPrivateMode = user.inPrivateMode;
+	}
+
+	public List<SupportTicket> getSupportTickets() {
+		return supportTickets;
+	}
+
+	public void setSupportTickets(List<SupportTicket> supportTickets) {
+		this.supportTickets = supportTickets;
 	}
 }
