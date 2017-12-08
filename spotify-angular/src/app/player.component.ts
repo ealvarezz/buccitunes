@@ -20,6 +20,8 @@ export class PlayerComponent {
     private volume : number
     private time : number
     private loop : boolean;
+    private shuffle : boolean;
+    
 
 
     private secretMode : boolean;
@@ -52,10 +54,16 @@ export class PlayerComponent {
           secret => this.secretMode = secret
       );
       this.musicService.loopChange.subscribe(
-          loop => this.loop = loop
-      )
+        loop => this.loop = loop
+      );
+      this.musicService.shuffleChange.subscribe(
+          shuffle => this.shuffle = shuffle
+      );
     }
 
+    sliderChange(){
+        
+    }
     mute(){
       this.musicService.changeVolume(0);
     }
@@ -68,9 +76,17 @@ export class PlayerComponent {
        this.musicService.changeVolume(this.volume);
     }
 
-     play(){
+    play(){
         this.musicService.playSong();
     }
+
+    skipNext(){
+        this.musicService.skipNext();
+    }
+    skipPrevious(){
+        this.musicService.skipPrevious();
+    }
+
     pause(){
         this.musicService.pauseSong();
     }
@@ -84,6 +100,9 @@ export class PlayerComponent {
 
     toggleLoop(){
         this.musicService.toggleLoop();
+    }
+    toggleShuffle(){
+        this.musicService.toggleShuffle();
     }
     
 

@@ -5,6 +5,7 @@ import {MediaService } from './services/media.service';
 import {MediaFile} from './objs/MediaFile';
 import {Playlist} from './objs/Playlist';
 import {environment} from '../environments/environment';
+import {NotificationsService} from 'angular4-notifications';
 
 
 @Component({
@@ -16,7 +17,8 @@ export class AddPlaylistDialog {
 
   constructor(public dialogRef: MdDialogRef<AddPlaylistDialog>,
               private musicService : MusicCollectionService,
-              public mediaService : MediaService ) {
+              public mediaService : MediaService,
+              private notificationService: NotificationsService) {
      }
 
      playlistName : string;
@@ -33,8 +35,8 @@ export class AddPlaylistDialog {
         this.musicService.addPlaylist(playlist)
             .subscribe(
                 (data : Playlist) => {
+                    this.notificationService.success("SUCCESS", "This playlist has been added!");
                     this.closeDialog();
-                    console.log(data);
                 },
                 (err) => {
                     console.log(err.message);

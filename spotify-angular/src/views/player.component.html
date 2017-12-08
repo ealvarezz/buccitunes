@@ -1,13 +1,13 @@
 <div class = "music-player-class">
 <md-toolbar color="primary" class="music-bar">
 
-     <img *ngIf="song.album" class="album_img" [src] ="mediaService.getAlbumImageUrl(song.album.artworkPath)"> 
+     <img *ngIf="song?.album" class="album_img" [src] ="mediaService.getAlbumImageUrl(song.album.artworkPath)"> 
     <div class="row" style="padding-left:10px;">
         <div >
-            <a class="song_name">{{song.name}}</a>
+            <a class="song_name">{{song?.name}}</a>
         </div>
         <div style="line-height:0px;">
-            <a *ngIf="song.owner" class="artist_name">{{song.owner.name}}</a>
+            <a *ngIf="song?.owner" [routerLink]="['/artist',song.owner.id]" class="artist_name">{{song?.owner.name}}</a>
         </div>
     </div>
 
@@ -16,20 +16,22 @@
 
     <div class="middle-controls row"> 
         <div class = "controls" >
-            <button md-icon-button><i class="material-icons">shuffle</i></button>
-            <button md-icon-button><i class="material-icons">skip_previous</i></button>
+            <button md-icon-button *ngIf="!shuffle" (click)="toggleShuffle()"><i class="material-icons">shuffle</i></button>
+            <button md-icon-button *ngIf="shuffle" color="accent" (click)="toggleShuffle()"><i class="material-icons">shuffle</i></button>
+            <button md-icon-button (click)="skipPrevious()"><i class="material-icons">skip_previous</i></button>
             <button md-icon-button *ngIf ="!isPlaying" (click)="play()"><i class="material-icons md-48">play_circle_outline</i></button>
             <button md-icon-button *ngIf ="isPlaying" (click)="pause()"><i class="material-icons md-48">pause_circle_outline</i></button>
-            <button md-icon-button><i class="material-icons">skip_next</i></button>
+            <button md-icon-button (click)="skipNext()"><i class="material-icons">skip_next</i></button>
             <button (click) ="toggleLoop()" *ngIf="!loop" md-icon-button><i class="material-icons">loop</i></button>
             <button (click) ="toggleLoop()" *ngIf="loop" color="accent" md-icon-button><i class="material-icons">loop</i></button>
         </div>
         <div class="song_progress">
-              <md-progress-bar
+              <!-- <md-progress-bar
                 color="warn"
                 mode="determinate"
                 [value]="time">
-            </md-progress-bar>  
+            </md-progress-bar>   -->
+            <md-slider style="min-width:100;" color="warn" [(ngModel)]="musicService.currTime"></md-slider>
         </div>
     </div>
 
@@ -37,7 +39,7 @@
 
         <button md-icon-button (click)="toggleSecret()" mdTooltip="Enable Secret Mode" mdTooltipPosition="above" *ngIf="secretMode == false" ><i class="material-icons">visibility</i></button>
         <button md-icon-button (click)="toggleSecret()" mdTooltip="Disable Secret Mode" mdTooltipPosition="above" *ngIf="secretMode == true" ><i class="material-icons">visibility_off</i></button>
-        <button md-icon-button ><i class="material-icons">queue_music</i></button>
+        <button md-icon-button routerLink="/queue"><i class="material-icons">queue_music</i></button>
 
         <!-- volume control section -->
         <button (click)="mute()" *ngIf ="volume >= 50" md-icon-button ><i class="material-icons">volume_up</i></button>

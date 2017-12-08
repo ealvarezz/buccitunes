@@ -41,14 +41,14 @@ public class Song {
 	
 	@ManyToOne(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     @JoinColumn(name = "album_id")
-	@JsonIgnoreProperties(value = "songs")
+	@JsonIgnoreProperties(value = {"songs","primaryArtist"})
 	private Album album;
 	
 	private boolean explicit;
 	
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "owner_id")
-	@JsonIgnoreProperties(value = "recentlyPlayed")
+	@JsonIgnoreProperties(value = {"albums", "recentlyPlayed"})
 	private Artist owner;
 	
 	@ManyToMany(fetch=FetchType.LAZY)
