@@ -63,6 +63,12 @@ export class UserService {
          .catch(this.handleError);
     }
 
+    cancelPremiumAccount() {
+        return this.http.put<BucciResponse<User>>(BucciConstants.Endpoints.CANCEL_PREMIUM, {withCredentials: true}).
+         map(this.extractData)
+         .catch(this.handleError);
+    } 
+
     private sanitzeUser(user : User){
         let newUser = new User();
         newUser.email = user.email;
