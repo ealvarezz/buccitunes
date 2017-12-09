@@ -6,6 +6,8 @@ import {MusicCollectionService} from './services/music.service';
 import {NotificationsService} from 'angular4-notifications';
 import {MediaService} from './services/media.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
+import {QueueService} from './services/queue.service';
+import {MusicService} from './services/player.service';
 
 
 @Component({
@@ -24,7 +26,9 @@ export class AlbumComponent{
                 private musicService    : MusicCollectionService,
                 private mediaService    : MediaService, 
                 private _location       : Location,
-                private notifications   : NotificationsService){}
+                private notifications   : NotificationsService,
+                private queueService    : QueueService,
+                private playerService   : MusicService){}
 
 
     ngOnInit(){
@@ -53,6 +57,11 @@ export class AlbumComponent{
 
            }
        );
+   }
+
+   playAlbum(){
+        this.queueService.playMusicCollection(this.album.songs, 0);
+        this.playerService.playSong();
    }
     
     

@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {MusicCollectionService} from './services/music.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Song} from './objs/Song';
+import {MusicService} from './services/player.service';
+import {QueueService} from './services/queue.service';
 
 @Component({
   selector: 'song-library',
@@ -13,7 +15,9 @@ export class SongLibrary implements OnInit {
   songs : Song[];
   
 
-  constructor(private musicService : MusicCollectionService) { }
+  constructor(private musicService : MusicCollectionService,
+              private queueService : QueueService,
+              private playerService : MusicService) { }
 
   ngOnInit() {
         this.getLibrary();
@@ -28,6 +32,11 @@ export class SongLibrary implements OnInit {
             console.log(err);
           }
       )
+  }
+  
+  playLibrary(){
+    this.queueService.playMusicCollection(this.songs, 0);
+    this.playerService.playSong();
   }
 
  

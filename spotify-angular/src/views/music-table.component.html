@@ -1,6 +1,6 @@
 <div class="example-container">
 
-  <md-table #table [dataSource]="dataSource">
+  <md-table #table [dataSource]="dataSource" mdSort>
 
     <!-- ID Column -->
     <ng-container mdColumnDef="num">
@@ -13,7 +13,7 @@
 
     <!-- Progress Column -->
     <ng-container mdColumnDef="songName">
-      <md-header-cell *mdHeaderCellDef> Title </md-header-cell>
+      <md-header-cell *mdHeaderCellDef md-sort-header> Title </md-header-cell>
       <md-cell *mdCellDef="let row"> {{row.name}} </md-cell>
     </ng-container>
 
@@ -26,13 +26,13 @@
     </ng-container>
 
     <ng-container mdColumnDef="artist">
-      <md-header-cell *mdHeaderCellDef> <div *ngIf="isAlbum == false" >Artist</div> </md-header-cell>
-      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false" >{{row.owner.name}}</div> </md-cell>
+      <md-header-cell *mdHeaderCellDef md-sort-header> <div *ngIf="isAlbum == false" >Artist</div> </md-header-cell>
+      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false" ><a [routerLink]="['/artist', row.owner.id]" class="link">{{row.owner.name}}</a></div> </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="album">
-      <md-header-cell *mdHeaderCellDef> <div *ngIf="isAlbum == false" >Album</div> </md-header-cell>
-      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false">{{row.album.title}}</div> </md-cell>
+      <md-header-cell *mdHeaderCellDef md-sort-header> <div *ngIf="isAlbum == false" >Album</div> </md-header-cell>
+      <md-cell *mdCellDef="let row"> <div *ngIf="isAlbum == false"><a class="link" [routerLink]="['/album', row.album.id]">{{row.album.title}}</a></div> </md-cell>
     </ng-container>
 
     <ng-container mdColumnDef="more">
@@ -40,10 +40,13 @@
       <md-cell *mdCellDef="let row"> 
         <button md-icon-button [mdMenuTriggerFor]="menu" mdTooltip="More"  mdTooltipShowDelay="800"> <i class="material-icons" >more_horiz</i> </button> 
         <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
-          <button md-menu-item (click)="addSongToQueue(row)">
+          <button *ngIf="!isQueue" md-menu-item (click)="addSongToQueue(row)">
             <span>Add to Queue</span>
           </button>
-          <button md-menu-item>
+          <button *ngIf="isQueue" md-menu-item (click)="removeSongFromQueue(row)">
+            <span>Remove From Queue</span>
+          </button>
+          <button *ngIf="row.owner" [routerLink]="['/artist', row.owner.id]" md-menu-item>
             <span>Go to Artist</span>
           </button>
           <button (click)="addSongToLibrary(row)"md-menu-item>
@@ -52,7 +55,7 @@
           <button [mdMenuTriggerFor]="subMenu" md-menu-item>
             <span>Add to Playlist</span>
           </button>
-          <button (click)="removeSongFromPlaylist(row)" *ngIf="!isAlbum" md-menu-item>
+          <button (click)="removeSongFromPlaylist(row)" *ngIf="!isAlbum && !isQueue" md-menu-item>
             <span>Delete From Playlist</span>
           </button>
         </md-menu>
@@ -64,7 +67,7 @@
     </ng-container>
     
     <ng-container mdColumnDef="duration">
-      <md-header-cell *mdHeaderCellDef> <i class="material-icons" >access_time</i> </md-header-cell>
+      <md-header-cell *mdHeaderCellDef md-sort-header> <i class="material-icons" >access_time</i> </md-header-cell>
       <md-cell *mdCellDef="let row"> 3:30 </md-cell>
     </ng-container>
 

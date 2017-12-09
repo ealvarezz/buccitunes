@@ -1,8 +1,10 @@
 import { Component, Input } from '@angular/core';
 import {MusicService } from './services/player.service';
 import {MediaService} from './services/media.service';
+import {AuthenticationService} from './services/authentication.service';
 import { Observable } from 'rxjs/Observable';
 import { Song } from './objs/Song';
+import {NotificationsService} from 'angular4-notifications';
 
 @Component({
   selector: 'music-player',
@@ -21,21 +23,26 @@ export class PlayerComponent {
     private time : number
     private loop : boolean;
     private shuffle : boolean;
-    
-
-
     private secretMode : boolean;
 
     showBar : boolean = false;
 
     
     constructor(private musicService : MusicService,
-                private mediaService : MediaService){
+                private mediaService : MediaService,
+                private authService  :AuthenticationService,
+                private notificationService : NotificationsService){
     }
 
     ngOnInit(){
       this.musicService.volumeChange.subscribe(
           vol => this.volume = vol
+      );
+      this.authService.currentUserChange.subscribe(
+          (user) => {
+              this.secretMode = user.inPrivateMode;
+              console.log(this.secretMode);
+          }
       );
       this.musicService.currSongChange.subscribe(
           song => this.song = song
@@ -48,10 +55,6 @@ export class PlayerComponent {
       );
       this.musicService.pauseChange.subscribe(
           pause => this.isPaused = pause
-      );
-    
-      this.musicService.secretChange.subscribe(
-          secret => this.secretMode = secret
       );
       this.musicService.loopChange.subscribe(
         loop => this.loop = loop
@@ -69,7 +72,17 @@ export class PlayerComponent {
     }
 
     toggleSecret(){
-        this.musicService.toggleSecretMode();
+        this.authService.togglePrivate(!this.secretMode).subscribe(
+            (data)=>{
+                if(data.inPrivateMode){
+                    this.notificationService.success("Success", "You are now in private mode. Other user's wont be able to see which songs you play.")
+                }
+                else{
+                    this.notificationService.success("Success", "Private mode turned off. The songs you play will now be public.")
+                }
+                
+            }
+        )
     }
 
     changeVolume(){
