@@ -473,6 +473,25 @@ public class UserController {
 		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
 	}
 	
+	@RequestMapping(value="reset_password_nomail", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Boolean> resetPasswordNomail(@RequestBody LoginInfo info, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		User user = userService.findOne(loggedUser.getEmail());
+		user.setPasswordAndEncrypt(info.password);
+		userService.save(user);
+			try {
+				mailManager.sendResetConfirmation(user.getEmail());
+			} catch (MessagingException e) {
+				return BucciResponseBuilder.failedMessage("The email server is down, wait some time and try again.");
+			}
+		
+		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
+	}
+	
+	
 	@RequestMapping(value="go_private", method = RequestMethod.PUT)
 	public @ResponseBody BucciResponse<User> becomePrivate(@RequestParam boolean secret, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
