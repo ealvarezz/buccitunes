@@ -18,6 +18,7 @@ import {AuthenticationService} from './services/authentication.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {MediaService} from './services/media.service';
 import {Location} from '@angular/common';
+import {BucciConstants} from '../environments/app.config';
 
 
 @Component({
@@ -33,6 +34,8 @@ export class ArtistComponent implements OnInit {
   viewSongs     : Song[] = this.songs.slice(0,5);
   showAllSongs  : boolean = false;
   isEditModeBio : boolean = false;
+  isOwner       : boolean = false;
+  following     : boolean = false;
 
   constructor(public dialog                 : MdDialog,
               private artistService         : ArtistService,
@@ -47,7 +50,9 @@ export class ArtistComponent implements OnInit {
     });
 
     this.authenticationService.currentUserChange.subscribe(
-      user => this.currentUser = user
+      (user) => {
+        this.currentUser = user;
+      }
     );
     
   }
@@ -56,6 +61,7 @@ export class ArtistComponent implements OnInit {
       .subscribe(
           (data) => {
             this.artist = data;
+            this.isCurrentUserOwner();
           },  
           (err) => {
             this.notificationService.error("ERROR","There was an error loading this artist.");
@@ -64,6 +70,33 @@ export class ArtistComponent implements OnInit {
           });
   }
 
+  followArtist(){
+    this.artistService.followArtist(this.artist).subscribe(
+      (data)=>{
+        this.following = true;
+      },
+      (err)=>{
+        this.notificationService.error("ERROR", "There was an issue following this artist.");
+      }
+    )
+  }
+
+  unFollowArtist(){
+    this.artistService.unFollowArtist(this.artist).subscribe(
+      (data)=>{
+        this.following = false;
+      },
+      (err)=>{
+        this.notificationService.error("ERROR", "There was an issue unfollowing this artist.");
+      }
+    );
+  }
+
+  isCurrentUserOwner(){
+    if((this.currentUser.role === BucciConstants.Roles.ARTIST) && (this.artist) && (this.currentUser.artist.id == this.artist.id)){
+      this.isOwner = true;
+    }
+  }
   addAlbum(){
     let dialogRef = this.dialog.open(AddAlbumDialog, 
       {
@@ -132,7 +165,6 @@ export class AddAlbumDialog {
   artist            : Artist;
   user              : User;
   albumArtworkPath  : string = '';
-
   disableNext : boolean = false;
 
 

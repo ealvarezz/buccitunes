@@ -77,10 +77,6 @@ export class MusicService {
         this.currTimeChange.next(time)
     }
 
-    toggleSecretMode(){
-        this.secretChange.next(!this.secretMode);
-    }
-
     toggleLoop(){
         this.audio.loop = !this.loop;
         this.loopChange.next(!this.loop);

@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule, MdExpansionModule, MdDatepickerModule, MdNativeDateModule} from '@angular/material';
+import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule, MdExpansionModule, MdDatepickerModule, MdNativeDateModule, MdSortModule} from '@angular/material';
 import {MdProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {PlayerComponent} from './player.component'
 import {HomePageTabTemplate} from './homepage-tab.component'
@@ -161,6 +161,7 @@ const appRoutes: Routes = [
     MdDatepickerModule,
     MdNativeDateModule,
     MdProgressSpinnerModule,
+    MdSortModule,
     SimpleNotificationsModule.forRoot()
   ],
   providers: [

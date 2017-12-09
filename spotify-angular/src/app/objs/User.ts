@@ -1,5 +1,6 @@
 
 import {Album} from './Album';
+import {Artist} from './Artist';
 import {Playlist} from './Playlist';
 import {BillingInfo} from './BillingInfo';
 export class User{
@@ -18,5 +19,7 @@ export class User{
     role            : String;
     avatarPath      : String;
     billingInfo     : BillingInfo;
+    artist          : Artist;
+    inPrivateMode   : boolean;
     
 }

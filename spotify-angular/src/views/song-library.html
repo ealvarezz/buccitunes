@@ -5,11 +5,11 @@
                 <h1>Songs</h1>
             </div>
             <div>
-                <button md-raised-button  class="rounded-button">Play</button>
+                <button md-raised-button (click)="playLibrary()" class="rounded-button">Play</button>
             </div>
         </div>
     </md-card-header>
     <md-card-content>
-        <music-table [data] = "songs" [isAlbum] = "true"></music-table>
+        <music-table [data] = "songs" [isAlbum] = "false"></music-table>
     </md-card-content>
 </md-card>

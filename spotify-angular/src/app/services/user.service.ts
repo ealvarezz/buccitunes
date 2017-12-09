@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {BucciConstants} from '../../environments/app.config';
 import {User} from '../objs/User';
+import {Artist} from '../objs/Artist';
 import {UserPage} from '../objs/UserPage';
 import {BucciResponse} from '../objs/BucciResponse';
 import {environment} from '../../environments/environment';
@@ -29,6 +30,8 @@ export class UserService {
         .catch(this.handleError);
     }
 
+    
+
     getAllUser(){
         return this.http.get<BucciResponse<User[]>>(BucciConstants.Endpoints.GET_ALL_USERS,{
            withCredentials: true
@@ -50,6 +53,7 @@ export class UserService {
          map(this.extractData)
          .catch(this.handleError);
     }
+
     private sanitzeUser(user : User){
         let newUser = new User();
         newUser.email = user.email;

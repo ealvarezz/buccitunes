@@ -59,6 +59,15 @@ export class AuthenticationService {
         
     }
 
+    togglePrivate(secret : boolean){
+        return this.http.put(BucciConstants.Endpoints.GO_SECRET_MODE, null, {
+            params: new HttpParams().set('secret', String(secret)), 
+            withCredentials: true
+        })
+        .map(this.extractData.bind(this))
+        .catch(this.handleError);
+    }
+
     resetPasswordRequest(email : String){
         return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.RESET_PW_REQUEST, JSON.stringify(email), 
         {headers: new HttpHeaders().set('Content-Type', 'application/json'), 
