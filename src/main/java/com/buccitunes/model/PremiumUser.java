@@ -12,10 +12,12 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.buccitunes.constants.UserRole;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="PremiumUser")
 public class PremiumUser extends User {
@@ -30,6 +32,10 @@ public class PremiumUser extends User {
 	@JoinColumn(name = "premium_user_id")
 	@JsonIgnoreProperties(value = "premiumUser")
 	private List<Payment> paymentHistory;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	Date nextBillingDate;
 	
 	public PremiumUser(){
 		super();
@@ -75,5 +81,13 @@ public class PremiumUser extends User {
 		
 		paymentHistory.add(payment);
 		return paid;
+	}
+
+	public Date getNextBillingDate() {
+		return nextBillingDate;
+	}
+
+	public void setNextBillingDate(Date nextBillingDate) {
+		this.nextBillingDate = nextBillingDate;
 	}
 }

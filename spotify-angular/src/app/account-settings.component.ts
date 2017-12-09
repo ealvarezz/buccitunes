@@ -19,7 +19,7 @@ export class AccountSettingsComponent implements OnInit {
     private authentication: AuthenticationService,
     private notificationService: NotificationsService,
     public mediaService: MediaService,
-    public userService: UserService,
+    public userService: UserService
   ) {}
 
   user: User;
@@ -32,12 +32,10 @@ export class AccountSettingsComponent implements OnInit {
   nameForUser: string;
   usernameForUser: string;
   avatarArtwork: string;
-  
 
   ngOnInit() {
     this.authentication.currentUserChange.subscribe(user => {
       this.user = user;
-      this.renewDate = new Date(2018, 0, 7);
 
       // if(this.user.join_date.getDay() < new Date().getDay()){
 
@@ -52,11 +50,10 @@ export class AccountSettingsComponent implements OnInit {
         this.previewCC = this.user.billingInfo.creditCardNo.slice(-4);
         this.user.billingInfo.creditCardCompany = this.getCreditCardCompany();
 
-        this.userService.getPaymentInfo().subscribe(
-          data => {
-            this.receipts = data;
-          }
-        );
+        this.userService.getPaymentInfo().subscribe(data => {
+          this.receipts = data;
+          this.renewDate = this.receipts[0].nextBillingDate;
+        });
       }
       this.nameForUser = user.name;
       this.usernameForUser = user.username;
@@ -68,7 +65,8 @@ export class AccountSettingsComponent implements OnInit {
     //changedUser.email = this.user.email;
     changedUser.name = this.nameForUser;
     changedUser.username = this.usernameForUser;
-    if (this.avatarArtwork) changedUser.avatar = this.avatarArtwork.split(",")[1];
+    if (this.avatarArtwork)
+      changedUser.avatar = this.avatarArtwork.split(",")[1];
     this.userService.changeUser(changedUser).subscribe(
       data => {
         this.user = data;
@@ -102,6 +100,13 @@ export class AccountSettingsComponent implements OnInit {
   uploadImage(event) {
     this.mediaService.previewImage(event).subscribe((data: MediaFile) => {
       this.avatarArtwork = data.artwork;
+    });
+  }
+
+  cancelPremiumAccount() {
+    this.userService.cancelPremiumAccount().subscribe(data => {
+      this.receipts = data;
+      this.renewDate = this.receipts[0].nextBillingDate;
     });
   }
 }

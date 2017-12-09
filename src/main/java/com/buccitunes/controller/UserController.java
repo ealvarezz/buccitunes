@@ -1,5 +1,6 @@
 package com.buccitunes.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -31,6 +32,7 @@ import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.RequestedAlbum;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
 import com.buccitunes.service.UserService;
 
@@ -472,6 +474,25 @@ public class UserController {
 		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
 	}
 	
+	@RequestMapping(value="reset_password_nomail", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<Boolean> resetPasswordNomail(@RequestBody LoginInfo info, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		User user = userService.findOne(loggedUser.getEmail());
+		user.setPasswordAndEncrypt(info.password);
+		userService.save(user);
+			try {
+				mailManager.sendResetConfirmation(user.getEmail());
+			} catch (MessagingException e) {
+				return BucciResponseBuilder.failedMessage("The email server is down, wait some time and try again.");
+			}
+		
+		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
+	}
+	
+	
 	@RequestMapping(value="go_private", method = RequestMethod.PUT)
 	public @ResponseBody BucciResponse<User> becomePrivate(@RequestParam boolean secret, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
@@ -524,5 +545,54 @@ public class UserController {
 		
 		List<Payment> payments = userService.getPayments((PremiumUser) loggedUser);
 		return BucciResponseBuilder.successfulResponse(payments);
+	}
+	
+	@RequestMapping(value="submit_ticket", method = RequestMethod.POST)
+	public @ResponseBody void submitTicket(@RequestBody SupportTicket supportTicket, HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return;
+		}
+		
+		userService.saveTicket(supportTicket, loggedUser.getEmail());
+	}
+	
+	
+	
+	
+	@RequestMapping(value="cancel_subscription", method = RequestMethod.PUT)
+	public @ResponseBody BucciResponse<User> cancelSubscription(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else if(!BucciPrivilege.isPremium(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
+		}
+		
+		PremiumUser user = userService.cancelPremium((PremiumUser) loggedUser);
+		session.setAttribute(constants.getSession(), user);
+		
+		
+		String nextBillingDate = new SimpleDateFormat("MMM dd, yyyy").format(user.getNextBillingDate());
+		return BucciResponseBuilder.successfulResponseMessage("You are now bucci basic, final charge date is on " + nextBillingDate
+				, user);
+	}
+	
+	@RequestMapping(value="activate_subscription", method = RequestMethod.PUT)
+	public @ResponseBody BucciResponse<User> activateSubscription(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		try {
+			PremiumUser user = userService.reActivateSubscription(loggedUser);
+			session.setAttribute(constants.getSession(), user);
+			return BucciResponseBuilder.successfulResponseMessage("You are back to being bucci premium", user);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
 	}
 }

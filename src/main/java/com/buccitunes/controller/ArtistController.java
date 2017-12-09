@@ -32,6 +32,7 @@ import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
 import com.buccitunes.service.ArtistService;
 import com.buccitunes.service.UserService;
@@ -255,6 +256,12 @@ public class ArtistController {
 			}
 		} else {
 			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg()); 
-		}
+		}		
 	}
+	
+	@RequestMapping(value="tickets", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<SupportTicket>> tickets(HttpSession session) {
+		return BucciResponseBuilder.successfulResponse((artistService.findAllTickets()));
+	}
+
 }
