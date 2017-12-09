@@ -10,10 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="Payment")
 public class Payment {
@@ -30,6 +32,10 @@ public class Payment {
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
 	private Date date;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	Date nextBillingDate;
 	
 	@ManyToOne(cascade = {CascadeType.MERGE , CascadeType.PERSIST})
     @JoinColumn(name = "premium_user_id")
@@ -95,4 +101,14 @@ public class Payment {
 	public void setPremiumUser(PremiumUser premiumUser) {
 		this.premiumUser = premiumUser;
 	}
+
+	public Date getNextBillingDate() {
+		return nextBillingDate;
+	}
+
+	public void setNextBillingDate(Date nextBillingDate) {
+		this.nextBillingDate = nextBillingDate;
+	}
+	
+	
 }

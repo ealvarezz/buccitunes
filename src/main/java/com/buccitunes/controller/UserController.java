@@ -1,5 +1,6 @@
 package com.buccitunes.controller;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import javax.mail.MessagingException;
@@ -524,5 +525,41 @@ public class UserController {
 		
 		List<Payment> payments = userService.getPayments((PremiumUser) loggedUser);
 		return BucciResponseBuilder.successfulResponse(payments);
+	}
+	
+	@RequestMapping(value="cancel_subscription", method = RequestMethod.PUT)
+	public @ResponseBody BucciResponse<User> cancelSubscription(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else if(!BucciPrivilege.isPremium(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
+		}
+		
+		PremiumUser user = userService.cancelPremium((PremiumUser) loggedUser);
+		session.setAttribute(constants.getSession(), user);
+		
+		
+		String nextBillingDate = new SimpleDateFormat("MMM dd, yyyy").format(user.getNextBillingDate());
+		return BucciResponseBuilder.successfulResponseMessage("You are now bucci basic, final charge date is on " + nextBillingDate
+				, user);
+	}
+	
+	@RequestMapping(value="activate_subscription", method = RequestMethod.PUT)
+	public @ResponseBody BucciResponse<User> activateSubscription(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		try {
+			PremiumUser user = userService.reActivateSubscription(loggedUser);
+			session.setAttribute(constants.getSession(), user);
+			return BucciResponseBuilder.successfulResponseMessage("You are back to being bucci premium", user);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+		
 	}
 }

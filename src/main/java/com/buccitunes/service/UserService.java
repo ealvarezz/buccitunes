@@ -1,7 +1,11 @@
 package com.buccitunes.service;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import javax.transaction.Transactional;
@@ -14,6 +18,7 @@ import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.BillingInfoRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
+import com.buccitunes.dao.PaymentRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongRepository;
@@ -52,11 +57,13 @@ public class UserService  {
 	private final PlaylistRepository playlistRepository;
 	private final CreditCompanyRepository creditCompanyRepository;
 	private final BillingInfoRepository billingInfoRepository;
+	private final PaymentRepository paymentRepository;
+	
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
 			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository, 
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
-			ArtistRepository artistRepository) {
+			ArtistRepository artistRepository, PaymentRepository paymentRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -66,6 +73,7 @@ public class UserService  {
 		this.songRepository = songRepository;
 		this.playlistRepository = playlistRepository;
 		this.artistRepository = artistRepository;
+		this.paymentRepository = paymentRepository;
 	}
 	
 	public List<User> findAll(){
@@ -378,8 +386,62 @@ public class UserService  {
 	}
 	
 	public List<Payment> getPayments(PremiumUser user) {
+		List<Payment> paymentHistory = paymentRepository.findByPremiumUserOrderByDateDesc(user);
+		
+		Payment lastPayment = paymentHistory.get(0);
+		Date lastPayDate = lastPayment.getDate();
+		
+		//Used to get the next month/next billingdate
+		Date nextBillingDate =  getNextBillingDate(lastPayDate);
+		lastPayment.setNextBillingDate(nextBillingDate);
+		System.out.println(new SimpleDateFormat("MMM dd, yyyy").format(lastPayment.getDate()));
+		System.out.println(new SimpleDateFormat("MMM dd, yyyy").format(lastPayment.getNextBillingDate()));
+		
+		
+		return paymentHistory;
+	}
+	
+	public PremiumUser cancelPremium(PremiumUser user) {
 		user = premiumUserRepository.findOne(user.getEmail());
-		user.getPaymentHistory().size();
-		return user.getPaymentHistory();
+		user.getBillingInfo().setActive(false);
+		user.setRole(UserRole.USER);
+		
+		Date lastPayDate = paymentRepository.findTopByPremiumUserOrderByDateDesc(user).getDate();
+		Date nextBillingDate =  getNextBillingDate(lastPayDate);
+		user.setNextBillingDate(nextBillingDate);
+	
+		return user;
+	}
+	
+	public PremiumUser reActivateSubscription(User loggedUser) throws BucciException {
+		PremiumUser pUser = premiumUserRepository.findOne(loggedUser.getEmail());
+		if(pUser == null) {
+			throw new BucciException("You were never a premium user before!");
+		}
+		
+		pUser.getBillingInfo().setActive(true);
+		pUser.setRole(UserRole.PREMIUM);
+		
+		/*
+		Date previousBillingDate = paymentRepository.findTopByPremiumUserOrderByDateDesc(pUser).getDate();
+		//Used to get
+		Calendar cal = Calendar.getInstance(); 
+		cal.add(Calendar.MONTH, -1);
+		Date nextBillingDate = cal.getTime();
+		
+		
+		if(previousBillingDate.compareTo(nextBillingDate)){
+			
+		}
+		*/
+		
+		return pUser;
+	}
+	
+	private Date getNextBillingDate(Date date) {
+		Calendar cal = Calendar.getInstance();
+		cal.setTime(date);		
+		cal.add(Calendar.MONTH, 1);
+		return cal.getTime();
 	}
 }
