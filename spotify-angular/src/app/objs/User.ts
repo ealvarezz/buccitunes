@@ -18,6 +18,7 @@ export class User{
     join_date       : Date;
     role            : String;
     avatarPath      : String;
+    avatar          : String;
     billingInfo     : BillingInfo;
     artist          : Artist;
     inPrivateMode   : boolean;

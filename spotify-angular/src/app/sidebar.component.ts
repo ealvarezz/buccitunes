@@ -8,74 +8,95 @@ import {AddPlaylistDialog} from './add-playlist.component';
 import {Playlist} from './objs/Playlist';
 import {User} from './objs/User';
 import {MusicService} from './services/player.service';
+import { MediaFile } from "./objs/MediaFile";
+import { MediaService } from "./services/media.service";
+import { environment } from "../environments/environment";
 
 
 @Component({
-  selector: 'side-bar',
-  templateUrl: '../views/sidebar.component.html',
-  styleUrls: ['../views/styles/sidebar.component.css']
+  selector: "side-bar",
+  templateUrl: "../views/sidebar.component.html",
+  styleUrls: ["../views/styles/sidebar.component.css"]
 })
 export class SideBarComponent implements OnInit {
-    constructor(public dialog: MdDialog,
-                private router: Router,
-                private authService : AuthenticationService,
-                private musicService : MusicCollectionService,
-                private playerService : MusicService) {}
-    recentAlbums : Album[];
-    playlists    : Playlist[];
-    currentUser  : User;
+  constructor(
+    public dialog: MdDialog,
+    private router: Router,
+    private authService: AuthenticationService,
+    private musicService: MusicCollectionService,
+    private playerService: MusicService,
+    public mediaService: MediaService
+  ) {}
+  recentAlbums: Album[];
+  playlists: Playlist[];
+  currentUser: User;
 
-    ngOnInit(){
-        this.getRecentlyPlayedAlbums();
+  ngOnInit() {
+    this.getRecentlyPlayedAlbums();
 
-        this.authService.currentUserChange.subscribe(
-            user => this.currentUser = user
-        );
-        
-        this.musicService.userPlaylists.subscribe(
-          playlists => this.playlists = playlists
-        );
-    }
+    this.authService.currentUserChange.subscribe(
+      user => (this.currentUser = user)
+    );
 
-    logout() {
-        this.playerService.pauseSong();
-        this.authService.logout().subscribe(
-            (data) =>{
-                this.router.navigate(["/login"]);
-            },
-            (err) =>{
-                console.log("error");
-            }
-        ) 
-    }
+    this.musicService.userPlaylists.subscribe(
+      playlists => (this.playlists = playlists)
+    );
+  }
 
-    getUserPage(){
-        this.router.navigate(['/user',this.currentUser.email])
-    }
-    getRecentlyPlayedAlbums(){
-        this.musicService.getRecentlyPlayedAlbums().subscribe(
-        (data)=>{
-            this.recentAlbums = data;
-        },
-        (err)=>{
-            console.log("cannot find");
-        });
-    }
+  logout() {
+    this.playerService.pauseSong();
+    this.authService.logout().subscribe(
+      data => {
+        this.router.navigate(["/login"]);
+      },
+      err => {
+        console.log("error");
+      }
+    );
+  }
 
-    getPlaylists(){
-        this.musicService.getUserPlaylists().subscribe(
-            (data) =>{
-                this.playlists = data;
-            }
-        )
-    }
+  getUserPage() {
+    this.router.navigate(["/user", this.currentUser.email]);
+  }
+  getRecentlyPlayedAlbums() {
+    this.musicService.getRecentlyPlayedAlbums().subscribe(
+      data => {
+        this.recentAlbums = data;
+      },
+      err => {
+        console.log("cannot find");
+      }
+    );
+  }
 
-    addPlaylist(){
-        let dialogRef = this.dialog.open(AddPlaylistDialog,{width:'700px'});
-    }
+  getPlaylists() {
+    this.musicService.getUserPlaylists().subscribe(data => {
+      this.playlists = data;
+    });
+  }
 
-    savedPlaylists : PlaylistTemp[] = [new PlaylistTemp("Sajid's Playlist","own"), new PlaylistTemp("DICS Playlist","public"), new PlaylistTemp("The Block Playlist","friend"), new PlaylistTemp("Justin's Playlist","friend"), new PlaylistTemp("Chris' Playlist","friend")] 
-    recentPlaylists: string[] = ["DAMN","Coloring Book", "Gym Playlist", "Billboard Hot 100", "RapCaviar", "Signed XOXO", "Graduation","Power Workout", "Channel X"];
+  addPlaylist() {
+    let dialogRef = this.dialog.open(AddPlaylistDialog, { width: "700px" });
+  }
+
+  savedPlaylists: PlaylistTemp[] = [
+    new PlaylistTemp("Sajid's Playlist", "own"),
+    new PlaylistTemp("DICS Playlist", "public"),
+    new PlaylistTemp("The Block Playlist", "friend"),
+    new PlaylistTemp("Justin's Playlist", "friend"),
+    new PlaylistTemp("Chris' Playlist", "friend")
+  ];
+  recentPlaylists: string[] = [
+    "DAMN",
+    "Coloring Book",
+    "Gym Playlist",
+    "Billboard Hot 100",
+    "RapCaviar",
+    "Signed XOXO",
+    "Graduation",
+    "Power Workout",
+    "Channel X"
+  ];
 }
 
 export class PlaylistTemp {

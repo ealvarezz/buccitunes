@@ -3,6 +3,7 @@ import { Observable } from 'rxjs/Observable';
 import {BucciConstants} from '../../environments/app.config';
 import {User} from '../objs/User';
 import {Artist} from '../objs/Artist';
+import { Payment } from "../objs/Payment";
 import {UserPage} from '../objs/UserPage';
 import {BucciResponse} from '../objs/BucciResponse';
 import {environment} from '../../environments/environment';
@@ -20,8 +21,7 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 export class UserService {
     constructor(private http: HttpClient) { }
 
-    getUser(userId : string){
-        
+    getUser(userId : string){ 
         return this.http.post<BucciResponse<UserPage>>(BucciConstants.Endpoints.GET_USER,JSON.stringify(userId),{
           headers: new HttpHeaders().set('Content-Type', 'application/json'),
            withCredentials: true
@@ -54,6 +54,18 @@ export class UserService {
          .catch(this.handleError);
     }
 
+    changeUser(user : User) {
+        return this.http.post<BucciResponse<User>>(BucciConstants.Endpoints.CHANGE_USER_INFO, user, {withCredentials: true}).
+         map(this.extractData)
+         .catch(this.handleError);
+    }
+
+    getPaymentInfo() {
+        return this.http.get<BucciResponse<Payment>>(BucciConstants.Endpoints.GET_PAYMENT_HISTORY, {withCredentials: true}).
+         map(this.extractData)
+         .catch(this.handleError);
+    }
+
     private sanitzeUser(user : User){
         let newUser = new User();
         newUser.email = user.email;
@@ -73,5 +85,6 @@ export class UserService {
         return Observable.throw(new Error(error.message));
     }
     
+
 
 }

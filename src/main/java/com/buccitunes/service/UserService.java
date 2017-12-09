@@ -31,6 +31,7 @@ import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.CreditCompany;
 import com.buccitunes.model.MusicCollection;
+import com.buccitunes.model.Payment;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.Song;
@@ -327,7 +328,6 @@ public class UserService  {
 	}
 	
 	public User changeUserInfo(User loggedUser, User changedUser) throws BucciException {
-		
 		User user = userRepository.findOne(loggedUser.getEmail());
 		
 		if(user == null || !user.getEmail().equals(changedUser.getEmail())) {
@@ -375,5 +375,11 @@ public class UserService  {
 		 user = userRepository.findOne(user.getEmail());
 		 user.setInPrivateMode(secret);
 		 return user;
+	}
+	
+	public List<Payment> getPayments(PremiumUser user) {
+		user = premiumUserRepository.findOne(user.getEmail());
+		user.getPaymentHistory().size();
+		return user.getPaymentHistory();
 	}
 }

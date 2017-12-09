@@ -40,6 +40,8 @@ export const BucciConstants =  {
       FOLLOW_ARTIST       : environment.SERVER_PATH + "/follow_artist",
       UNFOLLOW_ARTIST     : environment.SERVER_PATH + "/unfollow_artist",
       GO_SECRET_MODE      : environment.SERVER_PATH + "/go_private",
+      CHANGE_USER_INFO    : environment.SERVER_PATH + "/change_settings",
+      GET_PAYMENT_HISTORY : environment.SERVER_PATH + "/payment_info"
 
 
   },
