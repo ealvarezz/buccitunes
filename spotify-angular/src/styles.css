@@ -194,3 +194,7 @@ mat-toolbar-row{
     min-height:100%;
     display: none;
 }
+
+.link:hover{
+    text-decoration: underline;
+}

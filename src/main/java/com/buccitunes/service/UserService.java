@@ -22,6 +22,7 @@ import com.buccitunes.dao.PaymentRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongRepository;
+import com.buccitunes.dao.SupportTicketRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
@@ -40,6 +41,7 @@ import com.buccitunes.model.Payment;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
 
 @Service
@@ -57,13 +59,15 @@ public class UserService  {
 	private final PlaylistRepository playlistRepository;
 	private final CreditCompanyRepository creditCompanyRepository;
 	private final BillingInfoRepository billingInfoRepository;
+	private final SupportTicketRepository supportTicketRepository; 
 	private final PaymentRepository paymentRepository;
 	
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
 			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository, 
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
-			ArtistRepository artistRepository, PaymentRepository paymentRepository) {
+			ArtistRepository artistRepository, SupportTicketRepository supportTicketRepository,
+			PaymentRepository paymentRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -73,7 +77,6 @@ public class UserService  {
 		this.songRepository = songRepository;
 		this.playlistRepository = playlistRepository;
 		this.artistRepository = artistRepository;
-		this.paymentRepository = paymentRepository;
 	}
 	
 	public List<User> findAll(){
@@ -384,6 +387,15 @@ public class UserService  {
 		 user.setInPrivateMode(secret);
 		 return user;
 	}
+	
+	public void saveTicket(SupportTicket supportTicket, String email) {
+		 User user = userRepository.findOne(email);
+		 supportTicket.setTicketHolder(user);
+		 supportTicketRepository.save(supportTicket);
+	}
+	
+	
+	
 	
 	public List<Payment> getPayments(PremiumUser user) {
 		List<Payment> paymentHistory = paymentRepository.findByPremiumUserOrderByDateDesc(user);

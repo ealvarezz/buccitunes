@@ -2,6 +2,7 @@ import { Injectable, Inject } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import {BucciConstants} from '../../environments/app.config';
 import {User} from '../objs/User';
+import {Artist} from '../objs/Artist';
 import { Payment } from "../objs/Payment";
 import {UserPage} from '../objs/UserPage';
 import {BucciResponse} from '../objs/BucciResponse';
@@ -28,6 +29,8 @@ export class UserService {
         map(this.extractData)
         .catch(this.handleError);
     }
+
+    
 
     getAllUser(){
         return this.http.get<BucciResponse<User[]>>(BucciConstants.Endpoints.GET_ALL_USERS,{

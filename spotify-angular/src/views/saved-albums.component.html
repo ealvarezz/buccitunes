@@ -10,8 +10,8 @@
         <md-grid-tile *ngFor = "let album of albums" colspan= "1" rowpan = "1" >
             <div>
                 <div style="height: 220px; width: 220px;"><image [src]="getImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
-                <div *ngIf ="album.title" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
-                <div *ngIf ="album.primaryArtist" class ="browse-item-template"><h4><b><a [routerLink]="['/artist', album.primaryArtist.id]">{{album.primaryArtist.name}}</a></b></h4></div>
+                <div *ngIf ="album.title" class ="browse-item-template"><h4><b><a class="link" [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
+                <div *ngIf ="album.primaryArtist" class ="browse-item-template"><h4><b><a class="link" [routerLink]="['/artist', album.primaryArtist.id]">{{album.primaryArtist.name}}</a></b></h4></div>
 
             </div>
         </md-grid-tile>

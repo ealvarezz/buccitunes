@@ -56,6 +56,17 @@ export class QueueService {
         this.queue = newQueue;
     }
 
+    removeSongFromQueue(song : Song){
+        let newQueue = this.queue.slice();
+        let index = newQueue.indexOf(song);
+        if(index >=0){
+            newQueue.splice(index,1);
+        }
+
+        this.queue = newQueue;
+        
+    }
+
     addAlbumToQueue(album : Album){
         let temp = this.queue;
 

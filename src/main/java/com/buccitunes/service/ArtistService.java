@@ -29,6 +29,7 @@ import com.buccitunes.dao.RequestedArtistRepository;
 import com.buccitunes.dao.RequestedConcertRepository;
 import com.buccitunes.dao.RequestedSongRepository;
 import com.buccitunes.dao.SongRepository;
+import com.buccitunes.dao.SupportTicketRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
@@ -45,6 +46,7 @@ import com.buccitunes.model.RequestedArtist;
 import com.buccitunes.model.RequestedConcert;
 import com.buccitunes.model.RequestedSong;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
 
 @Service
@@ -66,13 +68,16 @@ public class ArtistService {
 	private final RequestedConcertRepository requestedConcertRepository;
 	private final LocationRepository locationRepository;
 	private final ArtistTransactionRepository artistTransactionRepository;
+	private final SupportTicketRepository supportTicketRepository; 
+
 	
 	public ArtistService(RequestedArtistRepository requestedArtistRepository, ArtistRepository artistRepository, 
 			RequestedAlbumRepository requestedAlbumRepository, UserRepository userRepository, 
 			ArtistUserRepository artistUserRepository, SongRepository songRepository, 
 			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository, 
 			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository, 
-			LocationRepository locationRepository, ArtistTransactionRepository artistTransactionRepository) {
+			LocationRepository locationRepository, ArtistTransactionRepository artistTransactionRepository,
+			SupportTicketRepository supportTicketRepository) {
 		
 		this.requestedArtistRepository = requestedArtistRepository;
 		this.albumRepository = albumRepository;
@@ -86,6 +91,7 @@ public class ArtistService {
 		this.concertRepository = concertRepository;
 		this.locationRepository = locationRepository;
 		this.artistTransactionRepository = artistTransactionRepository;
+		this.supportTicketRepository=supportTicketRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -320,4 +326,13 @@ public class ArtistService {
 		
 		return artistUser;
 	}
+	
+	
+	public List<SupportTicket> findAllTickets() {
+		List<SupportTicket> list = new ArrayList<SupportTicket>();
+		for(SupportTicket ticket: supportTicketRepository.findAll()) list.add(ticket);
+		return list;
+	}
+
+
 }

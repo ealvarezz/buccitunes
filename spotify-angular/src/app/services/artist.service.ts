@@ -23,6 +23,24 @@ export class ArtistService {
         map(this.extractData)
         .catch(this.handleError);
     }
+
+    followArtist(artist : Artist){
+        return this.http.get<BucciResponse<Artist[]>>(BucciConstants.Endpoints.FOLLOW_ARTIST, {
+            params: new HttpParams().set('artistId', String(artist.id)), 
+            withCredentials: true
+        })
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    unFollowArtist(artist : Artist){
+        return this.http.get<BucciResponse<Artist[]>>(BucciConstants.Endpoints.UNFOLLOW_ARTIST, {
+            params: new HttpParams().set('artistId', String(artist.id)), 
+            withCredentials: true
+        })
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
         
 
     private extractData(bucci){

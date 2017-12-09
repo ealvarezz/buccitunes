@@ -6,12 +6,14 @@
                 <div><h3>Artist<i class="material-icons" style="color:#3f51b5;">verified_user</i></h3></div>
                 <div><h1>{{artist.name}}</h1></div>
                 <button md-raised-button class="rounded-button">Play</button>
-                <button md-raised-button class="rounded-button" (click)="testNotification()">Follow</button>
+                <button md-raised-button class="rounded-button" *ngIf="!following" (click)="followArtist()">Follow</button>
+                <button md-raised-button class="rounded-button" *ngIf="following" (click)="unFollowArtist()">Unfollow</button>
                 <button md-mini-fab  style="color: white; background-color:#3f51b5; top:5px;" [mdMenuTriggerFor]="artistMenu"><i class="material-icons " style="font-size:24px; ">more_horiz</i></button>
 
                 <md-menu #artistMenu="matMenu">
-                    <button mat-menu-item (click)="addAlbum()"> Add Album </button>
-                    <button mat-menu-item> Add Song </button>
+                    <button *ngIf="isOwner" md-menu-item (click)="addAlbum()"> Add Album </button>
+                    <button *ngIf="isOwner" md-menu-item> Add Song </button>
+                    <button md-menu-item> Follow </button>
                 </md-menu>
             </div>
         </div>
@@ -50,7 +52,7 @@
             
         </md-tab>
         <md-tab label="ABOUT">
-            <button mdTooltip="Edit Bio" style="float:right;" *ngIf="isEditModeBio == false" (click)="toggleEditModeBio()"md-icon-button><i class="material-icons">mode_edit</i></button>
+            <button mdTooltip="Edit Bio" style="float:right;" *ngIf="isOwner && isEditModeBio == false" (click)="toggleEditModeBio()" md-icon-button><i class="material-icons">mode_edit</i></button>
             <h2>Bio</h2>
             <img src="../assets/ugly_god.png">
             <p *ngIf="isEditModeBio == false">{{artist.biography}}</p>
@@ -74,12 +76,15 @@
                 </div>
             </div>
             <div>
-                <h2 style="margin-bottom:1px;">2,542,347</h2>
+                <h2 style="margin-bottom:1px;">{{artist.stats.monthlyPlays}}</h2>
                 <p style="margin-top:0px;">Monthly Listeners</p>
             </div>
             <div>
-                <h2 style="margin-bottom:1px;">445,020</h2>
-                <p style="margin-top:0px;">Followers</p>
+                <h2 style="margin-bottom:1px;">{{artist.stats.totalPlays}}</h2>
+                <p style="margin-top:0px;">Total Listeners</p>
+            </div>
+            <div style="background-color:aqua; width:25%;">
+                <h2 style="margin-bottom:1px;">{{artist.stats.rank}}th in the world</h2>
             </div>
         </md-tab>
         <md-tab label="CONCERTS">

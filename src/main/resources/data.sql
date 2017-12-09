@@ -193,17 +193,17 @@ select song_id, COUNT(*) as total_plays FROM song_plays
 select DATE_FORMAT(currDate ,'%Y-%m-01') as month,  @curRow := @curRow + 1 AS rank, p.revenue, p.total_plays,  album_id
  FROM 
 (
-	SELECT album_id, sum(total_plays) as total_plays, sum(revenue) as revenue
+    SELECT album_id, sum(total_plays) as total_plays, sum(revenue) as revenue
     FROM
     (
-		select  album_id,  s.total_plays as total_plays, s.revenue as revenue
-		 from song_monthly_stat s
-		 LEFT JOIN song
-		ON s.song_id = song.id
+        select  album_id,  s.total_plays as total_plays, s.revenue as revenue
+         from song_monthly_stat s
+         LEFT JOIN song
+        ON s.song_id = song.id
         WHERE MONTH(s.month) = currMonth
         AND YEAR(s.month) = currYear
-	) c
-	GROUP BY album_id
+    ) c
+    GROUP BY album_id
     ORDER BY total_plays DESC
 )p
  JOIN    (SELECT @curRow := 0) r;
@@ -214,24 +214,24 @@ INSERT INTO artist_monthly_stat
 SELECT DATE_FORMAT(currDate ,'%Y-%m-01') as month, @curRow := @curRow + 1 AS rank, p.revenue as revenue,   p.total_plays as total_plays, artist_id
 FROM
 (
-	SELECT artist_id, sum(total_plays) as total_plays, sum(revenue) as revenue FROM
-	(
-		SELECT ms.*, a.primary_artist_id as artist_id FROM album_monthly_stat ms
-		RIGHT JOIN album a
-		ON ms.album_id = a.id
+    SELECT artist_id, sum(total_plays) as total_plays, sum(revenue) as revenue FROM
+    (
+        SELECT ms.*, a.primary_artist_id as artist_id FROM album_monthly_stat ms
+        RIGHT JOIN album a
+        ON ms.album_id = a.id
         WHERE MONTH(ms.month) = currMonth
         AND YEAR(ms.month) = currYear
-	) k
-	GROUP BY artist_id
+    ) k
+    GROUP BY artist_id
     ORDER BY total_plays DESC
 )p
  JOIN    (SELECT @curRow := 0) r;
  
  
- UPDATE stat_cache
+UPDATE stat_cache
         INNER JOIN
     (SELECT 
-			stats_id,
+        stats_id,
             monthly_plays,
             monthly_revenue,
             total_plays,
@@ -239,16 +239,16 @@ FROM
             @curRow:=@curRow + 1 AS rank
     FROM
         (SELECT 
-			stats_id,
-            IFNULL(monthly_plays,0) as monthly_plays,
-            IFNULL(monthly_revenue,0) as monthly_revenue,
-            IFNULL(total_plays,0) as total_plays,
-            IFNULL(total_revenue,0) as total_revenue,
+        stats_id,
+            IFNULL(monthly_plays, 0) AS monthly_plays,
+            IFNULL(monthly_revenue, 0) AS monthly_revenue,
+            IFNULL(total_plays, 0) AS total_plays,
+            IFNULL(total_revenue, 0) AS total_revenue,
             rank
     FROM
         song son
     LEFT JOIN (SELECT 
-			song_id,
+        song_id,
             AVG(total_plays) AS monthly_plays,
             AVG(revenue) AS monthly_revenue,
             0 AS rank,
@@ -264,7 +264,7 @@ SET
     stat_cache.monthly_revenue = k.monthly_revenue,
     stat_cache.rank = k.rank,
     stat_cache.total_plays = k.total_plays,
-    stat_cache.total_revenue = k.total_revenue; 
+    stat_cache.total_revenue = k.total_revenue;
  
 UPDATE stat_cache
         INNER JOIN
@@ -278,15 +278,15 @@ UPDATE stat_cache
     FROM
         (SELECT 
         stats_id,
-            monthly_plays,
-            monthly_revenue,
-            total_plays,
-            total_revenue,
+            IFNULL(monthly_plays, 0) AS monthly_plays,
+            IFNULL(monthly_revenue, 0) AS monthly_revenue,
+            IFNULL(total_plays, 0) AS total_plays,
+            IFNULL(total_revenue, 0) AS total_revenue,
             rank
     FROM
         artist art
     LEFT JOIN (SELECT 
-			artist_id,
+        artist_id,
             AVG(total_plays) AS monthly_plays,
             AVG(revenue) AS monthly_revenue,
             0 AS rank,
@@ -319,10 +319,10 @@ UPDATE stat_cache
     FROM
         (SELECT 
         stats_id,
-            monthly_plays,
-            monthly_revenue,
-            total_plays,
-            total_revenue,
+            IFNULL(monthly_plays, 0) AS monthly_plays,
+            IFNULL(monthly_revenue, 0) AS monthly_revenue,
+            IFNULL(total_plays, 0) AS total_plays,
+            IFNULL(total_revenue, 0) AS total_revenue,
             rank
     FROM
         album alb
