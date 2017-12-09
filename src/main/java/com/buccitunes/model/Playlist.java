@@ -149,7 +149,11 @@ public class Playlist extends MusicCollection {
 		if(playlist.getTitle() != null || playlist.getTitle().isEmpty()) {
 			super.setTitle(playlist.getTitle());
 		}
+		if(playlist.getDescription() !=null) {
+			this.setDescription(playlist.getDescription());
+		}
 		
 		this.isPublic = playlist.isPublic();
+		this.isCollaborative = playlist.isCollaborative();
 	}
 }

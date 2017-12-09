@@ -6,6 +6,7 @@ export class Artist{
     biography       : string;
     avatar          : string;
     albums          : Album[];
+    avatarPath      :string;
 
     // CHANGE THIS STUFF L8R
     followers       : string;

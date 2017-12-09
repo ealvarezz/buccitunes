@@ -1,5 +1,6 @@
 import { Injectable, Inject} from '@angular/core';
 import {Artist } from '../objs/Artist';
+import {User} from '../objs/User';
 import {BucciResponse} from '../objs/BucciResponse';
 import { environment } from '../../environments/environment';
 import {BucciConstants} from '../../environments/app.config';
@@ -38,6 +39,12 @@ export class ArtistService {
             params: new HttpParams().set('artistId', String(artist.id)), 
             withCredentials: true
         })
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    updateArtist(artist : Artist){
+        return this.http.post<BucciResponse<User>>(BucciConstants.Endpoints.UPDATE_ARTIST, artist, { withCredentials: true})
         .map(this.extractData)
         .catch(this.handleError)
     }

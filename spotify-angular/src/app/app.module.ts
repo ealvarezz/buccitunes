@@ -58,6 +58,7 @@ import {QueueService} from './services/queue.service';
 import {RecentlyPlayed} from './recently-played';
 import {FollowedPlaylists} from './followed-playlist';
 import {QueueComponent} from './queue.component';
+import {UpdatePlaylistDialog} from './update-playlist.component';
 
 
 const appRoutes: Routes = [
@@ -123,7 +124,8 @@ const appRoutes: Routes = [
     UserDashboard,
     RecentlyPlayed,
     FollowedPlaylists,
-    QueueComponent
+    QueueComponent,
+    UpdatePlaylistDialog
   ],
   imports: [
     RouterModule.forRoot(
@@ -184,6 +186,7 @@ const appRoutes: Routes = [
     AddAlbumDialog,
     AddPlaylistDialog,
     ConfirmDialog,
+    UpdatePlaylistDialog,
   ],
   bootstrap: [AppComponent]
 })

@@ -102,6 +102,10 @@ export class MediaService {
     }
   }
 
+  getArtistImageUrl(imagePath : string){
+      return environment.SERVER_PATH + imagePath;
+  }
+
   getPlaylistImageUrl(imagePath : string){
       if(imagePath){
          return environment.SERVER_PATH + imagePath;

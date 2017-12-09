@@ -162,6 +162,13 @@ export class MusicCollectionService {
 
     }
 
+    updatePlaylist(playlist : Playlist){
+        let playlistInfo = this.constructPlaylistUpdate(playlist, null, null);
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.UPDATE_PLAYLIST, playlistInfo, {withCredentials: true}).
+        map(this.extractDataPlaylists.bind(this))
+        .catch(this.handleError);
+    }
+
     followPlaylist(playlist: Playlist){
         return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.FOLLOW_PLAYLIST, playlist, {withCredentials: true}).
         map(this.extractData)
@@ -219,6 +226,16 @@ export class MusicCollectionService {
 
     private extractData(bucci){
         if(bucci.successful){
+            return bucci.response;
+        }
+        else{
+            throw new Error(bucci.message);
+        }
+    }
+
+    private extractDataPlaylists(bucci){
+        if(bucci.successful){
+            this.reloadPlaylists();
             return bucci.response;
         }
         else{
