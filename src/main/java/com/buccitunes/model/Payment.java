@@ -46,9 +46,9 @@ public class Payment {
 		this.date = new Date();
 	}
 
-	public Payment(double amount, boolean isPaid, PremiumUser premiumUser) {
+	public Payment(double amount, PremiumUser premiumUser) {
 		this.amount = amount;
-		this.isPaid = isPaid;
+		this.isPaid = true;
 		this.isPending = false;
 		this.premiumUser = premiumUser;
 		this.date = new Date();

@@ -620,4 +620,10 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 	}
+	
+	@RequestMapping(value="charge_premium_users", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<PremiumUser>> changeBillingInfo() {
+		List<PremiumUser> user = userService.chargeUserForPremium();
+		return BucciResponseBuilder.successfulResponseMessage("The users were charged", user);
+	}
 }

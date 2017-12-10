@@ -12,6 +12,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PreRemove;
 import javax.persistence.Transient;
 
 import com.buccitunes.constants.UserRole;
@@ -77,7 +78,7 @@ public class PremiumUser extends User {
 		if(paymentHistory == null) {
 			paymentHistory = new ArrayList<Payment>();
 		}
-		Payment payment = new Payment(amount, true, this);
+		Payment payment = new Payment(amount, this);
 		
 		paymentHistory.add(payment);
 		return paid;
@@ -89,5 +90,12 @@ public class PremiumUser extends User {
 
 	public void setNextBillingDate(Date nextBillingDate) {
 		this.nextBillingDate = nextBillingDate;
+	}
+	
+	@PreRemove
+	private void removeAssociationsWithChilds() {
+	   for (Payment p : paymentHistory) {
+	        p.setPremiumUser(null);
+	   }
 	}
 }

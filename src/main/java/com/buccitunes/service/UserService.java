@@ -471,6 +471,21 @@ public class UserService  {
 		return user;
 	}
 	
+	public List<PremiumUser> chargeUserForPremium() {
+		List<PremiumUser> users = premiumUserRepository.getNeededUsersToPay();
+		
+		for(PremiumUser user : users) {
+			boolean isPaid = true;
+			//Logic to actually charge users here
+			
+			if(isPaid) {
+				Payment payment = new Payment(constants.getMonthlyPremiumPrice(),user);
+				paymentRepository.save(payment);
+			}
+		}
+		return users;
+	}
+	
 	private Date getNextBillingDate(Date date) {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);		
