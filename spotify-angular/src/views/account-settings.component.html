@@ -98,32 +98,12 @@
         Account Settings
       </md-panel-title>
       <md-panel-description>
-        Change password or deactivate account
+        Account settings or deactivate account
         <md-icon>security</md-icon>
       </md-panel-description>
     </md-expansion-panel-header>
 
-    <div>
-      <md-form-field>
-        <input mdInput placeholder="Current Password">
-      </md-form-field>
-    </div>
-
-    <div>
-      <md-form-field>
-        <input mdInput placeholder="New Password">
-      </md-form-field>
-    </div>
-
-    <div>
-      <md-form-field>
-        <input mdInput placeholder="Repeat New Password">
-      </md-form-field>
-    </div>
-
-    <button md-button color="warn">Update Password</button>
-
-    <div style="margin-top:5%"><h2>CHANGE EMAIL</h2></div>
+    <div><h2>CHANGE EMAIL</h2></div>
     <md-divider></md-divider>
     <div><span>Changing your username can have unintended side effects.</span></div>
     <div><button md-raised-button color="warn">Change Email</button></div>
@@ -133,8 +113,6 @@
     <md-divider></md-divider>
     <div><span>Once you delete your account, there is no going back. Please be certain.</span></div>
     <div><button md-raised-button color="warn">Delete Account</button></div>
-
-    
 
     <md-action-row>
     </md-action-row>
@@ -154,28 +132,30 @@
     
     <div>
       <md-form-field>
-        <input mdInput placeholder="Current Password">
+        <input  type="password" mdInput placeholder="Current Password" [(ngModel)]="currentPassword"  autocomplete="off">
       </md-form-field>
     </div>
-
+    
     <div>
       <md-form-field>
-        <input mdInput placeholder="New Password">
+        <input type="password" mdInput placeholder="New Password" [(ngModel)]="newPassword"  autocomplete="off">
       </md-form-field>
     </div>
-
+    
     <div>
       <md-form-field>
-        <input mdInput placeholder="Repeat New Password">
+        <input type="password" mdInput placeholder="Repeat New Password" [(ngModel)]="newPasswordRetype"  autocomplete="off">
       </md-form-field>
     </div>
+    
+    <button md-button color="warn" (click)="changePassword()">Update Password</button>
     
 
     <md-action-row>
     </md-action-row>
   </md-expansion-panel>
 
-  <md-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+  <md-expansion-panel [expanded]="step === 3" (opened)="setStep(3)" hideToggle="true">
     <md-expansion-panel-header>
       <md-panel-title>
         Subscription
@@ -199,7 +179,7 @@
     <div>
       <div><h2>BUCCI PREMIUM</h2></div>
       <div style="max-width:42%"><p>Your plan will automatically renew on {{renewDate | date: 'shortDate'}} and you'll be charged $4.99</p></div>
-      <div><button md-raised-button class="rounded-button" (click)="cancelPremiumAccount()>CHANGE OR CANCEL</button></div>
+      <div><button md-raised-button class="rounded-button" (click)="cancelPremiumAccountConfirm()">CHANGE OR CANCEL</button></div>
     </div>
     <div>
         <div><h3>Payment Method</h3></div>
@@ -213,17 +193,78 @@
           </div>
         </div>
     </div>
-      <div><button md-raised-button class="rounded-button">UPDATE PAYMENT METHOD</button></div>
+      <div><button md-raised-button class="rounded-button" (click)="toggleEditModeBill()">UPDATE PAYMENT METHOD</button></div>
     </div>
 
-
+    <div *ngIf="editModeBill" style="margin-top:5%;padding-top:5%;border-top:1px">
+      <md-grid-list cols="6" rowHeight="55px">
+        <md-grid-tile colspan="2">
+          <span style="position:absolute; left:0px;">
+            <b>Card Holder Name</b>
+          </span>
+        </md-grid-tile>
+        <md-grid-tile colspan="4">
+          <span style="position:absolute; left:0px;">
+            <md-form-field>
+              <input mdInput placeholder="Name" [value]="this.billingInfoChange.cardHolderName" [(ngModel)]="this.billingInfoChange.cardHolderName">
+            </md-form-field>
+          </span>
+        </md-grid-tile>
+        <md-grid-tile colspan="2">
+          <span style="position:absolute; left:0px;">
+            <b>Credit Card Number</b>
+          </span>
+        </md-grid-tile>
+        <md-grid-tile colspan="4">
+          <span style="position:absolute; left:0px;">
+            <md-form-field>
+              <input mdInput placeholder="Credit Card Number" (input)="changePreviewCC()" [value]="this.billingInfoChange.creditCardNo" [(ngModel)]="this.billingInfoChange.creditCardNo">
+            </md-form-field>
+          </span>
+        </md-grid-tile>
+        <md-grid-tile colspan="2">
+          <span style="position:absolute; left:0px;">
+            <b>CVV</b>
+          </span>
+        </md-grid-tile>
+        <md-grid-tile colspan="4">
+          <span style="position:absolute; left:0px;">
+            <md-form-field>
+              <input mdInput placeholder="CVV" [value]="this.billingInfoChange.cvv" [(ngModel)]="this.billingInfoChange.cvv">
+            </md-form-field>
+          </span>
+        </md-grid-tile>
+        <md-grid-tile colspan="2">
+          <span style="position:absolute; left:0px;">
+            <b>Credit Card Company</b>
+          </span>
+        </md-grid-tile>
+        <md-grid-tile colspan="4">
+          <span style="position:absolute; left:0px;">
+            <div style="margin-bottom: 1%;">
+              <md-select placeholder="Credit Card Company" name="company" [(ngModel)]="this.billingInfoChange.creditCardCompany" [ngModelOptions]="{standalone: true}">
+                <md-option *ngFor="let company of companies" [value]="company">
+                  <div style="display:inline-block">
+                    <img style="max-height:30px; max-width:35px;" [src]="company.artwork">
+                  </div>
+                  <div style="display:inline-block">{{company.name}}</div>
+                </md-option>
+              </md-select>
+            </div>
+          </span>
+        </md-grid-tile>
+        </md-grid-list>
+        </div>
 
     <md-action-row>
+      <button *ngIf="editModeBill" md-raised-button color="primary" (click)="changeBillingInformation()">Submit</button>
+      <button *ngIf="editModeBill" md-raised-button color="primary" (click)="toggleEditModeBill()">Cancel</button>
     </md-action-row>
   </md-expansion-panel>
+  
 
   <div *ngIf="user.billingInfo">
-  <md-expansion-panel [expanded]="step === 2" (opened)="setStep(2)" hideToggle="true">
+  <md-expansion-panel [expanded]="step === 4" (opened)="setStep(4)" hideToggle="true">
     <md-expansion-panel-header>
       <md-panel-title>
        View Reciepts

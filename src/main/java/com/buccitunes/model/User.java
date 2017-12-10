@@ -241,6 +241,10 @@ public class User {
 	public void setPasswordAndEncrypt(String password) {
 		this.password = BucciPassword.encryptPassword(password);
 	}
+	
+	public boolean passwordIsCorrect(String otherPassword) {
+		return BucciPassword.checkPassword(otherPassword, this.password);
+	}
 
 	public String getAvatar() {
 		return avatar;

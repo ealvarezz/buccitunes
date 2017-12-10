@@ -42,9 +42,10 @@ export const BucciConstants =  {
       GO_SECRET_MODE      : environment.SERVER_PATH + "/go_private",
       CHANGE_USER_INFO    : environment.SERVER_PATH + "/change_settings",
       GET_PAYMENT_HISTORY : environment.SERVER_PATH + "/payment_info",
-      CANCEL_PREMIUM      : environment.SERVER_PATH + "/cancel_subscription"
-
-
+      CANCEL_PREMIUM      : environment.SERVER_PATH + "/cancel_subscription",
+      RESET_PASS_NO_MAIL  : environment.SERVER_PATH + "/reset_password_nomail",
+      CHANGE_BILLING_INFO : environment.SERVER_PATH + "/change_billing_info"
+      
   },
 
  Roles : {

@@ -8,6 +8,9 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonInclude;
 
 @Entity(name="BillingInfo")
 public class BillingInfo {
@@ -24,6 +27,8 @@ public class BillingInfo {
 	
 	private String billingAddress;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private Date nextBillingDate;
 	
 	@ManyToOne
@@ -117,4 +122,26 @@ public class BillingInfo {
 	    }*/
 	    return (sum % 10 == 0);
 	 }
+	
+	public void updateBillingInfo(BillingInfo billing) {
+		if(billing.billingAddress != null) {
+			this.billingAddress = billing.billingAddress;
+		}
+		
+		if(billing.creditCardNo != null) {
+			this.creditCardNo = billing.creditCardNo;
+		}
+		
+		if(billing.creditCardCompany != null) {
+			this.creditCardCompany = billing.creditCardCompany;
+		}
+		
+		if(billing.cvv != null) {
+			this.cvv = billing.cvv;
+		}
+		
+		if(billing.cardHolderName != null) {
+			this.cardHolderName = billing.cardHolderName;
+		}
+	}
 }

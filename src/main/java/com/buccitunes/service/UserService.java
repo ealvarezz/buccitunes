@@ -24,6 +24,7 @@ import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.SupportTicketRepository;
 import com.buccitunes.dao.UserRepository;
+import com.buccitunes.jsonmodel.CurrentToNewForm;
 import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.jsonmodel.UserPageInfo;
@@ -77,6 +78,8 @@ public class UserService  {
 		this.songRepository = songRepository;
 		this.playlistRepository = playlistRepository;
 		this.artistRepository = artistRepository;
+		this.supportTicketRepository = supportTicketRepository;
+		this.paymentRepository = paymentRepository;
 	}
 	
 	public List<User> findAll(){
@@ -394,47 +397,52 @@ public class UserService  {
 		 supportTicketRepository.save(supportTicket);
 	}
 	
-	
-	
+	public User confirmAndSavePassword(CurrentToNewForm form, User user) throws BucciException {
+		user = userRepository.findOne(user.getEmail());
+		
+		if(!user.passwordIsCorrect(form.current) ) {
+			throw new BucciException("Invalid Password Information");
+		}
+		user.setPasswordAndEncrypt(form.toNew);
+		
+		return user;
+	}
 	
 	public List<Payment> getPayments(PremiumUser user) {
 		List<Payment> paymentHistory = paymentRepository.findByPremiumUserOrderByDateDesc(user);
 		
 		Payment lastPayment = paymentHistory.get(0);
 		Date lastPayDate = lastPayment.getDate();
-		
-		//Used to get the next month/next billingdate
+	
 		Date nextBillingDate =  getNextBillingDate(lastPayDate);
 		lastPayment.setNextBillingDate(nextBillingDate);
-		System.out.println(new SimpleDateFormat("MMM dd, yyyy").format(lastPayment.getDate()));
-		System.out.println(new SimpleDateFormat("MMM dd, yyyy").format(lastPayment.getNextBillingDate()));
-		
 		
 		return paymentHistory;
 	}
 	
 	public PremiumUser cancelPremium(PremiumUser user) {
 		user = premiumUserRepository.findOne(user.getEmail());
-		user.getBillingInfo().setActive(false);
-		user.setRole(UserRole.USER);
 		
 		Date lastPayDate = paymentRepository.findTopByPremiumUserOrderByDateDesc(user).getDate();
 		Date nextBillingDate =  getNextBillingDate(lastPayDate);
+		
+		user.getBillingInfo().setActive(false);
+		user.setRole(UserRole.USER);
 		user.setNextBillingDate(nextBillingDate);
 	
 		return user;
 	}
 	
-	public PremiumUser reActivateSubscription(User loggedUser) throws BucciException {
+	public User reActivateSubscription(User loggedUser) throws BucciException {
 		PremiumUser pUser = premiumUserRepository.findOne(loggedUser.getEmail());
 		if(pUser == null) {
 			throw new BucciException("You were never a premium user before!");
 		}
 		
-		pUser.getBillingInfo().setActive(true);
-		pUser.setRole(UserRole.PREMIUM);
+		
 		
 		/*
+		 * TODO for charging the user if the user hasn't paid in a month
 		Date previousBillingDate = paymentRepository.findTopByPremiumUserOrderByDateDesc(pUser).getDate();
 		//Used to get
 		Calendar cal = Calendar.getInstance(); 
@@ -447,7 +455,20 @@ public class UserService  {
 		}
 		*/
 		
+		pUser.getBillingInfo().setActive(true);
+		pUser.setRole(UserRole.PREMIUM);
+		
 		return pUser;
+	}
+	
+	public PremiumUser changeBillingInfo(BillingInfo billing, PremiumUser user) throws BucciException {
+		user = premiumUserRepository.findOne(user.getEmail());
+		if(user.getBillingInfo().getId() != billing.getId()) {
+			throw new BucciException("User does not own this billing information");
+		}
+		BillingInfo userBilling = user.getBillingInfo();
+		userBilling.updateBillingInfo(billing);
+		return user;
 	}
 	
 	private Date getNextBillingDate(Date date) {

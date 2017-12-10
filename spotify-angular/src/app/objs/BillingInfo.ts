@@ -1,10 +1,11 @@
 
-export class BillingInfo{
-    cardHolderName : string;
-    creditCardNo : string;
-    cvv : string
-    billingAddresss : string;
-    creditCardCompany : CreditCardCompany = new CreditCardCompany(null, null, null);
+export class BillingInfo {
+    id: number;
+    cardHolderName: string;
+    creditCardNo: string;
+    cvv: string;
+    billingAddresss: string;
+    creditCardCompany: CreditCardCompany = new CreditCardCompany(null, null, null);
 }
 
 export class CreditCardCompany{
