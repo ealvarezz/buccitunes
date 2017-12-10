@@ -77,6 +77,8 @@ public class UserService  {
 		this.songRepository = songRepository;
 		this.playlistRepository = playlistRepository;
 		this.artistRepository = artistRepository;
+		this.supportTicketRepository = supportTicketRepository;
+		this.paymentRepository = paymentRepository;
 	}
 	
 	public List<User> findAll(){

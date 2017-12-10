@@ -8,10 +8,10 @@
     class = "side-bar mat-elevation-z22">
        <side-bar></side-bar>
     </md-sidenav>
-    <nav-comp></nav-comp>
     <div *ngIf="showSpinner" class="spinner-div">
         <md-spinner  class="spinner" diameter="2000"></md-spinner>
     </div>
+    <search></search>
     <router-outlet></router-outlet>
 </md-sidenav-container>
 <music-player></music-player>

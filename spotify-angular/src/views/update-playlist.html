@@ -7,7 +7,8 @@
         <div>Image</div>
         <div>
             <img *ngIf="!playlist.artwork" style ="max-height: 200px; max-width:100%;" [src]="mediaService.getPlaylistImageUrl(playlist.artworkPath)">
-            <img *ngIf="playlist.artwork" style ="max-height: 200px; max-width:100%;" [src]="playlist.artwork">
+            <img *ngIf="playlist.
+            artwork" style ="max-height: 200px; max-width:100%;" [src]="playlist.artwork">
         </div>
         
         <div><button md-raised-button class="rounded-button" (click)="imgFileInput.click()" >Choose Image</button></div>

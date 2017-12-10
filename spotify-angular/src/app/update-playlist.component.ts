@@ -44,16 +44,6 @@ export class UpdatePlaylistDialog implements OnInit {
             this.playlist.artwork = this.mediaService.trimImageBase64(this.playlist.artwork);
         }
         this.dialogRef.close(this.playlist);
-
-        // this.musicService.updatePlaylist(this.playlist)
-        //     .subscribe(
-        //         (data : Playlist) => {
-        //             this.notificationService.success("SUCCESS", "This playlist has been added!");
-        //             this.closeDialog();
-        //         },
-        //         (err) => {
-        //             console.log(err.message);
-        //         });
      }
 
      uploadImage(event){
