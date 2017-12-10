@@ -397,6 +397,16 @@ public class MusicCollectionService {
 		return song;
 		
 	}
+	
+	public String getSongLyrics(int songId) {
+		Song song = songRepository.findOne(songId);
+		if(song.getLyrics() !=null) {
+			return song.getLyrics().getLyric();
+		}
+		else {
+			return "";
+		}
+	}
 
 	
 }

@@ -44,9 +44,10 @@ export const BucciConstants =  {
       UPDATE_ARTIST       : environment.SERVER_PATH + "/edit_artist_info",
       GET_PAYMENT_HISTORY : environment.SERVER_PATH + "/payment_info",
       CANCEL_PREMIUM      : environment.SERVER_PATH + "/cancel_subscription",
+      GET_LYRICS          : environment.SERVER_PATH + "/getSongLyrics",
+      SEARCH              : environment.SERVER_PATH + "/search",
       RESET_PASS_NO_MAIL  : environment.SERVER_PATH + "/reset_password_nomail",
       CHANGE_BILLING_INFO : environment.SERVER_PATH + "/change_billing_info"
-      
   },
 
  Roles : {

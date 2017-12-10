@@ -1,0 +1,45 @@
+<div class="navBar">
+<div style="display: inline-block;">
+    <button md-icon-button (click)="goBack()"><md-icon>arrow_back</md-icon></button>
+</div>
+<div style="display: inline-block;" class="search-bar"> 
+<form class="example-form">
+  <md-form-field class="full-width">
+    <input type="text" placeholder="Search" aria-label="Search" mdInput [formControl]="myControl" [mdAutocomplete]="auto">
+    <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn">
+    <ng-container *ngFor="let group of (filteredOptions | async | appProperties)">
+    <mat-optgroup *ngIf="group.items.length > 0" [label]="labelMap[group.name]">
+      <md-option *ngFor="let option of group.items" [value]="option" (onSelectionChange)="goToSelection(option, group.name)">
+        <div *ngIf="option.title">{{option.title}}</div>
+        <div *ngIf="option.name">{{option.name}}</div>
+      </md-option>
+    </mat-optgroup>
+    </ng-container>
+    </md-autocomplete>
+  </md-form-field>
+</form>
+</div>
+</div>
+
+
+
+<!-- <div class="navBar">
+<div style="display: inline-block;">
+    <button md-icon-button (click)="goBack()"><md-icon>arrow_back</md-icon></button>
+</div>
+<div style="display: inline-block;" class="search-bar"> 
+<form class="example-form">
+  <md-form-field class="full-width">
+    <input type="text" placeholder="Search" aria-label="Search" mdInput [formControl]="myControl" [mdAutocomplete]="auto">
+    <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn">
+    <mat-optgroup *ngFor="let group of (filteredOptions | async | appProperties)" [label]="labelMap[group.name]">
+      <md-option *ngFor="let option of group.items" [value]="option" (onSelectionChange)="goToSelection(option, group.name)">
+        <div *ngIf="option.title">{{option.title}}</div>
+        <div *ngIf="option.name">{{option.name}}</div>
+      </md-option>
+    </mat-optgroup>
+    </md-autocomplete>
+  </md-form-field>
+</form>
+</div>
+</div> -->

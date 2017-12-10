@@ -2,6 +2,7 @@ import {Artist} from './Artist';
 import {Album} from './Album';
 
 export class Song{
+    public id               : number;
     public name             : string = "Homecoming";
     public duration         : number = 280;
     public rating           : number;

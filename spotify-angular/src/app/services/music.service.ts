@@ -35,6 +35,21 @@ export class MusicCollectionService {
         .catch(this.handleError);
     }
 
+    search(searchParam : string){
+        return this.http.get<BucciResponse<any>>(BucciConstants.Endpoints.SEARCH,{
+           params: new HttpParams().set('searchString', searchParam), 
+           withCredentials: true
+        })
+        .map(bucci  => {
+                if(bucci.successful){
+                    return bucci.response;
+                }
+                else{
+                    throw new Error(bucci.message);
+                }
+        }).catch(this.handleError);
+    }
+
     getPlaylist(id : number){
         return this.http.get<BucciResponse<Album>>(BucciConstants.Endpoints.GET_PLAYLIST,{
            params: new HttpParams().set('id', String(id)), 
@@ -103,6 +118,14 @@ export class MusicCollectionService {
         }).catch((error : any) =>{
             return Observable.throw(new Error(error.message));
         });
+    }
+
+    getSongLyrics(id : number){
+        return this.http.get<BucciResponse<String>>(BucciConstants.Endpoints.GET_LYRICS,{
+            params: new HttpParams().set('songId', String(id)),
+            withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
     }
 
     saveAlbum(album : Album){

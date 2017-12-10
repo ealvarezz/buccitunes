@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule, MdExpansionModule, MdDatepickerModule, MdNativeDateModule, MdSortModule} from '@angular/material';
+import {MdToolbarModule, MdButtonModule, MdDialogModule, MdIconModule, MdSliderModule,MdProgressBarModule, MdGridListModule, MdSidenavModule, MdListModule, MdCardModule,MdInputModule, MdStepperModule,MdRadioModule,MdSelectModule, MdTabsModule, MdTableModule, MdMenuModule, MdCheckboxModule, MdTooltipModule, MD_DIALOG_DATA, MdDialogRef,MdSlideToggleModule,MdChipsModule, MdExpansionModule, MdDatepickerModule, MdNativeDateModule, MdSortModule, MdAutocompleteModule} from '@angular/material';
 import {MdProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {PlayerComponent} from './player.component'
 import {HomePageTabTemplate} from './homepage-tab.component'
@@ -59,6 +59,9 @@ import {RecentlyPlayed} from './recently-played';
 import {FollowedPlaylists} from './followed-playlist';
 import {QueueComponent} from './queue.component';
 import {UpdatePlaylistDialog} from './update-playlist.component';
+import {LyricsComponent} from './lyrics-component';
+import {PropertiesPipe} from './properties-pipe';
+import {SearchComponent} from './search.component';
 
 
 const appRoutes: Routes = [
@@ -125,6 +128,9 @@ const appRoutes: Routes = [
     RecentlyPlayed,
     FollowedPlaylists,
     QueueComponent,
+    LyricsComponent,
+    PropertiesPipe,
+    SearchComponent,
     UpdatePlaylistDialog
   ],
   imports: [
@@ -163,6 +169,7 @@ const appRoutes: Routes = [
     MdDatepickerModule,
     MdNativeDateModule,
     MdProgressSpinnerModule,
+    MdAutocompleteModule,
     MdSortModule,
     SimpleNotificationsModule.forRoot()
   ],
@@ -187,6 +194,7 @@ const appRoutes: Routes = [
     AddPlaylistDialog,
     ConfirmDialog,
     UpdatePlaylistDialog,
+    LyricsComponent,
   ],
   bootstrap: [AppComponent]
 })
