@@ -373,3 +373,19 @@ BEGIN
 	SELECT MS.* FROM buccidb2.artist_monthly_stat MS
 	WHERE MONTH(MS.month) = MONTH(NOW()) - 1 AND YEAR(MS.month) = YEAR(NOW());
 END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_related_artists`(IN artist_id INT)
+BEGIN
+SELECT AR.*FROM
+(
+	SELECT G.genre_id, COUNT(*)
+	FROM buccidb2.album A, buccidb2.genre_album G
+	WHERE A.primary_artist_id = artist_id AND A.id = G.album_id
+	GROUP BY G.genre_id
+	LIMIT 1
+) top_genre, buccidb2.artist AR, buccidb2.genre_album G, buccidb2.album A2
+WHERE AR.id <> artist_id AND A2.primary_artist_id = AR.id AND G.album_id = A2.id AND G.genre_id = top_genre.genre_id
+GROUP BY AR.id
+ORDER BY RAND()
+LIMIT 10;
+END ^;

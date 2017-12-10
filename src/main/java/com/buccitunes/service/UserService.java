@@ -200,7 +200,7 @@ public class UserService  {
 		if(existingPremium != null) {
 			throw new BucciException("You are already a premium user");
 		}
-		
+	 
 		user = userRepository.findOne(user.getEmail());
 		if(user == null) {
 			throw new BucciException("Original user not found");

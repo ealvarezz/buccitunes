@@ -18,8 +18,10 @@ albumFile = os.listdir(albumPath)[0]
 album = json.loads(open(albumPath + albumFile, 'r').read())
 album['songs'] = [] 
 fname = PATH + "songs/"
+admin = "bossman@gmail.com"
 
 def populate_songs():
+    album['songs'] = []
     for i in os.listdir(fname):
         bytes64 = b64encode(get_decoded_file(fname + i))
         base64_string = bytes64.decode('utf-8')
@@ -27,7 +29,6 @@ def populate_songs():
         song['audio'] = base64_string
         song['name'] = rw.random_word() + " " + rw.random_word()
         song['genres'] = []
-        album['songs'] = []
         song['genres'].append({"id": 3})
         album['songs'].append(song)
         
@@ -49,7 +50,20 @@ def send_request(the_chosen_one):
     populate_songs();
     r = s.post(ALBUM_ENDPOINT, json=album)
     res = r.json()
+    
+    # Now the user logs out
+    s.post(LOGOUT_ENDPOINT)
+   
+    # Sign in as the admin to approve the album
+    login['email'] = admin
+    login['password'] = 'boss'
+    r = s.post(LOGIN_ENDPOINT, json=login)
+    res = r.json()
     print(res)
- 
+
+    
+    
+
+
 send_request("1146@fake.com")
 
