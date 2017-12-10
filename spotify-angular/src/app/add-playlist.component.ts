@@ -20,10 +20,12 @@ export class AddPlaylistDialog {
               public mediaService : MediaService,
               private notificationService: NotificationsService) {
      }
+     
 
      playlistName : string;
      playlistArtwork : string = environment.LOCAL_RESOURCE + environment.DEFAULT_ARTWORK;
      playlistDescription : string;
+
 
      closeDialog(){
          this.dialogRef.close();

@@ -54,24 +54,25 @@
         <md-tab label="ABOUT">
             <button mdTooltip="Edit Bio" style="float:right;" *ngIf="isOwner && isEditModeBio == false" (click)="toggleEditModeBio()" md-icon-button><i class="material-icons">mode_edit</i></button>
             <h2>Bio</h2>
-            <img src="../assets/ugly_god.png">
+            <img *ngIf="!artwork" style="max-height:600px; max-width:320px;" [src]="mediaService.getArtistImageUrl(artist.avatarPath)">
+            <img *ngIf="artwork" style="max-height:600px; max-width:320px;" [src]="artwork">
             <p *ngIf="isEditModeBio == false">{{artist.biography}}</p>
             <div *ngIf="isEditModeBio == true">
                 <div>
                     <input style = "margin-top:1%; margin-bottom:1%;" [disabled] = "true" placeholder="Upload Image...." mdInput value="../assets/ugly_god.png" required>
                     <button type="button" style="background-color:#3f51b5; color:white; margin-bottom:1%" md-raised-button (click)="imgFileInput.click()"><i class="material-icons">file_upload</i>Update Image</button>
-                    <input hidden type="file" #imgFileInput (change)="previewImage($event)"/>
+                    <input hidden type="file" #imgFileInput (change)="uploadImage($event)"/>
                 </div>
             
                 <div class="txtarea">
                     <md-form-field class="txtarea">
-                        <textarea mdInput placeholder="Artist Bio" mdTextareaAutosize mdAutosizeMinRows="2"
-                                    mdAutosizeMaxRows="10">{{artist.biography}}
+                        <textarea [(ngModel)]="bio" mdInput placeholder="Artist Bio" mdTextareaAutosize mdAutosizeMinRows="2"
+                                    mdAutosizeMaxRows="10">
                                 </textarea>
                     </md-form-field>
                 </div>
                 <div>
-                <button class="rounded-button" (click)="toggleEditModeBio()" md-raised-button>Update</button>
+                <button class="rounded-button" (click)="editBio()" md-raised-button>Update</button>
                 <button  class="rounded-button" (click)="toggleEditModeBio()" md-raised-button>Cancel</button>
                 </div>
             </div>

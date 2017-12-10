@@ -9,6 +9,7 @@ import {MediaService} from './services/media.service';
 import {NotificationsService} from 'angular4-notifications';
 import {ConfirmDialog} from './confirm-dialog.component';
 import {MdDialog, MdDialogRef} from '@angular/material';
+import {UpdatePlaylistDialog} from './update-playlist.component';
 
 
 @Component({
@@ -35,11 +36,40 @@ export class PlaylistComponent{
         });
     }
 
+    openUpdateDialog(){
+    let dialogRef = this.dialog.open(UpdatePlaylistDialog, 
+      {
+        width: "700px" ,
+        data: {
+          playlist  : this.playlist,
+        }
+      });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if(result){
+        this.updatePlaylist(result);
+      }
+
+    });
+    }
+
+    updatePlaylist(playlist : Playlist){
+        this.musicService.updatePlaylist(playlist)
+            .subscribe(
+                (data) => {
+                    this.getPlaylist(this.playlist.id);
+                },
+                (err) => {
+                    this.notifications.error("ERROR", "There was an error updating this playlist.");
+                });
+    }
+
     getPlaylist(id : number ){
     this.musicService.getPlaylist(id)
                 .subscribe(
                     (data) => {
                         this.playlist = data;
+                        this.playlist.artworkPath = this.playlist.artworkPath +'?d='+new Date().getTime();
                         // this.artworkUrl = this.playlist.artworkPath ? environment.SERVER_PATH + this.playlist.artworkPath : null;
                     },
                     (err) => {

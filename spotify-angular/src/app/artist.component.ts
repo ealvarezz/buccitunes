@@ -36,9 +36,12 @@ export class ArtistComponent implements OnInit {
   isEditModeBio : boolean = false;
   isOwner       : boolean = false;
   following     : boolean = false;
+  bio           : string;
+  artwork       : string;
 
   constructor(public dialog                 : MdDialog,
               private artistService         : ArtistService,
+              private mediaService          : MediaService,
               private route                 : ActivatedRoute,
               private location              : Location,
               private notificationService   : NotificationsService,
@@ -62,6 +65,8 @@ export class ArtistComponent implements OnInit {
           (data) => {
             this.artist = data;
             this.isCurrentUserOwner();
+            this.bio = this.artist.biography;
+            this.artist.avatarPath = this.artist.avatarPath+'?dummy='+new Date().getTime();
           },  
           (err) => {
             this.notificationService.error("ERROR","There was an error loading this artist.");
@@ -69,6 +74,36 @@ export class ArtistComponent implements OnInit {
             console.log(err.message);
           });
   }
+  
+  editBio(){
+    this.artist.biography = this.bio;
+    this.artist.avatar = this.artwork ? this.mediaService.trimImageBase64(this.artwork) : null;
+    this.artwork = null;
+    this.artistService.updateArtist(this.artist).subscribe(
+      (data)=>{
+        this.toggleEditModeBio();
+        this.getArtist(this.artist.id);
+        this.notificationService.success("Success","Artist successfully updated.");
+      },
+      (err)=>{
+        this.notificationService.error("Error", "There was an error updating this artist");
+      }
+    )
+  }
+
+  uploadImage(event){
+    this.mediaService.previewImage(event).subscribe(
+           (data : MediaFile)=>{
+                this.artwork = data.artwork;
+                //this.albumArtworkPath = data.artworkPath;
+           },
+          (err) =>{
+              // this.artworkError.status = true;
+              // this.artworkError.message = err.message;
+            });
+  }
+
+
 
   followArtist(){
     this.artistService.followArtist(this.artist).subscribe(
@@ -138,6 +173,9 @@ export class ArtistComponent implements OnInit {
 
   toggleEditModeBio(){
     this.isEditModeBio = !this.isEditModeBio;
+    if(!this.isEditModeBio){
+      this.artwork = null;
+    }
   }
 
 }
