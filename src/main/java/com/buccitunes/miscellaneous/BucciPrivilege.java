@@ -11,7 +11,7 @@ public class BucciPrivilege {
 	
 	
 	public static boolean isPremium(User user) {
-		return (user instanceof PremiumUser);
+		return (user instanceof PremiumUser && user.getRole().equals(UserRole.PREMIUM));
 	}
 	
 	public static boolean isArtist(User user) {

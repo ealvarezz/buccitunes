@@ -137,16 +137,19 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `search_song`(IN song_name VARCHAR(1
 END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_needed_users_to_pay`()
-BEGIN
-	select u.*, pu.*, last_payed.date
-	from user u
+BEGIN 
+	select u.*, pu.*
+	from user u 
 	join premium_user pu on pu.email = u.email
-	join(
-		select p.premium_user_id, max(p.date) as date
-		from payment p
-		group by p.premium_user_id
+	join( 
+		select p.premium_user_id, max(p.date) as date 
+		from payment p 
+		join premium_user pu2 on pu2.email = p.premium_user_id
+		join billing_info b on b.id = pu2.billing_id and b.active is true
+		where p.is_paid is true
+		group by p.premium_user_id 
 	) last_payed on last_payed.premium_user_id = u.email 
-	and last_payed.date <=  DATE_SUB(NOW(), INTERVAL 30 DAY);
+	and last_payed.date <= DATE_SUB(NOW(), INTERVAL 30 DAY);
 END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `getConcertsOfArtistId`(IN artist_id int)

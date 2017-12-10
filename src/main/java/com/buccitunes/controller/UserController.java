@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.buccitunes.jsonmodel.CurrentToNewForm;
 import com.buccitunes.jsonmodel.LoginInfo;
 import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
@@ -182,7 +183,7 @@ public class UserController {
 		
 		User account = userService.findOne(loginInfo.email);
 		
-		if(account != null && BucciPassword.checkPassword(loginInfo.password, account.getPassword())) {
+		if(account != null && account.passwordIsCorrect(loginInfo.password)) {
 			session.setAttribute(constants.getSession(), account);
 			return BucciResponseBuilder.successfulResponseMessage("Successful Login", account);	
 		} else {
@@ -475,21 +476,27 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="reset_password_nomail", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<Boolean> resetPasswordNomail(@RequestBody LoginInfo info, HttpSession session) {
+	public @ResponseBody BucciResponse<User> resetPasswordNomail(@RequestBody CurrentToNewForm form, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
-		User user = userService.findOne(loggedUser.getEmail());
-		user.setPasswordAndEncrypt(info.password);
-		userService.save(user);
+
+		User user;
+		try {
+			user = userService.confirmAndSavePassword(form, loggedUser);
+			session.setAttribute(constants.getSession(), user);
 			try {
 				mailManager.sendResetConfirmation(user.getEmail());
 			} catch (MessagingException e) {
 				return BucciResponseBuilder.failedMessage("The email server is down, wait some time and try again.");
 			}
-		
-		return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",new Boolean(true));
+			
+			return BucciResponseBuilder.successfulResponseMessage("Your password has been reset.",user);
+			
+		} catch (BucciException e1) {
+			return BucciResponseBuilder.failedMessage(e1.getErrMessage());
+		}
 	}
 	
 	
@@ -587,12 +594,36 @@ public class UserController {
 		}
 		
 		try {
-			PremiumUser user = userService.reActivateSubscription(loggedUser);
+			User user = userService.reActivateSubscription(loggedUser);
 			session.setAttribute(constants.getSession(), user);
 			return BucciResponseBuilder.successfulResponseMessage("You are back to being bucci premium", user);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
+	}
+	
+	@RequestMapping(value="change_billing_info", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<User> changeBillingInfo(@RequestBody BillingInfo billing,HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else if(!BucciPrivilege.isPremium(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
+		}
 		
+		try {
+			User user = userService.changeBillingInfo(billing, (PremiumUser) loggedUser);
+			session.setAttribute(constants.getSession(), user);
+			return BucciResponseBuilder.successfulResponseMessage("Billing information successfully changed", user);
+		} catch (BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
+	}
+	
+	@RequestMapping(value="charge_premium_users", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<PremiumUser>> changeBillingInfo() {
+		List<PremiumUser> user = userService.chargeUserForPremium();
+		return BucciResponseBuilder.successfulResponseMessage("The users were charged", user);
 	}
 }

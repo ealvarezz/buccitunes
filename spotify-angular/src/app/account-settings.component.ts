@@ -1,13 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from './objs/User';
 import {Payment} from './objs/Payment';
-import {CREDIT_CARD_ENUM} from './objs/BillingInfo';
+import {CREDIT_CARD_ENUM, BillingInfo, CreditCardCompany} from './objs/BillingInfo';
 import {AuthenticationService } from './services/authentication.service';
 import { MediaService } from "./services/media.service";
 import { UserService } from "./services/user.service";
 import { MediaFile } from "./objs/MediaFile";
+import { YesNoDialogComponent } from "./yes-no-dialog.component";
 import { environment } from "../environments/environment";
 import { NotificationsService } from "angular4-notifications";
+import { FormControl, Validators } from "@angular/forms";
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
 
 @Component({
   selector: "account-settings",
@@ -19,12 +22,14 @@ export class AccountSettingsComponent implements OnInit {
     private authentication: AuthenticationService,
     private notificationService: NotificationsService,
     public mediaService: MediaService,
-    public userService: UserService
+    public userService: UserService,
+    public dialog: MdDialog
   ) {}
 
   user: User;
   step: number;
   editMode: boolean = false;
+  editModeBill: boolean = false;
   receipts: Payment[];
   renewDate: Date;
   previewCC: string;
@@ -32,6 +37,16 @@ export class AccountSettingsComponent implements OnInit {
   nameForUser: string;
   usernameForUser: string;
   avatarArtwork: string;
+
+  currentPasswordFormControl = new FormControl("", [Validators.required]);
+  newPasswordFormControl = new FormControl("", [Validators.required]);
+  newPassRetypeFormControl = new FormControl("", [Validators.required]);
+  currentPassword: string = "";
+  newPassword: string = "";
+  newPasswordRetype: string = "";
+
+  billingInfoChange: BillingInfo;
+  companies: CreditCardCompany[];
 
   ngOnInit() {
     this.authentication.currentUserChange.subscribe(user => {
@@ -54,9 +69,12 @@ export class AccountSettingsComponent implements OnInit {
           this.receipts = data;
           this.renewDate = this.receipts[0].nextBillingDate;
         });
+
+        this.billingInfoChange = user.billingInfo;
       }
       this.nameForUser = user.name;
       this.usernameForUser = user.username;
+      this.companies = CREDIT_CARD_ENUM.slice();
     });
   }
 
@@ -67,7 +85,7 @@ export class AccountSettingsComponent implements OnInit {
     changedUser.username = this.usernameForUser;
     if (this.avatarArtwork)
       changedUser.avatar = this.avatarArtwork.split(",")[1];
-    this.userService.changeUser(changedUser).subscribe(
+    this.userService.changeUserInfo(changedUser).subscribe(
       data => {
         this.user = data;
         this.notificationService.success("SUCCESS", "The change has been made");
@@ -96,6 +114,9 @@ export class AccountSettingsComponent implements OnInit {
   toggleEditMode() {
     this.editMode = !this.editMode;
   }
+  toggleEditModeBill() {
+    this.editModeBill = !this.editModeBill;
+  }
 
   uploadImage(event) {
     this.mediaService.previewImage(event).subscribe((data: MediaFile) => {
@@ -103,10 +124,71 @@ export class AccountSettingsComponent implements OnInit {
     });
   }
 
+  changePassword() {
+    if (this.newPassword === this.newPasswordRetype) {
+      this.userService
+        .changePasswordSetting(
+          this.currentPassword.trim(),
+          this.newPassword.trim()
+        )
+        .subscribe(
+          data => {
+            this.user = data;
+            this.notificationService.success(
+              "SUCCESS",
+              "Your password has changed"
+            );
+          },
+          err => {
+            this.currentPasswordFormControl.setErrors({ credentials: true });
+          }
+        );
+    } else if (this.newPassword == "") {
+      this.newPasswordFormControl.setErrors({ credentials: true });
+    } else {
+      this.newPassRetypeFormControl.setErrors({ credentials: true });
+    }
+  }
+
+  cancelPremiumAccountConfirm() {
+    var header = "Your Bucci Premium status will be lost";
+    var message = "Are you sure to become Bucci Basic?";
+
+    let dialogRef = this.dialog.open(YesNoDialogComponent, {
+      width: "500px",
+      data: { dialogHeader: header, dialogQuestion: message }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
+  }
+
+  changePreviewCC() {
+    if (this.user.billingInfo.creditCardNo.length >= 19) {
+      this.previewCC = this.user.billingInfo.creditCardNo.slice(-4);
+    }
+  }
+
+  changeBillingInformation() {
+    this.userService.changeBillingInfo(this.billingInfoChange).subscribe(
+      data => {
+        this.user = data;
+        this.notificationService.success(
+          "SUCCESS",
+          "Your billing information has changed"
+        );
+      },
+      err => {
+        this.currentPasswordFormControl.setErrors({ credentials: true });
+      }
+    );
+  }
+
   cancelPremiumAccount() {
     this.userService.cancelPremiumAccount().subscribe(data => {
-      this.receipts = data;
-      this.renewDate = this.receipts[0].nextBillingDate;
+      this.user = data.response;
+      this.notificationService.success("SUCCESS", data.message);
     });
   }
 }

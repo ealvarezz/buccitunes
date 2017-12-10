@@ -1,0 +1,8 @@
+<h1 md-dialog-title >{{dialogHeader}}</h1>
+<div md-dialog-content>
+    <p>{{dialogQuestion}}</p>
+</div>
+<div md-dialog-actions>
+    <button md-raised-button color="warn" tabindex="2" [mat-dialog-close]="!clickedYes">Ok</button>
+    <button md-raised-button tabindex="-1" [mat-dialog-close]="clickedYes">No Thanks</button>
+</div>
