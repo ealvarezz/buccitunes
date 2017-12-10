@@ -62,6 +62,7 @@ import {UpdatePlaylistDialog} from './update-playlist.component';
 import {LyricsComponent} from './lyrics-component';
 import {PropertiesPipe} from './properties-pipe';
 import {SearchComponent} from './search.component';
+import { YesNoDialogComponent } from "./yes-no-dialog.component";
 
 
 const appRoutes: Routes = [
@@ -131,19 +132,18 @@ const appRoutes: Routes = [
     LyricsComponent,
     PropertiesPipe,
     SearchComponent,
-    UpdatePlaylistDialog
+    UpdatePlaylistDialog,
+    YesNoDialogComponent
   ],
   imports: [
-    RouterModule.forRoot(
-      appRoutes
-    ),
+    RouterModule.forRoot(appRoutes),
     HttpModule,
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
     MdToolbarModule,
-    MdButtonModule, 
+    MdButtonModule,
     MdIconModule,
     MdProgressBarModule,
     MdSliderModule,
@@ -195,7 +195,8 @@ const appRoutes: Routes = [
     ConfirmDialog,
     UpdatePlaylistDialog,
     LyricsComponent,
+    YesNoDialogComponent
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

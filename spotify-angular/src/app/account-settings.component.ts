@@ -6,9 +6,11 @@ import {AuthenticationService } from './services/authentication.service';
 import { MediaService } from "./services/media.service";
 import { UserService } from "./services/user.service";
 import { MediaFile } from "./objs/MediaFile";
+import { YesNoDialogComponent } from "./yes-no-dialog.component";
 import { environment } from "../environments/environment";
 import { NotificationsService } from "angular4-notifications";
 import { FormControl, Validators } from "@angular/forms";
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
 
 @Component({
   selector: "account-settings",
@@ -20,7 +22,8 @@ export class AccountSettingsComponent implements OnInit {
     private authentication: AuthenticationService,
     private notificationService: NotificationsService,
     public mediaService: MediaService,
-    public userService: UserService
+    public userService: UserService,
+    public dialog: MdDialog
   ) {}
 
   user: User;
@@ -148,7 +151,17 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   cancelPremiumAccountConfirm() {
-    console.log("CLICK CANCEL");
+    var header = "Your Bucci Premium status will be lost";
+    var message = "Are you sure to become Bucci Basic?";
+
+    let dialogRef = this.dialog.open(YesNoDialogComponent, {
+      width: "500px",
+      data: { dialogHeader: header, dialogQuestion: message }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+    });
   }
 
   changePreviewCC() {
@@ -158,20 +171,18 @@ export class AccountSettingsComponent implements OnInit {
   }
 
   changeBillingInformation() {
-    this.userService
-      .changeBillingInfo(this.billingInfoChange)
-      .subscribe(
-        data => {
-          this.user = data;
-          this.notificationService.success(
-            "SUCCESS",
-            "Your billing information has changed"
-          );
-        },
-        err => {
-          this.currentPasswordFormControl.setErrors({ credentials: true });
-        }
-      );
+    this.userService.changeBillingInfo(this.billingInfoChange).subscribe(
+      data => {
+        this.user = data;
+        this.notificationService.success(
+          "SUCCESS",
+          "Your billing information has changed"
+        );
+      },
+      err => {
+        this.currentPasswordFormControl.setErrors({ credentials: true });
+      }
+    );
   }
 
   cancelPremiumAccount() {

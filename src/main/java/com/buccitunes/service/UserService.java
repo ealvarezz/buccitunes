@@ -252,7 +252,7 @@ public class UserService  {
 		User user = userRepository.findOne(email);
 		Album album = albumRepository.findOne(albumId);
 		user.getSavedAlbums().add(album);
-		
+
 	}
 	
 	public void followPlaylist(int playlistId, String email) {
@@ -324,7 +324,7 @@ public class UserService  {
 			throw new BucciException("User not found");
 		}
 		
-		if(!user.isInPrivateMode()) {
+		if(loggedUser.getEmail().equals(user.getEmail()) || !user.isInPrivateMode()) {
 			List<Album> recentlyPlayedAlbum = albumRepository.getRecentlyPlayed(user.getEmail());
 			List<MusicCollection> recentlyPlayed = new ArrayList<MusicCollection>(recentlyPlayedAlbum);
 			user.setRecentlyPlayed(recentlyPlayed);
@@ -333,6 +333,7 @@ public class UserService  {
 			user.getFollowing().size();
 			user.getFollowingPlaylists().size();
 		}
+		
 		boolean isAFollower = false;
 		if(userRepository.isFollowing(loggedUser.getEmail(), user.getEmail())) {
 			isAFollower = true;
@@ -479,8 +480,9 @@ public class UserService  {
 			//Logic to actually charge users here
 			
 			if(isPaid) {
-				Payment payment = new Payment(constants.getMonthlyPremiumPrice(),user);
-				paymentRepository.save(payment);
+				//Payment payment = new Payment(constants.getMonthlyPremiumPrice(),user);
+				//paymentRepository.save(payment);
+				user.makePayment(constants.getMonthlyPremiumPrice());
 			}
 		}
 		return users;
