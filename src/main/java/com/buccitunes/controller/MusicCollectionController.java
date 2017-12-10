@@ -158,6 +158,13 @@ public class MusicCollectionController {
 		}
 	}
 	
+	@RequestMapping(value="getSongLyrics", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<String> getSongLyrics(@RequestParam int songId, HttpSession session) {
+		
+			String lyrics = musicCollectionService.getSongLyrics(songId);
+			return BucciResponseBuilder.successfulResponse(lyrics);
+	}
+	
 	@RequestMapping(value="test", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<User> test(HttpSession session) {
 		User sessionUser = (User) session.getAttribute(constants.getSession());

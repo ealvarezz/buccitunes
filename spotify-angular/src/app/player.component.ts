@@ -1,11 +1,13 @@
 import { Component, Input } from '@angular/core';
 import {MusicService } from './services/player.service';
 import {MediaService} from './services/media.service';
+import {MusicCollectionService} from './services/music.service';
 import {AuthenticationService} from './services/authentication.service';
 import { Observable } from 'rxjs/Observable';
 import { Song } from './objs/Song';
 import {NotificationsService} from 'angular4-notifications';
-
+import {LyricsComponent} from './lyrics-component';
+import {MdDialog, MdDialogRef} from '@angular/material';
 @Component({
   selector: 'music-player',
   templateUrl: '../views/player.component.html',
@@ -28,8 +30,10 @@ export class PlayerComponent {
     showBar : boolean = false;
 
     
-    constructor(private musicService : MusicService,
+    constructor(public dialog        : MdDialog,
+                private musicService : MusicService,
                 private mediaService : MediaService,
+                private songService : MusicCollectionService,
                 private authService  :AuthenticationService,
                 private notificationService : NotificationsService){
     }
@@ -81,6 +85,26 @@ export class PlayerComponent {
                     this.notificationService.success("Success", "Private mode turned off. The songs you play will now be public.")
                 }
                 
+            }
+        )
+    }
+
+    getLyrics(){
+        this.songService.getSongLyrics(this.song.id).subscribe(
+            (data)=>{
+                let lyrics = data;
+                let dialogRef = this.dialog.open(LyricsComponent, 
+                {
+                    width: "800px",
+                    height: "500px",
+                    data: {
+                    lyrics  : lyrics,
+                    songName    : this.song.name
+                }
+            });
+            },
+            (err)=>{
+
             }
         )
     }
