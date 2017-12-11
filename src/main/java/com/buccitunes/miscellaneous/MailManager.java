@@ -26,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -67,7 +68,7 @@ public class MailManager {
 	private String DeniedArtistSubject;
 	private String DeniedArtistText;
 	
-	
+	@Async
 	public void mailApprovedAlbumRequest(ArtistUser user, Album album) throws MessagingException{
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -77,6 +78,7 @@ public class MailManager {
         javaMailSender.send(mail);
 	}
 	
+	@Async
 	public void mailDeniedAlbumRequest(ArtistUser user, RequestedAlbum album) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -86,7 +88,7 @@ public class MailManager {
         javaMailSender.send(mail);		
 	}
 	
-	
+	@Async
 	public void mailApprovedSongRequest(ArtistUser user, Song song) throws BucciException {
 		try {
 			MimeMessage mail = javaMailSender.createMimeMessage();
@@ -100,7 +102,7 @@ public class MailManager {
 		}
 	}
 
-	
+	@Async
 	public void mailDeniedSongRequest(ArtistUser user, RequestedSong song) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -110,6 +112,7 @@ public class MailManager {
         javaMailSender.send(mail);
 	}
 
+	@Async
 	public void mailApprovedConcertRequest(ArtistUser user, Concert concert) throws BucciException {
 		try {
 			MimeMessage mail = javaMailSender.createMimeMessage();
@@ -123,6 +126,7 @@ public class MailManager {
 		}
 	}
 	
+	@Async
 	public void mailApprovedArtistRequest(ArtistUser user) throws BucciException {
 		try {
 			MimeMessage mail = javaMailSender.createMimeMessage();
@@ -136,6 +140,7 @@ public class MailManager {
 		}
 	}
 	
+	@Async
 	public void mailDeniedArtistRequest(RequestedArtist requested) throws BucciException {
 		try {
 			MimeMessage mail = javaMailSender.createMimeMessage();
@@ -149,6 +154,7 @@ public class MailManager {
 		}
 	}
 	
+	@Async
 	public void mailDeniedConcertRequest(ArtistUser user, RequestedConcert concert) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -158,6 +164,7 @@ public class MailManager {
         javaMailSender.send(mail);
 	}
 	
+	@Async
 	public void mailAccountConfirmation(User user) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -167,6 +174,7 @@ public class MailManager {
         javaMailSender.send(mail);
 	}
 	
+	@Async
 	public void sendPasswordReset(String email, String hashedURL) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
@@ -176,6 +184,7 @@ public class MailManager {
         javaMailSender.send(mail);
 	}	
 	
+	@Async
 	public void sendResetConfirmation(String email) throws MessagingException {
 		MimeMessage mail = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(mail, true);
