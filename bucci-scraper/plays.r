@@ -58,6 +58,7 @@ dbClearResult(ts)
 
 dbDisconnect(mydb)
 
-rs = dbSendQuery(mydb, "CALL runStatBatch(0.07, '2017-01-01'")
+fn <- "test.csv"
+if (file.exists(fn)) file.remove(fn)
 
 
