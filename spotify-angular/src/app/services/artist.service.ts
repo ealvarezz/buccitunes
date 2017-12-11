@@ -1,5 +1,6 @@
 import { Injectable, Inject} from '@angular/core';
 import {Artist } from '../objs/Artist';
+import {Concert} from '../objs/Concert';
 import {User} from '../objs/User';
 import {BucciResponse} from '../objs/BucciResponse';
 import { environment } from '../../environments/environment';
@@ -48,7 +49,21 @@ export class ArtistService {
         .map(this.extractData)
         .catch(this.handleError)
     }
-        
+    
+    getConcerts(artist : Artist){
+        return this.http.post<BucciResponse<Concert[]>>(BucciConstants.Endpoints.GET_CONCERTS, artist, { withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    getRelatedArtists(artist : Artist){
+        return this.http.get<BucciResponse<Artist[]>>(BucciConstants.Endpoints.GET_RELATED_ARTISTS, {
+            params: new HttpParams().set('artistId', String(artist.id)), 
+            withCredentials: true
+        })
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
 
     private extractData(bucci){
         if(bucci.successful){

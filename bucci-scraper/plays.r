@@ -58,5 +58,7 @@ dbClearResult(ts)
 
 dbDisconnect(mydb)
 
+fn <- "test.csv"
+if (file.exists(fn)) file.remove(fn)
 
 

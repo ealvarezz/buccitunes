@@ -1,0 +1,63 @@
+<div class="main signupScreen">
+<div class="signupContainer">
+<md-card>
+<md-card-header>
+  <div style="width: 50%; margin: 0 auto;">
+  <h1> Upgrade To Bucci Premium</h1>
+  </div>
+</md-card-header>
+<md-horizontal-stepper linear #stepper>
+  <md-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template  mdStepLabel>Payment Information</ng-template>
+        <div>
+          <h2>Enter Payment Information</h2>
+          <md-form-field> 
+            <input mdInput [(ngModel)]="billingInfo.cardHolderName" placeholder="Name (As it appears on the card)" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
+        <div style="margin-bottom: 1%;">
+          <md-select placeholder="Credit Card Company" name="company" [(ngModel)]="billingInfo.creditCardCompany" [ngModelOptions]="{standalone: true}">
+              <md-option *ngFor="let company of companies" [value]="company">
+              <div style="display:inline-block">
+                <img style="max-height:30px; max-width:35px;" [src]="company.artwork">
+              </div>
+              <div style="display:inline-block">{{company.name}}</div>
+              </md-option>
+          </md-select>
+        </div>
+        <div> 
+          <md-form-field> 
+            <input mdInput [(ngModel)]="billingInfo.creditCardNo" placeholder="Card Number" formControlName="secondCtrl" required>
+          </md-form-field>
+        </div>
+        <div>
+          <md-select placeholder="Month" name="month">
+              <md-option *ngFor="let month of months" [value]="month">
+              {{month}}
+              </md-option>
+          </md-select>
+        <md-form-field> 
+          <input mdInput type="number" placeholder="Year" formControlName="secondCtrl" required>
+        </md-form-field>
+        </div>
+      <div>
+        <h4>By clicking submit, you agree to subscribe to a monthly payment of $4.99. You may cancel at any time in your account settings page. </h4>
+        <button md-button mdStepperNext (click)="upgrade()">Submit</button>
+      </div>
+    </form>
+  </md-step>
+  <md-step >
+    <ng-template mdStepLabel>Done</ng-template>
+    <h2>You're now BUCCI PREMIUM!</h2>
+      <img style=" display:inline-block; vertical-align:top; max-height:100%; max-width:20%;" src="/assets/Kangaroo.png">
+    <div style="display:inline-block;">
+      <h4> You're officially BUCCI. </h4>
+      <p>Click <a routerLink="/login"><u>here</u></a> to login and get the Bucci Experience</p>
+    </div>
+  </md-step>
+</md-horizontal-stepper>
+
+</md-card>
+</div>
+</div>

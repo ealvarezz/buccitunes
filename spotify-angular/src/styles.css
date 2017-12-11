@@ -185,6 +185,7 @@ mat-toolbar-row{
     z-index: 500000;
 }
 
+
 .spinner{
     top:50%;
     left:70%;
@@ -197,4 +198,8 @@ mat-toolbar-row{
 
 .link:hover{
     text-decoration: underline;
+}
+
+.img-circle {
+    border-radius: 50%;
 }

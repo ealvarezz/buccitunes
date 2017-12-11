@@ -20,7 +20,7 @@
     </md-card-header>
     <md-tab-group>
         <md-tab label="OVERVIEW">
-            <div style="width:70%">
+            <div style="display:inline-block; vertical-align:top; width:70%;">
                 <div class="sub-header"><h4>Latest Release</h4></div>
                 <div class="hoverable-div">
                     <div style="width: 20%; float:left" >
@@ -40,6 +40,17 @@
                     <button *ngIf = "showAllSongs == true" style="width:25%" md-raised-button class="rounded-button" (click)="toggleShow(false)">SHOW ONLY 5 SONGS</button>
                 </div>
                 </div>
+            <div style="display: inline-block;">
+                <md-nav-list>
+                    <h3 md-subheader>Related Artist</h3>
+                    <ng-container *ngFor="let artist of relatedArtists; let i = index">
+                    <md-list-item [routerLink]="['/artist',artist.id]" style="margin-bottom:5%;" *ngIf="i < 7">
+                        <img md-list-icon class="img-circle" style="max-height:50px; max-width:50px; min-height:50px; min-width:50px;" [src]="mediaService.getArtistImageUrl(artist.avatarPath)">
+                        <h4 md-line>{{artist.name}}</h4>
+                    </md-list-item>
+                    </ng-container>
+                </md-nav-list>
+            </div>
             <div>
                 <md-list>
                     <h3 >Albums</h3>
@@ -91,10 +102,31 @@
         <md-tab label="CONCERTS">
             <md-list>
                 <h3 >Upcoming Concerts</h3>
+                
+                <div *ngFor="let concert of artist.concerts">
+                    <div>
+                        <md-grid-list cols="5" rowHeight="60px">
+                            <md-grid-tile ><md-icon color="accent" style="position:absolute; left:0px;">event</md-icon></md-grid-tile>
+                            <md-grid-tile><span style="position:absolute; left:0px;">{{concert.mainStar.name}}</span></md-grid-tile>
+                            <md-grid-tile><h4>{{concert.releaseDate | date:'fullDate'}}</h4></md-grid-tile>
+                            <md-grid-tile><h4>{{concert.name | capitalize}}</h4></md-grid-tile>
+                            <md-grid-tile *ngIf="concert.location.city"><h4 > {{concert.location.city}}, {{concert.location.state}}</h4></md-grid-tile>
+                            <md-grid-tile *ngIf="!concert.location.city"><h4 > TBA</h4></md-grid-tile>
+                        </md-grid-list>
+                    </div>
                 <md-divider></md-divider>
+                </div>
             </md-list>
         </md-tab>
         <md-tab label="RELATED ARTISTS">
+        <md-grid-list cols="4" rowHeight="300px">
+        <md-grid-tile *ngFor = "let artist of relatedArtists" colspan= "1" rowpan = "1" >
+            <div>
+                <div style="height: 220px; width: 220px;"><image [src]="mediaService.getArtistImageUrl(artist.avatarPath)" [route]="'/artist/'+artist.id"></image></div>
+                <div *ngIf ="artist.name" class ="browse-item-template"><h4><b><a class="link" [routerLink]="['/artist', artist.id]">{{artist.name}}</a></b></h4></div>
+            </div>
+        </md-grid-tile>
+        </md-grid-list>
         </md-tab>
     </md-tab-group>
 

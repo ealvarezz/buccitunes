@@ -4,9 +4,10 @@
     
     <div mdLine class="profile-pic-btn">
         <button md-button [mdMenuTriggerFor]="userMenu">
-            <img [src]="mediaService.getUserImageUrl(this.currentUser.avatarPath)" style="max-height: 48px; max-width: 48px;">     
+            <img [src]="mediaService.getUserImageUrl(this.currentUser.avatarPath)" style="max-height: 48px; max-width: 48px;" class="img-circle">     
         </button>
         <md-menu #userMenu="matMenu" yPosition="below" xPosition="after" [overlapTrigger]="false">
+            <button md-menu-item [routerLink]="['/user',currentUser.email]" > Profile Page </button>
             <button md-menu-item routerLink="/account-settings"> Settings </button>
             <button md-menu-item (click)="logout()"> Logout </button>
         </md-menu>

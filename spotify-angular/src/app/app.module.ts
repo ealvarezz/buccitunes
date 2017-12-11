@@ -62,7 +62,9 @@ import {UpdatePlaylistDialog} from './update-playlist.component';
 import {LyricsComponent} from './lyrics-component';
 import {PropertiesPipe} from './properties-pipe';
 import {SearchComponent} from './search.component';
+import {CapitalizePipe} from './capitalize-pipe';
 import { YesNoDialogComponent } from "./yes-no-dialog.component";
+import { UpgradePremiumComponent } from "./upgrade-premium.component";
 
 
 const appRoutes: Routes = [
@@ -89,6 +91,7 @@ const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'recover/:email/*:hash', component: RecoverComponent},
   {path: 'forgot', component: ForgotComponent},
+  {path: 'upgrade', component: UpgradePremiumComponent, canActivate: [AuthGuard]},
   {path: 'sign-up', component: SignUpComponent}
 ];
 
@@ -131,8 +134,10 @@ const appRoutes: Routes = [
     QueueComponent,
     LyricsComponent,
     PropertiesPipe,
+    CapitalizePipe,
     SearchComponent,
     UpdatePlaylistDialog,
+    UpgradePremiumComponent,
     YesNoDialogComponent
   ],
   imports: [

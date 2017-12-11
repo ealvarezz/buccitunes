@@ -445,11 +445,14 @@ public class UserService  {
 	public List<Payment> getPayments(PremiumUser user) {
 		List<Payment> paymentHistory = paymentRepository.findByPremiumUserOrderByDateDesc(user);
 		
-		Payment lastPayment = paymentHistory.get(0);
-		Date lastPayDate = lastPayment.getDate();
-	
-		Date nextBillingDate =  getNextBillingDate(lastPayDate);
-		lastPayment.setNextBillingDate(nextBillingDate);
+		if(paymentHistory.size() > 0) {
+			Payment lastPayment = paymentHistory.get(0);
+			Date lastPayDate = lastPayment.getDate();
+		
+			Date nextBillingDate =  getNextBillingDate(lastPayDate);
+			lastPayment.setNextBillingDate(nextBillingDate);
+			
+		}
 		
 		return paymentHistory;
 	}

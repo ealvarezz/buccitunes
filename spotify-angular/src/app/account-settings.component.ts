@@ -80,7 +80,7 @@ export class AccountSettingsComponent implements OnInit {
 
   submitUserChange() {
     var changedUser = new User();
-    //changedUser.email = this.user.email;
+    changedUser.email = this.user.email;
     changedUser.name = this.nameForUser;
     changedUser.username = this.usernameForUser;
     if (this.avatarArtwork)
