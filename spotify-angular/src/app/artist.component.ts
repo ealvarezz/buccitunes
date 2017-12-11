@@ -11,6 +11,7 @@ import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MdChipInputEvent, ENTER} from '@angular/material';
 import {ArtistService} from './services/artist.service';
+import {SpinnerService} from './services/spinner.service';
 import {MusicCollectionService} from './services/music.service';
 import { Observable } from 'rxjs/Rx';
 import {NotificationsService} from 'angular4-notifications';
@@ -19,6 +20,9 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import {MediaService} from './services/media.service';
 import {Location} from '@angular/common';
 import {BucciConstants} from '../environments/app.config';
+import 'rxjs/add/observable/forkJoin';
+import {AddConcertDialog} from './add-concert';
+import {Concert} from './objs/Concert';
 
 
 @Component({
@@ -46,11 +50,15 @@ export class ArtistComponent implements OnInit {
               private route                 : ActivatedRoute,
               private location              : Location,
               private notificationService   : NotificationsService,
-              private authenticationService : AuthenticationService){}
+              private authenticationService : AuthenticationService,
+              private spinnerService        : SpinnerService){}
 
   ngOnInit(){
     this.route.params.subscribe(params => {
-        this.getArtist(+params['id']);
+      let id = +params['id'];
+      this.loadArtist(id);
+
+        // this.getArtist(+params['id']);
     });
 
     this.authenticationService.currentUserChange.subscribe(
@@ -60,46 +68,70 @@ export class ArtistComponent implements OnInit {
     );
     
   }
-  getArtist(id : number ){
-   this.artistService.getArtist(id)
-      .subscribe(
-          (data) => {
-            this.artist = data;
-            this.isCurrentUserOwner();
-            this.getConcerts();
-            this.getRelatedArtists();
-            this.bio = this.artist.biography;
-            this.artist.avatarPath = this.artist.avatarPath+'?dummy='+new Date().getTime();
-          },  
-          (err) => {
-            this.notificationService.error("ERROR","There was an error loading this artist.");
-            this.location.back();
-            console.log(err.message);
-          });
-  }
 
+  loadArtist(id : number){
+    this.spinnerService.openSpinner();
+    Observable.forkJoin(
+      this.artistService.getArtist(id),
+      this.artistService.getConcerts(id),
+      this.artistService.getRelatedArtists(id),
+    ).subscribe(
+      (res)=>{
+        this.artist = res[0];
+        this.bio = this.artist.biography;
+        this.artist.avatarPath = this.artist.avatarPath+'?dummy='+new Date().getTime();
 
-  getConcerts(){
-    this.artistService.getConcerts(this.artist).subscribe(
-      (data)=>{
-        this.artist.concerts = data;
-      },
+        this.artist.concerts = res[1];
+        this.relatedArtists = res[2];
+        this.isCurrentUserOwner();
+        this.spinnerService.stopSpinner();
+    },
       (err)=>{
-        this.notificationService.error("ERROR","There was an error fetching concerts");
+        this.notificationService.error("ERROR","There was an error loading this artist");
+        this.spinnerService.stopSpinner();
       }
-    )
+    );
   }
+  // getArtist(id : number ){
+  //  this.artistService.getArtist(id)
+  //     .subscribe(
+  //         (data) => {
+  //           this.artist = data;
+  //           this.isCurrentUserOwner();
+  //           this.getConcerts();
+  //           this.getRelatedArtists();
+  //           this.bio = this.artist.biography;
+  //           this.artist.avatarPath = this.artist.avatarPath+'?dummy='+new Date().getTime();
+  //         },  
+  //         (err) => {
+  //           this.notificationService.error("ERROR","There was an error loading this artist.");
+  //           this.location.back();
+  //           console.log(err.message);
+  //         });
+  // }
 
-  getRelatedArtists(){
-    this.artistService.getRelatedArtists(this.artist).subscribe(
-      (data)=>{
-        this.relatedArtists = data;
-      },
-      (err)=>{
-        this.notificationService.error("ERROR","There was an error fetching related artists");
-      }
-    )
-  }
+
+  // getConcerts(){
+  //   this.artistService.getConcerts(this.artist.id).subscribe(
+  //     (data)=>{
+  //       this.artist.concerts = data;
+  //     },
+  //     (err)=>{
+  //       this.notificationService.error("ERROR","There was an error fetching concerts");
+  //     }
+  //   )
+  // }
+
+  // getRelatedArtists(){
+  //   this.artistService.getRelatedArtists(this.artist.id).subscribe(
+  //     (data)=>{
+  //       this.relatedArtists = data;
+  //     },
+  //     (err)=>{
+  //       this.notificationService.error("ERROR","There was an error fetching related artists");
+  //     }
+  //   )
+  // }
   
   editBio(){
     this.artist.biography = this.bio;
@@ -108,7 +140,7 @@ export class ArtistComponent implements OnInit {
     this.artistService.updateArtist(this.artist).subscribe(
       (data)=>{
         this.toggleEditModeBio();
-        this.getArtist(this.artist.id);
+        this.loadArtist(this.artist.id);
         this.notificationService.success("Success","Artist successfully updated.");
       },
       (err)=>{
@@ -169,8 +201,26 @@ export class ArtistComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        this.getArtist(this.artist.id)
+        this.loadArtist(this.artist.id)
         this.notificationService.success("SUCCESS",result);
+      }
+    });
+  }
+
+  addConcert(){
+    let dialogRef = this.dialog.open(AddConcertDialog, {width:'700px'});
+
+    dialogRef.afterClosed().subscribe((result : Concert) => {
+      if(result){
+        this.artistService.requestConcert(result).subscribe(
+          (data)=>{
+            this.notificationService.success("SUCCESS","You have successfully requested a concert. Please allow 4-5 hours for an admin to review and approve this concert.");
+          },
+          (err)=>{
+            this.notificationService.error("ERROR","There was a problem submitting your concert. Please try again or contact an admin for further assistance.")
+          }
+        )
+
       }
     });
   }

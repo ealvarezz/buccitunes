@@ -98,6 +98,7 @@ public class UserController {
 		
 		try{
 			userService.deleteUser(loggedUser, loginInfo.password);
+			session.removeAttribute(constants.getSession());
 			return BucciResponseBuilder.successMessage("Goodbye friend, stay bucci"); 
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
@@ -594,16 +595,13 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
 		}
 		
-		PremiumUser user = userService.cancelPremium((PremiumUser) loggedUser);
+		User user = userService.cancelPremium((PremiumUser) loggedUser);
 		session.setAttribute(constants.getSession(), user);
 		
-		
-		String nextBillingDate = new SimpleDateFormat("MMM dd, yyyy").format(user.getNextBillingDate());
-		return BucciResponseBuilder.successfulResponseMessage("You are now bucci basic, final charge date is on " + nextBillingDate
-				, user);
+		return BucciResponseBuilder.successfulResponseMessage("You are now bucci basic", user);
 	}
 	
-	@RequestMapping(value="activate_subscription", method = RequestMethod.PUT)
+	@RequestMapping(value="reactivate_subscription", method = RequestMethod.PUT)
 	public @ResponseBody BucciResponse<User> activateSubscription(HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {

@@ -7,7 +7,7 @@ export class Concert{
     releaseDate     : Date;
     price           : number;
     purchaseLink    : string;
-    location        : Location;
+    location        : Location = new Location();
 
 
 }

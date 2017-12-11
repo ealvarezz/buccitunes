@@ -92,6 +92,9 @@ public class PremiumUser extends User {
 		this.nextBillingDate = nextBillingDate;
 	}
 	
+	/*
+	 * Need to remove casascase all for this to work
+	 */
 	@PreRemove
 	private void removeAssociationsWithChilds() {
 	   for (Payment p : paymentHistory) {

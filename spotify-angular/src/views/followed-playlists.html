@@ -10,8 +10,8 @@
         <md-grid-tile *ngFor = "let playlist of playlists" colspan= "1" rowpan = "1" >
             <div>
                 <div style="height: 220px; width: 220px;"><image [src]="mediaService.getPlaylistImageUrl(playlist.artworkPath)" [route]="'/playlist/'+playlist.id"></image></div>
-                <div *ngIf ="playlist.title" class ="browse-item-template"><h4><b><a [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></b></h4></div>
-                <div *ngIf ="playlist.owner" class ="browse-item-template"><h4><b><a [routerLink]="['/user', playlist.owner.email]">{{playlist.owner.email}}</a></b></h4></div>
+                <div *ngIf ="playlist.title" class ="browse-item-template"><h4><b><a class="link" [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></b></h4></div>
+                <div *ngIf ="playlist.owner" class ="browse-item-template"><h4><b><a class="link" [routerLink]="['/user', playlist.owner.email]">{{playlist.owner.email}}</a></b></h4></div>
 
             </div>
         </md-grid-tile>

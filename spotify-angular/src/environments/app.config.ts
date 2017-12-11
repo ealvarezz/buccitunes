@@ -51,6 +51,8 @@ export const BucciConstants =  {
       GET_CONCERTS        : environment.SERVER_PATH + "/get_artist_concerts",
       GET_RELATED_ARTISTS : environment.SERVER_PATH + "/get_related_artists",
       UPGRADE_TO_PREMIUM  : environment.SERVER_PATH + "/premium_upgrade",
+      GET_FOLLOWED_ARTIST : environment.SERVER_PATH + "/followed_artists",
+      REQUEST_CONCERT     : environment.SERVER_PATH + "/request_concert",
 
 
   },

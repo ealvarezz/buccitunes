@@ -11,6 +11,7 @@ import {MusicService} from './services/player.service';
 import { MediaFile } from "./objs/MediaFile";
 import { MediaService } from "./services/media.service";
 import { environment } from "../environments/environment";
+import {BucciConstants} from "../environments/app.config";
 
 
 @Component({
@@ -30,12 +31,17 @@ export class SideBarComponent implements OnInit {
   recentAlbums: Album[];
   playlists: Playlist[];
   currentUser: User;
+  isArtist : boolean = false;
+
 
   ngOnInit() {
     this.getRecentlyPlayedAlbums();
 
     this.authService.currentUserChange.subscribe(
-      user => (this.currentUser = user)
+      (user) => {
+        this.currentUser = user;
+        this.isCurrentUserOwner();
+      }
     );
 
     this.musicService.userPlaylists.subscribe(
@@ -53,6 +59,12 @@ export class SideBarComponent implements OnInit {
         console.log("error");
       }
     );
+  }
+
+  isCurrentUserOwner(){
+    if((this.currentUser.role === BucciConstants.Roles.ARTIST) && (this.currentUser.artist)){
+        this.isArtist = true;
+    }
   }
 
   getUserPage() {

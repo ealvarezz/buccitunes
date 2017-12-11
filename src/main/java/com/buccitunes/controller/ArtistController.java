@@ -78,10 +78,10 @@ public class ArtistController {
 		}
 	}
 
-	@RequestMapping(value="get_artist_concerts", method = RequestMethod.POST)
-	public BucciResponse<List<Concert>> getConcerts(@RequestBody Artist artist) {
+	@RequestMapping(value="get_artist_concerts", method = RequestMethod.GET)
+	public BucciResponse<List<Concert>> getConcerts(@RequestParam int artistId) {
 		try {
-			List<Concert> concerts = artistService.getArtistConcerts(artist.getId());
+			List<Concert> concerts = artistService.getArtistConcerts(artistId);
 			return BucciResponseBuilder.successfulResponse(concerts);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());

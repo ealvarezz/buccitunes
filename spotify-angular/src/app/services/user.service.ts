@@ -36,6 +36,14 @@ export class UserService {
       .catch(this.handleError);
   }
 
+  getFollowedArtists(){
+    return this.http.get<BucciResponse<User[]>>(BucciConstants.Endpoints.GET_FOLLOWED_ARTIST, {
+        withCredentials: true
+      })
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+
   getAllUser() {
     return this.http
       .get<BucciResponse<User[]>>(BucciConstants.Endpoints.GET_ALL_USERS, {
