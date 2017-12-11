@@ -1,8 +1,17 @@
-<h1 md-dialog-title >{{dialogHeader}}</h1>
+<h1 md-dialog-title>{{dialogHeader}}</h1>
 <div md-dialog-content>
     <p>{{dialogQuestion}}</p>
+    <md-form-field *ngIf="putInText">
+        <input mdInput tabindex="1" type="password" [(ngModel)]="textInput"
+         [formControl]="textFormControl" placeholder="Password" required>
+        <md-error *ngIf="textFormControl.invalid">Input is Needed</md-error>
+    </md-form-field>
 </div>
-<div md-dialog-actions>
-    <button md-raised-button color="warn" tabindex="2" [mat-dialog-close]="!clickedYes">Ok</button>
-    <button md-raised-button tabindex="-1" [mat-dialog-close]="clickedYes">No Thanks</button>
+<div *ngIf="!putInText" md-dialog-actions>
+    <button md-raised-button color="warn" tabindex="2" [md-dialog-close]="clickedYes">Ok</button>
+    <button md-raised-button tabindex="-1" [md-dialog-close]="!clickedYes">No Thanks</button>
+</div>
+<div *ngIf="putInText" md-dialog-actions>
+    <button md-raised-button color="warn" tabindex="2" [md-dialog-close]="textInput">Ok</button>
+    <button md-raised-button tabindex="-1" [md-dialog-close]="">No Thanks</button>
 </div>

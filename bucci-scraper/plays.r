@@ -17,7 +17,7 @@ mydb = dbConnect(MySQL(), user='root', password=xx, dbname='buccidb2', host='loc
 rs = dbSendQuery(mydb, "select * from song")
 songs = fetch(rs, n=-1)
 
-rs = dbSendQuery(mydb, "select  email from user LIMIT 50")
+rs = dbSendQuery(mydb, "select  email from user LIMIT 100")
 users = fetch(rs, n=-1)
 
 rs = dbSendQuery(mydb, "select  * from song_plays")
@@ -58,6 +58,7 @@ dbClearResult(ts)
 
 dbDisconnect(mydb)
 
-rs = dbSendQuery(mydb, "CALL runStatBatch(0.07, '2017-01-01'")
+fn <- "test.csv"
+if (file.exists(fn)) file.remove(fn)
 
 

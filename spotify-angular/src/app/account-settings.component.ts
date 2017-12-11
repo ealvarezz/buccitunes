@@ -164,6 +164,28 @@ export class AccountSettingsComponent implements OnInit {
     });
   }
 
+  deleteAccountConfirm() {
+    var header = "Are sure you want to delete your acccount and no longer be bucci?";
+    var message = "Type in your password if you really want to be delete?";
+    var passInput = true;
+
+    let dialogRef = this.dialog.open(YesNoDialogComponent, {
+      width: "600px",
+      data: {
+        dialogHeader: header,
+        dialogQuestion: message,
+        putInText: passInput
+      }
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result);
+      if(result) {
+        console.log("START DELETION!");
+      }
+    });
+  }
+
   changePreviewCC() {
     if (this.user.billingInfo.creditCardNo.length >= 19) {
       this.previewCC = this.user.billingInfo.creditCardNo.slice(-4);

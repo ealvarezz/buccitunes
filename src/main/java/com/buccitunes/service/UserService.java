@@ -21,6 +21,7 @@ import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PaymentRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
+import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.SupportTicketRepository;
 import com.buccitunes.dao.UserRepository;
@@ -31,6 +32,7 @@ import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
+import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
@@ -42,6 +44,7 @@ import com.buccitunes.model.Payment;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
 
@@ -62,13 +65,14 @@ public class UserService  {
 	private final BillingInfoRepository billingInfoRepository;
 	private final SupportTicketRepository supportTicketRepository; 
 	private final PaymentRepository paymentRepository;
+	private final SongPlaysRepository songPlaysRepository;
 	
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
 			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository, 
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
 			ArtistRepository artistRepository, SupportTicketRepository supportTicketRepository,
-			PaymentRepository paymentRepository) {
+			PaymentRepository paymentRepository, SongPlaysRepository songPlaysRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -80,6 +84,7 @@ public class UserService  {
 		this.artistRepository = artistRepository;
 		this.supportTicketRepository = supportTicketRepository;
 		this.paymentRepository = paymentRepository;
+		this.songPlaysRepository = songPlaysRepository;
 	}
 	
 	public List<User> findAll(){
@@ -98,6 +103,34 @@ public class UserService  {
 	public void remove(String email) {
 		
 		userRepository.delete(email);
+	}
+	
+	public void deleteUser(User user, String password) throws BucciException {
+		user = userRepository.findOne(user.getEmail());
+		
+		if(user == null || !user.passwordIsCorrect(password)) {
+			throw new BucciException("Invalid Login Information");	
+		}
+		
+		List<SongPlays> songs = songPlaysRepository.findByUser(user);
+		for(SongPlays playedSong : songs) {
+			playedSong.setUser(null);
+		}
+		
+		String emailId = user.getEmail();
+		if(BucciPrivilege.isPremium(user)) {
+			premiumUserRepository.delete(emailId);
+		} else {
+			userRepository.delete(emailId);
+		
+			//Case is used if the premium user downgraded to a basic user
+			if(premiumUserRepository.exists(emailId) ) {
+				System.out.println("Deleting Premium stuff");
+				premiumUserRepository.delete(emailId);
+			}
+		}
+		
+		
 	}
 	
 	public User follow(String follower, String followed) throws BucciException {
