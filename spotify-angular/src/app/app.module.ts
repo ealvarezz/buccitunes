@@ -67,6 +67,8 @@ import { YesNoDialogComponent } from "./yes-no-dialog.component";
 import { UpgradePremiumComponent } from "./upgrade-premium.component";
 import {FollowedArtists} from './following-artists.component';
 import {AddConcertDialog} from './add-concert';
+import {RequestedConcertTableComponent} from './requested-concert-table';
+import {RequestedConcertComponent} from './requested-concert';
 
 
 const appRoutes: Routes = [
@@ -76,9 +78,10 @@ const appRoutes: Routes = [
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist/:id', component: PlaylistComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
-          {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard, AdminGuard], canActivateChild: [AuthGuard, AdminGuard], 
+          {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard], 
               children:[
                 {path: 'requested_albums', component: RequestedAlbumComponent, canActivate: [AuthGuard]},
+                {path: 'requested_concerts', component: RequestedConcertComponent, canActivate: [AuthGuard]},
                 {path: 'user_dashboard', component: UserDashboard, canActivate: [AuthGuard]}
               ]},
           {path: 'library', component: SongLibrary, canActivate: [AuthGuard]},
@@ -92,10 +95,11 @@ const appRoutes: Routes = [
         ] 
   },
   {path: 'login', component: LoginComponent},
-  {path: 'recover/:email/*:hash', component: RecoverComponent},
+  {path: 'recover/:email/:hash', component: RecoverComponent},
   {path: 'forgot', component: ForgotComponent},
   {path: 'upgrade', component: UpgradePremiumComponent, canActivate: [AuthGuard]},
-  {path: 'sign-up', component: SignUpComponent}
+  {path: 'sign-up', component: SignUpComponent},
+  {path: '**', redirectTo: 'login'}
 ];
 
 @NgModule({
@@ -143,7 +147,9 @@ const appRoutes: Routes = [
     UpgradePremiumComponent,
     YesNoDialogComponent,
     FollowedArtists,
-    AddConcertDialog
+    RequestedConcertTableComponent,
+    AddConcertDialog,
+    RequestedConcertComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

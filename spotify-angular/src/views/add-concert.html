@@ -3,6 +3,23 @@
         <input name="name" [(ngModel)]= "concert.name" mdInput placeholder="Concert Name" required>
     </md-form-field>
 </div>
+    <div style="width: 30%; display: inline-block; vertical-align:top;">
+        <div><h2>Concert Info</h2></div>
+        <div> 
+            <md-form-field style="width: 50%;">
+                <md-icon mdPrefix>attach_money</md-icon>
+                <input name="price" [(ngModel)]= "concert.price" mdInput placeholder="Price" required>
+            </md-form-field>
+        </div>
+        <div> 
+            <md-form-field>
+                <input mdInput [(ngModel)]="concert.releaseDate"  name="datepicker" [mdDatepicker]="dp3" placeholder="Choose a date">
+                <md-datepicker-toggle mdSuffix [for]="dp3"></md-datepicker-toggle>
+                <md-datepicker #dp3 disabled="false"></md-datepicker>
+          </md-form-field>
+        </div>
+        
+    </div>
     <div style="width: 40%; display: inline-block; vertical-align:top;">
         <div><h2>Location</h2></div>
         <div> 
@@ -16,17 +33,16 @@
             </md-form-field>
         </div>
         <div> 
-            <md-form-field style="width: 90%;">
+            <md-form-field style="width: 40%;">
                 <input name="state" [(ngModel)]= "concert.location.state" mdInput placeholder="State" required>
             </md-form-field>
-        </div>
-        <div> 
-            <md-form-field style="width: 90%;">
+            <md-form-field style="width: 50%;">
                 <input name="zip" [(ngModel)]= "concert.location.zip" mdInput placeholder="Zip Code" required>
             </md-form-field>
         </div>
+        
     </div>
-    <div style="width: 50%; top:0; display: inline-block;">
+    <div style="width: 20%; top:0; display: inline-block;">
     <div> 
             <md-form-field style="width: 90%;">
                 <input name="featured"  mdInput placeholder="Featured Artists">

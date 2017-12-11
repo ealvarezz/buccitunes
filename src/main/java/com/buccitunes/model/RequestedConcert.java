@@ -27,6 +27,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 		  generator = ObjectIdGenerators.PropertyGenerator.class, 
 		  property = "id",
 		  scope = RequestedConcert.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class RequestedConcert {
 	
 	@Id

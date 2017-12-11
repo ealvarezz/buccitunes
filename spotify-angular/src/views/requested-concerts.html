@@ -1,0 +1,14 @@
+<md-card class=" card mat-elevation-z8">
+            <md-card-header>
+                <div class= "table-header"><h4>Pending Concert Requests</h4></div>
+            </md-card-header>
+            <md-card-content>
+                <request-concert-table [requests] = "requests"></request-concert-table>
+            </md-card-content>
+            <md-card-actions>
+                <div  class="actions">
+                    <button md-raised-button (click)="approveSelectedConcerts()"  color="primary">Accept Selected</button>
+                    <button md-raised-button  (click)="rejectSelectedConcerts()" color="primary">Decline Selected</button>
+                </div>
+            </md-card-actions>
+        </md-card>

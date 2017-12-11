@@ -25,7 +25,6 @@ export class MainComponent {
         this.spinnerService.isLoading.subscribe(
             (loading) => {
                 this.showSpinner = loading;
-                this._changeDetectionRef.detectChanges();
             }
         );
         
