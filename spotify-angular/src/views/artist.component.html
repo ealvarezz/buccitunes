@@ -13,6 +13,7 @@
                 <md-menu #artistMenu="matMenu">
                     <button *ngIf="isOwner" md-menu-item (click)="addAlbum()"> Add Album </button>
                     <button *ngIf="isOwner" md-menu-item> Add Song </button>
+                    <button *ngIf="isOwner" md-menu-item (click)="addConcert()"> Add Concert </button>
                     <button md-menu-item> Follow </button>
                 </md-menu>
             </div>

@@ -1,0 +1,48 @@
+<div>
+    <md-form-field style="width: 90%;">
+        <input name="name" [(ngModel)]= "concert.name" mdInput placeholder="Concert Name" required>
+    </md-form-field>
+</div>
+    <div style="width: 40%; display: inline-block; vertical-align:top;">
+        <div><h2>Location</h2></div>
+        <div> 
+            <md-form-field style="width: 90%;">
+                <input name="venue" [(ngModel)]= "concert.location.address" mdInput placeholder="Venue Name" required>
+            </md-form-field>
+        </div>
+        <div> 
+            <md-form-field style="width: 90%;">
+                <input name="city" [(ngModel)]= "concert.location.city" mdInput placeholder="City" required>
+            </md-form-field>
+        </div>
+        <div> 
+            <md-form-field style="width: 90%;">
+                <input name="state" [(ngModel)]= "concert.location.state" mdInput placeholder="State" required>
+            </md-form-field>
+        </div>
+        <div> 
+            <md-form-field style="width: 90%;">
+                <input name="zip" [(ngModel)]= "concert.location.zip" mdInput placeholder="Zip Code" required>
+            </md-form-field>
+        </div>
+    </div>
+    <div style="width: 50%; top:0; display: inline-block;">
+    <div> 
+            <md-form-field style="width: 90%;">
+                <input name="featured"  mdInput placeholder="Featured Artists">
+            </md-form-field>
+    </div>
+    <div>
+            <md-list>
+                <md-list-item *ngFor="let artist of featuredArtists">
+                    <span>{{artist.name}}</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+    </div>
+    </div>
+    <div style="display: block; margin-left: auto; margin-right: auto; width: 40%;">
+        <button md-raised-button (click)="closeDialog()" class="rounded-button"> Cancel</button>
+        <button md-raised-button (click)="submitConcert()" class="rounded-button"> Add Concert</button>
+    </div>
+    

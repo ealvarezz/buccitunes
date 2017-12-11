@@ -65,6 +65,8 @@ import {SearchComponent} from './search.component';
 import {CapitalizePipe} from './capitalize-pipe';
 import { YesNoDialogComponent } from "./yes-no-dialog.component";
 import { UpgradePremiumComponent } from "./upgrade-premium.component";
+import {FollowedArtists} from './following-artists.component';
+import {AddConcertDialog} from './add-concert';
 
 
 const appRoutes: Routes = [
@@ -74,7 +76,7 @@ const appRoutes: Routes = [
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist/:id', component: PlaylistComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
-          {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard], 
+          {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard, AdminGuard], canActivateChild: [AuthGuard, AdminGuard], 
               children:[
                 {path: 'requested_albums', component: RequestedAlbumComponent, canActivate: [AuthGuard]},
                 {path: 'user_dashboard', component: UserDashboard, canActivate: [AuthGuard]}
@@ -83,6 +85,7 @@ const appRoutes: Routes = [
           {path: 'album-library', component: AlbumLibrary, canActivate: [AuthGuard]},
           {path: 'recently-played', component: RecentlyPlayed, canActivate: [AuthGuard]},
           {path: 'followed-playlists', component: FollowedPlaylists, canActivate: [AuthGuard]},
+          {path: 'followed-artists', component: FollowedArtists, canActivate: [AuthGuard]},
           {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
           {path: 'queue', component: QueueComponent, canActivate: [AuthGuard]},
           {path: 'user/:id', component: AccountComponent, canActivate: [AuthGuard]},
@@ -138,7 +141,9 @@ const appRoutes: Routes = [
     SearchComponent,
     UpdatePlaylistDialog,
     UpgradePremiumComponent,
-    YesNoDialogComponent
+    YesNoDialogComponent,
+    FollowedArtists,
+    AddConcertDialog
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -200,7 +205,8 @@ const appRoutes: Routes = [
     ConfirmDialog,
     UpdatePlaylistDialog,
     LyricsComponent,
-    YesNoDialogComponent
+    YesNoDialogComponent,
+    AddConcertDialog
   ],
   bootstrap: [AppComponent]
 })

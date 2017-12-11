@@ -18,4 +18,7 @@ public interface ArtistRepository extends CrudRepository<Artist, Integer>{
 	@Query(value="CALL get_related_artists(:artistId);", nativeQuery = true)
 	public List<Artist> getRelatedArtist(@Param("artistId") int artistId);
 	
+	@Query(value="CALL search_artist(:name);", nativeQuery = true)
+	public List<Artist> searchArtists(@Param("name") String name);
+	
 }

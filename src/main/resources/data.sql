@@ -409,6 +409,27 @@ SELECT * FROM
 		WHERE UFA.user_id = email AND AA.artist_id = UFA.artist_id
 	)
 ) feeds 
-ORDER BY feeds.date
+ORDER BY feeds.date DESC
 LIMIT 30;
+END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `downgrade_premium_user`(IN userEmail varchar(255), IN basicRole int )
+BEGIN
+START TRANSACTION;
+	
+    DELETE FROM payment
+    WHERE premium_user_id = userEmail;
+    
+    DELETE FROM premium_user
+    where email = userEmail;
+    
+    UPDATE USER
+    SET role = basicRole
+    where email = userEmail;
+    
+    SELECT u.* 
+    FROM user u
+    WHERE email = userEmail;
+    
+COMMIT;
 END ^;

@@ -10,6 +10,7 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.buccitunes.model.PremiumUser;
+import com.buccitunes.model.User;
 
 @Transactional
 public interface PremiumUserRepository extends BaseUserRepository<PremiumUser>, CrudRepository<PremiumUser, String> {

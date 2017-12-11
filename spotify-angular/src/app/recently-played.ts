@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import {MusicCollectionService} from './services/music.service';
-import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Album} from './objs/Album';
-import {environment} from '../environments/environment';
 import {AuthenticationService} from './services/authentication.service';
 import {UserService} from './services/user.service';
+import {MediaService} from './services/media.service';
 
 @Component({
   selector: 'recent-albums',
@@ -19,7 +18,8 @@ export class RecentlyPlayed implements OnInit {
 
   constructor(private musicService : MusicCollectionService,
               private authService  : AuthenticationService,
-              private userService  : UserService) { }
+              private userService  : UserService,
+              private mediaService : MediaService) { }
 
   ngOnInit() {
     this.authService.currentUserChange.subscribe(
@@ -40,9 +40,4 @@ export class RecentlyPlayed implements OnInit {
       }
     );
   }
-
-  getImageUrl(imagePath : string){
-      return environment.SERVER_PATH + imagePath;
-  }
-
 }

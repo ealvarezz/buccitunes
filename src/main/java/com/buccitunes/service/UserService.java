@@ -14,9 +14,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.UserRole;
+import com.buccitunes.dao.ActivityFeedRepository;
+import com.buccitunes.dao.AdminUserRepository;
 import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistActivityRepository;
 import com.buccitunes.dao.ArtistRepository;
+import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.BillingInfoRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PaymentRepository;
@@ -36,10 +39,11 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.model.ActivityFeed;
 import com.buccitunes.model.AdminUser;
+import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
-import com.buccitunes.model.ArtistActivity;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.CreditCompany;
 import com.buccitunes.model.MusicCollection;
@@ -71,7 +75,9 @@ public class UserService  {
 	private final PaymentRepository paymentRepository;
 	private final SongPlaysRepository songPlaysRepository;
 	private final UserActivityRepository userActivityRepository;
-
+	private final ActivityFeedRepository activityFeedRepository;
+	private final ArtistUserRepository artistUserRepository;
+	private final AdminUserRepository adminUserRepository;
 	
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
@@ -79,7 +85,8 @@ public class UserService  {
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
 			ArtistRepository artistRepository, SupportTicketRepository supportTicketRepository,
 			PaymentRepository paymentRepository, SongPlaysRepository songPlaysRepository,
-			UserActivityRepository userActivityRepository) {
+			UserActivityRepository userActivityRepository, ActivityFeedRepository activityFeedRepository,
+			ArtistUserRepository artistUserRepository, AdminUserRepository adminUserRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -92,7 +99,10 @@ public class UserService  {
 		this.supportTicketRepository = supportTicketRepository;
 		this.paymentRepository = paymentRepository;
 		this.songPlaysRepository = songPlaysRepository;
+		this.adminUserRepository = adminUserRepository; 
+		this.artistUserRepository = artistUserRepository;
 		this.userActivityRepository = userActivityRepository;
+		this.activityFeedRepository = activityFeedRepository;
 	}
 	
 	public List<User> findAll(){
@@ -126,19 +136,19 @@ public class UserService  {
 		}
 		
 		String emailId = user.getEmail();
-		if(BucciPrivilege.isPremium(user)) {
+		if(BucciPrivilege.isArtist(user)) {
+			int artistId = ((ArtistUser)user).getArtist().getId();
+			
+			artistUserRepository.delete(emailId);
+			if(artistRepository.exists(artistId)) {
+				artistRepository.delete(artistId);
+			}
+		}
+		else if(BucciPrivilege.isPremium(user)) {
 			premiumUserRepository.delete(emailId);
 		} else {
 			userRepository.delete(emailId);
-		
-			//Case is used if the premium user downgraded to a basic user
-			if(premiumUserRepository.exists(emailId) ) {
-				System.out.println("Deleting Premium stuff");
-				premiumUserRepository.delete(emailId);
-			}
 		}
-		
-		
 	}
 	
 	public User follow(String follower, String followed) throws BucciException {
@@ -269,6 +279,7 @@ public class UserService  {
 		user.setRole(UserRole.PREMIUM);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
+		pUser.makePayment(constants.getSignupPremiumPrice());
 		return pUser;
 	}
 	
@@ -475,17 +486,10 @@ public class UserService  {
 		return paymentHistory;
 	}
 	
-	public PremiumUser cancelPremium(PremiumUser user) {
-		user = premiumUserRepository.findOne(user.getEmail());
-		
-		Date lastPayDate = paymentRepository.findTopByPremiumUserOrderByDateDesc(user).getDate();
-		Date nextBillingDate =  getNextBillingDate(lastPayDate);
-		
-		user.getBillingInfo().setActive(false);
-		user.setRole(UserRole.USER);
-		user.setNextBillingDate(nextBillingDate);
-	
-		return user;
+	public User cancelPremium(PremiumUser user) {
+		User basicUser = userRepository.findOne(user.getEmail());
+		userRepository.downgradeToBasic(user.getEmail(), UserRole.USER.getCode());
+		return basicUser;
 	}
 	
 	public User reActivateSubscription(User loggedUser) throws BucciException {
@@ -509,9 +513,10 @@ public class UserService  {
 			
 		}
 		*/
-		
+		/*
 		pUser.getBillingInfo().setActive(true);
 		pUser.setRole(UserRole.PREMIUM);
+		*/
 		
 		return pUser;
 	}
@@ -547,5 +552,10 @@ public class UserService  {
 		cal.setTime(date);		
 		cal.add(Calendar.MONTH, 1);
 		return cal.getTime();
+	}
+	
+	public List<ActivityFeed> userFeed (String email){
+		
+		return activityFeedRepository.getUserFeed(email);
 	}
 }
