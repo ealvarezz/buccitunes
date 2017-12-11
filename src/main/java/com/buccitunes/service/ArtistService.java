@@ -235,7 +235,7 @@ public class ArtistService {
 	
 	public RequestedConcert requestNewConcert(RequestedConcert requested, ArtistUser artistUser) throws BucciException {
 		artistUser = artistUserRepository.findOne(artistUser.getEmail());
-		Location location = locationRepository.findOne(requested.getLocation().getId());
+		Location location = locationRepository.save(requested.getLocation());
 		List<Artist> concertArtists;
 		requested.setLocation(location);
 		requested.setRequester(artistUser);
