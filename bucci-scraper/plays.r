@@ -17,7 +17,7 @@ mydb = dbConnect(MySQL(), user='root', password=xx, dbname='buccidb2', host='loc
 rs = dbSendQuery(mydb, "select * from song")
 songs = fetch(rs, n=-1)
 
-rs = dbSendQuery(mydb, "select  email from user LIMIT 50")
+rs = dbSendQuery(mydb, "select  email from user LIMIT 100")
 users = fetch(rs, n=-1)
 
 rs = dbSendQuery(mydb, "select  * from song_plays")

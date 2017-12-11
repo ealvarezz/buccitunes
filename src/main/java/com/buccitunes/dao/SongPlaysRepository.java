@@ -7,9 +7,12 @@ import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
 import com.buccitunes.model.SongPlays;
+import com.buccitunes.model.User;
 
 public interface SongPlaysRepository extends CrudRepository<SongPlays, Integer> {
 
+	List<SongPlays> findByUser(User user);
+	
 	List<SongPlays> findBySong_Owner_Id(int id);
 	
 	@Query(value="SELECT SP.*\n" + 

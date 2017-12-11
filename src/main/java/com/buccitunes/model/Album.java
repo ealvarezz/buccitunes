@@ -44,15 +44,15 @@ public class Album extends MusicCollection {
 	private Artist primaryArtist;
 	
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "artists_featured_on_album",
-		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
 	private List<Artist> featuredArtists;
 	
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "album_id")
-//	@JsonIgnoreProperties(value = {"album","owner"})
+	//@JsonIgnoreProperties(value = {"album","owner"})
 	private List<Song> songs;
 	
 	@DateTimeFormat(pattern="MM/dd/yyyy")
@@ -62,8 +62,8 @@ public class Album extends MusicCollection {
 	
 	@ManyToMany(fetch=FetchType.LAZY)
 	@JoinTable(name = "genre_album",
-		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "genre_id", referencedColumnName = "id"))
 	private List<Genre> genres;
 	
 	@OneToOne(cascade = CascadeType.ALL)

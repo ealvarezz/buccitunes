@@ -23,6 +23,7 @@ import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.*;
+import com.buccitunes.model.ActivityFeed;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
@@ -81,10 +82,27 @@ public class UserController {
 			
 		}
 	}
-	
+	/*
 	@RequestMapping(value="delete_user", method = RequestMethod.GET)
 	public @ResponseBody void removeUser(@RequestParam String email) {
 		userService.remove(email);
+	}
+	*/
+	
+	@RequestMapping(value="delete_user_account", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> deleteUser(@RequestBody LoginInfo loginInfo, HttpSession session) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		try{
+			userService.deleteUser(loggedUser, loginInfo.password);
+			session.removeAttribute(constants.getSession());
+			return BucciResponseBuilder.successMessage("Goodbye friend, stay bucci"); 
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
 	}
 	
 	@RequestMapping(value="follow", method = RequestMethod.POST)
@@ -577,16 +595,13 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
 		}
 		
-		PremiumUser user = userService.cancelPremium((PremiumUser) loggedUser);
+		User user = userService.cancelPremium((PremiumUser) loggedUser);
 		session.setAttribute(constants.getSession(), user);
 		
-		
-		String nextBillingDate = new SimpleDateFormat("MMM dd, yyyy").format(user.getNextBillingDate());
-		return BucciResponseBuilder.successfulResponseMessage("You are now bucci basic, final charge date is on " + nextBillingDate
-				, user);
+		return BucciResponseBuilder.successfulResponseMessage("You are now bucci basic", user);
 	}
 	
-	@RequestMapping(value="activate_subscription", method = RequestMethod.PUT)
+	@RequestMapping(value="reactivate_subscription", method = RequestMethod.PUT)
 	public @ResponseBody BucciResponse<User> activateSubscription(HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
@@ -600,6 +615,19 @@ public class UserController {
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
+	}
+	
+	@RequestMapping(value="get_activity_feed", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<ActivityFeed>> getUserActivityFromFollowing(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		
+		List<ActivityFeed> feed = userService.userFeed(loggedUser.getEmail());
+		return BucciResponseBuilder.successfulResponse(feed);
+		
 	}
 	
 	@RequestMapping(value="change_billing_info", method = RequestMethod.POST)

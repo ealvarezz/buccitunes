@@ -14,15 +14,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.UserRole;
+import com.buccitunes.dao.ActivityFeedRepository;
+import com.buccitunes.dao.AdminUserRepository;
 import com.buccitunes.dao.AlbumRepository;
+import com.buccitunes.dao.ArtistActivityRepository;
 import com.buccitunes.dao.ArtistRepository;
+import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.BillingInfoRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PaymentRepository;
 import com.buccitunes.dao.PlaylistRepository;
 import com.buccitunes.dao.PremiumUserRepository;
+import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.SupportTicketRepository;
+import com.buccitunes.dao.UserActivityRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.CurrentToNewForm;
 import com.buccitunes.jsonmodel.SearchResults;
@@ -31,8 +37,11 @@ import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
+import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.model.ActivityFeed;
 import com.buccitunes.model.AdminUser;
+import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
@@ -42,8 +51,10 @@ import com.buccitunes.model.Payment;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.PremiumUser;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
+import com.buccitunes.model.UserActivity;
 
 @Service
 @Transactional
@@ -62,13 +73,20 @@ public class UserService  {
 	private final BillingInfoRepository billingInfoRepository;
 	private final SupportTicketRepository supportTicketRepository; 
 	private final PaymentRepository paymentRepository;
+	private final SongPlaysRepository songPlaysRepository;
+	private final UserActivityRepository userActivityRepository;
+	private final ActivityFeedRepository activityFeedRepository;
+	private final ArtistUserRepository artistUserRepository;
+	private final AdminUserRepository adminUserRepository;
 	
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
 			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository, 
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
 			ArtistRepository artistRepository, SupportTicketRepository supportTicketRepository,
-			PaymentRepository paymentRepository) {
+			PaymentRepository paymentRepository, SongPlaysRepository songPlaysRepository,
+			UserActivityRepository userActivityRepository, ActivityFeedRepository activityFeedRepository,
+			ArtistUserRepository artistUserRepository, AdminUserRepository adminUserRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -80,6 +98,11 @@ public class UserService  {
 		this.artistRepository = artistRepository;
 		this.supportTicketRepository = supportTicketRepository;
 		this.paymentRepository = paymentRepository;
+		this.songPlaysRepository = songPlaysRepository;
+		this.adminUserRepository = adminUserRepository; 
+		this.artistUserRepository = artistUserRepository;
+		this.userActivityRepository = userActivityRepository;
+		this.activityFeedRepository = activityFeedRepository;
 	}
 	
 	public List<User> findAll(){
@@ -100,6 +123,34 @@ public class UserService  {
 		userRepository.delete(email);
 	}
 	
+	public void deleteUser(User user, String password) throws BucciException {
+		user = userRepository.findOne(user.getEmail());
+		
+		if(user == null || !user.passwordIsCorrect(password)) {
+			throw new BucciException("Invalid Login Information");	
+		}
+		
+		List<SongPlays> songs = songPlaysRepository.findByUser(user);
+		for(SongPlays playedSong : songs) {
+			playedSong.setUser(null);
+		}
+		
+		String emailId = user.getEmail();
+		if(BucciPrivilege.isArtist(user)) {
+			int artistId = ((ArtistUser)user).getArtist().getId();
+			
+			artistUserRepository.delete(emailId);
+			if(artistRepository.exists(artistId)) {
+				artistRepository.delete(artistId);
+			}
+		}
+		else if(BucciPrivilege.isPremium(user)) {
+			premiumUserRepository.delete(emailId);
+		} else {
+			userRepository.delete(emailId);
+		}
+	}
+	
 	public User follow(String follower, String followed) throws BucciException {
 		
 		User followingUser = userRepository.findOne(follower);
@@ -110,6 +161,11 @@ public class UserService  {
 		}
 		
 		followingUser.getFollowing().add(followedUser);
+		
+		UserActivity activity = new UserActivity(followingUser, new Date());
+		activity.setFeed(followingUser.getEmail()+" is now following: "+followedUser.getEmail());
+		userActivityRepository.save(activity);
+		
 		return followedUser;
 	}
 	
@@ -223,6 +279,7 @@ public class UserService  {
 		user.setRole(UserRole.PREMIUM);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
+		pUser.makePayment(constants.getSignupPremiumPrice());
 		return pUser;
 	}
 	
@@ -372,6 +429,11 @@ public class UserService  {
 		Artist artist = artistRepository.findOne(artistId);
 		user.getFollowingArtists().size();
 		user.getFollowingArtists().add(artist);
+
+		UserActivity activity = new UserActivity(user, new Date());
+		activity.setFeed(user.getEmail()+" is now following: "+artist.getName());
+		userActivityRepository.save(activity);
+		
 		return user.getFollowingArtists();
 		
 	}
@@ -424,17 +486,10 @@ public class UserService  {
 		return paymentHistory;
 	}
 	
-	public PremiumUser cancelPremium(PremiumUser user) {
-		user = premiumUserRepository.findOne(user.getEmail());
-		
-		Date lastPayDate = paymentRepository.findTopByPremiumUserOrderByDateDesc(user).getDate();
-		Date nextBillingDate =  getNextBillingDate(lastPayDate);
-		
-		user.getBillingInfo().setActive(false);
-		user.setRole(UserRole.USER);
-		user.setNextBillingDate(nextBillingDate);
-	
-		return user;
+	public User cancelPremium(PremiumUser user) {
+		User basicUser = userRepository.findOne(user.getEmail());
+		userRepository.downgradeToBasic(user.getEmail(), UserRole.USER.getCode());
+		return basicUser;
 	}
 	
 	public User reActivateSubscription(User loggedUser) throws BucciException {
@@ -458,9 +513,10 @@ public class UserService  {
 			
 		}
 		*/
-		
+		/*
 		pUser.getBillingInfo().setActive(true);
 		pUser.setRole(UserRole.PREMIUM);
+		*/
 		
 		return pUser;
 	}
@@ -496,5 +552,10 @@ public class UserService  {
 		cal.setTime(date);		
 		cal.add(Calendar.MONTH, 1);
 		return cal.getTime();
+	}
+	
+	public List<ActivityFeed> userFeed (String email){
+		
+		return activityFeedRepository.getUserFeed(email);
 	}
 }
