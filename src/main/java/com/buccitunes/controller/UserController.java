@@ -89,15 +89,15 @@ public class UserController {
 	*/
 	
 	@RequestMapping(value="delete_user_account", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<String> deleteUser(@RequestBody String password, HttpSession session) {
+	public @ResponseBody BucciResponse<String> deleteUser(@RequestBody LoginInfo loginInfo, HttpSession session) {
 		User loggedUser = (User) session.getAttribute("user");
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		
 		try{
-			userService.deleteUser(loggedUser, password);
-			return BucciResponseBuilder.successMessage("Goodbye, stay bucci"); 
+			userService.deleteUser(loggedUser, loginInfo.password);
+			return BucciResponseBuilder.successMessage("Goodbye friend, stay bucci"); 
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}

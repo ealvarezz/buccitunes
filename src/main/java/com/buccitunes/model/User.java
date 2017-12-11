@@ -47,40 +47,40 @@ public class User {
 	
 	String avatarPath;
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "following",
 	joinColumns = @JoinColumn(name = "following_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "followed_id", referencedColumnName = "email"))
 	private List<User> following;
 	
-	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "following")
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "following", cascade=CascadeType.REMOVE)
 	private List<User> followers;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "user_following_playlist",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
 	private List<Playlist> followingPlaylists;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "user_following_artist",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"))
 	private List<Artist> followingArtists;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "user_saved_song",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	private List<Song> savedSongs;
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "user_saved_album",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "album_id", referencedColumnName = "id"))
 	private List<Album> savedAlbums;
 
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "user_recently_played_music_collection",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "music_collection_id", referencedColumnName = "id"))
@@ -89,7 +89,7 @@ public class User {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Playlist> playlists;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "user_collaborating_playlist",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
