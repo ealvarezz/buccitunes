@@ -76,7 +76,7 @@ const appRoutes: Routes = [
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist/:id', component: PlaylistComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
-          {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard], 
+          {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard, AdminGuard], canActivateChild: [AuthGuard, AdminGuard], 
               children:[
                 {path: 'requested_albums', component: RequestedAlbumComponent, canActivate: [AuthGuard]},
                 {path: 'user_dashboard', component: UserDashboard, canActivate: [AuthGuard]}

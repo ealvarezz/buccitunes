@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {FormControl} from '@angular/forms';
 import {MusicCollectionService} from './services/music.service';
+import {MediaService} from './services/media.service';
 import {Router } from '@angular/router';
 import {environment} from '../environments/environment';
 import {Observable} from 'rxjs/Observable';
@@ -24,7 +25,8 @@ filteredOptions: Observable<SearchResults>;
 
 constructor(private musicService : MusicCollectionService,
             private router : Router,
-            private location : Location){}
+            private location : Location,
+            private mediaService : MediaService){}
 
 labelMap = {
     "songResults" : "Songs",

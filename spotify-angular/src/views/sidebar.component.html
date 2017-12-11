@@ -13,7 +13,7 @@
         </md-menu>
         <a [routerLink]="['/user',currentUser.email]"><p>{{currentUser.email}}</p></a>
     </div>
-    <md-list-item>
+    <md-list-item *ngIf="isAdmin">
         <div mdLine>
             <h4 class ="side-list"><a routerLink="/admin">Admin Utilities</a></h4>
         </div>
