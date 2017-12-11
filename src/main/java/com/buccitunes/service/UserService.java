@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.UserRole;
+import com.buccitunes.dao.AdminUserRepository;
 import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistRepository;
+import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.BillingInfoRepository;
 import com.buccitunes.dao.CreditCompanyRepository;
 import com.buccitunes.dao.PaymentRepository;
@@ -37,6 +39,7 @@ import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.CreditCompany;
 import com.buccitunes.model.MusicCollection;
@@ -66,13 +69,16 @@ public class UserService  {
 	private final SupportTicketRepository supportTicketRepository; 
 	private final PaymentRepository paymentRepository;
 	private final SongPlaysRepository songPlaysRepository;
+	private final ArtistUserRepository artistUserRepository;
+	private final AdminUserRepository adminUserRepository;
 	
 	
 	public UserService(UserRepository userRepository, PremiumUserRepository premiumUserRepository, 
 			CreditCompanyRepository creditCompanyRepository, BillingInfoRepository billingInfoRepository, 
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
 			ArtistRepository artistRepository, SupportTicketRepository supportTicketRepository,
-			PaymentRepository paymentRepository, SongPlaysRepository songPlaysRepository) {
+			PaymentRepository paymentRepository, SongPlaysRepository songPlaysRepository,
+			ArtistUserRepository artistUserRepository, AdminUserRepository adminUserRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -85,6 +91,8 @@ public class UserService  {
 		this.supportTicketRepository = supportTicketRepository;
 		this.paymentRepository = paymentRepository;
 		this.songPlaysRepository = songPlaysRepository;
+		this.artistUserRepository = artistUserRepository;
+		this.adminUserRepository = adminUserRepository;
 	}
 	
 	public List<User> findAll(){
@@ -118,19 +126,14 @@ public class UserService  {
 		}
 		
 		String emailId = user.getEmail();
-		if(BucciPrivilege.isPremium(user)) {
+		if(BucciPrivilege.isArtist(user)) {
+			artistUserRepository.delete(emailId);
+		}
+		else if(BucciPrivilege.isPremium(user)) {
 			premiumUserRepository.delete(emailId);
 		} else {
 			userRepository.delete(emailId);
-		
-			//Case is used if the premium user downgraded to a basic user
-			if(premiumUserRepository.exists(emailId) ) {
-				System.out.println("Deleting Premium stuff");
-				premiumUserRepository.delete(emailId);
-			}
 		}
-		
-		
 	}
 	
 	public User follow(String follower, String followed) throws BucciException {

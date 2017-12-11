@@ -50,29 +50,29 @@ public class Artist {
 	@JsonIgnoreProperties(value = "primaryArtist")
 	private List<Album> albums;
 	
-	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "followingArtists")
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "followingArtists",cascade=CascadeType.REMOVE)
 	private List<User> followers;
 	
-	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists")
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists", cascade=CascadeType.REMOVE)
 	private List<Song> features;
 	
-	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists")
+	@ManyToMany(fetch=FetchType.LAZY, mappedBy = "featuredArtists", cascade=CascadeType.REMOVE)
 	@JsonIgnoreProperties(value = "featuredArtists")
 	private List<Concert> upcomingConcerts;
 	
-	@OneToMany(fetch=FetchType.LAZY)
+	@OneToMany(fetch=FetchType.LAZY,cascade=CascadeType.REMOVE)
 	@JoinColumn(name = "artist_id")
 	private List<Concert> organizedConcerts;
 	
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "featured_album_id", insertable = false, updatable = false)
+    @JoinColumn(name = "featured_album_id")
 	@JsonIgnoreProperties(value = "primaryArtist")
 	private Album featuredAlbum;
 	
-	@ManyToMany(fetch=FetchType.LAZY)
+	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "recently_played_song_artist",
-		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id", insertable = false, updatable = false),
-		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id", insertable = false, updatable = false))
+		joinColumns = @JoinColumn(name = "artist_id", referencedColumnName = "id"),
+		inverseJoinColumns = @JoinColumn(name = "song_id", referencedColumnName = "id"))
 	@JsonIgnoreProperties(value = "owner")
 	private List<Song> recentlyPlayed;
 	

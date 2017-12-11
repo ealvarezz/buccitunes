@@ -97,6 +97,7 @@ public class UserController {
 		
 		try{
 			userService.deleteUser(loggedUser, loginInfo.password);
+			session.removeAttribute(constants.getSession());
 			return BucciResponseBuilder.successMessage("Goodbye friend, stay bucci"); 
 		} catch(BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
