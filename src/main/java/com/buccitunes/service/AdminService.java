@@ -225,10 +225,12 @@ public class AdminService {
 			Artist owner = artistRepository.findOne(requested.getRequester().getArtist().getId()); 
 			newConcert = new Concert(requested);
 			newConcert.setMainStar(owner);
-			
-			ArtistActivity activity = new ArtistActivity(requested.getFeaturedArtists().get(0), new Date());
-			activity.setFeed(requested.getFeaturedArtists().get(0).getName()+" added a new concert: "+requested.getName());
-			artistActivityRepository.save(activity);
+			if(requested.getFeaturedArtists().size() > 0) {
+				ArtistActivity activity = new ArtistActivity(requested.getFeaturedArtists().get(0), new Date());
+				activity.setFeed(requested.getFeaturedArtists().get(0).getName()+" added a new concert: "+requested.getName());
+				artistActivityRepository.save(activity);
+			}
+		
 		}
 		newConcert = concertRepository.save(newConcert);
 		requestedConcertRepository.delete(requested);

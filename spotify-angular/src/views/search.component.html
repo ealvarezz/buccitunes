@@ -9,9 +9,16 @@
     <md-autocomplete #auto="mdAutocomplete" [displayWith]="displayFn">
     <ng-container *ngFor="let group of (filteredOptions | async | appProperties)">
     <mat-optgroup *ngIf="group.items.length > 0" [label]="labelMap[group.name]">
-      <md-option *ngFor="let option of group.items" [value]="option" (onSelectionChange)="goToSelection(option, group.name)">
-        <div *ngIf="option.title">{{option.title}}</div>
-        <div *ngIf="option.name">{{option.name}}</div>
+      <md-option style="height:55px;" *ngFor="let option of group.items" [value]="option" (onSelectionChange)="goToSelection(option, group.name)">
+        <div *ngIf="group.name == 'albumResults' || group.name =='playlistResults'">
+          <img [src]="mediaService.getAlbumImageUrl(option.artworkPath)" class="img-circle" style="max-height:50px; max-width:50px; min-width:50px; min-height: 50px; display:inline-block; vertical-align:top; ">
+          <span>{{option.title}}</span>
+        </div>
+        <div *ngIf="group.name == 'artistResults'">
+          <img [src]="mediaService.getArtistImageUrl(option.avatarPath)" class="img-circle" style="max-height:50px; max-width:50px; min-width:50px; min-height: 50px; display:inline-block; vertical-align:top; ">
+          <span>{{option.name}}</span>
+        </div>
+        <div *ngIf="group.name == 'songResults'">{{option.name}}</div>
       </md-option>
     </mat-optgroup>
     </ng-container>

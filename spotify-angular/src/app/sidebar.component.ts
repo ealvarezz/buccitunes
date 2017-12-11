@@ -32,6 +32,7 @@ export class SideBarComponent implements OnInit {
   playlists: Playlist[];
   currentUser: User;
   isArtist : boolean = false;
+  isAdmin : boolean = false;
 
 
   ngOnInit() {
@@ -41,6 +42,7 @@ export class SideBarComponent implements OnInit {
       (user) => {
         this.currentUser = user;
         this.isCurrentUserOwner();
+        this.isAdminUser();
       }
     );
 
@@ -64,6 +66,12 @@ export class SideBarComponent implements OnInit {
   isCurrentUserOwner(){
     if((this.currentUser.role === BucciConstants.Roles.ARTIST) && (this.currentUser.artist)){
         this.isArtist = true;
+    }
+  }
+
+  isAdminUser(){
+    if(this.currentUser.role === BucciConstants.Roles.ADMIN){
+      this.isAdmin = true;
     }
   }
 

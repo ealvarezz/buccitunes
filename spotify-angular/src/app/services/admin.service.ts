@@ -5,6 +5,7 @@ import {BucciConstants} from '../../environments/app.config';
 import {User} from '../objs/User';
 import {RequestedAlbum} from '../objs/RequestedAlbum';
 import {BucciResponse} from '../objs/BucciResponse';
+import {Concert} from '../objs/Concert';
 
 import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse} from '@angular/common/http';
 import 'rxjs/add/operator/map';
@@ -47,6 +48,24 @@ export class AdminService {
 
     rejectAlbum(album: RequestedAlbum){
         return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.REJECT_ALBUM, album, {withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+    
+    getRequestedConcerts(){
+        return this.http.get<BucciResponse<Concert[]>>(BucciConstants.Endpoints.GET_REQUESTED_CONCERTS, {withCredentials: true})   
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    approveRequestedConcert(concert : Concert){
+        return this.http.post<BucciResponse<Concert>>(BucciConstants.Endpoints.APPROVE_CONCERT, concert, {withCredentials: true})   
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    rejectRequestedConcert(concert : Concert){
+        return this.http.post<BucciResponse<Concert>>(BucciConstants.Endpoints.REJECT_CONCERT, concert, {withCredentials: true})   
         .map(this.extractData)
         .catch(this.handleError)
     }

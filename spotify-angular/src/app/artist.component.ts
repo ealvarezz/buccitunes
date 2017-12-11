@@ -208,10 +208,11 @@ export class ArtistComponent implements OnInit {
   }
 
   addConcert(){
-    let dialogRef = this.dialog.open(AddConcertDialog, {width:'700px'});
+    let dialogRef = this.dialog.open(AddConcertDialog, {width:'1200px'});
 
     dialogRef.afterClosed().subscribe((result : Concert) => {
       if(result){
+        result.mainStar = this.artist;
         this.artistService.requestConcert(result).subscribe(
           (data)=>{
             this.notificationService.success("SUCCESS","You have successfully requested a concert. Please allow 4-5 hours for an admin to review and approve this concert.");

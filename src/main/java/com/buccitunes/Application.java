@@ -10,6 +10,7 @@ import org.springframework.boot.web.support.SpringBootServletInitializer;
 import org.springframework.cache.annotation.EnableCaching;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.buccitunes.miscellaneous.BucciConstants;
@@ -21,6 +22,7 @@ import com.buccitunes.miscellaneous.FileManager;
 @ComponentScan
 @EnableScheduling
 @EnableCaching
+@EnableAsync
 public class Application extends SpringBootServletInitializer {
 	
 	@Override

@@ -1,5 +1,6 @@
 import {Artist} from './Artist';
 import {Location} from './Location';
+import {User} from './User';
 export class Concert{
     id              : number;
     name            : string;
@@ -8,6 +9,8 @@ export class Concert{
     price           : number;
     purchaseLink    : string;
     location        : Location = new Location();
+    requester       : User;
+    accept          : boolean;
 
 
 }
