@@ -81,10 +81,26 @@ public class UserController {
 			
 		}
 	}
-	
+	/*
 	@RequestMapping(value="delete_user", method = RequestMethod.GET)
 	public @ResponseBody void removeUser(@RequestParam String email) {
 		userService.remove(email);
+	}
+	*/
+	
+	@RequestMapping(value="delete_user_account", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> deleteUser(@RequestBody String password, HttpSession session) {
+		User loggedUser = (User) session.getAttribute("user");
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		try{
+			userService.deleteUser(loggedUser, password);
+			return BucciResponseBuilder.successMessage("Goodbye, stay bucci"); 
+		} catch(BucciException e) {
+			return BucciResponseBuilder.failedMessage(e.getErrMessage());
+		}
 	}
 	
 	@RequestMapping(value="follow", method = RequestMethod.POST)
