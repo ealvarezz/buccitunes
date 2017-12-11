@@ -458,7 +458,9 @@ public class UserController {
 			return BucciResponseBuilder.failedMessage("No account for this email.");
 		}
 		try {
-			mailManager.sendPasswordReset(email, user.getPassword());
+			java.util.Base64.Encoder encoder = java.util.Base64.getUrlEncoder();
+			mailManager.sendPasswordReset(email, encoder.encodeToString(user.getPassword().getBytes()));
+			//mailManager.sendPasswordReset(email, user.getPassword());
 			return BucciResponseBuilder.successfulResponseMessage("An email to reset your password has been sent to this email.",new Boolean(true));
 		} catch (MessagingException e) {
 			return BucciResponseBuilder.failedMessage("The email server is down, wait some time and try again.");
@@ -468,8 +470,9 @@ public class UserController {
 	@RequestMapping(value="check_reset_password_link", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<Boolean> checkResetPasswordLink(@RequestBody LoginInfo info) {
 		User user = userService.findOne(info.email);
-	
-		if(user == null || !user.getPassword().equals(info.password)) {
+		java.util.Base64.Encoder encoder = java.util.Base64.getUrlEncoder();
+
+		if(user == null || !encoder.encodeToString(user.getPassword().getBytes()).equals(info.password)) {
 			return BucciResponseBuilder.failedMessage("Must have the correct url to reset password.");
 		}
 		return BucciResponseBuilder.successfulResponseMessage("Reset your password.",new Boolean(true));
