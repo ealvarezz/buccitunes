@@ -53,6 +53,9 @@ export const BucciConstants =  {
       UPGRADE_TO_PREMIUM  : environment.SERVER_PATH + "/premium_upgrade",
       GET_FOLLOWED_ARTIST : environment.SERVER_PATH + "/followed_artists",
       REQUEST_CONCERT     : environment.SERVER_PATH + "/request_concert",
+      GET_REQUESTED_CONCERTS : environment.SERVER_PATH + "/requested_concerts",
+      APPROVE_CONCERT     : environment.SERVER_PATH + "/approve_concert",
+      REJECT_CONCERT      : environment.SERVER_PATH + "/disapprove_request_concert",
 
 
   },
