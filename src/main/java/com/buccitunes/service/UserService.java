@@ -357,7 +357,8 @@ public class UserService  {
 				songRepository.searchSong(keyword),
 				artistRepository.searchArtist(keyword),
 				albumRepository.searchAlbum(keyword),
-				playlistRepository.searchPlaylist(keyword)
+				playlistRepository.searchPlaylist(keyword),
+				userRepository.searchUser(keyword)
 				
 		);
 	}

@@ -6,3 +6,4 @@ Rscript ./plays.r $MYSQL_PSSW
 python3 ./generate_concerts.py $MYSQL_PSSW
 python3 ./generate_playlists.py $MYSQL_PSSW
 python3 ./setStats.py $MYSQL_PSSW
+python3 ./sendSongs.py $MYSQL_PSSW

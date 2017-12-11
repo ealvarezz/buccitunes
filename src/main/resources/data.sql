@@ -136,6 +136,13 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `search_song`(IN song_name VARCHAR(1
 	LIMIT 5;
 END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `search_user`(IN user_name VARCHAR(200))
+BEGIN
+SELECT * FROM user U, artist_user AU
+WHERE U.name LIKE CONCAT('%', user_name, '%') AND U.email <> AU.email
+LIMIT 5;
+END ^;
+
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_needed_users_to_pay`()
 BEGIN 
 	select u.*, pu.*

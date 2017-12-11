@@ -15,4 +15,7 @@ public interface UserRepository extends BaseUserRepository<User>, CrudRepository
 
 	@Query(value="CALL downgrade_premium_user(:userEmail,:roleId);", nativeQuery = true)
 	public void downgradeToBasic(@Param("userEmail")String userEmail, @Param("roleId")int roleId);
+	
+	@Query(value="CALL search_user(:name);", nativeQuery = true)
+	public List<User> searchUser(@Param("name") String name);
 }
