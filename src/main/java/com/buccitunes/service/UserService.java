@@ -41,6 +41,7 @@ import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.ActivityFeed;
 import com.buccitunes.model.AdminUser;
+import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.BillingInfo;
@@ -98,6 +99,10 @@ public class UserService  {
 		this.supportTicketRepository = supportTicketRepository;
 		this.paymentRepository = paymentRepository;
 		this.songPlaysRepository = songPlaysRepository;
+		this.adminUserRepository = adminUserRepository; 
+		this.artistUserRepository = artistUserRepository;
+		this.userActivityRepository = userActivityRepository;
+		this.activityFeedRepository = activityFeedRepository;
 	}
 	
 	public List<User> findAll(){
