@@ -47,7 +47,12 @@ export const BucciConstants =  {
       GET_LYRICS          : environment.SERVER_PATH + "/getSongLyrics",
       SEARCH              : environment.SERVER_PATH + "/search",
       RESET_PASS_NO_MAIL  : environment.SERVER_PATH + "/reset_password_nomail",
-      CHANGE_BILLING_INFO : environment.SERVER_PATH + "/change_billing_info"
+      CHANGE_BILLING_INFO : environment.SERVER_PATH + "/change_billing_info",
+      GET_CONCERTS        : environment.SERVER_PATH + "/get_artist_concerts",
+      GET_RELATED_ARTISTS : environment.SERVER_PATH + "/get_related_artists",
+      UPGRADE_TO_PREMIUM  : environment.SERVER_PATH + "/premium_upgrade",
+
+
   },
 
  Roles : {
@@ -60,6 +65,7 @@ export const BucciConstants =  {
     DEFAULT_PLAYLIST  : "/default-cover-art.png",
     DEFAULT_ALBUM     : "/default-album-artwork.png",
     DEFAULT_USER      : "/default-user-artwork.png",
+    DEFAULT_ARTIST    : "/default_artist_artwork.jpg",
     EXCEED_FILE_LIMIT   : "The uploaded image exceeds the file size limit of 10 MB.",
     IMAGE_SIZE_LIMIT    : 1000000, 
     acceptedMedia       : "image/x-png,image/gif,image/jpeg"

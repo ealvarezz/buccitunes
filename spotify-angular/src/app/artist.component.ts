@@ -38,6 +38,7 @@ export class ArtistComponent implements OnInit {
   following     : boolean = false;
   bio           : string;
   artwork       : string;
+  relatedArtists  : Artist[];
 
   constructor(public dialog                 : MdDialog,
               private artistService         : ArtistService,
@@ -65,6 +66,8 @@ export class ArtistComponent implements OnInit {
           (data) => {
             this.artist = data;
             this.isCurrentUserOwner();
+            this.getConcerts();
+            this.getRelatedArtists();
             this.bio = this.artist.biography;
             this.artist.avatarPath = this.artist.avatarPath+'?dummy='+new Date().getTime();
           },  
@@ -73,6 +76,29 @@ export class ArtistComponent implements OnInit {
             this.location.back();
             console.log(err.message);
           });
+  }
+
+
+  getConcerts(){
+    this.artistService.getConcerts(this.artist).subscribe(
+      (data)=>{
+        this.artist.concerts = data;
+      },
+      (err)=>{
+        this.notificationService.error("ERROR","There was an error fetching concerts");
+      }
+    )
+  }
+
+  getRelatedArtists(){
+    this.artistService.getRelatedArtists(this.artist).subscribe(
+      (data)=>{
+        this.relatedArtists = data;
+      },
+      (err)=>{
+        this.notificationService.error("ERROR","There was an error fetching related artists");
+      }
+    )
   }
   
   editBio(){

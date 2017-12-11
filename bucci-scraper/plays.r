@@ -58,5 +58,6 @@ dbClearResult(ts)
 
 dbDisconnect(mydb)
 
+rs = dbSendQuery(mydb, "CALL runStatBatch(0.07, '2017-01-01'")
 
 

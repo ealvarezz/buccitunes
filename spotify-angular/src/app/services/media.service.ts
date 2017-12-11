@@ -103,7 +103,12 @@ export class MediaService {
   }
 
   getArtistImageUrl(imagePath : string){
-      return environment.SERVER_PATH + imagePath;
+      if(imagePath){
+        return environment.SERVER_PATH + imagePath;
+      }
+      else{
+          return environment.LOCAL_RESOURCE + BucciConstants.CoverArt.DEFAULT_ARTIST;
+      }
   }
 
   getPlaylistImageUrl(imagePath : string){
