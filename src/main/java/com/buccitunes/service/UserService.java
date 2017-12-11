@@ -14,8 +14,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.UserRole;
+import com.buccitunes.dao.ActivityFeedRepository;
 import com.buccitunes.dao.AdminUserRepository;
 import com.buccitunes.dao.AlbumRepository;
+import com.buccitunes.dao.ArtistActivityRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistUserRepository;
 import com.buccitunes.dao.BillingInfoRepository;
@@ -26,6 +28,7 @@ import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
 import com.buccitunes.dao.SupportTicketRepository;
+import com.buccitunes.dao.UserActivityRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.CurrentToNewForm;
 import com.buccitunes.jsonmodel.SearchResults;
@@ -36,10 +39,10 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.model.ActivityFeed;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
-import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.BillingInfo;
 import com.buccitunes.model.CreditCompany;
 import com.buccitunes.model.MusicCollection;
@@ -50,6 +53,7 @@ import com.buccitunes.model.Song;
 import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.SupportTicket;
 import com.buccitunes.model.User;
+import com.buccitunes.model.UserActivity;
 
 @Service
 @Transactional
@@ -69,6 +73,8 @@ public class UserService  {
 	private final SupportTicketRepository supportTicketRepository; 
 	private final PaymentRepository paymentRepository;
 	private final SongPlaysRepository songPlaysRepository;
+	private final UserActivityRepository userActivityRepository;
+	private final ActivityFeedRepository activityFeedRepository;
 	private final ArtistUserRepository artistUserRepository;
 	private final AdminUserRepository adminUserRepository;
 	
@@ -78,6 +84,7 @@ public class UserService  {
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
 			ArtistRepository artistRepository, SupportTicketRepository supportTicketRepository,
 			PaymentRepository paymentRepository, SongPlaysRepository songPlaysRepository,
+			UserActivityRepository userActivityRepository, ActivityFeedRepository activityFeedRepository,
 			ArtistUserRepository artistUserRepository, AdminUserRepository adminUserRepository) {
 		
 		this.userRepository = userRepository;
@@ -91,8 +98,6 @@ public class UserService  {
 		this.supportTicketRepository = supportTicketRepository;
 		this.paymentRepository = paymentRepository;
 		this.songPlaysRepository = songPlaysRepository;
-		this.artistUserRepository = artistUserRepository;
-		this.adminUserRepository = adminUserRepository;
 	}
 	
 	public List<User> findAll(){
@@ -151,6 +156,11 @@ public class UserService  {
 		}
 		
 		followingUser.getFollowing().add(followedUser);
+		
+		UserActivity activity = new UserActivity(followingUser, new Date());
+		activity.setFeed(followingUser.getEmail()+" is now following: "+followedUser.getEmail());
+		userActivityRepository.save(activity);
+		
 		return followedUser;
 	}
 	
@@ -414,6 +424,11 @@ public class UserService  {
 		Artist artist = artistRepository.findOne(artistId);
 		user.getFollowingArtists().size();
 		user.getFollowingArtists().add(artist);
+
+		UserActivity activity = new UserActivity(user, new Date());
+		activity.setFeed(user.getEmail()+" is now following: "+artist.getName());
+		userActivityRepository.save(activity);
+		
 		return user.getFollowingArtists();
 		
 	}
@@ -532,5 +547,10 @@ public class UserService  {
 		cal.setTime(date);		
 		cal.add(Calendar.MONTH, 1);
 		return cal.getTime();
+	}
+	
+	public List<ActivityFeed> userFeed (String email){
+		
+		return activityFeedRepository.getUserFeed(email);
 	}
 }

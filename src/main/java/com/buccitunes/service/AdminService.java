@@ -21,6 +21,7 @@ import com.buccitunes.miscellaneous.MailManager;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistActivity;
 import com.buccitunes.model.ArtistMonthlyStat;
 import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
@@ -58,6 +59,7 @@ public class AdminService {
 	private final SongPlaysRepository songPlaysRepository;
 	private final PremiumUserRepository premiumUserRepository;
 	private final ArtistMonthlyStatRepository artistMonthlyStatRepository;
+	private final ArtistActivityRepository artistActivityRepository;
 	
 	public AdminService(AdminUserRepository adminUserRepository, AlbumRepository albumRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, ConcertRepository concertRepository,
@@ -65,7 +67,7 @@ public class AdminService {
 			RequestedArtistRepository requestedArtistRepository, RequestedConcertRepository requestedConcertRepository, 
 			ArtistUserRepository artistUserRepository, UserRepository userRepository, SongPlaysRepository songPlaysRepository,
 			ArtistTransactionRepository artistTransactionRepository, PremiumUserRepository premiumUserRepository,
-			ArtistMonthlyStatRepository artistMonthlyStatRepository) {
+			ArtistMonthlyStatRepository artistMonthlyStatRepository, ArtistActivityRepository artistActivityRepository) {
 		this.adminUserRepository = adminUserRepository;
 		this.albumRepository = albumRepository;
 		this.songRepository = songRepository;
@@ -81,6 +83,7 @@ public class AdminService {
 		this.artistTransactionRepository = artistTransactionRepository;
 		this.premiumUserRepository = premiumUserRepository;
 		this.artistMonthlyStatRepository = artistMonthlyStatRepository;
+		this.artistActivityRepository = artistActivityRepository;
 	}
 	
 	public Artist addNewArtist(Artist artist) throws BucciException {
@@ -159,6 +162,10 @@ public class AdminService {
 		newAlbum = new Album(requestedAlbum, approveAllSongs);
 		newAlbum = albumRepository.save(newAlbum);
 		
+		ArtistActivity activity = new ArtistActivity(requestedAlbum.getPrimaryArtist(), new Date());
+		activity.setFeed(requestedAlbum.getPrimaryArtist().getName()+" added a new album: "+requestedAlbum.getTitle());
+		artistActivityRepository.save(activity);
+		
 		if(requestedAlbum.getArtworkPath() != null) {
 			try {				
 				String artworkPath = FileManager.moveRequestedArtworkToAlbum(requestedAlbum.getArtworkPath(), newAlbum.getId());
@@ -218,6 +225,10 @@ public class AdminService {
 			Artist owner = artistRepository.findOne(requested.getRequester().getArtist().getId()); 
 			newConcert = new Concert(requested);
 			newConcert.setMainStar(owner);
+			
+			ArtistActivity activity = new ArtistActivity(requested.getFeaturedArtists().get(0), new Date());
+			activity.setFeed(requested.getFeaturedArtists().get(0).getName()+" added a new concert: "+requested.getName());
+			artistActivityRepository.save(activity);
 		}
 		newConcert = concertRepository.save(newConcert);
 		requestedConcertRepository.delete(requested);
@@ -237,6 +248,11 @@ public class AdminService {
 			}
 		}
 		Song song = songRepository.save(new Song(requestedSong));
+		
+		ArtistActivity activity = new ArtistActivity(requestedSong.getArtist(), new Date());
+		activity.setFeed(requestedSong.getArtist().getName()+" added a new album: "+requestedSong.getName());
+		artistActivityRepository.save(activity);
+		
 		if(requestedSong.getPicturePath() != null) {
 			try {				
 				String artworkPath = FileManager.moveRequestedArtworkToSong(requestedSong.getPicturePath(), song.getId());
