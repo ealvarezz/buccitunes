@@ -175,6 +175,12 @@ public class AdminController {
 		return BucciResponseBuilder.successfulResponse(requested);
 	}
 	
+	@RequestMapping(value="requested_concerts", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<RequestedConcert>> getAllRequestedConcerts() {
+		List<RequestedConcert> requested = adminService.getRequestedConcerts();
+		return BucciResponseBuilder.successfulResponse(requested);
+	}
+	
 	@RequestMapping(value="requested_album_info", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<RequestedAlbum> getRequestedAlbum(@RequestParam int id, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
@@ -282,5 +288,19 @@ public class AdminController {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
 		
+	}
+	
+	@RequestMapping(value="search_artists", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Artist>> searchAllArtists(HttpSession session, @RequestParam String name) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		} else if(!BucciPrivilege.isAdmin(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getAdminAccessDeniedMsg());
+		}
+		
+		List<Artist> artists = adminService.searchForArtists(name);
+		return BucciResponseBuilder.successfulResponse(artists);
+				
 	}
 }

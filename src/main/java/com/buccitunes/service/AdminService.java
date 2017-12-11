@@ -389,4 +389,17 @@ public class AdminService {
 		return requestedConcertRepository.findOne(id);
 	}
 	
+	public List<RequestedConcert> getRequestedConcerts() {
+		
+		List<RequestedConcert> concerts = new ArrayList<>();
+		for(RequestedConcert c: requestedConcertRepository.findAll())
+			concerts.add(c);
+		
+		return concerts;
+	}
+	
+	public List<Artist> searchForArtists(String name){
+		
+		return artistRepository.searchArtist(name);
+	}
 }
