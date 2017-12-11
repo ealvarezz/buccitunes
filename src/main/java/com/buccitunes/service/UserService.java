@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.UserRole;
+import com.buccitunes.dao.ActivityFeedRepository;
 import com.buccitunes.dao.AlbumRepository;
 import com.buccitunes.dao.ArtistActivityRepository;
 import com.buccitunes.dao.ArtistRepository;
@@ -36,6 +37,7 @@ import com.buccitunes.miscellaneous.BucciException;
 import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.miscellaneous.FileManager;
+import com.buccitunes.model.ActivityFeed;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
@@ -71,6 +73,7 @@ public class UserService  {
 	private final PaymentRepository paymentRepository;
 	private final SongPlaysRepository songPlaysRepository;
 	private final UserActivityRepository userActivityRepository;
+	private final ActivityFeedRepository activityFeedRepository;
 
 	
 	
@@ -79,7 +82,7 @@ public class UserService  {
 			AlbumRepository albumRepository, SongRepository songRepository, PlaylistRepository playlistRepository,
 			ArtistRepository artistRepository, SupportTicketRepository supportTicketRepository,
 			PaymentRepository paymentRepository, SongPlaysRepository songPlaysRepository,
-			UserActivityRepository userActivityRepository) {
+			UserActivityRepository userActivityRepository, ActivityFeedRepository activityFeedRepository) {
 		
 		this.userRepository = userRepository;
 		this.premiumUserRepository = premiumUserRepository;
@@ -93,6 +96,7 @@ public class UserService  {
 		this.paymentRepository = paymentRepository;
 		this.songPlaysRepository = songPlaysRepository;
 		this.userActivityRepository = userActivityRepository;
+		this.activityFeedRepository = activityFeedRepository;
 	}
 	
 	public List<User> findAll(){
@@ -547,5 +551,10 @@ public class UserService  {
 		cal.setTime(date);		
 		cal.add(Calendar.MONTH, 1);
 		return cal.getTime();
+	}
+	
+	public List<ActivityFeed> userFeed (String email){
+		
+		return activityFeedRepository.getUserFeed(email);
 	}
 }

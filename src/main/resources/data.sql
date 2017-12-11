@@ -409,6 +409,6 @@ SELECT * FROM
 		WHERE UFA.user_id = email AND AA.artist_id = UFA.artist_id
 	)
 ) feeds 
-ORDER BY feeds.date
+ORDER BY feeds.date DESC
 LIMIT 30;
 END ^;

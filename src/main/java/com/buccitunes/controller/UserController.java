@@ -23,6 +23,7 @@ import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
 import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.*;
+import com.buccitunes.model.ActivityFeed;
 import com.buccitunes.model.AdminUser;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
@@ -616,6 +617,19 @@ public class UserController {
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
+	}
+	
+	@RequestMapping(value="get_activity_feed", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<ActivityFeed>> getUserActivityFromFollowing(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		
+		List<ActivityFeed> feed = userService.userFeed(loggedUser.getEmail());
+		return BucciResponseBuilder.successfulResponse(feed);
+		
 	}
 	
 	@RequestMapping(value="change_billing_info", method = RequestMethod.POST)
