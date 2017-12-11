@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.Tier;
@@ -31,6 +32,7 @@ import com.buccitunes.dao.PremiumUserRepository;
 import com.buccitunes.dao.SongMonthlyStatRepository;
 import com.buccitunes.dao.SongPlaysRepository;
 import com.buccitunes.dao.SongRepository;
+import com.buccitunes.dao.UserActivityRepository;
 import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.PlaylistPage;
 import com.buccitunes.miscellaneous.BucciConstants;
@@ -48,6 +50,7 @@ import com.buccitunes.model.Song;
 import com.buccitunes.model.SongMonthlyStat;
 import com.buccitunes.model.SongPlays;
 import com.buccitunes.model.User;
+import com.buccitunes.model.UserActivity;
 import com.buccitunes.resultset.AlbumWithStats;
 
 @Service
@@ -67,11 +70,13 @@ public class MusicCollectionService {
 	private final GenreRepository genreRepository;
 	private final ArtistUserRepository artistUserRepository;
 	private final SongMonthlyStatRepository songMonthlyStatRepository;
+
+	private final UserActivityRepository userActivityRepository;
 	
 	public MusicCollectionService(AlbumRepository albumRepository, PlaylistRepository playlistRepository,
 			SongRepository songRepository, ArtistRepository artistRepository, SongPlaysRepository songPlaysRepository,
 			UserRepository userRepository, ArtistUserRepository artistUserRepository, GenreRepository genreRepository,
-			SongMonthlyStatRepository songMonthlyStatRepository
+			SongMonthlyStatRepository songMonthlyStatRepository, UserActivityRepository userActivityRepository
 			) {
 		this.albumRepository = albumRepository;
 		this.playlistRepository = playlistRepository;
@@ -82,6 +87,7 @@ public class MusicCollectionService {
 		this.artistUserRepository = artistUserRepository;
 		this.genreRepository = genreRepository;
 		this.songMonthlyStatRepository = songMonthlyStatRepository;
+		this.userActivityRepository = userActivityRepository;
 	}
 	
 	public List<Album> getNewReleasesByCurrentMonth() {
@@ -142,6 +148,10 @@ public class MusicCollectionService {
 		String artwork = playlist.getArtwork();
 		playlist.setOwner(user);
 		Playlist newPlaylist = playlistRepository.save(playlist);
+		
+		UserActivity activity = new UserActivity(user, new Date());
+		activity.setFeed(user.getEmail()+" made a new playlist: "+playlist.getTitle());
+		userActivityRepository.save(activity);
 		
 		if(artwork != null)  {
 			try {
