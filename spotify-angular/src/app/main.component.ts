@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import {MusicCollectionService } from './services/music.service'
 import {SpinnerService} from './services/spinner.service';
 
@@ -10,17 +10,25 @@ export class MainComponent {
 
 
   constructor(private musicService : MusicCollectionService,
-              private spinnerService : SpinnerService){
+              private spinnerService : SpinnerService,
+            private _changeDetectionRef : ChangeDetectorRef){
     }
 
     showSpinner : boolean = false;
 
     ngOnInit(){
       this.getPlaylists();
+    }
+
+    ngAfterViewInit() : void {
 
         this.spinnerService.isLoading.subscribe(
-            loading => this.showSpinner = loading
+            (loading) => {
+                this.showSpinner = loading;
+                this._changeDetectionRef.detectChanges();
+            }
         );
+        
     }
 
     getPlaylists(){

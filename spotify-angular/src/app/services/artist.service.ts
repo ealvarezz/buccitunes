@@ -50,17 +50,26 @@ export class ArtistService {
         .catch(this.handleError)
     }
     
-    getConcerts(artist : Artist){
-        return this.http.post<BucciResponse<Concert[]>>(BucciConstants.Endpoints.GET_CONCERTS, artist, { withCredentials: true})
+    getConcerts(artistId : number){
+        return this.http.get<BucciResponse<Concert[]>>(BucciConstants.Endpoints.GET_CONCERTS,{
+            params: new HttpParams().set('artistId', String(artistId)), 
+            withCredentials: true
+        })
         .map(this.extractData)
         .catch(this.handleError)
     }
 
-    getRelatedArtists(artist : Artist){
+    getRelatedArtists(artistId : number){
         return this.http.get<BucciResponse<Artist[]>>(BucciConstants.Endpoints.GET_RELATED_ARTISTS, {
-            params: new HttpParams().set('artistId', String(artist.id)), 
+            params: new HttpParams().set('artistId', String(artistId)), 
             withCredentials: true
         })
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    requestConcert(concert : Concert){
+        return this.http.post<BucciResponse<Concert>>(BucciConstants.Endpoints.REQUEST_CONCERT, concert, { withCredentials: true})
         .map(this.extractData)
         .catch(this.handleError)
     }

@@ -7,6 +7,7 @@ export class User{
     
     recentlyPlayed  : Album[];
     followingPlaylists : Playlist[];
+    followingArtists : Artist[];
     username        : string;
     name            : string;
     first_name      : string;

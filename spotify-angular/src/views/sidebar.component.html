@@ -18,7 +18,13 @@
             <h4 class ="side-list"><a routerLink="/admin">Admin Utilities</a></h4>
         </div>
     </md-list-item>
-
+    <ng-container *ngIf="isArtist">
+    <md-list-item>
+        <div mdLine>
+            <h4 class ="side-list"><a [routerLink]="['/artist', currentUser.artist.id]">My Artist</a></h4>
+        </div>
+    </md-list-item>
+    </ng-container>
     <md-list-item>
         <div mdLine>
             <h4 class ="side-list"><a routerLink="/">Browse</a></h4>
@@ -37,7 +43,7 @@
             <h4 class ="side-list"><a routerLink="/album-library">Albums</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/artist/36">Artists</a> </h4>
+            <h4 class ="side-list"><a routerLink="/followed-artists">Artists</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
             <h4 class ="side-list"><a routerLink="/followed-playlists">Playlists</a></h4>
