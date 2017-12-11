@@ -21,7 +21,7 @@ export class CreditCardCompany{
 }
 
 export const CREDIT_CARD_ENUM=[
-    new CreditCardCompany(1, "American Express", "/assets/amex.png"),
+    new CreditCardCompany(1, "Amex", "/assets/amex.png"),
     new CreditCardCompany(2, "Discover", "/assets/discover.png"),
     new CreditCardCompany(3, "Master Card", "/assets/mastercard.png"),
     new CreditCardCompany(4, "Visa", "/assets/visa.png"),

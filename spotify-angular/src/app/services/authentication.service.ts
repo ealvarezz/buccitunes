@@ -4,6 +4,7 @@ import {SignupInfo} from '../objs/SignupInfo';
 import {User} from '../objs/User';
 import {BucciResponse} from '../objs/BucciResponse';
 import {BucciConstants} from '../../environments/app.config';
+import {BillingInfo} from '../objs/BillingInfo';
 
 import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
@@ -31,6 +32,12 @@ export class AuthenticationService {
     signUp(user : SignupInfo){
         return this.http.post<BucciResponse<User>>(BucciConstants.Endpoints.SIGN_UP, user, {withCredentials: true})
         .map(this.extractData.bind(this))
+        .catch(this.handleError);
+    }
+
+    upgradeToPremium(billingInfo : BillingInfo){
+        return this.http.post<BucciResponse<User>>(BucciConstants.Endpoints.UPGRADE_TO_PREMIUM, billingInfo, {withCredentials: true})
+        .map(this.extractDataBUCCI)
         .catch(this.handleError);
     }
 

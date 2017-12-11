@@ -1,4 +1,5 @@
 import {Album} from './album';
+import {Concert} from './Concert';
 
 export class Artist{
     id              : number;
@@ -7,6 +8,7 @@ export class Artist{
     avatar          : string;
     albums          : Album[];
     avatarPath      :string;
+    concerts         : Concert[];
 
     // CHANGE THIS STUFF L8R
     followers       : string;
