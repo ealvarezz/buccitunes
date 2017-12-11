@@ -127,7 +127,12 @@ public class UserService  {
 		
 		String emailId = user.getEmail();
 		if(BucciPrivilege.isArtist(user)) {
+			int artistId = ((ArtistUser)user).getArtist().getId();
+			
 			artistUserRepository.delete(emailId);
+			if(artistRepository.exists(artistId)) {
+				artistRepository.delete(artistId);
+			}
 		}
 		else if(BucciPrivilege.isPremium(user)) {
 			premiumUserRepository.delete(emailId);
@@ -259,6 +264,7 @@ public class UserService  {
 		user.setRole(UserRole.PREMIUM);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
+		pUser.makePayment(constants.getSignupPremiumPrice());
 		return pUser;
 	}
 	
@@ -460,17 +466,10 @@ public class UserService  {
 		return paymentHistory;
 	}
 	
-	public PremiumUser cancelPremium(PremiumUser user) {
-		user = premiumUserRepository.findOne(user.getEmail());
-		
-		Date lastPayDate = paymentRepository.findTopByPremiumUserOrderByDateDesc(user).getDate();
-		Date nextBillingDate =  getNextBillingDate(lastPayDate);
-		
-		user.getBillingInfo().setActive(false);
-		user.setRole(UserRole.USER);
-		user.setNextBillingDate(nextBillingDate);
-	
-		return user;
+	public User cancelPremium(PremiumUser user) {
+		User basicUser = userRepository.findOne(user.getEmail());
+		userRepository.downgradeToBasic(user.getEmail(), UserRole.USER.getCode());
+		return basicUser;
 	}
 	
 	public User reActivateSubscription(User loggedUser) throws BucciException {
@@ -494,9 +493,10 @@ public class UserService  {
 			
 		}
 		*/
-		
+		/*
 		pUser.getBillingInfo().setActive(true);
 		pUser.setRole(UserRole.PREMIUM);
+		*/
 		
 		return pUser;
 	}

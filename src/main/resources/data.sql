@@ -392,3 +392,24 @@ GROUP BY AR.id
 ORDER BY RAND()
 LIMIT 10;
 END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `downgrade_premium_user`(IN userEmail varchar(255), IN basicRole int )
+BEGIN
+START TRANSACTION;
+	
+    DELETE FROM payment
+    WHERE premium_user_id = userEmail;
+    
+    DELETE FROM premium_user
+    where email = userEmail;
+    
+    UPDATE USER
+    SET role = basicRole
+    where email = userEmail;
+    
+    SELECT u.* 
+    FROM user u
+    WHERE email = userEmail;
+    
+COMMIT;
+END ^;
