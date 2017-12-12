@@ -27,30 +27,44 @@
                 <md-tab-group class ="browse-tabs">
                  <md-tab label="OVERVIEW">
                         <div>
-                        <h2><b>TOP ALBUMS</b></h2>
+                        <h2><b>TOP SONG CHARTS</b></h2>
                         <md-grid-list cols="4" [rowHeight]="rowHeight">
-                                <md-grid-tile *ngFor = "let item of charts.topAlbums" colspan= "1" rowpan = "1" >
+                                <md-grid-tile colspan= "1" rowpan = "1" >
                                         <div>
-                                                <div><image [src]="item.artworkPath"></image></div>
-                                                <div *ngIf ="item.title" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
-                                                <div *ngIf ="item.stats.totalPlays" class ="browse-item-template"><h4>{{item.stats.totalPlays}}</h4></div>
+                                                <div style="height: 220px; width: 220px;"><image src="/assets/chart.png" route="/top-charts"></image></div>
+                                                <div class ="browse-item-template"><h4><b><a>Global Top 50</a></b></h4></div>
                                         </div>
                                 </md-grid-tile>
                         </md-grid-list>
+                        <md-divider></md-divider>
+                        </div>
+                        <div>
+                        <h2><b>TOP ALBUMS</b></h2>
+                        <md-grid-list cols="4" [rowHeight]="rowHeight">
+                                <md-grid-tile *ngFor = "let album of charts.topAlbums" colspan= "1" rowpan = "1" >
+                                        <div>
+                                                <div style="height: 220px; width: 220px;"><image [src]="mediaService.getAlbumImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
+                                                <div *ngIf ="album.title" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
+                                                <div *ngIf ="album.stats?.totalPlays" class ="browse-item-template"><h4>{{album?.stats?.totalPlays}}</h4></div>
+                                        </div>
+                                </md-grid-tile>
+                        </md-grid-list>
+                        <md-divider></md-divider>
                         </div>
                        <div>
+                               <h2><b>TOP ARTISTS</b></h2>
                                 <md-grid-list cols="4" [rowHeight]="rowHeight">
-                                        <md-grid-tile *ngFor = "let item of charts.topPlaylists" colspan= "1" rowpan = "1" >
+                                        <md-grid-tile *ngFor = "let artist of charts.topArtists" colspan= "1" rowpan = "1" >
                                                 <div>
-                                                        <div><image [src]="item.artworkPath"></image></div>
-                                                        <div *ngIf ="item.title" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
-                                                        <div *ngIf ="item.stats.totalPlays" class ="browse-item-template"><h4>{{item.stats.totalPlays}}</h4></div>
+                                                        <div style="height: 220px; width: 220px;"><image [circle]="true" [src]="mediaService.getArtistImageUrl(artist.avatarPath)" [route]="'/artist/'+artist.id"></image></div>
+                                                        <div *ngIf ="artist.name" class ="browse-item-template"><h4><b><a [routerLink]="['/artist', artist.id]">{{artist.name}}</a></b></h4></div>
+                                                        <div *ngIf ="artist.stats?.totalPlays" class ="browse-item-template"><h4>{{artist?.stats?.totalPlays}} LISTENERS</h4></div>
                                                 </div>
                                         </md-grid-tile>
                                 </md-grid-list>
                        </div>
                  </md-tab>
-                 <md-tab label="FOR YOU">
+                 <!-- <md-tab label="FOR YOU">
                          <homepage-template [data]="recommended"></homepage-template>
                  </md-tab>
                  <md-tab label="CHARTS">
@@ -64,7 +78,7 @@
                  </md-tab>
                  <md-tab label="CONCERTS">
                          <homepage-template [data]="overView"></homepage-template>
-                 </md-tab>
+                 </md-tab> -->
         </md-tab-group>
                 
 

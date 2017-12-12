@@ -1,0 +1,38 @@
+<md-card class="bg-card">
+    <md-card-header>
+        <div class="albumPic">
+            <!-- <img *ngIf="!artworkUrl" src="../assets/channel_x.png"> -->
+            <img style="max-height:100%; max-width:100%;"src="/assets/chart.png">
+        </div>
+        <div class="albumInfo">
+            <div><h4>Playlist</h4></div>
+            <div><h1>Global Top 50</h1></div>
+            <div><h4>Your monthly updates of the most played tracks right now.</h4></div>
+            <button md-raised-button  class="rounded-button">Play</button>
+            <button md-mini-fab style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+            <!-- <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
+                <button (click)="openUpdateDialog()" md-menu-item>
+                    <span>Edit Details</span>
+                </button>
+                <button (click)="deletePlaylist()" md-menu-item>
+                    <span>Delete</span>
+                </button>
+                <button md-menu-item>
+                    <span>Collaborative Playlist</span>
+                </button>
+                <button *ngIf="playlist.public" md-menu-item>
+                    <span>Make Private</span>
+                </button>
+                <button *ngIf="!playlist.public" md-menu-item>
+                    <span>Make Public</span>
+                </button>
+            </md-menu> -->
+        </div>
+    </md-card-header>
+    <md-card-content>
+        <div class="table">
+            <music-table [data] = "songs" [isAlbum]="false" [chart]="true"> </music-table>
+        </div>
+    </md-card-content>
+</md-card>
+  
