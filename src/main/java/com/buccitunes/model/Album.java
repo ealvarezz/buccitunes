@@ -26,6 +26,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
@@ -71,6 +72,10 @@ public class Album extends MusicCollection {
 	private StatCache stats;
 	
 	private boolean isPublic;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private boolean following;
 	
 	
 	public Album(){
@@ -166,5 +171,16 @@ public class Album extends MusicCollection {
 	public void setStats(StatCache stats) {
 		this.stats = stats;
 	}
+
+
+	public boolean isFollowing() {
+		return following;
+	}
+
+
+	public void setFollowing(boolean following) {
+		this.following = following;
+	}
+	
 	
 }
