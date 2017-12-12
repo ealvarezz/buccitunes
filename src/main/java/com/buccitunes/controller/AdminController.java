@@ -278,6 +278,12 @@ public class AdminController {
 		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
 	}
 	
+	@RequestMapping(value="pay_all_royalties", method = RequestMethod.POST)
+	public BucciResponse<String> payAllArtistRoyalties() {
+		adminService.payAllRoyaltiesByCaching();
+		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
+	}
+	
 	@RequestMapping(value="add_admin", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<AdminUser> addAdmin(@RequestBody AdminUser user, HttpSession session) {
 		
