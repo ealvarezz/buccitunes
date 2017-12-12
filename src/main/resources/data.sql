@@ -444,33 +444,37 @@ END ^;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_albums`()
 BEGIN
 SELECT A.*, M.artwork_path, M.date_created, M.title
-FROM album A, stat_cache SC, music_collection M
-WHERE A.id = SC.id AND A.id = M.id
+FROM music_collection M
+INNER JOIN album A
+ON A.id = M.id
+INNER JOIN stat_cache SC
+ON A.stats_id  = SC.id
 ORDER BY SC.total_plays DESC
 LIMIT 4;
-END ^;
+END^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_artists`()
 BEGIN
 SELECT A.*
-FROM artist A, stat_cache SC
-WHERE A.id = SC.id 
+FROM artist A
+INNER JOIN stat_cache SC
+ON A.stats_id = SC.id
 ORDER BY SC.total_plays DESC
 LIMIT 4;
-END ^;
+END^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_songs`()
 BEGIN
-SELECT S.*
-FROM song S, stat_cache SC
-WHERE S.id = SC.id
+SELECT S.*  FROM song S
+INNER JOIN stat_cache SC
+ON S.stats_id = SC.id
 ORDER BY SC.total_plays DESC
 LIMIT 50;
-END ^;
+END^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_songs_by_genre`(IN genre_id INT)
 BEGIN
-SELECT S.*, SC.total_plays
+SELECT S.*
 FROM stat_cache SC
 INNER JOIN song S
 ON S.stats_id = SC.id
