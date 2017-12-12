@@ -138,7 +138,7 @@ END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `search_user`(IN user_name VARCHAR(200))
 BEGIN
-SELECT * FROM user U, artist_user AU
+SELECT U.email, U.avatar_path, U.in_private_mode, U.name, U.password, U.role, U.username, 0 AS clazz_ FROM user U, artist_user AU
 WHERE U.name LIKE CONCAT('%', user_name, '%') AND U.email <> AU.email
 LIMIT 5;
 END ^;

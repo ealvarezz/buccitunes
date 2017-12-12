@@ -18,4 +18,5 @@ public interface UserRepository extends BaseUserRepository<User>, CrudRepository
 	
 	@Query(value="CALL search_user(:name);", nativeQuery = true)
 	public List<User> searchUser(@Param("name") String name);
+	
 }

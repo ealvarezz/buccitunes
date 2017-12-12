@@ -11,6 +11,7 @@ import org.springframework.data.repository.query.Param;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Album;
+import com.buccitunes.model.Artist;
 import com.buccitunes.model.Song;
 
 public interface SongRepository extends CrudRepository<Song, Integer>{
@@ -65,4 +66,7 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 	
 	@Query(value="CALL search_song(:name);", nativeQuery = true)
 	public List<Song> searchSong(@Param("name") String name);
+	
+	@Query(value="CALL get_top_songs();", nativeQuery = true)
+	public List<Song> topSongs();
 }

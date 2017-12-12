@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.jpa.repository.query.Procedure;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.NoRepositoryBean;
+import org.springframework.data.repository.query.Param;
 
 import com.buccitunes.model.User;
 
@@ -17,4 +18,5 @@ public interface BaseUserRepository< T extends User> extends CrudRepository<T, S
 	//@Query(value="CALL isFollowing(:email);", nativeQuery = true)
 	@Procedure
 	public Boolean isFollowing(String following, String followed);
+	
 }
