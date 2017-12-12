@@ -89,6 +89,9 @@ public class User {
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "owner", cascade = CascadeType.ALL)
 	private List<Playlist> playlists;
 	
+	@OneToMany(fetch=FetchType.LAZY, mappedBy = "user", cascade = CascadeType.REMOVE)
+	private List<UserActivity> activities;
+	
 	@ManyToMany(fetch=FetchType.LAZY, cascade=CascadeType.REMOVE)
 	@JoinTable(name = "user_collaborating_playlist",
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
@@ -297,5 +300,13 @@ public class User {
 
 	public void setSupportTickets(List<SupportTicket> supportTickets) {
 		this.supportTickets = supportTickets;
+	}
+
+	public List<UserActivity> getActivities() {
+		return activities;
+	}
+
+	public void setActivities(List<UserActivity> activities) {
+		this.activities = activities;
 	}
 }
