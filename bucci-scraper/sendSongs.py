@@ -15,6 +15,7 @@ ALBUM_ENDPOINT = "http://localhost:8080/request_album"
 APPROVE_ALBUM_ENDPOINT = "http://localhost:8080/approve_album"
 LOGIN_ENDPOINT = "http://localhost:8080/login"
 LOGOUT_ENDPOINT = "http://localhost:8080/logout"
+ROYALTY_ENDPOINT = "http://localhost:8080/pay_all_royalties"
  
 albumPath = PATH+"dummy_album/"
 albumFile = os.listdir(albumPath)[0]
@@ -113,6 +114,9 @@ def send_request(the_chosen_one):
     
     populate_audio_in_db(res['response']['songs'])
 
+    r = s.post(ROYALTY_ENDPOINT)
+    res = r.json()
+    print(res)
 
 send_request("1146@fake.com")
 

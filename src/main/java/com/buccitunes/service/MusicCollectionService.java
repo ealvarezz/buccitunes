@@ -109,21 +109,29 @@ public class MusicCollectionService {
 		return playlistRepository.getTopPlaylistOfAllTime();
 	}
 	
-	public Album getAlbum(int albumId) {
+	public Album getAlbum(int albumId, String email) {
 		
-	       Album album = albumRepository.findOne(albumId);
-	       album.getSongs().size();
-	       return album;
+		User user = userRepository.findOne(email);
+		Album album = albumRepository.findOne(albumId);
+		
+		if(user.getSavedAlbums().contains(album)) album.setFollowing(true);
+		
+		album.getSongs().size();
+	    return album;
 	}
 	public Album getAlbumNoSongs(int albumId) {
 			return albumRepository.findOne(albumId);
 	}
 	
-	public Playlist getPlaylist(int playlistId) {
+	public Playlist getPlaylist(int playlistId, String email) {
 		
-	       Playlist playlist = playlistRepository.findOne(playlistId);
-	       playlist.getSongs().size();
-	       return playlist;
+		User user = userRepository.findOne(email);
+		Playlist playlist = playlistRepository.findOne(playlistId);
+		
+		if(user.getFollowingPlaylists().contains(playlist)) playlist.setFollowing(true);
+		
+		playlist.getSongs().size();
+		return playlist;
 	}
 	
 	public Playlist newPlaylist(Playlist playlist) throws BucciException {

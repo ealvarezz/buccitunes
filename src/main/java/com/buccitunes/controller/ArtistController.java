@@ -69,9 +69,15 @@ public class ArtistController {
 	}
 	
 	@RequestMapping(value="artist", method = RequestMethod.GET)
-	public BucciResponse<Artist> getArtist(@RequestParam int id) {		
+	public BucciResponse<Artist> getArtist(@RequestParam int id, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
 		try {
-			Artist artist = artistService.getArtist(id);
+			Artist artist = artistService.getArtist(id, loggedUser.getEmail());
 			return BucciResponseBuilder.successfulResponse(artist);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
