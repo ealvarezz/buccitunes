@@ -427,16 +427,19 @@ START TRANSACTION;
     DELETE FROM payment
     WHERE premium_user_id = userEmail;
     
+    SELECT u.billing_id INTO @bill_id 
+    FROM premium_user u
+    WHERE email = userEmail;
+    
     DELETE FROM premium_user
     where email = userEmail;
+    
+    DELETE FROM billing_info
+    WHERE id = @bill_id;
     
     UPDATE USER
     SET role = basicRole
     where email = userEmail;
-    
-    SELECT u.* 
-    FROM user u
-    WHERE email = userEmail;
     
 COMMIT;
 END ^;

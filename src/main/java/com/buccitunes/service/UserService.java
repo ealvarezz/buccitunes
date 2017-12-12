@@ -508,8 +508,8 @@ public class UserService  {
 	}
 	
 	public User cancelPremium(PremiumUser user) {
-		User basicUser = userRepository.findOne(user.getEmail());
 		userRepository.downgradeToBasic(user.getEmail(), UserRole.USER.getCode());
+		User basicUser = userRepository.findOne(user.getEmail());
 		return basicUser;
 	}
 	
