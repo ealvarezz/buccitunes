@@ -1,33 +1,33 @@
 import { Component, Input } from '@angular/core';
-import {Song} from './objs/Song'
+import {Song, Genres} from './objs/Song'
 import {MusicCollectionService} from './services/music.service';
 import {QueueService} from './services/queue.service';
 import {MusicService} from './services/player.service';
-
-
-
-
-
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 
 @Component({
-  selector: 'charts-page',
-  templateUrl: '../views/top-songs.component.html',
+  selector: 'genre-page',
+  templateUrl: '../views/song-genre.html',
   styleUrls: ["../views/styles/album.component.css"]
 })
-export class TopSongsComponent{
+export class GenreComponent{
 
     constructor(private musicService    : MusicCollectionService,
                 private playerService   : MusicService,
-                private queueService    : QueueService){}
+                private queueService    : QueueService,
+                private route            : ActivatedRoute,){}
 
     @Input() songs : Song[];
+    genreName : string;
 
     
     ngOnInit(){
-        if(!this.songs){
-            this.reloadPlaylist();
-        }
+        this.route.params.subscribe(params => {
+            let id = +params['id'];
+            this.loadSongs(id);
+            this.genreName = Genres[id];
+        });
     }
 
 
@@ -36,15 +36,10 @@ export class TopSongsComponent{
         this.playerService.playSong();
     }
 
-    
-
-
-   
-    
-    reloadPlaylist(){
-        this.musicService.getTopCharts().subscribe(
+    loadSongs(id : number){
+        this.musicService.getSongsByGenre(id).subscribe(
             (data)=>{
-                this.songs = data.topSongs;
+                this.songs = data;
             }
         )
     }

@@ -32,6 +32,7 @@ export const BucciConstants =  {
       GET_USER            : environment.SERVER_PATH + "/user",
       FOLLOW_USER         : environment.SERVER_PATH + "/follow",
       UNFOLLOW_USER       : environment.SERVER_PATH + "/unfollow",
+      UNFOLLOW_PLAYLIST   : environment.SERVER_PATH + "/unfollow_playlist",
       RESET_PW_REQUEST    : environment.SERVER_PATH + "/reset_password_send_email",
       GET_RESET_PW        : environment.SERVER_PATH + "/check_reset_password_link",
       RESET_PASSWORD      : environment.SERVER_PATH + "/reset_password",
@@ -57,6 +58,7 @@ export const BucciConstants =  {
       APPROVE_CONCERT     : environment.SERVER_PATH + "/approve_concert",
       REJECT_CONCERT      : environment.SERVER_PATH + "/disapprove_request_concert",
       GET_TOP_CHARTS      : environment.SERVER_PATH + "/top_charts",
+      GET_GENRE_SONGS     : environment.SERVER_PATH + "/top_songs_by_genre",
 
 
   },

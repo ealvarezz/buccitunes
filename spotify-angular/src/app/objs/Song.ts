@@ -22,3 +22,15 @@ export class Song{
     //public album            : String = "Graduation"
 
 }
+
+
+export const Genres = {
+    1 : "Hip Hop",
+    3 : "Pop",
+    4 : "Latin",
+    7 : "RNB",
+    8 : "Metal",
+    11 : "Rock",
+    14 : "Punk",
+    15 : "Indie"
+}

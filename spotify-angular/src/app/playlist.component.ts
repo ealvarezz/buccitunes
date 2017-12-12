@@ -10,6 +10,8 @@ import {NotificationsService} from 'angular4-notifications';
 import {ConfirmDialog} from './confirm-dialog.component';
 import {MdDialog, MdDialogRef} from '@angular/material';
 import {UpdatePlaylistDialog} from './update-playlist.component';
+import {QueueService} from './services/queue.service';
+import {MusicService} from './services/player.service';
 
 
 @Component({
@@ -25,7 +27,9 @@ export class PlaylistComponent{
                 private _location       : Location,
                 private router          : Router,
                 private notifications   : NotificationsService,
-                public dialog           : MdDialog){}
+                public dialog           : MdDialog,
+                private playerService   : MusicService,
+                private queueService    : QueueService){}
 
     playlist : Playlist;
     artworkUrl: string;
@@ -91,6 +95,18 @@ export class PlaylistComponent{
        )
    }
 
+   unFollowPlaylist(){
+       this.musicService.unFollowPlaylist(this.playlist)
+       .subscribe(
+           (data)=>{
+               this.notifications.success("Success", "Successfully unfollowing playlist");
+           },
+           (err)=>{
+                console.log("error");
+            }
+       )
+   }
+
     deletePlaylist(){
         this.dialog.open(ConfirmDialog, {data: "Playlist",}).afterClosed().subscribe(result => {
             if(result){
@@ -115,6 +131,11 @@ export class PlaylistComponent{
     reloadPlaylist(){
         this.getPlaylist(this.playlist.id);
     }
+
+    playPlaylist(){
+        this.queueService.playMusicCollection(this.playlist.songs, 0);
+        this.playerService.playSong();
+   }
 
 
     private sendDeletePlaylist(){

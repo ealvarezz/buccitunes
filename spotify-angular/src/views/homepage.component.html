@@ -45,7 +45,7 @@
                                         <div>
                                                 <div style="height: 220px; width: 220px;"><image [src]="mediaService.getAlbumImageUrl(album.artworkPath)" [route]="'/album/'+album.id"></image></div>
                                                 <div *ngIf ="album.title" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
-                                                <div *ngIf ="album.stats?.totalPlays" class ="browse-item-template"><h4>{{album?.stats?.totalPlays}}</h4></div>
+                                                <div *ngIf ="album.stats?.totalPlays" class ="browse-item-template"><h4>{{album?.stats?.totalPlays}} PLAYS</h4></div>
                                         </div>
                                 </md-grid-tile>
                         </md-grid-list>
@@ -58,11 +58,24 @@
                                                 <div>
                                                         <div style="height: 220px; width: 220px;"><image [circle]="true" [src]="mediaService.getArtistImageUrl(artist.avatarPath)" [route]="'/artist/'+artist.id"></image></div>
                                                         <div *ngIf ="artist.name" class ="browse-item-template"><h4><b><a [routerLink]="['/artist', artist.id]">{{artist.name}}</a></b></h4></div>
-                                                        <div *ngIf ="artist.stats?.totalPlays" class ="browse-item-template"><h4>{{artist?.stats?.totalPlays}} LISTENERS</h4></div>
+                                                        <div *ngIf ="artist.stats?.totalPlays" class ="browse-item-template"><h4>{{artist?.stats?.totalPlays}} PLAYS</h4></div>
                                                 </div>
                                         </md-grid-tile>
                                 </md-grid-list>
                        </div>
+                 </md-tab>
+                <md-tab label="GENRE & MOODS">
+                        <div>
+                        <h2><b>SONGS BY GENRE</b></h2>
+                        <md-grid-list cols="4" [rowHeight]="rowHeight">
+                                <md-grid-tile *ngFor="let genre of genres" colspan= "1" rowpan = "1" >
+                                        <div>
+                                                <div style="height: 220px; width: 220px;"><image [src]="genre.img" [route]="'/genre/'+genre['id']"></image></div>
+                                        </div>
+                                </md-grid-tile>
+                        </md-grid-list>
+                        <md-divider></md-divider>
+                        </div>
                  </md-tab>
                  <!-- <md-tab label="FOR YOU">
                          <homepage-template [data]="recommended"></homepage-template>
@@ -70,9 +83,9 @@
                  <md-tab label="CHARTS">
                          <homepage-template [data]="overView"></homepage-template>
                  </md-tab>
-                 <md-tab label="GENRE & MOODS">
+                  <md-tab label="GENRE & MOODS">
                          <homepage-template [data]="genres" rowHeight = "250"></homepage-template>
-                 </md-tab>
+                 </md-tab> 
                  <md-tab label="NEW RELEASES">
                          <homepage-template [data]="overView"></homepage-template>
                  </md-tab>

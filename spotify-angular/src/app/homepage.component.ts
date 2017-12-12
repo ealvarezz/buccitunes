@@ -15,6 +15,10 @@ export class HomePageComponent {
   rowHeight : number = 300; 
 
 
+  genres = [ { img: "/assets/hip_hop.png", id: 1}, {img: "/assets/pop.png", id:3}, {img: "/assets/rnb.png", id:7}, {img: "/assets/rock.png", id: 11}, {img: "/assets/latin.png", id: 4}, {img:"/assets/metal.png", id:8}, {img: "/assets/indie.png", id: 15}] 
+
+
+
   constructor(private musicService : MusicCollectionService,
               private mediaService : MediaService){}
 
