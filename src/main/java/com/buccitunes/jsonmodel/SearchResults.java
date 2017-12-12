@@ -6,6 +6,7 @@ import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
 import com.buccitunes.model.Playlist;
 import com.buccitunes.model.Song;
+import com.buccitunes.model.User;
 
 public class SearchResults {
 	
@@ -13,14 +14,16 @@ public class SearchResults {
 	private List<Artist> artistResults;
 	private List<Album> albumResults;
 	private List<Playlist> playlistResults;
+	private List<User> userResults;
 	
 	public SearchResults(List<Song> songResults, List<Artist> artistResults, List<Album> albumResults,
-			List<Playlist> playlistResults) {
+			List<Playlist> playlistResults, List<User> userResults) {
 		super();
 		this.songResults = songResults;
 		this.artistResults = artistResults;
 		this.albumResults = albumResults;
 		this.playlistResults = playlistResults;
+		this.userResults = userResults;
 	}
 
 	public List<Song> getSongResults() {
@@ -53,6 +56,14 @@ public class SearchResults {
 
 	public void setPlaylistResults(List<Playlist> playlistResults) {
 		this.playlistResults = playlistResults;
+	}
+
+	public List<User> getUserResults() {
+		return userResults;
+	}
+
+	public void setUserResults(List<User> userResults) {
+		this.userResults = userResults;
 	}
 	
 	
