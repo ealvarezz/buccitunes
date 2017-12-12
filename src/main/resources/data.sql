@@ -468,4 +468,13 @@ ORDER BY SC.total_plays DESC
 LIMIT 50;
 END ^;
 
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_songs_by_genre`(IN genre_id INT)
+BEGIN
+SELECT S.*
+FROM stat_cache SC, song S, genre_song GS
+WHERE GS.genre_id = genre_id AND S.id = GS.song_id AND S.id = SC.id
+ORDER BY SC.total_plays DESC
+LIMIT 50;
+END ^;
+
 

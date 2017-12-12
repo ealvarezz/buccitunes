@@ -69,4 +69,7 @@ public interface SongRepository extends CrudRepository<Song, Integer>{
 	
 	@Query(value="CALL get_top_songs();", nativeQuery = true)
 	public List<Song> topSongs();
+	
+	@Query(value="CALL get_top_songs_by_genre(:genreId);", nativeQuery = true)
+	public List<Song> topSongsByGenre(@Param("genreId") int genreId);
 }

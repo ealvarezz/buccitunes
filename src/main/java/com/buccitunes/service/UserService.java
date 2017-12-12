@@ -569,4 +569,9 @@ public class UserService  {
 				artistRepository.topArtists()
 		);
 	}
+	
+	public List<Song> getTopSongsByGenre(int genreId){
+		
+		return songRepository.topSongsByGenre(genreId);
+	}
 }

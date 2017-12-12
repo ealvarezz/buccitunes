@@ -421,6 +421,18 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="top_songs_by_genre", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Song>> getTopSongsOfAllTimeByGenre(HttpSession session, @RequestParam int genreId) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Song> topSongs = userService.getTopSongsByGenre(genreId);
+			return BucciResponseBuilder.successfulResponse(topSongs);	
+		}
+	}
+	
 	@RequestMapping(value="get_related_artists", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Artist>> search(HttpSession session, @RequestParam int artistId) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
