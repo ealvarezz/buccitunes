@@ -84,8 +84,14 @@ public class MusicCollectionController {
 	
 	
 	@RequestMapping(value="playlist", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<Playlist> getPlaylist(@RequestParam int id) {
-		Playlist playlist = musicCollectionService.getPlaylist(id);
+	public @ResponseBody BucciResponse<Playlist> getPlaylist(@RequestParam int id, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		Playlist playlist = musicCollectionService.getPlaylist(id, loggedUser.getEmail());
 		return BucciResponseBuilder.successfulResponse(playlist);
 	}
 	
@@ -190,8 +196,14 @@ public class MusicCollectionController {
 	}
 	
 	@RequestMapping(value="album", method = RequestMethod.GET)
-	public @ResponseBody BucciResponse<Album> getAlbum(@RequestParam int id) {
-		return BucciResponseBuilder.successfulResponse(musicCollectionService.getAlbum(id));
+	public @ResponseBody BucciResponse<Album> getAlbum(@RequestParam int id, HttpSession session) {
+		
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		
+		return BucciResponseBuilder.successfulResponse(musicCollectionService.getAlbum(id, loggedUser.getEmail()));
 	}
 	
 

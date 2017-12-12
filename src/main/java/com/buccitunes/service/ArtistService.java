@@ -114,14 +114,18 @@ public class ArtistService {
 		return artistTransactionRepository.findByArtist_Id(artistId);
 	}
 	
-	public Artist getArtist(int id) throws BucciException {
+	public Artist getArtist(int id, String email) throws BucciException {
 		Artist artist = artistRepository.findOne(id);
+		User user = userRepository.findOne(email);
+		
 		if(artist != null) {
 			artist.getAlbums().size();
 			artist.getUpcomingConcerts();
 			for(Album album : artist.getAlbums()) {
 				album.getSongs().size();
 			}
+			
+			if(user.getFollowingArtists().contains(artist)) artist.setFollowing(true);
 			return artist;
 		} else {
 			throw new BucciException(constants.getArtistNotFoundMsg());
