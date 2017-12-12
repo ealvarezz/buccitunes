@@ -280,6 +280,18 @@ public class UserController {
 		}
 	}
 	
+	@RequestMapping(value="unsave_album", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> userUnSaveAlbum(HttpSession session, @RequestBody Album album) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else {
+			userService.unSaveAlbum(album.getId(), sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse("Album unsaved!");	
+		}
+	}
+	
 	@RequestMapping(value="follow_playlist", method = RequestMethod.POST)
 	public @ResponseBody BucciResponse<String> followPlaylist(@RequestBody Playlist playlist, HttpSession session) {	
 		User sessionUser = (User) session.getAttribute(constants.getSession());
@@ -313,6 +325,18 @@ public class UserController {
 		else {
 			userService.saveSong(song.getId(), sessionUser.getEmail());
 			return BucciResponseBuilder.successfulResponse("Song saved!");	
+		}
+	}
+	
+	@RequestMapping(value="unsave_song", method = RequestMethod.POST)
+	public @ResponseBody BucciResponse<String> userUnSaveSong(HttpSession session, @RequestBody Song song) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else {
+			userService.unSaveSong(song.getId(), sessionUser.getEmail());
+			return BucciResponseBuilder.successfulResponse("Song unsaved!");	
 		}
 	}
 	

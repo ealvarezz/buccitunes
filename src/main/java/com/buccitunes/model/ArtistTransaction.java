@@ -63,7 +63,7 @@ public class ArtistTransaction {
 	}
 
 	public void setArtist(Artist artist) {
-		artist = artist;
+		this.artist = artist;
 	}
 
 	
