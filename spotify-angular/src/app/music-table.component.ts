@@ -25,6 +25,7 @@ export class MusicTableComponent implements OnChanges {
     @Input() isAlbum;
     @Input() isRequest : boolean = false;
     @Input() isQueue : boolean = false;
+    @Input() chart   : boolean = false;
     @Output() remove : EventEmitter<any> = new EventEmitter();
     dataSource : MusicDataSource;
     hoveredRow : number = -1;

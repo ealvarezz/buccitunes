@@ -13,9 +13,11 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity(name="PLAYLIST")
@@ -52,6 +54,10 @@ public class Playlist extends MusicCollection {
 	@OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "stats_id")
 	private StatCache stats;
+	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private boolean following;
 	
 	public Playlist(){
 		super();
@@ -156,4 +162,13 @@ public class Playlist extends MusicCollection {
 		this.isPublic = playlist.isPublic();
 		this.isCollaborative = playlist.isCollaborative();
 	}
+
+	public boolean isFollowing() {
+		return following;
+	}
+
+	public void setFollowing(boolean following) {
+		this.following = following;
+	}
+	
 }

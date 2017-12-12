@@ -293,6 +293,19 @@ public class AdminService {
 		return total;
 	}
 	
+	public void payAllRoyaltiesByCaching() {
+		
+		
+		for(ArtistMonthlyStat stat: artistMonthlyStatRepository.findAll()) {
+			ArtistTransaction transaction  = new ArtistTransaction();
+			transaction.setAmount(stat.getRevenue());
+			transaction.setArtist(stat.getId().getArtist());
+			transaction.setDate(new Date());
+			transaction.setPaymentType(PaymentType.ROYALTY_PAYMENT); 
+			artistTransactionRepository.save(transaction);
+		}
+	}
+	
 	public void payRoyaltiesByCaching() {
 		
 		List<ArtistMonthlyStat> monthlyStats = artistMonthlyStatRepository.getLastMonthStats();

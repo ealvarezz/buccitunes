@@ -56,6 +56,7 @@ export const BucciConstants =  {
       GET_REQUESTED_CONCERTS : environment.SERVER_PATH + "/requested_concerts",
       APPROVE_CONCERT     : environment.SERVER_PATH + "/approve_concert",
       REJECT_CONCERT      : environment.SERVER_PATH + "/disapprove_request_concert",
+      GET_TOP_CHARTS      : environment.SERVER_PATH + "/top_charts",
 
 
   },

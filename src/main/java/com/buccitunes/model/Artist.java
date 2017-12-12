@@ -44,6 +44,10 @@ public class Artist {
 	@JsonInclude(JsonInclude.Include.NON_NULL)
 	private String avatar;
 	
+	@Transient
+	@JsonInclude(JsonInclude.Include.NON_NULL)
+	private boolean following;
+	
 	String avatarPath;
 	
 	@OneToMany(fetch=FetchType.LAZY, mappedBy = "primaryArtist", cascade = CascadeType.ALL)
@@ -190,4 +194,13 @@ public class Artist {
 	public void setAvatarPath(String avatarPath) {
 		this.avatarPath = avatarPath;
 	}
+
+	public boolean isFollowing() {
+		return following;
+	}
+
+	public void setFollowing(boolean following) {
+		this.following = following;
+	}
+	
 }

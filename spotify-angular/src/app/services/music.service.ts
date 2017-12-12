@@ -1,5 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
 import {BucciResponse} from '../objs/BucciResponse';
+import {TopCharts} from '../objs/TopCharts';
 
 import {environment} from '../../environments/environment';
 import {BucciConstants} from '../../environments/app.config';
@@ -124,6 +125,12 @@ export class MusicCollectionService {
         return this.http.get<BucciResponse<String>>(BucciConstants.Endpoints.GET_LYRICS,{
             params: new HttpParams().set('songId', String(id)),
             withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
+    }
+
+    getTopCharts(){
+        return this.http.get<BucciResponse<TopCharts>>(BucciConstants.Endpoints.GET_TOP_CHARTS ,{withCredentials: true}).
         map(this.extractData)
         .catch(this.handleError);
     }
