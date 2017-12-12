@@ -10,7 +10,7 @@
             <div><h4>{{playlist.description}}</h4></div>
             <div *ngIf="playlist.owner.name"><h4>Created By {{playlist.owner.name}} - {{playlist.songs.length}} Songs, 3 hr 1 min</h4></div>
             <div *ngIf="!playlist.owner.name"><h4>Created By {{playlist.owner.email}} - {{playlist.songs.length}} Songs, 3 hr 1 min</h4></div>
-            <button md-raised-button  class="rounded-button">Play</button>
+            <button md-raised-button  class="rounded-button" (click)="playPlaylist()">Play</button>
             <button md-raised-button (click)="followPlaylist()"  class="rounded-button">Follow</button>
             <button md-mini-fab  [mdMenuTriggerFor]="menu"  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
             <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
@@ -29,6 +29,7 @@
                 <button *ngIf="!playlist.public" md-menu-item>
                     <span>Make Public</span>
                 </button>
+                
             </md-menu>
         </div>
     </md-card-header>

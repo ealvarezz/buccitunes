@@ -71,6 +71,7 @@ import {RequestedConcertTableComponent} from './requested-concert-table';
 import {RequestedConcertComponent} from './requested-concert';
 import {ConcertDetailComponent} from './concert-detail-dialog';
 import {TopSongsComponent} from './top-songs.component';
+import {GenreComponent} from './song-genre';
 
 
 const appRoutes: Routes = [
@@ -79,6 +80,7 @@ const appRoutes: Routes = [
           { path: '', component: HomePageComponent, canActivate: [AuthGuard] },
           {path: 'album/:id', component: AlbumComponent, canActivate: [AuthGuard]},
           {path: 'playlist/:id', component: PlaylistComponent, canActivate: [AuthGuard]},
+          {path: 'genre/:id', component: GenreComponent, canActivate: [AuthGuard]},
           {path: 'artist/:id', component: ArtistComponent, canActivate: [AuthGuard]},
           {path: 'admin', component:AdminComponent,  canActivate: [AuthGuard], 
               children:[
@@ -155,6 +157,7 @@ const appRoutes: Routes = [
     RequestedConcertComponent,
     ConcertDetailComponent,
     TopSongsComponent,
+    GenreComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

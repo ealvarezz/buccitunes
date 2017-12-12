@@ -235,6 +235,21 @@ export class MusicCollectionService {
         .catch(this.handleError)
     }
 
+    unFollowPlaylist(playlist : Playlist){
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.UNFOLLOW_PLAYLIST, playlist, {withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
+    }
+
+    getSongsByGenre(id : number){
+         return this.http.get<BucciResponse<Album>>(BucciConstants.Endpoints.GET_GENRE_SONGS,{
+           params: new HttpParams().set('genreId', String(id)), 
+           withCredentials: true
+        })
+        .map(this.extractData)
+        .catch(this.handleError);
+    }
+
     private reloadPlaylists(){
         this.getUserPlaylists().subscribe(
             (data) =>{console.log("updated playlists")}

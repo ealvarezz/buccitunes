@@ -68,7 +68,7 @@
             <h2>Bio</h2>
             <img *ngIf="!artwork" style="max-height:600px; max-width:320px;" [src]="mediaService.getArtistImageUrl(artist.avatarPath)">
             <img *ngIf="artwork" style="max-height:600px; max-width:320px;" [src]="artwork">
-            <ng-container *ngIf="isEditModeBio == false"><pre>{{artist.biography}}</pre></ng-container>
+            <ng-container *ngIf="isEditModeBio == false"><p>{{artist.biography}}</p></ng-container>
             <div *ngIf="isEditModeBio == true">
                 <div>
                     <input style = "margin-top:1%; margin-bottom:1%;" [disabled] = "true" placeholder="Upload Image...." mdInput value="../assets/ugly_god.png" required>
@@ -107,7 +107,7 @@
                 <div *ngFor="let concert of artist.concerts">
                     <div>
                         <md-grid-list cols="6" rowHeight="60px">
-                            <md-grid-tile ><md-icon color="accent" style="position:absolute; left:0px;">event</md-icon></md-grid-tile>
+                            <md-grid-tile ><md-icon color="warn" style="position:absolute; left:0px;">event</md-icon></md-grid-tile>
                             <md-grid-tile><span style="position:absolute; left:0px;">{{concert.mainStar.name}}</span></md-grid-tile>
                             <md-grid-tile><h4>{{concert.releaseDate | date:'fullDate'}}</h4></md-grid-tile>
                             <md-grid-tile><h4>{{concert.name | capitalize}}</h4></md-grid-tile>

@@ -11,7 +11,7 @@
             <button md-menu-item routerLink="/account-settings"> Settings </button>
             <button md-menu-item (click)="logout()"> Logout </button>
         </md-menu>
-        <a [routerLink]="['/user',currentUser.email]"><p>{{currentUser.email}}</p></a>
+        <a class="link" [routerLink]="['/user',currentUser.email]"><p>{{currentUser.email}}</p></a>
     </div>
     <md-list-item *ngIf="isAdmin">
         <div mdLine>

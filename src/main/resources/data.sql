@@ -470,11 +470,15 @@ END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_songs_by_genre`(IN genre_id INT)
 BEGIN
-SELECT S.*
-FROM stat_cache SC, song S, genre_song GS
-WHERE GS.genre_id = genre_id AND S.id = GS.song_id AND S.id = SC.id
+SELECT S.*, SC.total_plays
+FROM stat_cache SC
+INNER JOIN song S
+ON S.stats_id = SC.id
+INNER JOIN genre_song GS
+ON GS.song_id = S.id
+WHERE GS.genre_id = genre_id 
 ORDER BY SC.total_plays DESC
 LIMIT 50;
-END ^;
+END^;
 
 
