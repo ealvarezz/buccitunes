@@ -447,7 +447,7 @@ SELECT A.*, M.artwork_path, M.date_created, M.title
 FROM album A, stat_cache SC, music_collection M
 WHERE A.id = SC.id AND A.id = M.id
 ORDER BY SC.total_plays DESC
-LIMIT 5;
+LIMIT 4;
 END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_artists`()
@@ -456,7 +456,7 @@ SELECT A.*
 FROM artist A, stat_cache SC
 WHERE A.id = SC.id 
 ORDER BY SC.total_plays DESC
-LIMIT 5;
+LIMIT 4;
 END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_songs`()
