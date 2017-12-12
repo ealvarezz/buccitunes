@@ -18,6 +18,7 @@
         </md-card-content>
 </md-card>
 
+
 <md-card class = "browse-card mat-elevation-z22">
     <!-- <md-card-header>
         
@@ -25,7 +26,29 @@
         <md-card-content style= "margin-bottom:100px">
                 <md-tab-group class ="browse-tabs">
                  <md-tab label="OVERVIEW">
-                         <homepage-template [data]="overView"></homepage-template>
+                        <div>
+                        <h2><b>TOP ALBUMS</b></h2>
+                        <md-grid-list cols="4" [rowHeight]="rowHeight">
+                                <md-grid-tile *ngFor = "let item of charts.topAlbums" colspan= "1" rowpan = "1" >
+                                        <div>
+                                                <div><image [src]="item.artworkPath"></image></div>
+                                                <div *ngIf ="item.title" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
+                                                <div *ngIf ="item.stats.totalPlays" class ="browse-item-template"><h4>{{item.stats.totalPlays}}</h4></div>
+                                        </div>
+                                </md-grid-tile>
+                        </md-grid-list>
+                        </div>
+                       <div>
+                                <md-grid-list cols="4" [rowHeight]="rowHeight">
+                                        <md-grid-tile *ngFor = "let item of charts.topPlaylists" colspan= "1" rowpan = "1" >
+                                                <div>
+                                                        <div><image [src]="item.artworkPath"></image></div>
+                                                        <div *ngIf ="item.title" class ="browse-item-template"><h4><b><a [routerLink]="['/album', album.id]">{{album.title}}</a></b></h4></div>
+                                                        <div *ngIf ="item.stats.totalPlays" class ="browse-item-template"><h4>{{item.stats.totalPlays}}</h4></div>
+                                                </div>
+                                        </md-grid-tile>
+                                </md-grid-list>
+                       </div>
                  </md-tab>
                  <md-tab label="FOR YOU">
                          <homepage-template [data]="recommended"></homepage-template>

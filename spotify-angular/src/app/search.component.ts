@@ -67,6 +67,10 @@ goToSelection(value, group ){
         let id = value.id;
         this.router.navigate(['/playlist', id]);
     }
+    else if(group == "userResults"){
+        let id = value.email;
+        this.router.navigate(['/user',id]);
+    }
 }
 
 displayFn(value : any): string {
@@ -75,6 +79,9 @@ displayFn(value : any): string {
     }
     if(value['title']){
         return value['title'];
+    }
+    else if(value['email']){
+        return value['email'];
     }
     else{
         return value['name'];
