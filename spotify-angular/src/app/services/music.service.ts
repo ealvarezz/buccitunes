@@ -238,7 +238,7 @@ export class MusicCollectionService {
         let add = acceptedSong ? [acceptedSong] : null;
         let remove = removedSong ? [removedSong] : null;
         let playlistInfo = new PlaylistPage();
-        playlistInfo.playlist = playlist;
+        playlistInfo.playlist = JSON.parse(JSON.stringify(playlist));
         playlistInfo.playlist.songs = null;
         playlistInfo.playlist.owner = null;
         playlistInfo.songsToAdd = add;
