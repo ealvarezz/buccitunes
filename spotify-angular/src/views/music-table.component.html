@@ -67,8 +67,14 @@
     </ng-container>
     
     <ng-container mdColumnDef="duration">
-      <md-header-cell *mdHeaderCellDef md-sort-header> <i class="material-icons" >access_time</i> </md-header-cell>
-      <md-cell *mdCellDef="let row"> 3:30 </md-cell>
+      <md-header-cell *mdHeaderCellDef md-sort-header>
+         <ng-container *ngIf="!chart"><i class="material-icons" >access_time</i> </ng-container> 
+         <ng-container *ngIf="chart"><span>Total Plays</span></ng-container> 
+        </md-header-cell>
+      <md-cell *mdCellDef="let row">
+         <ng-container *ngIf="!chart" >3:30 </ng-container>
+          <ng-container *ngIf="chart" >{{row.stats.totalPlays}}</ng-container>
+        </md-cell>
     </ng-container>
 
 

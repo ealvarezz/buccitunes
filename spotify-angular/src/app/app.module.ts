@@ -70,6 +70,7 @@ import {AddConcertDialog} from './add-concert';
 import {RequestedConcertTableComponent} from './requested-concert-table';
 import {RequestedConcertComponent} from './requested-concert';
 import {ConcertDetailComponent} from './concert-detail-dialog';
+import {TopSongsComponent} from './top-songs.component';
 
 
 const appRoutes: Routes = [
@@ -92,6 +93,7 @@ const appRoutes: Routes = [
           {path: 'followed-artists', component: FollowedArtists, canActivate: [AuthGuard]},
           {path: 'account-settings', component: AccountSettingsComponent, canActivate: [AuthGuard]},
           {path: 'queue', component: QueueComponent, canActivate: [AuthGuard]},
+          {path: 'top-charts', component: TopSongsComponent, canActivate: [AuthGuard]},
           {path: 'user/:id', component: AccountComponent, canActivate: [AuthGuard]},
         ] 
   },
@@ -151,7 +153,8 @@ const appRoutes: Routes = [
     RequestedConcertTableComponent,
     AddConcertDialog,
     RequestedConcertComponent,
-    ConcertDetailComponent
+    ConcertDetailComponent,
+    TopSongsComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

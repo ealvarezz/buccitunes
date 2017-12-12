@@ -68,7 +68,7 @@
             <h2>Bio</h2>
             <img *ngIf="!artwork" style="max-height:600px; max-width:320px;" [src]="mediaService.getArtistImageUrl(artist.avatarPath)">
             <img *ngIf="artwork" style="max-height:600px; max-width:320px;" [src]="artwork">
-            <p *ngIf="isEditModeBio == false">{{artist.biography}}</p>
+            <ng-container *ngIf="isEditModeBio == false"><pre>{{artist.biography}}</pre></ng-container>
             <div *ngIf="isEditModeBio == true">
                 <div>
                     <input style = "margin-top:1%; margin-bottom:1%;" [disabled] = "true" placeholder="Upload Image...." mdInput value="../assets/ugly_god.png" required>
