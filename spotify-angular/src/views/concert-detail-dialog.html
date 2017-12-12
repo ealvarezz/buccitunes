@@ -1,0 +1,66 @@
+<div>
+    <div style="width: 90%;">
+        <div><h3>Concert Name</h3></div>
+        <div><h1>{{concert.name}}</h1></div>
+    </div>
+</div>
+    <div style="width: 30%; display: inline-block; vertical-align:top;">
+        <div><h2>Concert Info</h2></div>
+        <div> 
+            <div style="width: 50%;">
+                <div><h3>Price</h3></div>
+                <div><span>${{concert.price | number : '1.2-2'}}</span></div>
+            </div>
+        </div>
+        <div> 
+        <div>
+            <div style="width: 50%;">
+                <div><h3>Main Star</h3></div>
+                <div><span>{{concert.mainStar.name}}</span></div>
+            </div>
+        </div> 
+        <div>
+            <div style="width: 50%;">
+                <div><h3>Date</h3></div>
+                <div><span>{{concert.releaseDate | date: 'fullDate'}}</span></div>
+            </div>
+        </div> 
+        </div>
+        
+    </div>
+    <div style="width: 40%; display: inline-block; vertical-align:top;">
+        <div><h2>Location</h2></div>
+        <div> 
+            <div style="width: 90%;">
+                <div><h3>Venue</h3></div>
+                <ng-container *ngIf="concert.location.city">
+                <div><span>{{concert.location.address}}</span></div>
+                <div><span>{{concert.location.city}}, {{concert.location.state}}</span></div>
+                <div><span>{{concert.location.zip}}</span></div>
+                </ng-container>
+                <ng-container *ngIf="!concert.location.city">
+                <div><span>TBA</span></div>
+                
+                </ng-container>
+            </div>
+        </div> 
+    </div>
+    <div style="width: 20%; top:0; display: inline-block;">
+    <div> 
+            <md-form-field style="width: 90%;">
+                <input name="featured"  mdInput placeholder="Featured Artists" disabled>
+            </md-form-field>
+    </div>
+    <div>
+            <md-list>
+                <md-list-item *ngFor="let artist of featuredArtists">
+                    <span>{{artist.name}}</span>
+                    <md-divider></md-divider>
+                </md-list-item>
+            </md-list>
+    </div>
+    </div>
+    <div style="display: block; margin-left: auto; margin-right: auto; width: 40%;">
+        <button md-raised-button md-dialog-close class="rounded-button"> Cancel</button>
+    </div>
+    
