@@ -138,8 +138,8 @@ END ^;
 
 CREATE DEFINER=`root`@`localhost` PROCEDURE `search_user`(IN user_name VARCHAR(200))
 BEGIN
-SELECT U.email, U.avatar_path, U.in_private_mode, U.name, U.password, U.role, U.username, 0 AS clazz_ FROM user U, artist_user AU
-WHERE U.name LIKE CONCAT('%', user_name, '%') AND U.email <> AU.email
+SELECT distinct U.email, U.avatar_path, U.in_private_mode, U.name, U.password, U.role, U.username, 0 AS clazz_ FROM user U
+WHERE U.name LIKE CONCAT('%', user_name, '%') AND (U.role = 0 OR U.role = 1)
 LIMIT 5;
 END ^;
 
@@ -440,3 +440,41 @@ START TRANSACTION;
     
 COMMIT;
 END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_albums`()
+BEGIN
+SELECT A.*, M.artwork_path, M.date_created, M.title
+FROM album A, stat_cache SC, music_collection M
+WHERE A.id = SC.id AND A.id = M.id
+ORDER BY SC.total_plays DESC
+LIMIT 4;
+END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_artists`()
+BEGIN
+SELECT A.*
+FROM artist A, stat_cache SC
+WHERE A.id = SC.id 
+ORDER BY SC.total_plays DESC
+LIMIT 4;
+END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_songs`()
+BEGIN
+SELECT S.*
+FROM song S, stat_cache SC
+WHERE S.id = SC.id
+ORDER BY SC.total_plays DESC
+LIMIT 50;
+END ^;
+
+CREATE DEFINER=`root`@`localhost` PROCEDURE `get_top_songs_by_genre`(IN genre_id INT)
+BEGIN
+SELECT S.*
+FROM stat_cache SC, song S, genre_song GS
+WHERE GS.genre_id = genre_id AND S.id = GS.song_id AND S.id = SC.id
+ORDER BY SC.total_plays DESC
+LIMIT 50;
+END ^;
+
+

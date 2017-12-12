@@ -13,6 +13,7 @@ import com.buccitunes.constants.Tier;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.QueryHelper;
 import com.buccitunes.model.Album;
+import com.buccitunes.model.Artist;
 import com.buccitunes.model.Song;
 import com.buccitunes.resultset.AlbumWithStats;
 
@@ -40,6 +41,9 @@ public interface AlbumRepository extends BaseMusicCollectionRepository<Album>, C
 	
 	@Query(value="CALL search_album(:name);", nativeQuery = true)
 	public List<Album> searchAlbum(@Param("name") String name);
+	
+	@Query(value="CALL get_top_albums();", nativeQuery = true)
+	public List<Album> topAlbums();
 	
 	/*
 	 * 	@Query(value=""

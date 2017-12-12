@@ -23,6 +23,7 @@ import {BucciConstants} from '../environments/app.config';
 import 'rxjs/add/observable/forkJoin';
 import {AddConcertDialog} from './add-concert';
 import {Concert} from './objs/Concert';
+import {ConcertDetailComponent} from './concert-detail-dialog';
 
 
 @Component({
@@ -159,6 +160,17 @@ export class ArtistComponent implements OnInit {
               // this.artworkError.status = true;
               // this.artworkError.message = err.message;
             });
+  }
+
+
+  viewDetails(concert : Concert){
+    let dialogRef = this.dialog.open(ConcertDetailComponent, {
+      width: '1000px',
+      data: {
+        concert: concert
+      }
+    });
+
   }
 
 

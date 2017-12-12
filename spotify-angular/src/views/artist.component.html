@@ -106,13 +106,14 @@
                 
                 <div *ngFor="let concert of artist.concerts">
                     <div>
-                        <md-grid-list cols="5" rowHeight="60px">
+                        <md-grid-list cols="6" rowHeight="60px">
                             <md-grid-tile ><md-icon color="accent" style="position:absolute; left:0px;">event</md-icon></md-grid-tile>
                             <md-grid-tile><span style="position:absolute; left:0px;">{{concert.mainStar.name}}</span></md-grid-tile>
                             <md-grid-tile><h4>{{concert.releaseDate | date:'fullDate'}}</h4></md-grid-tile>
                             <md-grid-tile><h4>{{concert.name | capitalize}}</h4></md-grid-tile>
                             <md-grid-tile *ngIf="concert.location.city"><h4 > {{concert.location.city}}, {{concert.location.state}}</h4></md-grid-tile>
                             <md-grid-tile *ngIf="!concert.location.city"><h4 > TBA</h4></md-grid-tile>
+                            <md-grid-tile ><button md-icon-button (click)="viewDetails(concert)"><md-icon>launch</md-icon></button></md-grid-tile>
                         </md-grid-list>
                     </div>
                 <md-divider></md-divider>

@@ -21,6 +21,7 @@ import com.buccitunes.jsonmodel.CurrentToNewForm;
 import com.buccitunes.jsonmodel.LoginInfo;
 import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
+import com.buccitunes.jsonmodel.TopCharts;
 import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.*;
 import com.buccitunes.model.ActivityFeed;
@@ -405,6 +406,30 @@ public class UserController {
 		else {
 			SearchResults searchResults = userService.search(searchString);
 			return BucciResponseBuilder.successfulResponse(searchResults);	
+		}
+	}
+	
+	@RequestMapping(value="top_charts", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<TopCharts> getTopChartsOfAllTime(HttpSession session) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			TopCharts charts = userService.getTopCharts();
+			return BucciResponseBuilder.successfulResponse(charts);	
+		}
+	}
+	
+	@RequestMapping(value="top_songs_by_genre", method = RequestMethod.GET)
+	public @ResponseBody BucciResponse<List<Song>> getTopSongsOfAllTimeByGenre(HttpSession session, @RequestParam int genreId) {	
+		User sessionUser = (User) session.getAttribute(constants.getSession());
+		if(sessionUser == null) {
+			return BucciResponseBuilder.failedMessage("Not Logged In");
+		}
+		else {
+			List<Song> topSongs = userService.getTopSongsByGenre(genreId);
+			return BucciResponseBuilder.successfulResponse(topSongs);	
 		}
 	}
 	

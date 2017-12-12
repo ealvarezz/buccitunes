@@ -156,4 +156,15 @@ public class Album extends MusicCollection {
 	public void setPublic(boolean isPublic) {
 		this.isPublic = isPublic;
 	}
+
+
+	public StatCache getStats() {
+		return stats;
+	}
+
+
+	public void setStats(StatCache stats) {
+		this.stats = stats;
+	}
+	
 }
