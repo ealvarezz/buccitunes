@@ -141,6 +141,12 @@ export class MusicCollectionService {
         .catch(this.handleError);
     }
 
+    unSaveAlbum(album : Album){
+        return this.http.post<BucciResponse<String>>(BucciConstants.Endpoints.UNSAVE_ALBUM, album, {withCredentials: true}).
+        map(this.extractData)
+        .catch(this.handleError);
+    }
+
     getAlbumLibrary(){
         return this.http.get<BucciResponse<Album[]>>(BucciConstants.Endpoints.GET_SAVED_ALBUMS, {withCredentials: true})
         .map(this.extractData)

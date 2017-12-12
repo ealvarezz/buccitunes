@@ -9,6 +9,7 @@ export class Artist{
     albums          : Album[];
     avatarPath      :string;
     concerts         : Concert[];
+    following        : boolean;
 
     // CHANGE THIS STUFF L8R
     followers       : string;

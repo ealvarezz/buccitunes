@@ -88,6 +88,7 @@ export class PlaylistComponent{
        .subscribe(
            (data)=>{
                this.notifications.success("Success", "Successfully following playlist");
+               this.playlist.following = true;
            },
            (err)=>{
                 console.log("error");
@@ -100,6 +101,7 @@ export class PlaylistComponent{
        .subscribe(
            (data)=>{
                this.notifications.success("Success", "Successfully unfollowing playlist");
+               this.playlist.following = false;
            },
            (err)=>{
                 console.log("error");

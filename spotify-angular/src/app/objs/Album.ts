@@ -16,5 +16,5 @@ export class Album{
     songs           : Song[] = [new Song(), new Song(), new Song(), new Song(), new Song(), new Song(), new Song(), new Song()];
     stats           : any;
     title           : string;
-
+    following       : boolean;
 }

@@ -6,8 +6,8 @@
                 <div><h3>Artist<i class="material-icons" style="color:#3f51b5;">verified_user</i></h3></div>
                 <div><h1>{{artist.name}}</h1></div>
                 <button md-raised-button class="rounded-button">Play</button>
-                <button md-raised-button class="rounded-button" *ngIf="!following" (click)="followArtist()">Follow</button>
-                <button md-raised-button class="rounded-button" *ngIf="following" (click)="unFollowArtist()">Unfollow</button>
+                <button md-raised-button class="rounded-button" *ngIf="!artist.following" (click)="followArtist()">Follow</button>
+                <button md-raised-button class="rounded-button" *ngIf="artist.following" (click)="unFollowArtist()">Unfollow</button>
                 <button md-mini-fab  style="color: white; background-color:#3f51b5; top:5px;" [mdMenuTriggerFor]="artistMenu"><i class="material-icons " style="font-size:24px; ">more_horiz</i></button>
 
                 <md-menu #artistMenu="matMenu">

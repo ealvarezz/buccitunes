@@ -14,5 +14,6 @@ export class Playlist {
          artwork: string;
          artworkPath: string;
          description: string;
+         following : boolean;
          stats: any;
        }

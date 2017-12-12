@@ -53,8 +53,16 @@ export class AlbumComponent{
    saveAlbum(){
        this.musicService.saveAlbum(this.album).subscribe(
            (data) =>{
-            
+                this.album.following = true;
+           }
+       );
+   }
 
+   unSaveAlbum(){
+    this.musicService.unSaveAlbum(this.album).subscribe(
+           (data) =>{
+            
+                this.album.following = false;
            }
        );
    }

@@ -178,7 +178,7 @@ export class ArtistComponent implements OnInit {
   followArtist(){
     this.artistService.followArtist(this.artist).subscribe(
       (data)=>{
-        this.following = true;
+        this.artist.following = true;
       },
       (err)=>{
         this.notificationService.error("ERROR", "There was an issue following this artist.");
@@ -189,7 +189,7 @@ export class ArtistComponent implements OnInit {
   unFollowArtist(){
     this.artistService.unFollowArtist(this.artist).subscribe(
       (data)=>{
-        this.following = false;
+        this.artist.following = false;
       },
       (err)=>{
         this.notificationService.error("ERROR", "There was an issue unfollowing this artist.");
