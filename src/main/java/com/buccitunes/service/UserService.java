@@ -33,6 +33,7 @@ import com.buccitunes.dao.UserRepository;
 import com.buccitunes.jsonmodel.CurrentToNewForm;
 import com.buccitunes.jsonmodel.SearchResults;
 import com.buccitunes.jsonmodel.SignupFormInfo;
+import com.buccitunes.jsonmodel.TopCharts;
 import com.buccitunes.jsonmodel.UserPageInfo;
 import com.buccitunes.miscellaneous.BucciConstants;
 import com.buccitunes.miscellaneous.BucciException;
@@ -558,5 +559,14 @@ public class UserService  {
 	public List<ActivityFeed> userFeed (String email){
 		
 		return activityFeedRepository.getUserFeed(email);
+	}
+	
+	public TopCharts getTopCharts() {
+		
+		return new TopCharts(
+				albumRepository.topAlbums(),
+				songRepository.topSongs(),
+				artistRepository.topArtists()
+		);
 	}
 }
