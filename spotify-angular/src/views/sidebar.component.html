@@ -15,55 +15,55 @@
     </div>
     <md-list-item *ngIf="isAdmin">
         <div mdLine>
-            <h4 class ="side-list"><a routerLink="/admin">Admin Utilities</a></h4>
+            <h4 class ="side-list"><a class="link" routerLink="/admin">Admin Utilities</a></h4>
         </div>
     </md-list-item>
     <ng-container *ngIf="isArtist">
     <md-list-item>
         <div mdLine>
-            <h4 class ="side-list"><a [routerLink]="['/artist', currentUser.artist.id]">My Artist</a></h4>
+            <h4 class ="side-list"><a class="link" [routerLink]="['/artist', currentUser.artist.id]">My Artist</a></h4>
         </div>
     </md-list-item>
     </ng-container>
     <md-list-item>
         <div mdLine>
-            <h4 class ="side-list"><a routerLink="/">Browse</a></h4>
+            <h4 class ="side-list"><a class="link" routerLink="/">Browse</a></h4>
         </div>
     </md-list-item>
     
     <md-list-item>
-        <h3 mdLine md-subheader>Your Library</h3>
+        <h3 mdLine md-subheader style="color:#ffd740;" >Your Library</h3>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/recently-played">Recently Played</a> </h4>
+            <h4 class ="side-list"><a class="link" routerLink="/recently-played">Recently Played</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/library">Songs</a> </h4>
+            <h4 class ="side-list"><a class="link" routerLink="/library">Songs</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/album-library">Albums</a> </h4>
+            <h4 class ="side-list"><a class="link" routerLink="/album-library">Albums</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/followed-artists">Artists</a> </h4>
+            <h4 class ="side-list"><a class="link" routerLink="/followed-artists">Artists</a> </h4>
         </div>
         <div mdLine class= "side-list-div">
-            <h4 class ="side-list"><a routerLink="/followed-playlists">Playlists</a></h4>
+            <h4 class ="side-list"><a class="link" routerLink="/followed-playlists">Playlists</a></h4>
         </div>
 
     </md-list-item>
        <md-divider></md-divider>
     <md-list-item>
-        <h3 mdLine md-subheader>Your Playlist <button (click)="addPlaylist()" md-icon-button style="float:right; color:white; margin-top:-5%;"><i class="material-icons">add_circle</i></button></h3>
+        <h3 mdLine md-subheader style="color:#ffd740;" >Your Playlist <button (click)="addPlaylist()" md-icon-button style="float:right; color:white; margin-top:-5%;"><i class="material-icons">add_circle</i></button></h3>
         <div *ngFor="let playlist of playlists" mdLine >
             <!-- <i md-list-icon *ngIf= "playlist.source == 'friend'" class="material-icons playlist-icons">people</i>
             <i *ngIf= "playlist.source == 'public'" class="material-icons playlist-icons">public</i> -->
-            <h4 class ="side-list"> <a [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></h4>
+            <h4 class ="side-list"> <a class="link" [routerLink]="['/playlist', playlist.id]">{{playlist.title}}</a></h4>
         </div>
     </md-list-item>
     <md-divider></md-divider>
     <md-list-item>
-        <h3 mdLine md-subheader>Recent Albums</h3>
+        <h3 mdLine md-subheader style="color:#ffd740;" >Recent Albums</h3>
         <div *ngFor="let album of recentAlbums" mdLine >
-            <h4 class ="side-list"> <a [routerLink]="['/album',album.id]">{{album.title}}</a></h4>
+            <h4 class ="side-list"> <a class="link" [routerLink]="['/album',album.id]">{{album.title}}</a></h4>
         </div>
     </md-list-item>
 

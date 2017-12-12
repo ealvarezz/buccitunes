@@ -69,6 +69,7 @@ import {FollowedArtists} from './following-artists.component';
 import {AddConcertDialog} from './add-concert';
 import {RequestedConcertTableComponent} from './requested-concert-table';
 import {RequestedConcertComponent} from './requested-concert';
+import {ConcertDetailComponent} from './concert-detail-dialog';
 
 
 const appRoutes: Routes = [
@@ -149,7 +150,8 @@ const appRoutes: Routes = [
     FollowedArtists,
     RequestedConcertTableComponent,
     AddConcertDialog,
-    RequestedConcertComponent
+    RequestedConcertComponent,
+    ConcertDetailComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -212,7 +214,8 @@ const appRoutes: Routes = [
     UpdatePlaylistDialog,
     LyricsComponent,
     YesNoDialogComponent,
-    AddConcertDialog
+    AddConcertDialog,
+    ConcertDetailComponent
   ],
   bootstrap: [AppComponent]
 })

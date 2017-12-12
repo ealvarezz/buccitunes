@@ -29,6 +29,7 @@ constructor(private musicService : MusicCollectionService,
             private mediaService : MediaService){}
 
 labelMap = {
+    "userResults" : "Users",
     "songResults" : "Songs",
     "artistResults" : "Artists",
     "albumResults" : "Albums",
