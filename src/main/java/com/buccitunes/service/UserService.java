@@ -313,6 +313,15 @@ public class UserService  {
 
 	}
 	
+	public void unSaveAlbum(int albumId, String email) {
+		
+		User user = userRepository.findOne(email);
+		Album album = albumRepository.findOne(albumId);
+		user.getSavedAlbums().size();
+		user.getSavedAlbums().remove(album);
+
+	}
+	
 	public void followPlaylist(int playlistId, String email) {
 		
 		User user = userRepository.findOne(email);
@@ -339,6 +348,16 @@ public class UserService  {
 		
 	}
 	
+	public void unSaveSong(int songId, String email) {
+		
+		User user = userRepository.findOne(email);
+		Song song = songRepository.findOne(songId);
+		user.getSavedSongs().size();
+		user.getSavedSongs().remove(song);
+		
+	}
+	
+
 	public List<Song> getSavedSongs(String email) {
 		
 		User user = userRepository.findOne(email);
