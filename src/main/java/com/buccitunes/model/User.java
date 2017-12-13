@@ -97,7 +97,6 @@ public class User {
 	joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "email"),
 	inverseJoinColumns = @JoinColumn(name = "playlist_id", referencedColumnName = "id"))
 	private List<Playlist> collaboratingPlaylitst;
-
 	
 	@OneToMany(mappedBy = "ticketHolder", cascade = CascadeType.ALL)
 	@JsonIgnoreProperties(value = {"ticketHolder"})

@@ -353,20 +353,18 @@ public class UserController {
 	}
 	
 	@RequestMapping(value="premium_upgrade", method = RequestMethod.POST)
-	public @ResponseBody BucciResponse<PremiumUser> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
+	public @ResponseBody BucciResponse<String> premiumUpgrade(@RequestBody BillingInfo billingInfo, HttpSession session) {
 		User sessionUser = (User) session.getAttribute(constants.getSession());
 		
 		if(sessionUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
 		try {
-			PremiumUser user = userService.upgradeToPremium(sessionUser, billingInfo);
-			session.setAttribute(constants.getSession(), user);
-			sessionUser = user;
+			userService.upgradeToPremium(sessionUser, billingInfo);
 		} catch (BucciException e) {
 			return BucciResponseBuilder.failedMessage(e.getErrMessage());
 		}
-		return BucciResponseBuilder.successfulResponseMessage("Congratulations, you have upgraded to premium", (PremiumUser)sessionUser);
+		return BucciResponseBuilder.successfulResponse("Congratulations, you have upgraded to premium");
 	}
 	
 	@RequestMapping(value="albums_of_saved_songs", method = RequestMethod.POST)
@@ -569,7 +567,6 @@ public class UserController {
 		}
 	}
 	
-	
 	@RequestMapping(value="go_private", method = RequestMethod.PUT)
 	public @ResponseBody BucciResponse<User> becomePrivate(@RequestParam boolean secret, HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
@@ -622,6 +619,20 @@ public class UserController {
 		
 		List<Payment> payments = userService.getPayments((PremiumUser) loggedUser);
 		return BucciResponseBuilder.successfulResponse(payments);
+	}
+	
+	@RequestMapping(value="makePayment", method = RequestMethod.PUT)
+	public @ResponseBody BucciResponse<String> makePayment(HttpSession session) {
+		User loggedUser = (User) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		else if(!BucciPrivilege.isPremium(loggedUser)) {
+			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
+		}
+		
+		userService.userMakePayment(loggedUser);
+		return BucciResponseBuilder.successfulResponse("Payment has been made");
 	}
 	
 	@RequestMapping(value="submit_ticket", method = RequestMethod.POST)
