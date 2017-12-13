@@ -9,6 +9,9 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {environment} from '../../environments/environment';
 import {QueueService} from './queue.service';
 import {MusicCollectionService} from './music.service';
+import {AuthenticationService} from './authentication.service';
+import {MdDialog, MdDialogRef, MD_DIALOG_DATA} from '@angular/material';
+import {AdDialog} from '../ad-dialog';
 
 @Injectable()
 export class MusicService {
@@ -45,7 +48,8 @@ export class MusicService {
 
 
 
-    constructor(private queueService : QueueService, private musicCollectionService : MusicCollectionService){
+    constructor(private queueService : QueueService, private musicCollectionService : MusicCollectionService, private authenticationService : AuthenticationService,
+        public dialog                 : MdDialog){
         this.audio.ontimeupdate = this.updateTime.bind(this);
         this.audio.onended = this.onEndHandler.bind(this);
         
@@ -104,6 +108,14 @@ export class MusicService {
             .subscribe(data => console.log("song recorded"));
         }
         this.togglePlaying(true);
+
+
+        if(this.authenticationService.currentUser && this.authenticationService.currentUser.role === "USER"){
+           let random  =  Math.floor(Math.random() * 3) + 1  
+           if(random == 1){
+               this.openAd()
+           }
+        }
         
     }
 
@@ -155,6 +167,12 @@ export class MusicService {
         this.volumeChange.next(vol);
         let mute = (vol == 0);
         this.muteChange.next(mute);
+    }
+
+    private openAd(){
+        let dialogRef = this.dialog.open(AdDialog, {
+      width: '800px',
+    });
     }
 
     private togglePlaying(isPlaying){

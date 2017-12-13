@@ -16,7 +16,7 @@ export class CancelSubscriptionComponent implements OnInit {
 thirdFormGroup: FormGroup;
 
 notCompleted = true;
-@ViewChild('stepper') stepper;
+@ViewChild('stepperz') stepper;
 
 
 constructor(private _formBuilder: FormBuilder, private authentication : AuthenticationService, private router : Router) {
@@ -25,20 +25,18 @@ constructor(private _formBuilder: FormBuilder, private authentication : Authenti
 
 ngOnInit() {
     this.thirdFormGroup = this._formBuilder.group({
-      secondCtrl: ['', Validators.required]
     });
 
   }
 
 
   cancel(){
-    
     this.authentication.cancelSubscription().subscribe(
       (data) =>{
-        this.stepper.selectedIndex = 1;
         this.authentication.logout().subscribe(
             (data)=>{
                 console.log("logged out");
+                this.stepper.selectedIndex = 1;
             }
         )
       },

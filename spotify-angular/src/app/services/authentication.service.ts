@@ -105,6 +105,12 @@ export class AuthenticationService {
         .catch(this.handleError);
     }
 
+    makePayment(){
+        return this.http.put<BucciResponse<User>>(BucciConstants.Endpoints.MAKE_PAYMENT,null,{withCredentials : true})
+        .map(this.extractDataBUCCI)
+        .catch(this.handleError);
+    }
+
 
     isAdminUserRole() : boolean{
         return this.currentUser.role === BucciConstants.Roles.ADMIN;

@@ -6,7 +6,7 @@
   <h1> Cancel your subscription</h1>
   </div>
 </md-card-header>
-<md-horizontal-stepper linear #stepper>
+<md-horizontal-stepper linear #stepperz>
   <md-step [stepControl]="thirdFormGroup">
     <form [formGroup]="thirdFormGroup">
       <ng-template  mdStepLabel>Cancel Subscription</ng-template>
@@ -23,7 +23,7 @@
         </div>
       <div>
         <h4>By clicking submit, you agree to cancel your monthly subscription. You will remain a BUCCI Premium user until the end of your billing cycle. After that date, you will no longer be charged. </h4>
-        <button md-button  (click)="cancel()">Submit</button>
+        <button md-button mdStepperNext  (click)="cancel()">Submit</button>
       </div>
     </form>
   </md-step>
@@ -41,3 +41,4 @@
 </md-card>
 </div>
 </div>
+

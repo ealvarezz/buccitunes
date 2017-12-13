@@ -4,6 +4,7 @@ import {BillingInfo, CreditCardCompany, CREDIT_CARD_ENUM} from './objs/BillingIn
 import {SignupInfo} from './objs/SignupInfo';
 import {AuthenticationService} from './services/authentication.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router } from '@angular/router';
 
 
 @Component({
@@ -40,6 +41,15 @@ ngOnInit() {
     this.authentication.upgradeToPremium(this.billingInfo).subscribe(
       (data) =>{
         this.stepper.selectedIndex = 1;
+        this.authentication.makePayment().subscribe(
+          (data)=>{
+            this.authentication.logout().subscribe(
+              (data)=>{
+                  console.log("logout");
+              }
+            )
+          }
+        )
       },
       (err) =>{
         console.error(err);

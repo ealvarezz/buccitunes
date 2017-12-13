@@ -621,16 +621,13 @@ public class UserController {
 		return BucciResponseBuilder.successfulResponse(payments);
 	}
 	
-	@RequestMapping(value="makePayment", method = RequestMethod.PUT)
+	@RequestMapping(value="make_payment", method = RequestMethod.PUT)
 	public @ResponseBody BucciResponse<String> makePayment(HttpSession session) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
 		if(loggedUser == null) {
 			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
 		}
-		else if(!BucciPrivilege.isPremium(loggedUser)) {
-			return BucciResponseBuilder.failedMessage(constants.getGeneralAccessDeniedMsg());
-		}
-		
+	
 		userService.userMakePayment(loggedUser);
 		return BucciResponseBuilder.successfulResponse("Payment has been made");
 	}

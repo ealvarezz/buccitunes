@@ -73,6 +73,7 @@ import {ConcertDetailComponent} from './concert-detail-dialog';
 import {TopSongsComponent} from './top-songs.component';
 import {GenreComponent} from './song-genre';
 import {CancelSubscriptionComponent} from './cancel-subscription';
+import {AdDialog} from './ad-dialog';
 
 
 const appRoutes: Routes = [
@@ -161,6 +162,7 @@ const appRoutes: Routes = [
     TopSongsComponent,
     GenreComponent,
     CancelSubscriptionComponent,
+    AdDialog,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
@@ -224,7 +226,8 @@ const appRoutes: Routes = [
     LyricsComponent,
     YesNoDialogComponent,
     AddConcertDialog,
-    ConcertDetailComponent
+    ConcertDetailComponent,
+    AdDialog
   ],
   bootstrap: [AppComponent]
 })
