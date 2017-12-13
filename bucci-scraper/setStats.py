@@ -15,7 +15,7 @@ cursor = db.cursor()
 query_start = "CALL runStatBatch(0.07, '2017-"
 query_end = "-01');"
 
-for i in range(1,13):
+for i in range(1,12):
     
     month = ''
 
