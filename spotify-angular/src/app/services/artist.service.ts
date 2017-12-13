@@ -10,6 +10,7 @@ import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse} from '@angular/
 import { Observable } from 'rxjs/Observable';
 import { catchError, tap }               from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Royalty} from '../objs/ArtistRoyalty';
 
 
 @Injectable()
@@ -70,6 +71,14 @@ export class ArtistService {
 
     requestConcert(concert : Concert){
         return this.http.post<BucciResponse<Concert>>(BucciConstants.Endpoints.REQUEST_CONCERT, concert, { withCredentials: true})
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    getRoyalties(){
+         return this.http.get<BucciResponse<Royalty[]>>(BucciConstants.Endpoints.GET_ROYALTIES, {
+            withCredentials: true
+        })
         .map(this.extractData)
         .catch(this.handleError)
     }

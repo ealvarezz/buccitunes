@@ -24,6 +24,7 @@ import 'rxjs/add/observable/forkJoin';
 import {AddConcertDialog} from './add-concert';
 import {Concert} from './objs/Concert';
 import {ConcertDetailComponent} from './concert-detail-dialog';
+import {Royalty} from './objs/ArtistRoyalty';
 
 
 @Component({
@@ -45,6 +46,7 @@ export class ArtistComponent implements OnInit {
   artwork       : string;
   relatedArtists  : Artist[];
   latestAlbum : Album;
+  royalties : Royalty[] = [];
 
   constructor(public dialog                 : MdDialog,
               private artistService         : ArtistService,
@@ -82,12 +84,15 @@ export class ArtistComponent implements OnInit {
         this.artist = res[0];
         this.bio = this.artist.biography;
         this.artist.avatarPath = this.artist.avatarPath+'?dummy='+new Date().getTime();
-
+ 
         this.artist.concerts = res[1];
         this.relatedArtists = res[2];
         this.isCurrentUserOwner();
         this.getLatestAlbum();
         this.spinnerService.stopSpinner();
+        if(this.isOwner){
+          this.getRoyalties();
+        }
     },
       (err)=>{
         this.notificationService.error("ERROR","There was an error loading this artist");
@@ -95,6 +100,25 @@ export class ArtistComponent implements OnInit {
       }
     );
   }
+
+
+  getRoyalties(){
+    this.artistService.getRoyalties().subscribe(
+      (data)=>{
+        this.royalties = data;
+      },
+      (err)=>{
+        console.log(err);
+      }
+    )
+  }
+
+
+
+
+
+
+
   // getArtist(id : number ){
   //  this.artistService.getArtist(id)
   //     .subscribe(

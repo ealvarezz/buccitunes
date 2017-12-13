@@ -65,6 +65,9 @@ export class QueueService {
         this.queue = newQueue;
     }
 
+    clearQueue(){
+        this.queue = [];
+    }
     removeSongFromQueue(song : Song){
         let newQueue = this.queue.slice();
         let index = newQueue.indexOf(song);

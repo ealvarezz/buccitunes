@@ -146,18 +146,24 @@
             </md-grid-list>
         </md-tab>
         <md-tab *ngIf="isOwner" label="Royalty Payments">
-            <md-grid-list cols="3" rowHeight="50px">
-                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Total Plays</b></md-grid-tile>
-                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">{{artist.stats.totalPlays}}</b></md-grid-tile>
-                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Monthly Plays</b></md-grid-tile>
-                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">{{artist.stats.monthlyPlays}}</b></md-grid-tile>
-                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Total Revenue</b></md-grid-tile>
-                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">${{artist.stats.totalRevenue | number : '1.2-2'}}</b></md-grid-tile>
-                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Monthly Revenue</b></md-grid-tile>
-                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">${{artist.stats.monthlyRevenue | number : '1.2-2'}}</b></md-grid-tile>
-                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Current Rank</b></md-grid-tile>
-                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">#{{artist.stats.rank}}</b></md-grid-tile>
+
+            <md-grid-list cols="4" rowHeight="50px">
+                            <md-grid-tile ></md-grid-tile>
+                            <md-grid-tile><span style="position:absolute; left:0px;"><h2><b>Artist Name</b></h2></span></md-grid-tile>
+                            <md-grid-tile><h2><b>Payment</b></h2></md-grid-tile>
+                            <md-grid-tile><h2><b>Date</b></h2></md-grid-tile>
             </md-grid-list>
+           <div *ngFor="let royalty of royalties">
+                    <div>
+                        <md-grid-list cols="4" rowHeight="50px">
+                            <md-grid-tile ><md-icon color="warn" style="position:absolute; left:0px;">attach_money</md-icon></md-grid-tile>
+                            <md-grid-tile><span style="position:absolute; left:0px;">{{royalty.artist.name}}</span></md-grid-tile>
+                            <md-grid-tile><h4 style="color: green;">{{royalty.amount | number : '1.2-2'}}</h4></md-grid-tile>
+                            <md-grid-tile><h4>{{royalty.date | date:'fullDate'}}</h4></md-grid-tile>
+                        </md-grid-list>
+                    </div>
+                <md-divider></md-divider>
+                </div>
         </md-tab>
     </md-tab-group>
 

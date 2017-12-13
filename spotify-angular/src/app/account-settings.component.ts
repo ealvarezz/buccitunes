@@ -69,9 +69,11 @@ export class AccountSettingsComponent implements OnInit {
 
         this.userService.getPaymentInfo().subscribe(data => {
           this.receipts = data;
-          this.renewDate = this.receipts[0].nextBillingDate;
+          if(this.receipts.length > 0){
+             this.renewDate = this.receipts[0].nextBillingDate;
+          }
+         
         });
-
         this.billingInfoChange = user.billingInfo;
       }
       this.nameForUser = user.name;
@@ -91,6 +93,7 @@ export class AccountSettingsComponent implements OnInit {
       data => {
         this.user = data;
         this.notificationService.success("SUCCESS", "The change has been made");
+        this.editMode = false;
       },
       err => {
         this.notificationService.error("ERROR", err.message);

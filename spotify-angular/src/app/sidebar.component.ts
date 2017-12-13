@@ -8,6 +8,7 @@ import {AddPlaylistDialog} from './add-playlist.component';
 import {Playlist} from './objs/Playlist';
 import {User} from './objs/User';
 import {MusicService} from './services/player.service';
+import {QueueService} from './services/queue.service';
 import { MediaFile } from "./objs/MediaFile";
 import { MediaService } from "./services/media.service";
 import { environment } from "../environments/environment";
@@ -26,7 +27,8 @@ export class SideBarComponent implements OnInit {
     private authService: AuthenticationService,
     private musicService: MusicCollectionService,
     private playerService: MusicService,
-    public mediaService: MediaService
+    public mediaService: MediaService,
+    private queueService : QueueService,
   ) {}
   recentAlbums: Album[];
   playlists: Playlist[];
@@ -55,6 +57,7 @@ export class SideBarComponent implements OnInit {
     this.playerService.pauseSong();
     this.authService.logout().subscribe(
       data => {
+        this.queueService.clearQueue();
         this.router.navigate(["/login"]);
       },
       err => {
