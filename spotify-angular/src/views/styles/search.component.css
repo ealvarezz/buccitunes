@@ -6,3 +6,4 @@
   width:100%;
 }
 
+.mat-autocomplete-panel { max-height: 450px !important; }

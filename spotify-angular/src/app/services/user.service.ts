@@ -7,6 +7,7 @@ import { Payment } from "../objs/Payment";
 import {UserPage} from '../objs/UserPage';
 import {BucciResponse} from '../objs/BucciResponse';
 import {environment} from '../../environments/environment';
+import {Activity} from '../objs/Activity';
 
 import {HttpClient, HttpResponse, HttpParams, HttpErrorResponse, HttpHeaders} from '@angular/common/http';
 import 'rxjs/add/operator/map';
@@ -117,6 +118,16 @@ export class UserService {
   changeBillingInfo(billingInfo: BillingInfo) {
     return this.http
       .post<BucciResponse<User>>(BucciConstants.Endpoints.CHANGE_BILLING_INFO, billingInfo, { withCredentials: true })
+      .map(this.extractData)
+      .catch(this.handleError);
+  }
+  
+  getActivityFeed(){
+    return this.http
+      .get<BucciResponse<Activity[]>>(
+        BucciConstants.Endpoints.GET_ACTIVITY_FEED,
+        { withCredentials: true }
+      )
       .map(this.extractData)
       .catch(this.handleError);
   }

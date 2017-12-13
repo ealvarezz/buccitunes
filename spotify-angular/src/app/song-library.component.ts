@@ -4,6 +4,7 @@ import { ActivatedRoute, ParamMap } from '@angular/router';
 import {Song} from './objs/Song';
 import {MusicService} from './services/player.service';
 import {QueueService} from './services/queue.service';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'song-library',
@@ -37,6 +38,14 @@ export class SongLibrary implements OnInit {
   playLibrary(){
     this.queueService.playMusicCollection(this.songs, 0);
     this.playerService.playSong();
+  }
+
+  unsave(song : Song){
+   this.musicService.unsaveSong(song).subscribe(
+     (data)=>{
+       this.getLibrary();
+     }
+   )
   }
 
  

@@ -2,7 +2,11 @@ import { Component } from '@angular/core';
 import {Song} from './objs/Song'
 import {MusicCollectionService} from './services/music.service';
 import {MediaService} from './services/media.service';
+import {UserService} from './services/user.service';
 import {TopCharts} from './objs/TopCharts'
+import 'rxjs/add/observable/forkJoin';
+import { Observable } from 'rxjs/Rx';
+import {Activity} from './objs/Activity';
 
 @Component({
   selector: 'home-page',
@@ -11,7 +15,8 @@ import {TopCharts} from './objs/TopCharts'
 export class HomePageComponent {
 
   private songs : Song[];
-  private charts : TopCharts = new TopCharts();
+  public  charts : TopCharts = new TopCharts();
+  public activityFeed     : Activity[];
   rowHeight : number = 300; 
 
 
@@ -20,14 +25,24 @@ export class HomePageComponent {
 
 
   constructor(private musicService : MusicCollectionService,
-              private mediaService : MediaService){}
+              private mediaService : MediaService,
+              private userService : UserService){}
 
   ngOnInit(){
-    this.musicService.getTopCharts().subscribe(
+
+    Observable.forkJoin(this.musicService.getTopCharts(), this.userService.getActivityFeed()).subscribe(
       (data)=>{
-        this.charts = data;
+        this.charts = data[0];
+        this.activityFeed =  data[1];
       }
-    );
+    )
+    // this.musicService.getTopCharts().subscribe(
+    //   (data)=>{
+    //     this.charts = data;
+    //   }
+    // );
 
   }
+
+  
 }

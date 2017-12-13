@@ -99,6 +99,11 @@ export class AuthenticationService {
         .map(this.extractData.bind(this))
         .catch(this.handleError);
     }
+    cancelSubscription(){
+        return this.http.put<BucciResponse<User>>(BucciConstants.Endpoints.CANCEL_PREMIUM,null,{withCredentials : true})
+        .map(this.extractDataBUCCI)
+        .catch(this.handleError);
+    }
 
 
     isAdminUserRole() : boolean{

@@ -72,6 +72,7 @@ import {RequestedConcertComponent} from './requested-concert';
 import {ConcertDetailComponent} from './concert-detail-dialog';
 import {TopSongsComponent} from './top-songs.component';
 import {GenreComponent} from './song-genre';
+import {CancelSubscriptionComponent} from './cancel-subscription';
 
 
 const appRoutes: Routes = [
@@ -104,6 +105,7 @@ const appRoutes: Routes = [
   {path: 'forgot', component: ForgotComponent},
   {path: 'upgrade', component: UpgradePremiumComponent, canActivate: [AuthGuard]},
   {path: 'sign-up', component: SignUpComponent},
+  {path: 'cancel-subscription', component: CancelSubscriptionComponent, canActivate: [AuthGuard]},
   {path: '**', redirectTo: 'login'}
 ];
 
@@ -158,6 +160,7 @@ const appRoutes: Routes = [
     ConcertDetailComponent,
     TopSongsComponent,
     GenreComponent,
+    CancelSubscriptionComponent,
   ],
   imports: [
     RouterModule.forRoot(appRoutes),

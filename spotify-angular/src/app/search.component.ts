@@ -12,11 +12,13 @@ import {Album} from './objs/Album';
 import {Artist} from './objs/Artist';
 import {Playlist} from './objs/Playlist';
 import {Location} from '@angular/common';
+import {ViewEncapsulation} from '@angular/core';
 
 @Component({
+  encapsulation: ViewEncapsulation.None,
   selector: 'search',
   templateUrl: '../views/search.component.html',
-  styleUrls: ['../views/styles/search.component.css']
+  styleUrls: ['../views/styles/search.component.css',]
 })
 export class SearchComponent implements OnInit{
 

@@ -7,6 +7,7 @@ import {environment} from '../environments/environment';
 import {Observable} from 'rxjs/Observable';
 import {SearchResults} from './objs/SearchResults';
 import {PropertiesPipe} from './properties-pipe';
+import {MediaService} from './services/media.service'
 
 @Component({
   selector: 'saved-albums',
@@ -19,7 +20,8 @@ export class AlbumLibrary implements OnInit {
   keys : string[];
   rowHeight = 300;
   
-  constructor(private musicService : MusicCollectionService) { }
+  constructor(private musicService : MusicCollectionService,
+              private mediaService : MediaService) { }
 
   ngOnInit() {
     this.getAlbumLibrary();

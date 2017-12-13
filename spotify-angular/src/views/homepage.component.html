@@ -1,10 +1,10 @@
-<md-card class = "featured-album-card mat-elevation-z22">
+<!-- <md-card class = "featured-album-card mat-elevation-z22">
     <md-card-header>
             <md-card-title><h2>Featured Album</h2></md-card-title>
     </md-card-header>
         <md-card-content style= "height:200px;">
                 <div class = "img-container">
-                        <!-- <image src="../assets/erotica.jpg"></image> -->
+       
                         <image src="http://localhost:8080/resources/ALBUMS/1/artwork.png"></image>
                 </div>
                 <div class = "featured-info">
@@ -16,7 +16,7 @@
                     <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
                 </div>
         </md-card-content>
-</md-card>
+</md-card> -->
 
 
 <md-card class = "browse-card mat-elevation-z22">
@@ -25,6 +25,23 @@
     </md-card-header> -->
         <md-card-content style= "margin-bottom:100px">
                 <md-tab-group class ="browse-tabs">
+                <md-tab label="FRIEND ACTIVITY">
+                                        <div *ngFor="let activity of activityFeed">
+                                        <md-grid-list cols="5" rowHeight="100px">
+                                                <md-grid-tile colspan="1"> <span style="position:absolute; left:0px;"><i class="material-icons" style="font-size:48px">person</i></span> </md-grid-tile>
+                                                <md-grid-tile colspan="3">
+                                                        <span style="position:absolute; left:0px;"><b>{{activity?.id.feed}}</b></span>
+                                                </md-grid-tile>
+                                                <md-grid-tile colspan="1">
+                                                <p> {{activity?.id.date | date}} </p>
+                                                </md-grid-tile>
+                                        </md-grid-list>
+                                        <md-divider></md-divider>
+                                        </div>
+                                        <div *ngIf=" activityFeed && activityFeed.length < 1">
+                                                <span><i style="color: red;" class="material-icons">error</i>Looks like there is no activity to show. Follow some friends to see what they're up to! </span>
+                                        </div>
+                </md-tab>
                  <md-tab label="OVERVIEW">
                         <div>
                         <h2><b>TOP SONG CHARTS</b></h2>

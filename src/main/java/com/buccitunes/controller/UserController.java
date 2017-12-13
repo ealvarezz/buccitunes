@@ -648,7 +648,7 @@ public class UserController {
 		}
 		
 		User user = userService.cancelPremium((PremiumUser) loggedUser);
-		session.setAttribute(constants.getSession(), user);
+//		session.setAttribute(constants.getSession(), user);
 		
 		return BucciResponseBuilder.successfulResponseMessage("You are now bucci basic", user);
 	}

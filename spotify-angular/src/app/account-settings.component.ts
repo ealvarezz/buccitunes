@@ -11,6 +11,7 @@ import { environment } from "../environments/environment";
 import { NotificationsService } from "angular4-notifications";
 import { FormControl, Validators } from "@angular/forms";
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from "@angular/material";
+import {Router } from '@angular/router';
 
 @Component({
   selector: "account-settings",
@@ -23,7 +24,8 @@ export class AccountSettingsComponent implements OnInit {
     private notificationService: NotificationsService,
     public mediaService: MediaService,
     public userService: UserService,
-    public dialog: MdDialog
+    public dialog: MdDialog,
+    private router : Router
   ) {}
 
   user: User;
@@ -160,7 +162,7 @@ export class AccountSettingsComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      console.log(result);
+      this.router.navigate(['/cancel-subscription']);
     });
   }
 

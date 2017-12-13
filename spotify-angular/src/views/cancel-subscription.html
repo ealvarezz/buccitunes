@@ -1,0 +1,43 @@
+<div class="main signupScreen">
+<div class="signupContainer">
+<md-card>
+<md-card-header>
+  <div style="width: 50%; margin: 0 auto;">
+  <h1> Cancel your subscription</h1>
+  </div>
+</md-card-header>
+<md-horizontal-stepper linear #stepper>
+  <md-step [stepControl]="thirdFormGroup">
+    <form [formGroup]="thirdFormGroup">
+      <ng-template  mdStepLabel>Cancel Subscription</ng-template>
+        <div>
+          <h2>Enter your login info to cancel your subscription</h2>
+          <md-form-field> 
+            <input mdInput placeholder="Email" required>
+          </md-form-field>
+        </div>
+        <div> 
+          <md-form-field> 
+            <input type="password" mdInput placeholder="Password"  required>
+          </md-form-field>
+        </div>
+      <div>
+        <h4>By clicking submit, you agree to cancel your monthly subscription. You will remain a BUCCI Premium user until the end of your billing cycle. After that date, you will no longer be charged. </h4>
+        <button md-button  (click)="cancel()">Submit</button>
+      </div>
+    </form>
+  </md-step>
+  <md-step >
+    <ng-template mdStepLabel>Done</ng-template>
+    <h2>We're Sad To See You Go!</h2>
+      <img style=" display:inline-block; vertical-align:top; max-height:100%; max-width:20%;" src="/assets/Kangaroo.png">
+    <div style="display:inline-block;">
+      <h4> You can still continue to get the Bucci Experience as a free user. Upgrade back to Bucci Premium at any time!</h4>
+      <p>Click <a routerLink="/login"><u>here</u></a> to login again.</p>
+    </div>
+  </md-step>
+</md-horizontal-stepper>
+
+</md-card>
+</div>
+</div>

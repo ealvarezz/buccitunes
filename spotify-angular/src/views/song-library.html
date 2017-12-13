@@ -10,6 +10,6 @@
         </div>
     </md-card-header>
     <md-card-content>
-        <music-table [data] = "songs" [isAlbum] = "false"></music-table>
+        <music-table [data] = "songs" [isAlbum] = "false" (remove)="unsave($event)"></music-table>
     </md-card-content>
 </md-card>
