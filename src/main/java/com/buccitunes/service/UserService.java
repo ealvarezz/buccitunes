@@ -252,7 +252,7 @@ public class UserService  {
 		}
 	}
 	
-	public PremiumUser upgradeToPremium(User user, BillingInfo billingInfo) throws BucciException {
+	public void upgradeToPremium(User user, BillingInfo billingInfo) throws BucciException {
 		PremiumUser existingPremium = premiumUserRepository.findOne(user.getEmail());
 		
 		if(existingPremium != null) {
@@ -279,9 +279,11 @@ public class UserService  {
 		
 		user.setRole(UserRole.PREMIUM);
 		premiumUserRepository.upgradeToPremium(user.getEmail(), billingInfo.getId());		
+	}
+	
+	public void userMakePayment(User user) {
 		PremiumUser pUser = premiumUserRepository.findOne(user.getEmail());
 		pUser.makePayment(constants.getSignupPremiumPrice());
-		return pUser;
 	}
 	
 	public List<Playlist> getFollowedPlaylist(String email){
