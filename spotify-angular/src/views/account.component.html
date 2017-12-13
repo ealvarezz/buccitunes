@@ -72,13 +72,11 @@
                 <h1 style="margin-bottom:0%;">Following</h1>
                      <md-divider></md-divider>
 
-                     <!-- <md-list>
-                         <div *ngFor="user.following">
-                             <md-divider></md-divider>
-                        </div>
-                     </md-list> -->
+                     <md-form-field floatPlaceholder="never">
+                            <input mdInput [formControl]="filterInput" placeholder="Filter Friends">
+                    </md-form-field>
                     <md-grid-list *ngIf="user.following" cols="4" rowHeight="300px">
-                        <md-grid-tile *ngFor = "let followUser of user.following" colspan= "1" rowpan = "1" >
+                        <md-grid-tile *ngFor = "let followUser of followers" colspan= "1" rowpan = "1" >
                             <div>
                                 <div style="max-height: 220px; min-height: 220px; height:220px; width: 220px;"><image [src]="mediaService.getUserImageUrl(followUser.avatarPath)" [route]="'/user/'+followUser.email"></image></div>
                                 <div class ="browse-item-template"><h4><b><a [routerLink]="['/user', followUser.email]">{{followUser.email}}</a></b></h4></div>

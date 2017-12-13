@@ -114,7 +114,8 @@ public class MusicCollectionService {
 		User user = userRepository.findOne(email);
 		Album album = albumRepository.findOne(albumId);
 		
-		if(user.getSavedAlbums().contains(album)) album.setFollowing(true);
+		user.getSavedAlbums().size();
+		if(user.getSavedAlbums()!=null && user.getSavedAlbums().contains(album)) album.setFollowing(true);
 		
 		album.getSongs().size();
 	    return album;
@@ -128,7 +129,8 @@ public class MusicCollectionService {
 		User user = userRepository.findOne(email);
 		Playlist playlist = playlistRepository.findOne(playlistId);
 		
-		if(user.getFollowingPlaylists().contains(playlist)) playlist.setFollowing(true);
+		user.getFollowingPlaylists().size();
+		if(user.getFollowingPlaylists() !=null && user.getFollowingPlaylists().contains(playlist)) playlist.setFollowing(true);
 		
 		playlist.getSongs().size();
 		return playlist;
@@ -225,6 +227,7 @@ public class MusicCollectionService {
 	public void deletePlaylist(int playlistId, User user) throws BucciException {
 		Playlist playlist = playlistRepository.findOne(playlistId);
 		
+		
 		if(playlist == null) {
 			throw new BucciException("Playlist does not exist");
 		}
@@ -232,6 +235,7 @@ public class MusicCollectionService {
 		if(!playlist.getOwner().getEmail().equals(user.getEmail()) ) {
 			throw new BucciException("You do not have permissions to delete this playlist!");
 		}
+		
 		
 		try {
 			FileManager.removePlaylistResources(playlist);

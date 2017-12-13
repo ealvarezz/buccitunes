@@ -37,6 +37,10 @@ export class AlbumComponent{
         });
     }
 
+    addToQueue(){
+        this.queueService.addMusicCollection(this.album.songs);
+    }
+
     getAlbum(id : number ){
     this.musicService.getAlbum(id)
                 .subscribe(

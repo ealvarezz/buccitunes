@@ -28,8 +28,8 @@
                          <img src="../assets/yung_gravy.png">   
                     </div> 
                     <div style="width:80%;float:left;">    
-                        <h4>Ran It Up Again</h4>
-                        <p>OCT 28, 2017</p> 
+                        <h4>{{latestAlbum?.title}}</h4>
+                        <p>{{latestAlbum?.releaseDate | date:'fullDate'}}</p> 
                     </div>
                 </div>
                 <div class="sub-header"><h4>Popular</h4></div>
@@ -53,6 +53,7 @@
                 </md-nav-list>
             </div>
             <div>
+                
                 <md-list>
                     <h3 >Albums</h3>
                     <md-divider></md-divider>
@@ -129,6 +130,34 @@
             </div>
         </md-grid-tile>
         </md-grid-list>
+        </md-tab>
+        <md-tab *ngIf="isOwner" label="STATS">
+            <md-grid-list cols="3" rowHeight="50px">
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Total Plays</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">{{artist.stats.totalPlays}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Monthly Plays</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">{{artist.stats.monthlyPlays}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Total Revenue</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">${{artist.stats.totalRevenue | number : '1.2-2'}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Monthly Revenue</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">${{artist.stats.monthlyRevenue | number : '1.2-2'}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Current Rank</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">#{{artist.stats.rank}}</b></md-grid-tile>
+            </md-grid-list>
+        </md-tab>
+        <md-tab *ngIf="isOwner" label="Royalty Payments">
+            <md-grid-list cols="3" rowHeight="50px">
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Total Plays</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">{{artist.stats.totalPlays}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Monthly Plays</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">{{artist.stats.monthlyPlays}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Total Revenue</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">${{artist.stats.totalRevenue | number : '1.2-2'}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Monthly Revenue</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">${{artist.stats.monthlyRevenue | number : '1.2-2'}}</b></md-grid-tile>
+                <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Current Rank</b></md-grid-tile>
+                <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">#{{artist.stats.rank}}</b></md-grid-tile>
+            </md-grid-list>
         </md-tab>
     </md-tab-group>
 

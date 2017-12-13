@@ -124,8 +124,8 @@ public class ArtistService {
 			for(Album album : artist.getAlbums()) {
 				album.getSongs().size();
 			}
-			
-			if(user.getFollowingArtists().contains(artist)) artist.setFollowing(true);
+			user.getFollowingArtists().size();
+			if(user.getFollowingArtists() !=null && user.getFollowingArtists().contains(artist)) artist.setFollowing(true);
 			return artist;
 		} else {
 			throw new BucciException(constants.getArtistNotFoundMsg());

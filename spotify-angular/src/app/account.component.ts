@@ -1,11 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { User } from './objs/User';
+import {FormControl} from '@angular/forms';
 import {Album} from './objs/Album';
 import {UserPage} from './objs/UserPage';
 import {UserService} from './services/user.service';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import {MediaService} from './services/media.service';
 import {NotificationsService} from 'angular4-notifications';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+import {Observable} from 'rxjs/Observable';
+import 'rxjs/add/observable/of';
+import 'rxjs/add/operator/startWith';
+import 'rxjs/add/observable/merge';
+import 'rxjs/add/operator/map';
+import 'rxjs/add/operator/debounceTime';
+import 'rxjs/add/operator/distinctUntilChanged';
+import 'rxjs/add/observable/fromEvent';
+
 
 
 @Component({
@@ -22,6 +33,8 @@ export class AccountComponent {
   user : User;
   overviewRecentlyPlayed : Album[];
   selectedTab : number;
+  filterInput = new FormControl();
+  followers : User[] = [];
 
   OVERVIEW_TAB        : number = 0;
   RECENTLY_PLAYED_TAB : number = 1;
@@ -32,6 +45,21 @@ export class AccountComponent {
         this.route.params.subscribe(params => {
             this.getUser(params['id']);
         });
+
+
+        this.filterInput.valueChanges
+        .debounceTime(150)
+        .distinctUntilChanged()
+        .subscribe((val) => {
+            this.followers = this.filterFriends(val);
+        });
+    }
+
+    filterFriends(val) : User[]{
+      return this.user.following.slice().filter((item: User) => {
+        let searchStr = (item.email + item.username).toLowerCase();
+        return searchStr.indexOf(val.toLowerCase()) != -1;
+      });
     }
 
 
@@ -41,6 +69,7 @@ export class AccountComponent {
         this.user = data.user;
         this.user.isfollowing = data.isAFollower;
         this.getOverviewItems();
+        this.followers = this.user.following;
       },
       (err) =>{
         console.log(err);

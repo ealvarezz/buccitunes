@@ -29,6 +29,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 //		  generator = ObjectIdGenerators.PropertyGenerator.class, 
 //		  property = "id",
 //		  scope = Artist.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class Artist {
 	
 	@Id

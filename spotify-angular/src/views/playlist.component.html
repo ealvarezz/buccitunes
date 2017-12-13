@@ -8,7 +8,7 @@
             <div><h4>Playlist</h4></div>
             <div><h1>{{playlist.title}}</h1></div>
             <div><h4>{{playlist.description}}</h4></div>
-            <div *ngIf="playlist.owner.name"><h4>Created By {{playlist.owner.name}} - {{playlist.songs.length}} Songs, 3 hr 1 min</h4></div>
+            <div *ngIf="playlist.owner.name"><h4>Created By <a class="link" [routerLink]="['/user', playlist.owner.email]">{{playlist.owner.name}}</a> - {{playlist.songs.length}} Songs, 3 hr 1 min</h4></div>
             <div *ngIf="!playlist.owner.name"><h4>Created By {{playlist.owner.email}} - {{playlist.songs.length}} Songs, 3 hr 1 min</h4></div>
             <button md-raised-button  class="rounded-button" (click)="playPlaylist()">Play</button>
             <button md-raised-button *ngIf="!playlist.following" (click)="followPlaylist()"  class="rounded-button">Follow</button>
@@ -21,8 +21,8 @@
                 <button (click)="deletePlaylist()" md-menu-item>
                     <span>Delete</span>
                 </button>
-                <button md-menu-item>
-                    <span>Collaborative Playlist</span>
+                <button (click)="addToQueue()"md-menu-item>
+                    <span>Add To Queue</span>
                 </button>
                 <button *ngIf="playlist.public" md-menu-item>
                     <span>Make Private</span>

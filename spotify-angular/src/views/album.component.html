@@ -13,7 +13,12 @@
             <button md-raised-button (click)="playAlbum()" class="rounded-button">Play</button>
             <button md-raised-button *ngIf="!album.following" (click) ="saveAlbum()"  class="rounded-button">Save</button>
             <button md-raised-button *ngIf="album.following" (click) ="unSaveAlbum()"  class="rounded-button">Remove from library</button>
-            <button md-mini-fab  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+            <button md-mini-fab  [mdMenuTriggerFor]="menu"  style="color: white; background-color:#3f51b5;"><i class="material-icons" style="font-size:18px;bottom:0;">more_horiz</i></button>
+            <md-menu #menu="mdMenu" [overlapTrigger]="false" xPosition="before">
+                <button (click)="addToQueue()" md-menu-item>
+                    <span>Add To Queue</span>
+                </button>
+            </md-menu>
         </div>
     </md-card-header>
     <md-card-content>

@@ -24,12 +24,12 @@ export class FollowedPlaylists implements OnInit {
               private mediaService : MediaService) { }
 
   ngOnInit() {
-      console.log("WTF MAN");
-        this.authService.currentUserChange.subscribe(
-            (user) => {
-            this.getUser(user.email);
-        }
-    );
+        this.getUser(this.authService.currentUser.email);
+        // this.authService.currentUserChange.subscribe(
+        //     (user) => {
+        //     this.getUser(user.email);
+        // }
+    //);
   }
 
 

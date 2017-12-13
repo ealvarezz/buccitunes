@@ -44,6 +44,7 @@ export class ArtistComponent implements OnInit {
   bio           : string;
   artwork       : string;
   relatedArtists  : Artist[];
+  latestAlbum : Album;
 
   constructor(public dialog                 : MdDialog,
               private artistService         : ArtistService,
@@ -85,6 +86,7 @@ export class ArtistComponent implements OnInit {
         this.artist.concerts = res[1];
         this.relatedArtists = res[2];
         this.isCurrentUserOwner();
+        this.getLatestAlbum();
         this.spinnerService.stopSpinner();
     },
       (err)=>{
@@ -148,6 +150,20 @@ export class ArtistComponent implements OnInit {
         this.notificationService.error("Error", "There was an error updating this artist");
       }
     )
+  }
+
+  getLatestAlbum(){
+    if(this.artist.albums.length > 0){
+      let recent = this.artist.albums[0];
+      for(let album of this.artist.albums ){
+        if(album.releaseDate > recent.releaseDate){
+          recent = album;
+        }
+      }
+
+      this.latestAlbum = recent;
+    }
+    
   }
 
   uploadImage(event){

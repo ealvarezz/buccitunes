@@ -30,15 +30,15 @@ export class QueueService {
     set queue(songs : Song[]){this.musicQueueChange.next(songs)}
 
     playMusicCollection(songs: Song[], startIndex : number){
-        let history = [];
-        this.historyChange.next(history);
+        //let history = [];
+        //this.historyChange.next(history);
         let list = songs.slice(startIndex, songs.length);
         this.queue = list;
     }
 
     playAlbum(album : Album, startIndex : number){
-        let history = [];
-        this.historyChange.next(history);
+        //let history = [];
+        //this.historyChange.next(history);
         let songs = album.songs.slice(startIndex, album.songs.length);
         this.queue = songs;
     }
@@ -53,6 +53,15 @@ export class QueueService {
     addSongToQueue(song : Song){
         let newQueue = this.queue.slice();
         newQueue.push(song);
+        this.queue = newQueue;
+    }
+
+    addMusicCollection(songs : Song[]){
+        let newQueue = this.queue.slice();
+        for(let song of songs){
+            newQueue.push(song);
+        }
+
         this.queue = newQueue;
     }
 

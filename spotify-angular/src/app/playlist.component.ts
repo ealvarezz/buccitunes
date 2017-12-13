@@ -83,6 +83,10 @@ export class PlaylistComponent{
                     });
    }
 
+   addToQueue(){
+        this.queueService.addMusicCollection(this.playlist.songs);
+    }
+
    followPlaylist(){
        this.musicService.followPlaylist(this.playlist)
        .subscribe(
