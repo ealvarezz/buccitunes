@@ -23,6 +23,7 @@ import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.BucciResponse;
 import com.buccitunes.miscellaneous.BucciResponseBuilder;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistMonthlyStat;
 import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
@@ -104,6 +105,24 @@ public class ArtistController {
 			try {
 				loggedUser = artistService.getArtistUser(loggedUser.getEmail());
 				return BucciResponseBuilder.successfulResponse(artistService.getArtistPaymentHistory(loggedUser.getArtist().getId()));
+			} catch (BucciException e) {
+				return BucciResponseBuilder.failedMessage(constants.getArtistNotFoundMsg());
+			}
+		} else {
+			return BucciResponseBuilder.failedMessage(constants.getArtistAccessDeniedMsg());
+		}
+	}
+	
+	@RequestMapping(value="yearly_stats", method = RequestMethod.GET)
+	public BucciResponse<List<ArtistMonthlyStat>> getLastYearStats(HttpSession session) {			
+		ArtistUser loggedUser = (ArtistUser) session.getAttribute(constants.getSession());
+		if(loggedUser == null) {
+			return BucciResponseBuilder.failedMessage(constants.getNotLoggedInMsg());
+		}
+		if(BucciPrivilege.isArtist(loggedUser)) {
+			try {
+				loggedUser = artistService.getArtistUser(loggedUser.getEmail());
+				return BucciResponseBuilder.successfulResponse(artistService.getYearlyStat(loggedUser.getArtist().getId()));
 			} catch (BucciException e) {
 				return BucciResponseBuilder.failedMessage(constants.getArtistNotFoundMsg());
 			}

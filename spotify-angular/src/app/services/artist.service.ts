@@ -11,6 +11,7 @@ import { Observable } from 'rxjs/Observable';
 import { catchError, tap }               from 'rxjs/operators';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 import {Royalty} from '../objs/ArtistRoyalty';
+import {MonthlyStat} from '../objs/MonthlyStat';
 
 
 @Injectable()
@@ -77,6 +78,14 @@ export class ArtistService {
 
     getRoyalties(){
          return this.http.get<BucciResponse<Royalty[]>>(BucciConstants.Endpoints.GET_ROYALTIES, {
+            withCredentials: true
+        })
+        .map(this.extractData)
+        .catch(this.handleError)
+    }
+
+    getYearStats(){
+         return this.http.get<BucciResponse<MonthlyStat[]>>(BucciConstants.Endpoints.GET_YEAR_STAT, {
             withCredentials: true
         })
         .map(this.extractData)

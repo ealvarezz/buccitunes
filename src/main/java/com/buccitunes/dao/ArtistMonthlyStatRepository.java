@@ -4,6 +4,8 @@ import java.util.List;
 
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.repository.query.Param;
+
 import com.buccitunes.model.ArtistMonthlyStat;
 import com.buccitunes.model.ArtistMonthlyStatId;
 
@@ -11,4 +13,8 @@ public interface ArtistMonthlyStatRepository extends CrudRepository<ArtistMonthl
 
 	@Query(value="CALL get_artist_last_month_stats();", nativeQuery = true)
 	public List<ArtistMonthlyStat> getLastMonthStats();
+	
+	@Query(value="CALL get_artist_year_stats(:artistId);", nativeQuery = true)
+	public List<ArtistMonthlyStat> getLastYearStats(@Param("artistId") int artistId);
+	
 }

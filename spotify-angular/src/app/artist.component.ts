@@ -1,4 +1,4 @@
-import { Component, OnInit, Inject, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, Inject, ChangeDetectorRef, ViewChild, AfterViewInit } from '@angular/core';
 import { environment } from '../environments/environment';
 import {Song} from './objs/Song';
 import{MediaFile} from './objs/MediaFile';
@@ -25,6 +25,8 @@ import {AddConcertDialog} from './add-concert';
 import {Concert} from './objs/Concert';
 import {ConcertDetailComponent} from './concert-detail-dialog';
 import {Royalty} from './objs/ArtistRoyalty';
+import {MonthlyStat} from './objs/MonthlyStat';
+import { DxChartComponent } from 'devextreme-angular';
 
 
 @Component({
@@ -47,6 +49,25 @@ export class ArtistComponent implements OnInit {
   relatedArtists  : Artist[];
   latestAlbum : Album;
   royalties : Royalty[] = [];
+  chartType : string = 'bar';
+  yearStats : MonthlyStat[];
+  showStat : string  = "plays";
+@ViewChild(DxChartComponent) dataGrid: DxChartComponent
+
+  months ={
+    0 : "Jan",
+    1 : "Feb",
+    2 : "Mar",
+    3 : "Apr",
+    4 : "May",
+    5 : "Jun",
+    6 : "July",
+    7: "Aug",
+    8: "Sept",
+    9: "Oct",
+    10: "Nov",
+    11: "Dec"
+  }
 
   constructor(public dialog                 : MdDialog,
               private artistService         : ArtistService,
@@ -61,7 +82,6 @@ export class ArtistComponent implements OnInit {
     this.route.params.subscribe(params => {
       let id = +params['id'];
       this.loadArtist(id);
-
         // this.getArtist(+params['id']);
     });
 
@@ -70,8 +90,14 @@ export class ArtistComponent implements OnInit {
         this.currentUser = user;
       }
     );
-    
+
   }
+
+  
+
+  // showStat(e : any){
+  //   return "totalPlays"
+  // }
 
   loadArtist(id : number){
     this.spinnerService.openSpinner();
@@ -92,6 +118,7 @@ export class ArtistComponent implements OnInit {
         this.spinnerService.stopSpinner();
         if(this.isOwner){
           this.getRoyalties();
+          this.getYearlyStats();
         }
     },
       (err)=>{
@@ -100,6 +127,27 @@ export class ArtistComponent implements OnInit {
       }
     );
   }
+
+  changeChart(val : string){
+    this.showStat = val;
+  }
+
+
+  clickStats(val : any){
+    if(val.index == 4 && this.dataGrid && this.isOwner){
+      this.dataGrid.instance.render();
+    }
+  }
+
+  changeChartType(val : string){
+    this.chartType = val;
+  }
+
+  customizeTooltip = (args: any) => {
+        return {
+           text : args.seriesName + ": "+ args.value
+      }
+}
 
 
   getRoyalties(){
@@ -112,6 +160,21 @@ export class ArtistComponent implements OnInit {
       }
     )
   }
+
+getYearlyStats(){
+  this.artistService.getYearStats().subscribe(
+    (data)=>{
+      this.yearStats = data;
+      for(let stat of this.yearStats){
+        stat.month = this.months[new Date(stat.id.month).getMonth()];
+      }
+    },
+    (err)=>{
+      console.log("err");
+    }
+  )
+}
+
 
 
 
@@ -242,6 +305,16 @@ export class ArtistComponent implements OnInit {
       this.isOwner = true;
     }
   }
+
+  isAdminUser(){
+    if(this.currentUser.role == BucciConstants.Roles.ADMIN){
+      return true;
+    }
+    else{
+      return false;
+    }
+  }
+  
   addAlbum(){
     let dialogRef = this.dialog.open(AddAlbumDialog, 
       {

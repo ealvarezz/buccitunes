@@ -1,5 +1,5 @@
 <div *ngIf="artist">
-<md-card style="margin-bottom:10%">
+    <md-card style="margin-bottom:10%">
     <md-card-header>
         <div style="margin-bottom: 1%">
             <div >
@@ -11,7 +11,7 @@
                 <button md-mini-fab  style="color: white; background-color:#3f51b5; top:5px;" [mdMenuTriggerFor]="artistMenu"><i class="material-icons " style="font-size:24px; ">more_horiz</i></button>
 
                 <md-menu #artistMenu="matMenu">
-                    <button *ngIf="isOwner" md-menu-item (click)="addAlbum()"> Add Album </button>
+                    <button *ngIf="isOwner || isAdminUser()" md-menu-item (click)="addAlbum()"> Add Album </button>
                     <button *ngIf="isOwner" md-menu-item> Add Song </button>
                     <button *ngIf="isOwner" md-menu-item (click)="addConcert()"> Add Concert </button>
                     <button md-menu-item> Follow </button>
@@ -19,7 +19,7 @@
             </div>
         </div>
     </md-card-header>
-    <md-tab-group>
+    <md-tab-group (selectChange)="clickStats($event)">
         <md-tab label="OVERVIEW">
             <div style="display:inline-block; vertical-align:top; width:70%;">
                 <div class="sub-header"><h4>Latest Release</h4></div>
@@ -132,6 +132,47 @@
         </md-grid-list>
         </md-tab>
         <md-tab *ngIf="isOwner" label="STATS">
+
+
+            <button md-raised-button (click)= "changeChartType('line')">Line Graph</button>
+            <button md-raised-button (click)= "changeChartType('bar')">Bar Graph</button>
+            <div style="min-width:100%; width:100%;">
+                <h2>Last Year Stats</h2>
+                <dx-chart  #chart [dataSource]="yearStats">
+                <dxo-adaptive-layout  width="1" height="1"></dxo-adaptive-layout>
+                    <dxi-series *ngIf="showStat == 'plays'"
+                        argumentField="month"
+                        valueField="totalPlays"
+                        name="Total Plays"
+                        [type] ="chartType"
+                        >
+                    </dxi-series>
+                        <dxi-series *ngIf="showStat == 'revenue'"
+                        argumentField="month"
+                        valueField="revenue"
+                        name="Total Revenue"
+                        [type] ="chartType"
+                        >
+                    </dxi-series>
+                        <dxi-series *ngIf="showStat == 'rank'"
+                        argumentField="month"
+                        valueField="rank"
+                        name="Rank"
+                        [type] ="chartType"
+                        >
+                    </dxi-series>
+                    <dxo-tooltip
+                        [enabled]="true"
+                        [customizeTooltip]="customizeTooltip">
+                    </dxo-tooltip>
+                    <dxo-crosshair [enabled]="chartType == 'line'">
+                        <dxo-label [visible]="chartType == 'line'"></dxo-label>
+                    </dxo-crosshair>
+                </dx-chart>
+                </div>
+            <button md-raised-button (click)= "changeChart('plays')">View Plays</button>
+            <button md-raised-button (click)= "changeChart('revenue')">View Revenue</button>
+            <button md-raised-button (click)= "changeChart('rank')">View Rank</button> 
             <md-grid-list cols="3" rowHeight="50px">
                 <md-grid-tile colspan="1"><b style="position:absolute; left:0px;">Total Plays</b></md-grid-tile>
                 <md-grid-tile colspan="2"><b style="position:absolute; left:0px;">{{artist.stats.totalPlays}}</b></md-grid-tile>
@@ -168,4 +209,6 @@
     </md-tab-group>
 
 </md-card>
+
+
 </div>
