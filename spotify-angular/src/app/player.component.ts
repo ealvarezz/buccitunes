@@ -114,7 +114,7 @@ export class PlayerComponent {
     }
 
     play(){
-        this.musicService.playSong();
+        this.musicService.playSongPlayer();
     }
 
     skipNext(){

@@ -64,6 +64,7 @@ export const BucciConstants =  {
       GET_ACTIVITY_FEED   : environment.SERVER_PATH + "/get_activity_feed",
       MAKE_PAYMENT        : environment.SERVER_PATH + "/make_payment",
       GET_ROYALTIES       : environment.SERVER_PATH + "/royalties",
+      GET_YEAR_STAT       : environment.SERVER_PATH + "/yearly_stats",
 
 
 

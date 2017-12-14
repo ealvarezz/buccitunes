@@ -97,6 +97,35 @@ export class MusicService {
     }
 
     play(){
+        // if(this.isPaused){
+        //     this.audio.play();
+        // }
+        // else{
+            this.audio.src = environment.SERVER_PATH+ this.currSong.audioPath;
+            this.audio.load();
+            this.audio.play();
+            this.musicCollectionService.recordSong(this.currSong)
+            .subscribe(data => console.log("song recorded"));
+        //}
+        this.togglePlaying(true);
+
+
+        if(this.authenticationService.currentUser && this.authenticationService.currentUser.role === "USER"){
+           let random  =  Math.floor(Math.random() * 3) + 1  
+           if(random == 1){
+               this.openAd()
+           }
+        }
+        
+    }
+
+    playSongPlayer(){
+        if(this.queueService.queue.length > 0){
+                this.playFromPlayer();
+            }
+    }
+
+     playFromPlayer(){
         if(this.isPaused){
             this.audio.play();
         }

@@ -74,6 +74,7 @@ import {TopSongsComponent} from './top-songs.component';
 import {GenreComponent} from './song-genre';
 import {CancelSubscriptionComponent} from './cancel-subscription';
 import {AdDialog} from './ad-dialog';
+import { DxChartModule } from 'devextreme-angular';
 
 
 const appRoutes: Routes = [
@@ -200,6 +201,7 @@ const appRoutes: Routes = [
     MdProgressSpinnerModule,
     MdAutocompleteModule,
     MdSortModule,
+    DxChartModule,
     SimpleNotificationsModule.forRoot()
   ],
   providers: [

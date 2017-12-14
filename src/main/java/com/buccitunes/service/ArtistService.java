@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 
 import com.buccitunes.constants.Tier;
 import com.buccitunes.dao.AlbumRepository;
+import com.buccitunes.dao.ArtistMonthlyStatRepository;
 import com.buccitunes.dao.ArtistRepository;
 import com.buccitunes.dao.ArtistTransactionRepository;
 import com.buccitunes.dao.ArtistUserRepository;
@@ -37,6 +38,7 @@ import com.buccitunes.miscellaneous.BucciPrivilege;
 import com.buccitunes.miscellaneous.FileManager;
 import com.buccitunes.model.Album;
 import com.buccitunes.model.Artist;
+import com.buccitunes.model.ArtistMonthlyStat;
 import com.buccitunes.model.ArtistTransaction;
 import com.buccitunes.model.ArtistUser;
 import com.buccitunes.model.Concert;
@@ -69,6 +71,7 @@ public class ArtistService {
 	private final LocationRepository locationRepository;
 	private final ArtistTransactionRepository artistTransactionRepository;
 	private final SupportTicketRepository supportTicketRepository; 
+	private final ArtistMonthlyStatRepository artistMonthlyStatRepository;
 
 	
 	public ArtistService(RequestedArtistRepository requestedArtistRepository, ArtistRepository artistRepository, 
@@ -77,7 +80,7 @@ public class ArtistService {
 			RequestedSongRepository requestedSongRepository, AlbumRepository albumRepository, 
 			RequestedConcertRepository requestedConcertRepository, ConcertRepository concertRepository, 
 			LocationRepository locationRepository, ArtistTransactionRepository artistTransactionRepository,
-			SupportTicketRepository supportTicketRepository) {
+			SupportTicketRepository supportTicketRepository, ArtistMonthlyStatRepository artistMonthlyStatRepository) {
 		
 		this.requestedArtistRepository = requestedArtistRepository;
 		this.albumRepository = albumRepository;
@@ -92,6 +95,7 @@ public class ArtistService {
 		this.locationRepository = locationRepository;
 		this.artistTransactionRepository = artistTransactionRepository;
 		this.supportTicketRepository=supportTicketRepository;
+		this.artistMonthlyStatRepository = artistMonthlyStatRepository;
 	}
 	
 	public List<Artist> findAll(){
@@ -336,6 +340,12 @@ public class ArtistService {
 		List<SupportTicket> list = new ArrayList<SupportTicket>();
 		for(SupportTicket ticket: supportTicketRepository.findAll()) list.add(ticket);
 		return list;
+	}
+	
+	
+	public List<ArtistMonthlyStat> getYearlyStat(int artistId){
+		List<ArtistMonthlyStat> stats = artistMonthlyStatRepository.getLastYearStats(artistId);
+		return stats;
 	}
 
 
