@@ -1,10 +1,11 @@
-<md-card style="height:100%; margin-bottom: 10%;">
+<md-card style="height:100%; margin-bottom: 20%;">
     <md-card-header>
         <h1>MUSIC QUEUE</h1>
     </md-card-header>
     <md-tab-group>
         <md-tab label="QUEUE">
             <div>
+                <button md-raised-button class="rounded-button" style="float:right" (click)="clearQueue()">Clear Queue</button>
                 <h3>Now Playing</h3>
             </div>
             <div style="margin-bottom:5%;">

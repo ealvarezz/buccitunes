@@ -26,6 +26,10 @@ export class QueueComponent implements OnInit{
                     this.nowPlaying = [data[0]];
                     this.queue = data.slice(1, data.length);
                 }
+                else{
+                    this.nowPlaying = [];
+                    this.queue = data;
+                }
             }
         );
 
@@ -35,6 +39,10 @@ export class QueueComponent implements OnInit{
             }
         )
 
+    }
+
+    clearQueue(){
+        this.queueService.clearQueue();
     }
 
 }

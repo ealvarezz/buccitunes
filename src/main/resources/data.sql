@@ -488,4 +488,10 @@ ORDER BY SC.total_plays DESC
 LIMIT 50;
 END^;
 
+CREATE PROCEDURE `get_artist_year_stats` (IN artistId INT)
+BEGIN
+SELECT * FROM artist_monthly_stat
+WHERE artist_id = artistId;
+END^;
+
 

@@ -22,11 +22,13 @@ export class RecentlyPlayed implements OnInit {
               private mediaService : MediaService) { }
 
   ngOnInit() {
-    this.authService.currentUserChange.subscribe(
-      (user) => {
-        this.getUser(user.email);
-      }
-    );
+
+    this.getUser(this.authService.currentUser.email);
+    // this.authService.currentUserChange.subscribe(
+    //   (user) => {
+    //     // this.getUser(user.email);
+    //   }
+    // );
   }
 
 
