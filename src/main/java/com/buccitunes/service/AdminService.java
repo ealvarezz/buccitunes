@@ -319,6 +319,12 @@ public class AdminService {
 		}
 	}
 	
+	public void updateMonthlyArtistsStats() {
+		
+		artistMonthlyStatRepository.updateStatsThisMonth();
+
+	}
+	
 	public RequestedAlbum getRequestedAlbum(int id) throws BucciException {
 		RequestedAlbum album = requestedAlbumRepository.findOne(id);
 		if(album == null) {

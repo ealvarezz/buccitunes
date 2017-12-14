@@ -2,6 +2,7 @@ package com.buccitunes.dao;
 
 import java.util.List;
 
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import com.buccitunes.model.ArtistMonthlyStat;
@@ -11,4 +12,9 @@ public interface ArtistMonthlyStatRepository extends CrudRepository<ArtistMonthl
 
 	@Query(value="CALL get_artist_last_month_stats();", nativeQuery = true)
 	public List<ArtistMonthlyStat> getLastMonthStats();
+	
+	@Modifying
+	@Query(value="CALL runStatBatch(0.07, '2017-12-1');", nativeQuery = true)
+	public void updateStatsThisMonth();
+	
 }

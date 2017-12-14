@@ -296,6 +296,12 @@ public class AdminController {
 		
 	}
 	
+	@RequestMapping(value="update_artist_stats", method = RequestMethod.POST)
+	public BucciResponse<String> updateMonthlyArtistStats() {
+		adminService.updateMonthlyArtistsStats();
+		return BucciResponseBuilder.successMessage(constants.getSuccessfulChargeMsg());
+	}
+	
 	@RequestMapping(value="search_artists", method = RequestMethod.GET)
 	public @ResponseBody BucciResponse<List<Artist>> searchAllArtists(HttpSession session, @RequestParam String name) {
 		User loggedUser = (User) session.getAttribute(constants.getSession());
